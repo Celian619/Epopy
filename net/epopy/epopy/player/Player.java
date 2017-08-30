@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.player.stats.CarStats;
 import net.epopy.epopy.player.stats.MarioStats;
@@ -123,9 +124,10 @@ public class Player {
 	}
 	
 	public void setLevel(int level) {
-		if(this.level < level)
+		if(this.level < level) {
 			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[]{1, 1f, 1, 1}, false);
-		
+			Audios.NEW_GAME.start(0.1f);
+		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));
 	}

@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.openal.Audio;
 
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.DisplayManager;
@@ -33,7 +32,7 @@ public class Main {
 	
 	public static void main(final String[] args) {
 		FileUtils.checkFiles();
-		
+		Audios.LOBBY.start(0.05f, true);
 		new ChooseGameTypeMenu();	
 		Display.setResizable(true);
 		loop();
