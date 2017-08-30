@@ -32,8 +32,11 @@ public class Main {
 	
 	public static void main(final String[] args) {
 		FileUtils.checkFiles();
-		Audios.LOBBY.start(0.05f, true);
-		new ChooseGameTypeMenu();	
+
+		Audios.changeVolume(0.05f);
+		Audios.LOBBY.start(true);
+
+		new ChooseGameTypeMenu();
 		Display.setResizable(true);
 		loop();
 	}

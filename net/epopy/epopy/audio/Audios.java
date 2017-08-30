@@ -12,7 +12,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Audios {
-	
+
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 
 	public static Audios LOBBY = new Audios("menu");
@@ -23,9 +23,9 @@ public class Audios {
 	public static Audios TANK = new Audios("tank");
 	public static Audios PLACEINVADER = new Audios("place_invader");
 	public static Audios SPEEDRUN = new Audios("speedrun");
-	
+
 	private Clip clip;
-	
+
 	private static List<Audios> audios = new ArrayList<Audios>();
 
 	public Audios(final String name) {
@@ -41,19 +41,9 @@ public class Audios {
 	/*
 	 * Fonctions
 	 */
-	public void start(final float volume, final boolean loop) {
-
-		setVolume(volume);
-		start(loop);
-	}
 	
-	public void start(final float volume) {
-		setVolume(volume);
-		start(false);
-	}
-
 	public void start(final boolean loop) {
-		
+
 		audios.add(this);
 		if (!clip.isRunning()) {
 			clip.start();
@@ -61,7 +51,7 @@ public class Audios {
 				clip.loop(Integer.MAX_VALUE);
 		}
 	}
-	
+
 	public void stop() {
 		if (clip.isRunning())
 			clip.stop();
@@ -72,19 +62,15 @@ public class Audios {
 			audio.stop();
 		}
 	}
-	
-	public void setVolume(final float volume) {
-		if (volume < 0f || volume > 1f)
-			throw new IllegalArgumentException("Volume not valid: " + volume);
-		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(20f * (float) Math.log10(volume));
-	}
 
-	/*
-	 * Getters
-	 */
-	public float getVolume() {
-		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		return (float) Math.pow(10f, gainControl.getValue() / 20f);
+	public static void changeVolume(final float volume) {
+		for (Audios audio : audios) {
+			if (volume < 0f || volume > 1f)
+				throw new IllegalArgumentException("Volume not valid: " + volume);
+			FloatControl gainControl = (FloatControl) audio.clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(20f * (float) Math.log10(volume));
+			
+		}
 	}
+	
 }

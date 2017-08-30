@@ -23,7 +23,7 @@ public class Player {
 	// key data
 	private int level;
 	private int lastGameID = 0;
-	private String name;
+	private final String name;
 	
 	// stats games
 	private MarioStats marioStats;
@@ -32,7 +32,7 @@ public class Player {
 	private CarStats carStats;
 	private TankStats tankStats;
 	
-	public Player(String name) {		
+	public Player(final String name) {
 		this.name = name;
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		try {
@@ -76,11 +76,11 @@ public class Player {
 		return Boolean.valueOf(Main.getConfig("infos").getData("display_fullscreen"));
 	}
 	
-	public void setDisplayFullScreen(boolean fullscreen) {
+	public void setDisplayFullScreen(final boolean fullscreen) {
 		Main.getConfig("infos").setValue("display_fullscreen", fullscreen + "");
 	}
 	
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	public String getTotalTemps() {
 		long tempsTotal = 0;
@@ -110,7 +110,7 @@ public class Player {
 		return lastGameID;
 	}
 	
-	public void setLastGame(int id) {
+	public void setLastGame(final int id) {
 		lastGameID = id;
 		config.setValue("last_game", String.valueOf(id));
 	}
@@ -123,10 +123,10 @@ public class Player {
 		return level;
 	}
 	
-	public void setLevel(int level) {
-		if(this.level < level) {
-			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[]{1, 1f, 1, 1}, false);
-			Audios.NEW_GAME.start(0.1f);
+	public void setLevel(final int level) {
+		if (this.level < level) {
+			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1f, 1, 1 }, false);
+			Audios.NEW_GAME.start(false);
 		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));

@@ -99,13 +99,11 @@ public class CarGame extends AbstractGameMenu {
 		if (timeTamp <= 0 && pause.isFinish() && !win) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
-					Audios.CAR.setVolume(0.02f);
 					pauseScreen = false;
 					pause.startPause(3);
 					start = false;
 					Mouse.setGrabbed(true);
 				} else {
-					Audios.CAR.setVolume(0.05f);
 					pauseScreen = true;
 					timer.pause();
 					Mouse.setGrabbed(false);
