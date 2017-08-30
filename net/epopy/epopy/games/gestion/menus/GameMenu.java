@@ -49,6 +49,8 @@ public class GameMenu extends AbstractGameMenu {
 		options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
 		user = new ButtonGui(Textures.GAME_MENU_USER_OFF, Textures.GAME_MENU_USER_ON);
 		sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
+		if(Main.getPlayer().getSound())
+			Audios.LOBBY.start(0.05f, true);
 	}
 
 	@Override

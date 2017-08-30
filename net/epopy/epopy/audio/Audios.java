@@ -12,7 +12,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Audios {
-	
+
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 
 	public static Audios LOBBY = new Audios("menu");
@@ -23,10 +23,10 @@ public class Audios {
 	public static Audios TANK = new Audios("tank");
 	public static Audios PLACEINVADER = new Audios("place_invader");
 	public static Audios SPEEDRUN = new Audios("speedrun");
-	
+
 	private Clip clip;
-	
-	private static List<Audios> audios = new ArrayList<Audios>();
+
+	private static List<Audios> audios = new ArrayList<Audios>(10);
 
 	public Audios(final String name) {
 		try {
@@ -42,26 +42,24 @@ public class Audios {
 	 * Fonctions
 	 */
 	public void start(final float volume, final boolean loop) {
-
-		setVolume(volume);
 		start(loop);
-	}
-	
-	public void start(final float volume) {
 		setVolume(volume);
+	}
+
+	public void start(final float volume) {
 		start(false);
+		setVolume(volume);
 	}
 
 	public void start(final boolean loop) {
-		
-		audios.add(this);
 		if (!clip.isRunning()) {
 			clip.start();
 			if (loop)
 				clip.loop(Integer.MAX_VALUE);
 		}
+		audios.add(this);
 	}
-	
+
 	public void stop() {
 		if (clip.isRunning())
 			clip.stop();
@@ -69,10 +67,12 @@ public class Audios {
 
 	public static void stopAll() {
 		for (Audios audio : audios) {
-			audio.stop();
+			if(audio.clip.isRunning())
+				audio.stop();
 		}
+		audios.clear();
 	}
-	
+
 	public void setVolume(final float volume) {
 		if (volume < 0f || volume > 1f)
 			throw new IllegalArgumentException("Volume not valid: " + volume);
