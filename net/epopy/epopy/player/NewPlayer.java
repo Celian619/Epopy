@@ -66,7 +66,8 @@ public class NewPlayer {
 			write(w, "tank_record=" + 0);
 			write(w, "tank_parties=" + 0);
 			write(w, "tank_temps=" + 0);
-
+			write(w, "sound=true");
+			
 			w.close();
 
 		} catch (Exception e) {

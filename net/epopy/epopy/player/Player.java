@@ -25,6 +25,8 @@ public class Player {
 	private int lastGameID = 0;
 	private String name;
 	
+	private boolean sound = true;
+	
 	// stats games
 	private MarioStats marioStats;
 	private SnakeStats snakeStats;
@@ -65,6 +67,7 @@ public class Player {
 		snakeStats = new SnakeStats(config);
 		pongStats = new PongStats(config);
 		tankStats = new TankStats(config);
+		sound = Boolean.valueOf(config.getData("sound", "true"));
 	}
 	
 	/**
@@ -104,6 +107,19 @@ public class Player {
 		return config.getData("account_create_at");
 	}
 	
+	public boolean hasSound() {
+		return sound;
+	}
+	
+	public void setSoundStatus(boolean sound) {
+		//config.setValue("sound", String.valueOf(sound));
+		this.sound = sound;
+	}
+	
+	public boolean getSound() {
+		return sound;
+	}
+	
 	public int getLastGame() {
 		if (lastGameID == 0)
 			lastGameID = Integer.parseInt(config.getData("last_game"));
@@ -118,7 +134,7 @@ public class Player {
 	public boolean hasNewGame() {
 		return true;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}

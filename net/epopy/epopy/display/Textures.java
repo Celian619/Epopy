@@ -53,7 +53,7 @@ public class Textures {
 	public static Textures NETWORK_GAME_TANK_ZONE_SMALL = load("network/games/zone-tank-small");
 	public static Textures NETWORK_GAME_END_BG = load("network/games/end_bg");
 	
-	public static Textures MENU_BTN_SOUND_OFF = load("games/btn_sound_off");
+	public static Textures MENU_SOUND_ON = load("games/sound_on");
 	public static Textures MENU_BTN_SOUND_ON = load("games/btn_sound_on");
 	public static Textures MENU_SOUND_OFF = load("games/sound_off");
 
