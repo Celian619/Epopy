@@ -14,7 +14,7 @@ public class Audios {
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 
 	public static Audios LOBBY = new Audios("menu");
-	public static Audios NEW_GAME = new Audios("yew");
+	public static Audios NEW_GAME = new Audios("level");
 	
 	private Clip clip;
 	public Audios(String name) {
@@ -30,14 +30,19 @@ public class Audios {
 	/*
 	 * Fonctions
 	 */
-	public void start(float volume) {
+	public void start(float volume, boolean loop) {
 		if (!clip.isRunning()) {
 			clip.start();
 			setVolume(volume);
+			if(loop)
 			clip.loop(Integer.MAX_VALUE);
 		}
 	}
 	
+	public void start(float volume) {
+		start(volume, false);
+	}
+		
 	public void start(boolean loop) {
 		if (!clip.isRunning()) {
 			clip.start();
