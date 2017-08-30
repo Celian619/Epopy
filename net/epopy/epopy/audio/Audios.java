@@ -1,6 +1,8 @@
 package net.epopy.epopy.audio;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -15,9 +17,18 @@ public class Audios {
 
 	public static Audios LOBBY = new Audios("menu");
 	public static Audios NEW_GAME = new Audios("level");
+	public static Audios PONG = new Audios("pong");
+	public static Audios CAR = new Audios("car");
+	public static Audios SNAKE = new Audios("snake");
+	public static Audios TANK = new Audios("tank");
+	public static Audios PLACEINVADER = new Audios("place_invader");
+	public static Audios SPEEDRUN = new Audios("speedrun");
 	
 	private Clip clip;
-	public Audios(String name) {
+	
+	private static List<Audios> audios = new ArrayList<Audios>();
+
+	public Audios(final String name) {
 		try {
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource(PATH + name + ".wav"));
 			clip = AudioSystem.getClip();
@@ -30,37 +41,39 @@ public class Audios {
 	/*
 	 * Fonctions
 	 */
-	public void start(float volume, boolean loop) {
-		if (!clip.isRunning()) {
-			clip.start();
-			setVolume(volume);
-			if(loop)
-			clip.loop(Integer.MAX_VALUE);
-		}
+	public void start(final float volume, final boolean loop) {
+
+		setVolume(volume);
+		start(loop);
 	}
 	
-	public void start(float volume) {
-		start(volume, false);
+	public void start(final float volume) {
+		setVolume(volume);
+		start(false);
 	}
+
+	public void start(final boolean loop) {
 		
-	public void start(boolean loop) {
+		audios.add(this);
 		if (!clip.isRunning()) {
 			clip.start();
-			if(loop)
+			if (loop)
 				clip.loop(Integer.MAX_VALUE);
 		}
 	}
 	
-	public void start() {
-		start(false);
-	}
- 
 	public void stop() {
-		if(clip.isRunning())
+		if (clip.isRunning())
 			clip.stop();
 	}
+
+	public static void stopAll() {
+		for (Audios audio : audios) {
+			audio.stop();
+		}
+	}
 	
-	public void setVolume(float volume) {
+	public void setVolume(final float volume) {
 		if (volume < 0f || volume > 1f)
 			throw new IllegalArgumentException("Volume not valid: " + volume);
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
