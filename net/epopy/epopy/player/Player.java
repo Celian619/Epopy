@@ -112,7 +112,7 @@ public class Player {
 	}
 	
 	public void setSoundStatus(boolean sound) {
-		//config.setValue("sound", String.valueOf(sound));
+		config.setValue("sound", String.valueOf(sound));
 		this.sound = sound;
 	}
 	
