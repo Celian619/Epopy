@@ -68,6 +68,10 @@ public class GameMenu extends AbstractGameMenu {
 			showOptions = false;
 		}
 
+		/*
+		 * sound
+		 */
+		
 		sound.update(10, 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 65, 65);
 
 		if(!Main.getPlayer().getSound()) {

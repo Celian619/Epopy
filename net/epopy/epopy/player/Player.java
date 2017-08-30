@@ -19,13 +19,12 @@ public class Player {
 	
 	// config du joueur
 	private Config config;
+	private boolean sound = true;
 	
 	// key data
 	private int level;
 	private int lastGameID = 0;
 	private String name;
-	
-	private boolean sound = true;
 	
 	// stats games
 	private MarioStats marioStats;
