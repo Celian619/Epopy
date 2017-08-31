@@ -44,12 +44,33 @@ public class GameMenu extends AbstractGameMenu {
 	public void onEnable() {
 
 	}
-
+	private float i = 0;
+	boolean soundCrescendo;
 	@Override
 	public void update() {
-		if(!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) 
-			Audios.LOBBY.setVolume(0.4f).start(true);
-
+		if(!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) {
+			Audios.LOBBY.setVolume(0.1f).start(true);
+			soundCrescendo = true;
+			i= 0;
+		}
+		
+		if(soundCrescendo) {
+			if(i == 10)
+				Audios.LOBBY.setVolume(0.15f);
+			else if(i == 20)
+				Audios.LOBBY.setVolume(0.2f);
+			else if(i == 40)
+				Audios.LOBBY.setVolume(0.25f);
+			else if(i == 80)
+				Audios.LOBBY.setVolume(0.3f);
+			else if(i == 100)
+				Audios.LOBBY.setVolume(0.35f);
+			else if(i == 120) {
+				Audios.LOBBY.setVolume(0.4f);
+				soundCrescendo = false;
+			}
+			i++;
+		}
 		if (showStats) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 
@@ -78,7 +99,7 @@ public class GameMenu extends AbstractGameMenu {
 				Audios.updateAllVolume();
 			} 
 		}
-		
+
 		if(sound_plus.isClicked()) {
 			if(Audios.VOLUME_VALUE < 10) {
 				Audios.VOLUME_VALUE+=1;
