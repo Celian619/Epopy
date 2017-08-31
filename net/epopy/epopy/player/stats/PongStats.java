@@ -51,7 +51,7 @@ public class PongStats {
 	}
 	
 	public long getObjectif() {
-		return 1000 * 1;// 1 min// 1000 * 60 + 1000*15;
+		return 1000 * 60 + 1000*15;//1 minute 15
 	}
 
 	public String getObjectifString() {
