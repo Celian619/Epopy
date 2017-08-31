@@ -161,6 +161,7 @@ public class TankGame extends AbstractGameMenu {
 
 	@Override
 	public void update() {
+		Timer.tick();
 		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -188,8 +189,10 @@ public class TankGame extends AbstractGameMenu {
 			}
 		}
 
-		if (pauseScreen || !pause.isFinish() || gameOver || win)
+		if (pauseScreen || !pause.isFinish() || gameOver || win) {
+			timer.pause();
 			return;
+		}
 
 		if (timer == null)
 			timer = new Timer();
@@ -277,7 +280,6 @@ public class TankGame extends AbstractGameMenu {
 		}
 
 		playRobot();
-		Timer.tick();
 	}
 
 	@Override

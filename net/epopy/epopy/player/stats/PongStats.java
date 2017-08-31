@@ -1,7 +1,6 @@
 package net.epopy.epopy.player.stats;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import net.epopy.epopy.utils.Config;
 
@@ -28,9 +27,23 @@ public class PongStats {
 	}
 	
 	public void addTemps(long start) {
-		long l = Calendar.getInstance().getTimeInMillis() - start;
-		tempsLong += l;
+		tempsLong += start * 1000;
 		config.setValue("pong_temps", String.valueOf(tempsLong));
+	}
+	
+	public long getRecord() {
+		return record;
+	}
+	
+	public String getRecordString() {
+		if (record <= 0)
+			return "00:00:00";
+		return timeFormat.format(record - 3600000);
+	}
+	
+	public void setRecord(long time) {
+		record = time * 1000;
+		config.setValue("pong_record", String.valueOf(record));
 	}
 	
 	public long getTempsLong() {
@@ -38,7 +51,7 @@ public class PongStats {
 	}
 	
 	public long getObjectif() {
-		return 1000 * 60 + 1000*15;// 1 min
+		return 1000 * 1;// 1 min// 1000 * 60 + 1000*15;
 	}
 
 	public String getObjectifString() {
@@ -54,18 +67,4 @@ public class PongStats {
 		config.setValue("pong_parties", String.valueOf(parties));
 	}
 	
-	public long getRecord() {
-		return record;
-	}
-	
-	public String getRecordString() {
-		if (record <= 0)
-			return "00:00:00";
-		return timeFormat.format(record - 3600000);
-	}
-	
-	public void setRecord(long time) {
-		record = time;
-		config.setValue("pong_record", String.valueOf(record));
-	}
 }

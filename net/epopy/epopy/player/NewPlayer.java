@@ -50,7 +50,7 @@ public class NewPlayer {
 			/*
 			 * Pong
 			 */
-			write(w, "pong_record=" + -3600000 * 25);
+			write(w, "pong_record=" + 0);
 			write(w, "pong_parties=" + 0);
 			write(w, "pong_temps=" + 0);
 
