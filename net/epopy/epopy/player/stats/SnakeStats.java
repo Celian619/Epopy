@@ -1,7 +1,6 @@
 package net.epopy.epopy.player.stats;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import net.epopy.epopy.utils.Config;
 
@@ -24,17 +23,11 @@ public class SnakeStats {
 	public String getTemps() {
 		if (tempsLong <= 0)
 			return "00:00:00";
-	/**	timeFormat = new SimpleDateFormat("HH'h ' m'min' s'sec'");
-		String time = timeFormat.format(tempsLong - 3600000);
-		if(time.contains("00h")) time = time.replace("00h", "");
-		if(time.contains("00min")) time = time.replace("00min", "");
-		if(time.contains("00sec")) time = time.replace("00sec", "");*/
 		return timeFormat.format(tempsLong - 3600000);
 	}
 
 	public void addTemps(long start) {
-		long l = Calendar.getInstance().getTimeInMillis() - start;
-		tempsLong += l;
+		tempsLong += start * 1000;
 		config.setValue("snake_temps", String.valueOf(tempsLong));
 	}
 

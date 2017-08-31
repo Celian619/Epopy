@@ -80,7 +80,7 @@ public class PongGame extends AbstractGameMenu {
 	private boolean pauseScreen;
 	private boolean paused = true;
 
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public void update() {
 		Timer.tick();
