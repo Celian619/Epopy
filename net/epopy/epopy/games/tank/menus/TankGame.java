@@ -257,7 +257,7 @@ public class TankGame extends AbstractGameMenu {
 		// tir
 		if (Input.isButtonDown(0)) {
 			if (!tir && damaged == 0) {
-				balles.add(new Balle(locPlayer.clone(), true));
+				balles.add(new Balle(locPlayer.clone(), true, false));
 				
 				if (balles.size() - robotBallesNbr >= maxBalles) {// tir alors qu'il y a trop de balles
 					for (int i = 0; i < balles.size(); i++) {
@@ -459,6 +459,9 @@ public class TankGame extends AbstractGameMenu {
 					recul++;
 				rotationSpeed = 5;
 			} else {
+				
+				if (rebondKill()) shootRobot();
+				
 				if (recul > -10) recul--;
 			}
 			
@@ -504,12 +507,21 @@ public class TankGame extends AbstractGameMenu {
 		
 	}
 	
+	private boolean rebondKill() {
+
+		Balle b = new Balle(locRobot.clone(), false, true);
+		while (!b.isTestFinish)
+			b.refreshPos();
+
+		return b.testResult;
+	}
+	
 	private void shootRobot() {
 		if (cooldownRobot <= 0) {
 			
 			if (robotBallesNbr < maxBalles) {// tir alors qu'il y a trop de balles
 				robotBallesNbr++;
-				balles.add(new Balle(locRobot.clone(), false));
+				balles.add(new Balle(locRobot.clone(), false, false));
 				cooldownRobot = 25;
 			}
 			
@@ -620,12 +632,20 @@ public class TankGame extends AbstractGameMenu {
 		private static final int speedBall = 8;
 		private final Location loc;
 		private final boolean playerOwn;
+
+		private final boolean testBalle;
+		private boolean isTestFinish;
+		private boolean testResult;
 		private int rebonds = 0;
 		
-		public Balle(final Location location, final boolean playerOwn) {
+		public Balle(final Location location, final boolean playerOwn, final boolean isTest) {
 			loc = location;
 			this.playerOwn = playerOwn;
-			
+			testBalle = isTest;
+			if (isTest) {
+				isTestFinish = false;
+				testResult = false;
+			}
 		}
 		
 		public Location getLocation() {
@@ -669,17 +689,38 @@ public class TankGame extends AbstractGameMenu {
 					
 			} else {
 				if (loc.distance(locPlayer) < tankSize) {
+					if (testBalle) {
+						isTestFinish = true;
+						testResult = true;
+						return;
+					}
+					
 					gameOver = true;
 				} else if (loc.distance(locRobot) < tankSize && rebonds > 0) {
+					
+					if (testBalle) {
+						isTestFinish = true;
+						testResult = false;
+						return;
+					}
+					
 					balles.remove(this);
 					robotBallesNbr--;
 				} else if (rebonds > maxRebonds) {
+					
+					if (testBalle) {
+						isTestFinish = true;
+						testResult = false;
+						
+						return;
+					}
+					
 					balles.remove(this);
 					robotBallesNbr--;
 				}
 			}
 			
-			if (balles.contains(this) && balles.size() > 1) {// pas encore supprimé
+			if (balles.contains(this) && balles.size() > 1 && !testBalle) {// pas encore supprimé
 				for (int i = balles.size() - 1; i >= 0; i--) {
 					Balle b = balles.get(i);
 					if (b != this) {
