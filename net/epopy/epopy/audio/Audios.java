@@ -13,7 +13,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Audios {
 
+	//le volume du joueur
+	public static int VOLUME_VALUE = 5; //min 1 : max 10
+
 	private static String PATH = "/net/epopy/epopy/audio/res/";
+	private static List<Audios> audios = new ArrayList<Audios>(10);
 
 	public static Audios LOBBY = new Audios("menu");
 	public static Audios NEW_GAME = new Audios("level");
@@ -26,8 +30,8 @@ public class Audios {
 	public static Audios DECO = new Audios("deco");
 
 	private Clip clip;
-
-	private static List<Audios> audios = new ArrayList<Audios>(10);
+	private float volume;
+	private float vec = 110 - VOLUME_VALUE * 10;// 0 < plus c'est fort
 
 	public Audios(final String name) {
 		try {
@@ -43,14 +47,15 @@ public class Audios {
 	 * Fonctions
 	 */
 
-	public void start(final boolean loop) {
+	public Audios start(final boolean loop) {
 		if (!clip.isRunning()) {
 			clip.start();
 			if (loop)
 				clip.loop(Integer.MAX_VALUE);
-				
+
 			audios.add(this);
 		}
+		return this;
 	}
 
 	public void stop() {
@@ -66,14 +71,53 @@ public class Audios {
 		audios.clear();
 	}
 
-	public static void changeVolume(final float volume) {
+	/*
+	 * Fonction pour update le volume du clip quand le joueur changer son master volume
+	 */
+	public void updateVolume() {
+		vec = 110 - VOLUME_VALUE * 10;
+		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl.setValue((vec * (float) Math.log10(volume)));
+	}
+
+	/*
+	 * Fonction pour changer le volume default
+	 */
+	public Audios setVolume(float volume) {
+		this.volume = volume;
+		updateVolume();
+		return this;
+	}
+
+	public float getVolume() {
+		return (float) Math.pow(10f, ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).getValue() / vec);
+	}
+
+	public Clip getClip() {
+		return clip;
+	}
+
+	/**
+	 * Fonction pour recalculer tous les volumes quand le joueur changer de volume
+	 * 
+	 * @param 
+	 */
+	public static void updateAllVolume() {
+		for (Audios audio : audios) 
+			audio.updateVolume();
+	}
+
+	/**
+	 * Pour set le volumes de tous les clips
+	 * 
+	 * @param volume
+	 */
+	public static void setVolumeAll(final float volume) {
 		for (Audios audio : audios) {
 			if (volume < 0f || volume > 1f)
 				throw new IllegalArgumentException("Volume not valid: " + volume);
 			FloatControl gainControl = (FloatControl) audio.clip.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(volume);
-			
 		}
 	}
-	
 }

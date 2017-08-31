@@ -50,11 +50,8 @@ public class SnakeGame extends AbstractGameMenu {
 	
 	@Override
 	public void onEnable() {
-
-		if (Main.getPlayer().hasSound()) {
-			Audios.changeVolume(0.02f);
-			Audios.SNAKE.start(true);
-		}
+		if (Main.getPlayer().hasSound()) 
+			Audios.SNAKE.setVolume(0.2f).start(true);
 
 		addStats = false;
 		startGame = 0;

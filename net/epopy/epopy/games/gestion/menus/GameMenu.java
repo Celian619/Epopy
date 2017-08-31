@@ -22,14 +22,17 @@ public class GameMenu extends AbstractGameMenu {
 
 	private String name = null;
 	private AbstractGame game;
-	private ButtonGui retour;
-	private ButtonGui gauche;
-	private ButtonGui droite;
-	private ButtonGui jouer;
-	private ButtonGui stats;
-	private ButtonGui options;
-	private ButtonGui quitterMenu;
-	private ButtonGui sound;
+	private static ButtonGui retour = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);;
+	private static ButtonGui gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
+	private static ButtonGui droite = new ButtonGui(Textures.GAME_MENU_DROITE_OFF, Textures.GAME_MENU_DROITE_ON);;
+	private static ButtonGui jouer =  new ButtonGui("Jouer", new float[] { 0, 0.7f, 0, 1 }, 50, false);
+	private static ButtonGui stats = new ButtonGui("Stats", new float[] { 1, 1, 1, 1 }, 30, false);
+	private static ButtonGui options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
+	private static ButtonGui quitterMenu = new ButtonGui(Textures.GAME_MENU_QUITTER_OFF, Textures.GAME_MENU_QUITTER_ON);
+	private static ButtonGui sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
+
+	private static ButtonGui sound_moins = new ButtonGui("-", new float[] { 1, 1, 1, 1 }, 30, false);
+	private static ButtonGui sound_plus = new ButtonGui("+", new float[] { 1, 1, 1, 1 }, 30, false);
 
 	private boolean showStats = false;
 	private boolean showOptions = false;
@@ -39,20 +42,13 @@ public class GameMenu extends AbstractGameMenu {
 
 	@Override
 	public void onEnable() {
-		retour = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
-		quitterMenu = new ButtonGui(Textures.GAME_MENU_QUITTER_OFF, Textures.GAME_MENU_QUITTER_ON);
-		gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
-		droite = new ButtonGui(Textures.GAME_MENU_DROITE_OFF, Textures.GAME_MENU_DROITE_ON);
-		jouer = new ButtonGui("Jouer", new float[] { 0, 0.7f, 0, 1 }, 50, false);
-		stats = new ButtonGui("Stats", new float[] { 1, 1, 1, 1 }, 30, false);
-		options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
-		sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
-		if (Main.getPlayer().hasSound())
-			Audios.LOBBY.start(true);
+
 	}
 
 	@Override
 	public void update() {
+		if(!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) 
+			Audios.LOBBY.setVolume(0.5f).start(true);
 
 		if (showStats) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
@@ -71,8 +67,24 @@ public class GameMenu extends AbstractGameMenu {
 		/*
 		 * sound
 		 */
-		
+
 		sound.update(10, 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 65, 65);
+		sound_moins.update(80, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+		sound_plus.update(123, 21, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+
+		if(sound_moins.isClicked()) {
+			if(Audios.VOLUME_VALUE  > 1) {
+				Audios.VOLUME_VALUE-=1;
+				Audios.updateAllVolume();
+			} 
+		}
+		
+		if(sound_plus.isClicked()) {
+			if(Audios.VOLUME_VALUE < 10) {
+				Audios.VOLUME_VALUE+=1;
+				Audios.updateAllVolume();
+			}
+		}
 
 		if (!Main.getPlayer().hasSound()) {
 			sound.textureOff = Textures.MENU_SOUND_OFF;
@@ -194,8 +206,12 @@ public class GameMenu extends AbstractGameMenu {
 
 		Textures.GAME_MENU_BG.renderBackground();
 
-		if (sound != null)
+		if (sound != null) {
 			sound.render();
+			sound_moins.render();
+			sound_plus.render();
+			ComponentsHelper.drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
+		}
 
 		if (showStats) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();

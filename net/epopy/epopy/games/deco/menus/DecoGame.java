@@ -27,11 +27,8 @@ public class DecoGame extends AbstractGameMenu {
 
 	@Override
 	public void onEnable() {
-
-		if (Main.getPlayer().hasSound()) {
-			Audios.changeVolume(0.02f);
-			Audios.DECO.start(true);
-		}
+		if (Main.getPlayer().hasSound()) 
+			Audios.DECO.setVolume(0.2f).start(true);
 
 		right = false;
 		left = false;
@@ -43,11 +40,11 @@ public class DecoGame extends AbstractGameMenu {
 	public void update() {
 		Random r = new Random();
 		if (prises.size() < 5 && getNearestPos() > 200 + r.nextInt(100)) {
-			
+
 			prises.add(new Prise(0, r.nextInt(3), r.nextBoolean()));
-			
+
 		}
-		
+
 		if (Input.isKeyDown(Keyboard.KEY_RIGHT)) {
 			if (voiePlayer < 2 && !right) {
 
@@ -59,7 +56,7 @@ public class DecoGame extends AbstractGameMenu {
 		} else if (right) {
 			right = false;
 		}
-		
+
 		if (Input.isKeyDown(Keyboard.KEY_LEFT)) {
 			if (voiePlayer > 0 && !left) {
 
@@ -95,7 +92,7 @@ public class DecoGame extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-		
+
 		Textures.GAME_DECO_LEVEL_BG.renderBackground();
 		float[] color = new float[] { 0, 1f, 0, 1 };
 		for (Prise p : prises) {
@@ -103,17 +100,17 @@ public class DecoGame extends AbstractGameMenu {
 				ComponentsHelper.drawText("1", defaultWidth / 2 + 300 * (p.voie - 1), p.position, PositionWidth.MILIEU, PositionHeight.MILIEU, 60, color);
 			else
 				ComponentsHelper.drawText("0", defaultWidth / 2 + 300 * (p.voie - 1), p.position, PositionWidth.MILIEU, PositionHeight.MILIEU, 60, color);
-				
+
 		}
-		
+
 		ComponentsHelper.drawText("_", defaultWidth / 2 + 300 * (voiePlayer - 1), defaultHeight - 280, PositionWidth.MILIEU, PositionHeight.MILIEU, 200, color);
 
 		ComponentsHelper.drawText("Score : " + score, 10, 10, 40);
-		
+
 		if (gameOver) {
 			ComponentsHelper.drawText("GAME OVER", defaultWidth - 200, 0, 40);
 		}
-		
+
 	}
 
 	/*
@@ -131,15 +128,15 @@ public class DecoGame extends AbstractGameMenu {
 		for (Prise p : prises) {
 			if (p.position < i) i = p.position;
 		}
-		
+
 		return i;
 	}
-	
+
 	class Prise {
 		private final boolean good;
 		private final int voie;
 		private double position;
-		
+
 		public Prise(final int position, final int voie, final boolean good) {
 			this.position = position;
 			this.voie = voie;
@@ -147,5 +144,5 @@ public class DecoGame extends AbstractGameMenu {
 		}
 
 	}
-	
+
 }

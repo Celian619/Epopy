@@ -90,8 +90,6 @@ public abstract class AbstractGameMenu {
 
 		if (quitterButton.isClicked()) {
 			Audios.stopAll();
-			Audios.changeVolume(0.05f);
-			Audios.LOBBY.start(true);
 			Main.getGameManager().getGameEnable().setStatus(GameStatus.MENU_CHOOSE_GAMES);
 		}
 	}

@@ -59,11 +59,8 @@ public class PongGame extends AbstractGameMenu {
 	
 	@Override
 	public void onEnable() {
-		
-		if (Main.getPlayer().hasSound()) {
-			Audios.changeVolume(0.02f);
-			Audios.PONG.start(true);
-		}
+		if (Main.getPlayer().hasSound()) 
+			Audios.PONG.setVolume(0.2f).start(true);
 		
 		timeRependre = "??";
 		speedBall = 8;

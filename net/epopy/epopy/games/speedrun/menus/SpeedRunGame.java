@@ -39,22 +39,18 @@ public class SpeedRunGame extends AbstractGameMenu {
 		level = 12;
 		playerSneak = 0;
 		score = 0;
+		if (Main.getPlayer().hasSound()) 
+			Audios.SPEEDRUN.setVolume(0.2f).start(true);
 	}
 
 	@Override
 	public void update() {
-
-		if (Main.getPlayer().hasSound()) {
-			Audios.changeVolume(0.02f);
-			Audios.SPEEDRUN.start(true);
-		}
-
 		level += 0.005;
 		if (Input.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			sneak = true;
 		} else {
 			if (sneak) sneak = false;
-			
+
 			if (Input.isKeyDown(Keyboard.KEY_SPACE)) {
 				if (height == 1) {// au sol
 					height += 5;
@@ -71,19 +67,19 @@ public class SpeedRunGame extends AbstractGameMenu {
 		} else {
 			height = 1;
 		}
-		
+
 		decors -= level / 4;
 		if (decors < 0) decors += 1920;
-		
+
 		playerWalk++;
 		if (playerWalk > 80) playerWalk = 9;
-		
+
 		playerSneak++;
 		if (playerSneak > 10) playerSneak = 0;
-		
+
 		for (int i = robots.size() - 1; i >= 0; i--) {
 			Robot r = robots.get(i);
-			
+
 			if (r.x > 0 && r.x < 130) {
 				if (r.normalORsneakORlampadaire == 0) {
 					if (!sneak) {
@@ -105,13 +101,13 @@ public class SpeedRunGame extends AbstractGameMenu {
 			}
 			r.move();
 		}
-		
+
 		if (newRobot > 0) newRobot--;
 		else {
 			robots.add(new Robot());
 			newRobot = defaultWidth / (int) level;
 		}
-		
+
 	}
 
 	@Override
@@ -119,7 +115,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 
 		ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_BG, decors, 0, 1920, 1080);
 		ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_BG, decors - 1920, 0, 1920, 1080);
-		
+
 		for (Robot r : robots) {
 
 			if (r.normalORsneakORlampadaire == 2) {// lampadaire
@@ -133,71 +129,71 @@ public class SpeedRunGame extends AbstractGameMenu {
 			} else {// normal
 				Textures robotTexture;
 				switch (r.walk / 10) {
-					case 2:
+				case 2:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN2;
-						break;
-					case 3:
+					break;
+				case 3:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN3;
-						break;
-					case 4:
+					break;
+				case 4:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN4;
-						break;
-					case 5:
+					break;
+				case 5:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN5;
-						break;
-					case 6:
+					break;
+				case 6:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN6;
-						break;
-					case 7:
+					break;
+				case 7:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN7;
-						break;
-					case 8:
+					break;
+				case 8:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN8;
-						break;
-					default:
+					break;
+				default:
 					robotTexture = Textures.GAME_SPEEDRUN_OTHERMEN1;
-						break;
+					break;
 				}
 				ComponentsHelper.renderTexture(robotTexture, r.x, defaultHeight / 2 - 180, 200, 300);
 			}
 
 		}
-		
+
 		if (sneak) {
 			if ((playerWalk - 5) / 10 == playerWalk / 10)// l'unité n'est pas 1/2/3/4/5
 				ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_MANSOL1, 50, defaultHeight / 2 + 62, 140, 60);
 			else ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_MANSOL2, 50, defaultHeight / 2 + 62, 140, 60);
-			
+
 		} else {
 			Textures playerTexture;
 			switch (playerWalk / 10) {
-				case 2:
+			case 2:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN2;
-					break;
-				case 3:
+				break;
+			case 3:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN3;
-					break;
-				case 4:
+				break;
+			case 4:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN4;
-					break;
-				case 5:
+				break;
+			case 5:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN5;
-					break;
-				case 6:
+				break;
+			case 6:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN6;
-					break;
-				case 7:
+				break;
+			case 7:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN7;
-					break;
-				case 8:
+				break;
+			case 8:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN8;
-					break;
-				default:
+				break;
+			default:
 				playerTexture = Textures.GAME_SPEEDRUN_MAN1;
-					break;
+				break;
 			}
 			ComponentsHelper.renderTexture(playerTexture, 50, defaultHeight / 2 - 27 - height, 100, 150);
-			
+
 		}
 
 	}
@@ -223,12 +219,12 @@ public class SpeedRunGame extends AbstractGameMenu {
 				robots.remove(this);
 				score++;
 			}
-			
+
 			walk++;
 			if (walk > 80) walk = 9;
 
 		}
-		
+
 	}
 
 }

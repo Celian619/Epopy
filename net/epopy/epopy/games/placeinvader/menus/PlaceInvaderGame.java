@@ -43,11 +43,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	
 	@Override
 	public void onEnable() {
-
-		if (Main.getPlayer().hasSound()) {
-			Audios.changeVolume(0.02f);
-			Audios.PLACEINVADER.start(true);
-		}
+		if (Main.getPlayer().hasSound()) 
+			Audios.PLACEINVADER.setVolume(0.2f).start(true);
 
 		gameOver = false;
 		shooted = 0;
