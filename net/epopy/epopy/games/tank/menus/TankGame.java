@@ -16,11 +16,13 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Timer;
 
 import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
+import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.TankStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
@@ -45,19 +47,21 @@ public class TankGame extends AbstractGameMenu {
 	private int print;
 	private int[] distanceBlocks;
 	
-	private boolean tir;
-	private int damage;
-	private boolean win;
-	private boolean stats;
 	private static Timer timer;
-	private boolean record;
 
+	private double speedRobot;
+	
 	private int cooldownRobot;
 	private int robotBallesNbr;
 	private int directionMax;
-	private double speedRobot;
 	private int recul;
 	private int damaged;
+	private int damage;
+
+	private boolean tir;
+	private boolean win;
+	private boolean stats;
+	private boolean record;
 	
 	/*
 	 *
@@ -67,6 +71,12 @@ public class TankGame extends AbstractGameMenu {
 	 */
 	@Override
 	public void onEnable() {
+		
+		if (Main.getPlayer().hasSound()) {
+			Audios.changeVolume(0.02f);
+			Audios.TANK.start(true);
+		}
+		
 		damaged = 0;
 		cooldownRobot = 25;
 		robotBallesNbr = 0;
@@ -375,10 +385,9 @@ public class TankGame extends AbstractGameMenu {
 					record = true;
 				}
 				
-				/**
-				 * TODO FIN du jeu, quand il y aura des autres jeux; if (tankStats.getRecord() <= tankStats.getObjectif()) { if
-				 * (Main.getPlayer().getLevel() <= GameList.TANK.getID()) Main.getPlayer().setLevel(GameList.TANK.getID() + 1); }
-				 */
+				if (tankStats.getRecord() >= tankStats.getObjectif())
+					if (Main.getPlayer().getLevel() <= GameList.TANK.getID()) Main.getPlayer().setLevel(GameList.TANK.getID() + 1);
+
 				tankStats.addPartie();
 				tankStats.addTemps((long) timer.getTime());
 			}

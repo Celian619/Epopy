@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
@@ -13,7 +15,7 @@ import net.epopy.epopy.utils.Input;
 
 public class SpeedRunGame extends AbstractGameMenu {
 	private static final int menSize = 100;
-	
+
 	int decors;
 	int playerWalk;
 	int playerSneak;
@@ -25,7 +27,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 	boolean sneak;
 	List<Robot> robots = new ArrayList<Robot>();
 	List<Integer> lampadairesX = new ArrayList<Integer>();
-	
+
 	@Override
 	public void onEnable() {
 		sneak = false;
@@ -38,16 +40,21 @@ public class SpeedRunGame extends AbstractGameMenu {
 		playerSneak = 0;
 		score = 0;
 	}
-	
+
 	@Override
 	public void update() {
-		
+
+		if (Main.getPlayer().hasSound()) {
+			Audios.changeVolume(0.02f);
+			Audios.SPEEDRUN.start(true);
+		}
+
 		level += 0.005;
 		if (Input.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			sneak = true;
 		} else {
 			if (sneak) sneak = false;
-
+			
 			if (Input.isKeyDown(Keyboard.KEY_SPACE)) {
 				if (height == 1) {// au sol
 					height += 5;
@@ -55,7 +62,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 				} else {
 					propulsion++;
 				}
-				
+
 			}
 		}
 		if (height > 1) {
@@ -64,19 +71,19 @@ public class SpeedRunGame extends AbstractGameMenu {
 		} else {
 			height = 1;
 		}
-
+		
 		decors -= level / 4;
 		if (decors < 0) decors += 1920;
-
+		
 		playerWalk++;
 		if (playerWalk > 80) playerWalk = 9;
-
+		
 		playerSneak++;
 		if (playerSneak > 10) playerSneak = 0;
-
+		
 		for (int i = robots.size() - 1; i >= 0; i--) {
 			Robot r = robots.get(i);
-
+			
 			if (r.x > 0 && r.x < 130) {
 				if (r.normalORsneakORlampadaire == 0) {
 					if (!sneak) {
@@ -94,35 +101,35 @@ public class SpeedRunGame extends AbstractGameMenu {
 						System.out.println("GameOver");
 					}
 				}
-				
+
 			}
 			r.move();
 		}
-
+		
 		if (newRobot > 0) newRobot--;
 		else {
 			robots.add(new Robot());
 			newRobot = defaultWidth / (int) level;
 		}
-
+		
 	}
-	
+
 	@Override
 	public void render() {
-		
+
 		ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_BG, decors, 0, 1920, 1080);
 		ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_BG, decors - 1920, 0, 1920, 1080);
-
+		
 		for (Robot r : robots) {
-			
+
 			if (r.normalORsneakORlampadaire == 2) {// lampadaire
 				ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_LAMPADAIRE, r.x, defaultHeight / 2 - 180, 100, 300);
 			} else if (r.normalORsneakORlampadaire == 1) {// sneak
-				
+
 				if ((r.walk - 5) / 10 == r.walk / 10)// l'unité n'est pas 1/2/3/4/5
 					ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_OTHERMENSOL1, r.x, defaultHeight / 2 + 62, 140, 60);
 				else ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_OTHERMENSOL2, r.x, defaultHeight / 2 + 62, 140, 60);
-				
+
 			} else {// normal
 				Textures robotTexture;
 				switch (r.walk / 10) {
@@ -153,14 +160,14 @@ public class SpeedRunGame extends AbstractGameMenu {
 				}
 				ComponentsHelper.renderTexture(robotTexture, r.x, defaultHeight / 2 - 180, 200, 300);
 			}
-			
-		}
 
+		}
+		
 		if (sneak) {
 			if ((playerWalk - 5) / 10 == playerWalk / 10)// l'unité n'est pas 1/2/3/4/5
 				ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_MANSOL1, 50, defaultHeight / 2 + 62, 140, 60);
 			else ComponentsHelper.renderTexture(Textures.GAME_SPEEDRUN_MANSOL2, 50, defaultHeight / 2 + 62, 140, 60);
-
+			
 		} else {
 			Textures playerTexture;
 			switch (playerWalk / 10) {
@@ -190,18 +197,18 @@ public class SpeedRunGame extends AbstractGameMenu {
 					break;
 			}
 			ComponentsHelper.renderTexture(playerTexture, 50, defaultHeight / 2 - 27 - height, 100, 150);
-
+			
 		}
-		
+
 	}
-	
+
 	class Robot {
-		
+
 		int x;
 		int speed;
 		int walk;
 		int normalORsneakORlampadaire;
-		
+
 		public Robot() {
 			x = defaultWidth;
 			Random r = new Random();
@@ -209,19 +216,19 @@ public class SpeedRunGame extends AbstractGameMenu {
 			speed = (int) level / 2;
 			walk = r.nextInt(79) + 1;
 		}
-		
+
 		public void move() {
 			x -= speed;
 			if (x < -menSize) {
 				robots.remove(this);
 				score++;
 			}
-
+			
 			walk++;
 			if (walk > 80) walk = 9;
-			
-		}
 
+		}
+		
 	}
-	
+
 }

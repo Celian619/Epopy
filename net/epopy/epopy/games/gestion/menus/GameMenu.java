@@ -26,10 +26,10 @@ public class GameMenu extends AbstractGameMenu {
 	private ButtonGui gauche;
 	private ButtonGui droite;
 	private ButtonGui jouer;
-	private ButtonGui user;
 	private ButtonGui stats;
 	private ButtonGui options;
 	private ButtonGui quitterMenu;
+	private ButtonGui sound;
 
 	private boolean showStats = false;
 	private boolean showOptions = false;
@@ -46,12 +46,14 @@ public class GameMenu extends AbstractGameMenu {
 		jouer = new ButtonGui("Jouer", new float[] { 0, 0.7f, 0, 1 }, 50, false);
 		stats = new ButtonGui("Stats", new float[] { 1, 1, 1, 1 }, 30, false);
 		options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
-		user = new ButtonGui(Textures.GAME_MENU_USER_OFF, Textures.GAME_MENU_USER_ON);
+		sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
+		if (Main.getPlayer().hasSound())
+			Audios.LOBBY.start(true);
 	}
 
 	@Override
 	public void update() {
-		
+
 		if (showStats) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 
@@ -66,6 +68,25 @@ public class GameMenu extends AbstractGameMenu {
 			showOptions = false;
 		}
 
+		/*
+		 * sound
+		 */
+		
+		sound.update(10, 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 65, 65);
+
+		if (!Main.getPlayer().hasSound()) {
+			sound.textureOff = Textures.MENU_SOUND_OFF;
+			sound.textureOn = Textures.MENU_SOUND_OFF;
+		} else {
+			sound.textureOff = Textures.MENU_SOUND_ON;
+			sound.textureOn = Textures.MENU_SOUND_ON;
+		}
+
+		if (sound.isClicked()) {
+			Main.getPlayer().setSoundStatus(!Main.getPlayer().hasSound());
+			sound.setClicked(false);
+		}
+
 		retour.update(AbstractGameMenu.defaultWidth - 17, 17, PositionWidth.DROITE, PositionHeight.HAUT, 50, 50);
 		droite.update(AbstractGameMenu.defaultWidth - 200, AbstractGameMenu.defaultHeight / 2, PositionWidth.DROITE, PositionHeight.MILIEU, 165, 148);
 		gauche.update(200, AbstractGameMenu.defaultHeight / 2, PositionWidth.GAUCHE, PositionHeight.MILIEU, 165, 148);
@@ -74,8 +95,6 @@ public class GameMenu extends AbstractGameMenu {
 
 		stats.update(1280, 980, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
 		options.update(1730, 730, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
-
-		user.update(15, 15, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, 50);
 
 		if (stats.isOn())
 			stats.setText(" Stats");
@@ -87,16 +106,14 @@ public class GameMenu extends AbstractGameMenu {
 		else
 			options.setText("Options");
 
-		if (stats.isClicked()&& !name.equals("? ? ? ?")) {
+		if (stats.isClicked() && !name.equals("? ? ? ?")) {
 			showStats = true;
 			showOptions = false;
 		}
-		if (options.isClicked()&& !name.equals("? ? ? ?")) {
+		if (options.isClicked() && !name.equals("? ? ? ?")) {
 			showStats = false;
 			showOptions = true;
 		}
-		if (user.isClicked())
-			Main.getGameManager().getGameEnable().setStatus(GameStatus.MENU_CHOOSE_USERS);
 
 		if (retour.isClicked())
 			new ChooseGameTypeMenu();
@@ -176,6 +193,10 @@ public class GameMenu extends AbstractGameMenu {
 		}
 
 		Textures.GAME_MENU_BG.renderBackground();
+
+		if (sound != null)
+			sound.render();
+
 		if (showStats) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
@@ -230,11 +251,11 @@ public class GameMenu extends AbstractGameMenu {
 				ComponentsHelper.renderTexture(game.getDefaultBackGround(), 483, 267, 958, 539);
 			}
 		}
-		if(name.equals("? ? ? ?") && showOptions || name.equals("? ? ? ?") && showStats) {
+		if (name.equals("? ? ? ?") && showOptions || name.equals("? ? ? ?") && showStats) {
 			showOptions = false;
 			showStats = false;
 		}
-		if(!name.equals("? ? ? ?")) {
+		if (!name.equals("? ? ? ?")) {
 			Textures.GAME_MENU_SCOTCH.renderBackground();
 			// Bas
 			ComponentsHelper.drawQuad(1297 + 18, 930 - 10, w1Jouer == 280 ? 287 : w1Jouer, 2);

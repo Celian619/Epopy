@@ -31,8 +31,8 @@ public class ButtonGui {
 	public int yy;
 	private int ww;
 	private int hh;
-	private Textures textureOff;
-	private Textures textureOn;
+	public Textures textureOff;
+	public Textures textureOn;
 	private boolean isOn = false;
 
 	public String text = null;

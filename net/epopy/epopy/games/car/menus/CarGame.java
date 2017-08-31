@@ -69,8 +69,12 @@ public class CarGame extends AbstractGameMenu {
 
 	@Override
 	public void onEnable() {
-		Audios.CAR.start(true);
 		
+		if (Main.getPlayer().hasSound()) {
+			Audios.changeVolume(0.02f);
+			Audios.CAR.start(true);
+		}
+
 		Mouse.setGrabbed(true);
 		pauseScreen = false;
 		addStats = false;
