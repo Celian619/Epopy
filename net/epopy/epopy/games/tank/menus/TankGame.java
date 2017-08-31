@@ -30,7 +30,7 @@ import net.epopy.epopy.utils.Location;
 public class TankGame extends AbstractGameMenu {
 
 	private static final int maxRebonds = 3;
-	
+
 	private static final int tankSize = 25;
 	private static final double speedTank = 2;
 	private static final int maxBalles = 5;
@@ -48,7 +48,7 @@ public class TankGame extends AbstractGameMenu {
 	private int[] distanceBlocks;
 
 	private static Timer timer;
-	
+
 	private double speedRobot;
 
 	private int cooldownRobot;
@@ -57,7 +57,7 @@ public class TankGame extends AbstractGameMenu {
 	private int recul;
 	private int damaged;
 	private int damage;
-	
+
 	private boolean tir;
 	private boolean win;
 	private boolean stats;
@@ -80,7 +80,7 @@ public class TankGame extends AbstractGameMenu {
 		directionMax = 0;
 		speedRobot = speedTank;
 		recul = -10;
-		
+
 		paused = true;
 		record = false;
 		stats = false;
@@ -91,7 +91,7 @@ public class TankGame extends AbstractGameMenu {
 		gameOver = false;
 		locPlayer = new Location(150, defaultHeight / 2, 0);
 		locRobot = new Location(1740, defaultHeight / 2, 180);
-		
+
 		tankPrintP = new LinkedList<Location>();
 		tankPrintR = new LinkedList<Location>();
 		balles = new LinkedList<Balle>();
@@ -106,10 +106,10 @@ public class TankGame extends AbstractGameMenu {
 			e.printStackTrace();
 		}
 		int width = img.getWidth();
-		
+
 		int nbrOfPixels = img.getHeight() * img.getWidth();
 		distanceBlocks = new int[nbrOfPixels];
-		
+
 		for (int x = 0; x < img.getWidth(); x++) {
 			for (int y = 0; y < img.getHeight(); y++) {
 				int argb = img.getRGB(x, y);
@@ -118,34 +118,35 @@ public class TankGame extends AbstractGameMenu {
 				}
 			}
 		}
-		
+
 		while (true) {
-			
+
 			int[] added = new int[nbrOfPixels];
-			
+
 			int modifs = 0;
 			for (int n = width; n < nbrOfPixels - width; n++) {
-				
+
 				if (distanceBlocks[n] == 0) {
 					int max1 = Math.max(distanceBlocks[n + 1], distanceBlocks[n - 1]);
 					int max2 = Math.max(distanceBlocks[n + width], distanceBlocks[n - width]);
 					int maxTotal = Math.max(max1, max2);
-					
+
 					if (maxTotal > 0) {
 						added[n] = maxTotal + 1;
 						modifs++;
 					}
-					
+
 				}
 			}
-			
+
 			for (int n = width; n < nbrOfPixels - width; n++) {
 				if (distanceBlocks[n] == 0)
 					distanceBlocks[n] = added[n];
 			}
-			
+
 			if (modifs == 0) break;
 			pause.startPause(5);
+			timer = new Timer();
 		}
 	}
 
@@ -190,18 +191,19 @@ public class TankGame extends AbstractGameMenu {
 		}
 
 		if (pauseScreen || !pause.isFinish() || gameOver || win) {
-			timer.pause();
+			if(timer != null)
+				timer.pause();
 			return;
 		}
 
 		if (timer == null)
 			timer = new Timer();
-			
+
 		if (paused) {
 			timer.resume();
 			paused = false;
 		}
-		
+
 		print++;
 		if (print >= 15) {
 
@@ -285,10 +287,10 @@ public class TankGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 		Textures.GAME_TANK_BG.renderBackground();
-		
+
 		if (!gameOver && !win && !pauseScreen)
 			ComponentsHelper.drawText("Score: " + damage, defaultWidth / 2, defaultHeight / 2 + 35, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.7f, 0.7f, 0.7f, 1f });
-			
+
 		// empreintes du tank
 		float f = 0.20f;
 		for (Location loc : tankPrintP) {
@@ -322,12 +324,12 @@ public class TankGame extends AbstractGameMenu {
 		// Affiche le Bot
 		Textures textureBot = tankAspectR <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
 		if (tankAspectR == 10) tankAspectR = 0;
-		
+
 		if (damaged > 0) {// a été touché
 			damaged--;
 			glColor4f(1f, 0f, 0f, 0.5f);
 		}
-		
+
 		ComponentsHelper.renderTexture(textureBot, locRobot.getX() - 26, locRobot.getY() - 24, 64, 56, locRobot.getDirection());
 
 		glColor4f(1, 1, 1, 1);
@@ -372,7 +374,7 @@ public class TankGame extends AbstractGameMenu {
 					tankStats.setRecord(damage);
 					record = true;
 				}
-				
+
 				if (tankStats.getRecord() >= tankStats.getObjectif())
 					if (Main.getPlayer().getLevel() <= GameList.TANK.getID()) Main.getPlayer().setLevel(GameList.TANK.getID() + 1);
 
@@ -493,11 +495,11 @@ public class TankGame extends AbstractGameMenu {
 	}
 
 	private boolean rebondKill() {
-		
+
 		Balle b = new Balle(locRobot.clone(), false, true);
 		while (!b.isTestFinish)
 			b.refreshPos();
-			
+
 		return b.testResult;
 	}
 
@@ -532,7 +534,7 @@ public class TankGame extends AbstractGameMenu {
 
 				Location locTo = locRobot.clone();
 				locTo.setDirection(direction);
-				
+
 				int dist = distanceBlocks[1920 * (int) deplacedY(locTo, speed) + (int) deplacedX(locTo, speed)];
 
 				if (dist > bestGood) {
@@ -617,7 +619,7 @@ public class TankGame extends AbstractGameMenu {
 		private static final int speedBall = 8;
 		private final Location loc;
 		private final boolean playerOwn;
-		
+
 		private final boolean testBalle;
 		private boolean isTestFinish;
 		private boolean testResult;
