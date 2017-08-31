@@ -116,7 +116,7 @@ public class Player {
 		if (!sound)
 			Audios.stopAll();
 		else
-			Audios.LOBBY.setVolume(0.5f).start(true);
+			Audios.LOBBY.setVolume(0.4f).start(true);
 		this.sound = sound;
 	}
 	
@@ -143,7 +143,7 @@ public class Player {
 	public void setLevel(final int level) {
 		if (this.level < level) {
 			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1f, 1, 1 }, false);
-			Audios.NEW_GAME.setVolume(0.4f).start(false);
+			Audios.NEW_GAME.setVolume(0.5f).start(false);
 		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));

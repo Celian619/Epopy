@@ -48,7 +48,7 @@ public class GameMenu extends AbstractGameMenu {
 	@Override
 	public void update() {
 		if(!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) 
-			Audios.LOBBY.setVolume(0.5f).start(true);
+			Audios.LOBBY.setVolume(0.4f).start(true);
 
 		if (showStats) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
