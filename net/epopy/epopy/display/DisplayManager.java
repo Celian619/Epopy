@@ -42,11 +42,8 @@ public class DisplayManager {
 				Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
 				Display.setFullscreen(true);
 			}
+			
 			Display.setTitle(title);
-			Display.create();
-
-			Display.setVSyncEnabled(true);
-			Display.setResizable(true);
 			
 			String path = "/net/epopy/epopy/display/res/main/";
 			Display.setIcon(new ByteBuffer[] {
@@ -54,6 +51,12 @@ public class DisplayManager {
 					getByteBuffer(getClass().getResource(path + "logo32.png")),
 					getByteBuffer(getClass().getResource(path + "logo32.png")),
 			});
+			
+			Display.create();
+
+			Display.setVSyncEnabled(true);
+			Display.setResizable(true);
+		
 			
 		} catch (LWJGLException e) {
 			e.printStackTrace();
