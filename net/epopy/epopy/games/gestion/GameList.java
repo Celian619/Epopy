@@ -8,24 +8,26 @@ import net.epopy.epopy.games.pong.Pong;
 import net.epopy.epopy.games.snake.Snake;
 import net.epopy.epopy.games.speedrun.SpeedRun;
 import net.epopy.epopy.games.tank.Tank;
+import net.epopy.epopy.games.tetras.Tetras;
 
 public enum GameList {
-
+	
 	PONG(1, Pong.class),
 	CAR(2, Car.class),
 	SNAKE(3, Snake.class),
-	TANK(4, Tank.class),
-	PLACEINVADER(5, PlaceInvader.class),
-	SPEEDRUN(6, SpeedRun.class)
+	PLACEINVADER(4, PlaceInvader.class),
+	TANK(5, Tank.class),
+	TETRAS(6, Tetras.class),
+	SPEEDRUN(7, SpeedRun.class)
 	// EATMAN(5, Eatman.class),
 	// MARIO(6, Mario.class),
 	// si id > 1000, il n'est plus visible
-	//DECO(6, Deco.class),
+	// DECO(6, Deco.class),
 	;
-
+	
 	private int id;
 	private Class<?> clazz;
-	
+
 	/**
 	 *
 	 * Class qui regroupe tous les retros du jeu
@@ -39,11 +41,11 @@ public enum GameList {
 		this.id = id;
 		this.clazz = clazz;
 	}
-	
+
 	public int getID() {
 		return id;
 	}
-
+	
 	public AbstractGame getAbstractGame() {
 		try {
 			return (AbstractGame) clazz.getConstructor().newInstance();

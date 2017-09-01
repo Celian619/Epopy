@@ -94,6 +94,9 @@ public class Textures {
 	public static Textures GAME_TANK_TANK1 = load("games/tank/tank");
 	public static Textures GAME_TANK_TANK2 = load("games/tank/tank2");
 	public static Textures GAME_TANK_TANKPRINT = load("games/tank/tankPrint");
+	
+	// tetras
+	public static Textures GAME_TETRAS_BG = load("games/tetras/bg");
 
 	// snake
 	public static Textures GAME_SNAKE_BG = load("games/snake/bg");

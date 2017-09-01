@@ -28,7 +28,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	private static final int yPlayer = defaultHeight - 100;
 	private double xPlayer;
 	
-	private boolean playerShot = false;
+	private boolean playerShot;
 	private int level;
 	private int scoreLevel;
 	private int score;
@@ -43,9 +43,10 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	
 	@Override
 	public void onEnable() {
-		if (Main.getPlayer().hasSound()) 
+		if (Main.getPlayer().hasSound())
 			Audios.PLACEINVADER.setVolume(0.2f).start(true);
-
+			
+		playerShot = false;
 		gameOver = false;
 		shooted = 0;
 		scoreLevel = 0;
@@ -58,7 +59,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		locBalleR = new ArrayList<Location>();
 		
 		timer = new Timer();
-
+		
 		xPlayer = defaultWidth / 2;
 		
 		pause.startPause(5);

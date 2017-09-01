@@ -40,7 +40,7 @@ public class TankGame extends AbstractGameMenu {
 
 	private List<Location> tankPrintP;
 	private List<Location> tankPrintR;
-	private List<Balle> balles;
+	private List<Ball> balles;
 
 	private int tankAspectP;
 	private int tankAspectR;
@@ -94,7 +94,7 @@ public class TankGame extends AbstractGameMenu {
 
 		tankPrintP = new LinkedList<Location>();
 		tankPrintR = new LinkedList<Location>();
-		balles = new LinkedList<Balle>();
+		balles = new LinkedList<Ball>();
 		tir = false;
 		print = 0;
 		tankAspectR = 0;
@@ -259,11 +259,11 @@ public class TankGame extends AbstractGameMenu {
 		// tir
 		if (Input.isButtonDown(0)) {
 			if (!tir && damaged == 0) {
-				balles.add(new Balle(locPlayer.clone(), true, false));
+				balles.add(new Ball(locPlayer.clone(), true, false));
 
 				if (balles.size() - robotBallesNbr > maxBalles) {// tir alors qu'il y a trop de balles
 					for (int i = 0; i < balles.size(); i++) {
-						Balle b = balles.get(i);
+						Ball b = balles.get(i);
 						if (b.isPlayerBall()) {
 							balles.remove(b);
 							break;
@@ -308,7 +308,7 @@ public class TankGame extends AbstractGameMenu {
 
 		glColor4f(1, 1, 1, 1);
 
-		for (Balle b : balles) {
+		for (Ball b : balles) {
 			if (b.isPlayerBall())
 				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 0f, 0f, 1f, 1f });
 			else
@@ -392,10 +392,10 @@ public class TankGame extends AbstractGameMenu {
 
 	private void playRobot() {
 		Location nearBalleLoc = null;
-		for (Balle b : balles) {
+		for (Ball b : balles) {
 			Location locB = b.getLocation();
 			if (b.isPlayerBall() && locB.distance(locRobot) < 100) {
-				Location loc = new Location(deplacedX(locB, Balle.speedBall), deplacedX(locB, Balle.speedBall));
+				Location loc = new Location(deplacedX(locB, Ball.speedBall), deplacedX(locB, Ball.speedBall));
 				if (loc.distance(locRobot) < locB.distance(locRobot)) {
 					nearBalleLoc = b.getLocation();
 					break;
@@ -496,7 +496,7 @@ public class TankGame extends AbstractGameMenu {
 
 	private boolean rebondKill() {
 
-		Balle b = new Balle(locRobot.clone(), false, true);
+		Ball b = new Ball(locRobot.clone(), false, true);
 		while (!b.isTestFinish)
 			b.refreshPos();
 
@@ -508,7 +508,7 @@ public class TankGame extends AbstractGameMenu {
 
 			if (robotBallesNbr < maxBalles) {// tir alors qu'il y a trop de balles
 				robotBallesNbr++;
-				balles.add(new Balle(locRobot.clone(), false, false));
+				balles.add(new Ball(locRobot.clone(), false, false));
 				cooldownRobot = 25;
 			}
 
@@ -615,20 +615,20 @@ public class TankGame extends AbstractGameMenu {
 		return loc.getY() + speed * Math.sin(Math.toRadians(loc.getDirection()));
 	}
 
-	class Balle {
+	class Ball {
 		private static final int speedBall = 8;
 		private final Location loc;
 		private final boolean playerOwn;
 
-		private final boolean testBalle;
+		private final boolean testBall;
 		private boolean isTestFinish;
 		private boolean testResult;
 		private int rebonds = 0;
 
-		public Balle(final Location location, final boolean playerOwn, final boolean isTest) {
+		public Ball(final Location location, final boolean playerOwn, final boolean isTest) {
 			loc = location;
 			this.playerOwn = playerOwn;
-			testBalle = isTest;
+			testBall = isTest;
 			if (isTest) {
 				isTestFinish = false;
 				testResult = false;
@@ -676,7 +676,7 @@ public class TankGame extends AbstractGameMenu {
 
 			} else {
 				if (loc.distance(locPlayer) < tankSize) {
-					if (testBalle) {
+					if (testBall) {
 						isTestFinish = true;
 						testResult = true;
 						return;
@@ -685,7 +685,7 @@ public class TankGame extends AbstractGameMenu {
 					gameOver = true;
 				} else if (loc.distance(locRobot) < tankSize && rebonds > 0) {
 
-					if (testBalle) {
+					if (testBall) {
 						isTestFinish = true;
 						testResult = false;
 						return;
@@ -695,7 +695,7 @@ public class TankGame extends AbstractGameMenu {
 					robotBallesNbr--;
 				} else if (rebonds > maxRebonds) {
 
-					if (testBalle) {
+					if (testBall) {
 						isTestFinish = true;
 						testResult = false;
 
@@ -707,9 +707,9 @@ public class TankGame extends AbstractGameMenu {
 				}
 			}
 
-			if (balles.contains(this) && balles.size() > 1 && !testBalle) {// pas encore supprimé
+			if (balles.contains(this) && balles.size() > 1 && !testBall) {// pas encore supprimé
 				for (int i = balles.size() - 1; i >= 0; i--) {
-					Balle b = balles.get(i);
+					Ball b = balles.get(i);
 					if (b != this) {
 						if (b.getLocation().distance(loc) < 10) {
 							balles.remove(this);
