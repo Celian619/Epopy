@@ -69,7 +69,7 @@ public class CarGame extends AbstractGameMenu {
 
 	@Override
 	public void onEnable() {
-		if (Main.getPlayer().hasSound()) 
+		if (Main.getPlayer().hasSound())
 			Audios.CAR.setVolume(0.2f).start(true);
 
 		Mouse.setGrabbed(true);
@@ -178,7 +178,7 @@ public class CarGame extends AbstractGameMenu {
 				renderEchap(false, (int) timer.getTime() + " sec", timer.getTime() < carStats.getRecord() || carStats.getRecord() == 0);
 				if (!addStats) {
 					addStats = true;
-					if (timer.getTime() > carStats.getRecord() || carStats.getRecord() < 1)
+					if (timer.getTime() < carStats.getRecord() || carStats.getRecord() < 1)
 						carStats.setRecord((int) timer.getTime());
 
 					if (carStats.getRecord() <= carStats.getObjectif()) {
@@ -198,7 +198,7 @@ public class CarGame extends AbstractGameMenu {
 
 			if (contreSens) {
 				contreSens = false;
-				ComponentsHelper.drawText("Tu es serieux pourquoi tu roules à contre sens ?", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
+				ComponentsHelper.drawText("Tu es serieux pourquoi tu roules à contre-sens ?", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
 			}
 			if (!pause.isFinish()) {
 				if (pause.getTimePauseTotal() == 5) {
@@ -207,14 +207,14 @@ public class CarGame extends AbstractGameMenu {
 					int x = 1093;
 					int y = 400;
 
-					ComponentsHelper.drawText("CONTROLE", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+					ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
 					ComponentsHelper.drawText("Droite", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 					ComponentsHelper.drawText("Gauche", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 150 + 45, 60, 60);
-					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x - 28, y + 40, 50, new float[] { 0, 0, 0, 1 });
-					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x - 28, y + 150 + 40, 50, new float[] { 0, 0, 0, 1 });
+					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x, y + 75, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
+					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 220, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
 
 					// if(Main.getPlayer().getLevel() <= GameList.CAR.getID()) { BATTRE SON RECORD :
 					ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });

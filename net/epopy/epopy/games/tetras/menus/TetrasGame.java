@@ -109,14 +109,14 @@ public class TetrasGame extends AbstractGameMenu {
 		
 		Textures.GAME_TETRAS_BG.renderBackground();
 		Location locat = movingBlock.loc;
-
+		
 		for (Location loc : movingBlock.locs) {
 			double x = loc.getX() + locat.getX();
 			double y = loc.getY() + locat.getY();
 			
 			x *= grilleWidth;
 			y *= grilleHeight;
-
+			
 			ComponentsHelper.drawQuad((int) x - 1, (int) y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2, lastColor);
 			ComponentsHelper.drawQuad((int) x + 1, (int) y + 1, (int) grilleWidth - 2, (int) grilleHeight - 2, color);
 		}
@@ -130,11 +130,13 @@ public class TetrasGame extends AbstractGameMenu {
 				y *= grilleHeight;
 				ComponentsHelper.drawQuad(x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2, color);
 				ComponentsHelper.drawQuad(x + 1, y + 1, (int) grilleWidth - 2, (int) grilleHeight - 2, lastColor);
-
+				
 			}
 			
 			i++;
 		}
+		
+		ComponentsHelper.drawText("Score : " + score, 10, 50, 40);
 		
 	}
 
