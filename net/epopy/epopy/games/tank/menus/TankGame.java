@@ -375,9 +375,9 @@ public class TankGame extends AbstractGameMenu {
 					record = true;
 				}
 				
-				if (tankStats.getRecord() >= tankStats.getObjectif())
+		/**		if (tankStats.getRecord() >= tankStats.getObjectif())
 					if (Main.getPlayer().getLevel() <= GameList.TANK.getID()) Main.getPlayer().setLevel(GameList.TANK.getID() + 1);
-					
+			*/		
 			}
 			renderEchap(false, +damage + "", record);
 		}
