@@ -9,6 +9,7 @@ import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.player.stats.CarStats;
 import net.epopy.epopy.player.stats.MarioStats;
+import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.PongStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.TankStats;
@@ -32,6 +33,7 @@ public class Player {
 	private PongStats pongStats;
 	private CarStats carStats;
 	private TankStats tankStats;
+	private PlaceInvaderStats placeInvaderStats;
 	
 	public Player(final String name) {
 		
@@ -66,6 +68,7 @@ public class Player {
 		carStats = new CarStats(config);
 		snakeStats = new SnakeStats(config);
 		pongStats = new PongStats(config);
+		placeInvaderStats = new PlaceInvaderStats(config);
 		tankStats = new TankStats(config);
 		sound = Boolean.valueOf(config.getData("sound", "true"));
 	}
@@ -92,6 +95,7 @@ public class Player {
 		tempsTotal += Long.parseLong(config.getData("snake_temps"));
 		tempsTotal += Long.parseLong(config.getData("car_temps"));
 		tempsTotal += Long.parseLong(config.getData("tank_temps"));
+		tempsTotal += Long.parseLong(config.getData("plainv_temps"));
 		
 		if (tempsTotal != 0)
 			return timeFormat.format(tempsTotal - 3600000);
@@ -147,6 +151,10 @@ public class Player {
 		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));
+	}
+	
+	public PlaceInvaderStats getPlaceInvaderStats() {
+		return placeInvaderStats;
 	}
 	
 	public MarioStats getMarioStats() {

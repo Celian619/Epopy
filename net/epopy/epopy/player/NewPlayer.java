@@ -66,6 +66,11 @@ public class NewPlayer {
 			write(w, "tank_record=" + 0);
 			write(w, "tank_parties=" + 0);
 			write(w, "tank_temps=" + 0);
+			
+			write(w, "plainv_pts=" + 0);
+			write(w, "plainv_parties=" + 0);
+			write(w, "plainv_temps=" + 0);
+			
 			write(w, "sound=true");
 			
 			w.close();

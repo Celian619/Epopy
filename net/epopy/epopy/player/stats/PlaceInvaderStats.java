@@ -5,19 +5,18 @@ import java.text.SimpleDateFormat;
 import net.epopy.epopy.utils.Config;
 
 public class PlaceInvaderStats {
-
-	private int record;
-	private Config config;
+	
+	private int pts;
 	private int parties;
 	private long tempsLong;
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	private Config config;
+	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");;
 
 	public PlaceInvaderStats(Config config) {
 		this.config = config;
-		record = Integer.parseInt(config.getData("placeinvader_record"));
-		parties = Integer.parseInt(config.getData("placeinvader_parties"));
-
-		tempsLong = Long.parseLong(config.getData("placeinvader_temps"));
+		this.pts = Integer.parseInt(config.getData("plainv_pts"));
+		this.parties = Integer.parseInt(config.getData("plainv_parties"));
+		this.tempsLong = Long.parseLong(config.getData("plainv_temps"));
 	}
 
 	public String getTemps() {
@@ -27,43 +26,29 @@ public class PlaceInvaderStats {
 	}
 
 	public void addTemps(long start) {
-		tempsLong += start * 1000;
-		config.setValue("placeinvader_temps", String.valueOf(tempsLong));
+		this.tempsLong += start * 1000;
+		config.setValue("plainv_temps", String.valueOf(tempsLong));
 	}
 
-	public long getTempsLong() {
-		return tempsLong;
-	}
-
-	public double getObjectif() {
+	public int getObjectif() {
 		return 100;
 	}
-	
-	public String getObjectifString() {
-		return "Avoir plus de" + getObjectif() + " points";
-	}
-	
+
 	public int getParties() {
 		return parties;
 	}
 
 	public void addPartie() {
-		parties = parties + 1;
-		config.setValue("placeinvader_parties", String.valueOf(parties));
+		this.parties = parties + 1;
+		config.setValue("plainv_parties", String.valueOf(parties));
 	}
 
 	public int getRecord() {
-		return record;
+		return pts;
 	}
 
-	public String getRecordString() {
-		if(record == 0)
-			return "0 point";
-		return record + " point" +(record < 2 ? "" : "s");
-	}
-
-	public void setRecord(int tir) {
-		record = tir;
-		config.setValue("placeinvader_record", String.valueOf(record));
+	public void setRecord(int pts) {
+		this.pts = pts;
+		config.setValue("plainv_pts", String.valueOf(pts));
 	}
 }

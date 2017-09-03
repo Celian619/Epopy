@@ -17,7 +17,8 @@ import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
-import net.epopy.epopy.player.stats.TankStats;
+import net.epopy.epopy.games.gestion.GameList;
+import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
@@ -40,7 +41,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	private List<Location> locBalleP;
 	private List<Location> locBalleR;
 	private boolean stats = false;
-
+	private static Timer timer;
+	
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound())
@@ -59,7 +61,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		locBalleR = new ArrayList<Location>();
 
 		timer = new Timer();
-
+	
 		xPlayer = defaultWidth / 2;
 
 		pause.startPause(5);
@@ -68,10 +70,14 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 
 	private int timeTamp;
 	private boolean pauseScreen;
-	private boolean paused;
+	private boolean paused = true;
 
 	@Override
 	public void update() {
+		Timer.tick();
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_A))
+			gameOver = true;
 		
 		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -94,8 +100,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 			if (rejouerButton.isClicked())
 				onEnable();
 			return;
-		}
-
+		} 
+		
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
 				pause.startPause(3);
@@ -104,7 +110,10 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 			}
 		}
 
-		if (!pause.isFinish() || pauseScreen) return;
+		if (!pause.isFinish() || pauseScreen) {
+			timer.pause();
+			return;
+		}
 		
 		if (paused) {
 			timer.resume();
@@ -188,8 +197,6 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		if (shooted > 0) shooted--;
 	}
 
-	private static Timer timer;
-	
 	@Override
 	public void render() {
 		Textures.GAME_PLACEINVADER_BG.renderBackground();
@@ -197,24 +204,44 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		if (shooted > 0 && (shooted - 5) / 10 == shooted / 10) glColor4f(1, 0.2f, 0.2f, 1);
 		ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_ROCKET, xPlayer - playerSize / 2, yPlayer, playerSize, 100);
 		glColor4f(1, 1, 1, 1);
-		
-		if (gameOver)
-			ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_EXPLOSION, xPlayer - playerSize / 2 - 18, yPlayer, 100, 100);
 			
 		if (pauseScreen) {
 			renderEchap(true);
 			return;
 		} else if (gameOver) {
+			ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_EXPLOSION, xPlayer - playerSize / 2 - 18, yPlayer, 100, 100);
+			
+			boolean record = false;
 			if (!stats) {
 				stats = true;
-				TankStats tankStats = Main.getPlayer().getTankStats();
-				tankStats.addPartie();
-				// TODO
-				tankStats.addTemps((long) timer.getTime());
+				PlaceInvaderStats placeInvaderStats = Main.getPlayer().getPlaceInvaderStats();
+				System.out.println("AVant partie:" + placeInvaderStats.getParties());
+				placeInvaderStats.addPartie();
+				System.out.println("apres partie:" + placeInvaderStats.getParties());
+				System.out.println("------------");
+				System.out.println("avant temps:" + placeInvaderStats.getParties());
+				placeInvaderStats.addTemps((long) timer.getTime());
+				System.out.println("apres temps:" + placeInvaderStats.getParties());
+				
+				System.out.println("------------");
+				System.out.println("avant record:" + placeInvaderStats.getRecord());
+				if (score > placeInvaderStats.getRecord()) {
+					placeInvaderStats.setRecord(score);
+					record = true;
+					System.out.println("new record");
+				}
+				System.out.println("apres record:" + placeInvaderStats.getRecord());
+				
+				if (score >= placeInvaderStats.getObjectif()) {
+					if (Main.getPlayer().getLevel() <= GameList.PLACEINVADER.getID())
+						Main.getPlayer().setLevel(GameList.PLACEINVADER.getID() + 1);
+				}
+			
+				System.out.println("add stats: " + record + " " + placeInvaderStats.getTemps());
 			}
-			boolean record = false;// TODO
+			
 			renderEchap(false, score + "", record);
-
+			
 			if (rejouerButton.isClicked())
 				onEnable();
 			return;

@@ -14,6 +14,7 @@ import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.player.guis.ChooseGameTypeMenu;
 import net.epopy.epopy.player.stats.CarStats;
+import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.PongStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.TankStats;
@@ -264,13 +265,18 @@ public class GameMenu extends AbstractGameMenu {
 					temps = tankStats.getTemps();
 					record = tankStats.getRecordString();
 					parties = String.valueOf(tankStats.getParties());
+				} else if (GameList.PLACEINVADER.toString().toLowerCase().equals(name.toLowerCase())) {
+					PlaceInvaderStats placeInvaderStats = Main.getPlayer().getPlaceInvaderStats();
+					temps = placeInvaderStats.getTemps();
+					record = String.valueOf(placeInvaderStats.getRecord());
+					parties = String.valueOf(placeInvaderStats.getParties());
 				}
 				// temps
 				int lastXTemps = ComponentsHelper.drawText("Temps de jeu", 780 - 10, 353, 30, new float[] { 1, 1f, 1, 1 });
-				ComponentsHelper.drawText(temps, lastXTemps + 35, ComponentsHelper.getResponsiveY(353), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
+				ComponentsHelper.drawText(temps, lastXTemps + 30, ComponentsHelper.getResponsiveY(353), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 				// nombre de partie jouées
 				int lastXPartie = ComponentsHelper.drawText("Parties jouées", 770 - 10, 530, 30, new float[] { 1, 1f, 1, 1 });
-				ComponentsHelper.drawText(parties, lastXPartie + 35, ComponentsHelper.getResponsiveY(530), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
+				ComponentsHelper.drawText(parties, lastXPartie + 30, ComponentsHelper.getResponsiveY(530), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 				// dernier record
 				int lastXRecord = ComponentsHelper.drawText("Record", 856 - 5, 718, 30, new float[] { 1, 1f, 1, 1 });
 				ComponentsHelper.drawText(record, lastXRecord + 30, ComponentsHelper.getResponsiveY(718), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
