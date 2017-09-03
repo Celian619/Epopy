@@ -221,7 +221,7 @@ public class PongGame extends AbstractGameMenu {
 				// ComponentsHelper.drawText(Main.getPlayer().getSnakeStats().getObjectifString(), 730, 600, PositionWidth.MILIEU,
 				// PositionHeight.HAUT, 25, new float[]{0.8f, 0.8f, 0.8f, 1});
 				ComponentsHelper.drawText("Tenir plus d'une", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				ComponentsHelper.drawText("1 min 15", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				ComponentsHelper.drawText("1 min 20", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 				
 				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 			} else
