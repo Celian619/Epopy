@@ -2,6 +2,7 @@ package net.epopy.epopy.games.speedrun.menus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -35,8 +36,8 @@ public class SpeedRunGame extends AbstractGameMenu {
 	double level;
 	int score;
 	boolean sneak;
-	List<Robot> robots = new ArrayList<Robot>();
-	List<Integer> lampadairesX = new ArrayList<Integer>();
+	List<Robot> robots = new LinkedList<Robot>();
+	List<Integer> lampadairesX = new LinkedList<Integer>();
 
 	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	private static Timer timer;
@@ -57,6 +58,9 @@ public class SpeedRunGame extends AbstractGameMenu {
 		if (Main.getPlayer().hasSound()) 
 			Audios.SPEEDRUN.setVolume(0.2f).start(true);
 		gameOver = false;
+		robots.clear();
+		lampadairesX.clear();
+		
 		
 		paused = true;
 		pauseScreen = false;
