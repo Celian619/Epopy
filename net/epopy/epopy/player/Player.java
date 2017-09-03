@@ -12,6 +12,7 @@ import net.epopy.epopy.player.stats.MarioStats;
 import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.PongStats;
 import net.epopy.epopy.player.stats.SnakeStats;
+import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
 import net.epopy.epopy.utils.Config;
 import net.epopy.epopy.utils.FileUtils;
@@ -34,6 +35,7 @@ public class Player {
 	private CarStats carStats;
 	private TankStats tankStats;
 	private PlaceInvaderStats placeInvaderStats;
+	private SpeedRunStats speedRunStats;
 	
 	public Player(final String name) {
 		
@@ -68,6 +70,7 @@ public class Player {
 		carStats = new CarStats(config);
 		snakeStats = new SnakeStats(config);
 		pongStats = new PongStats(config);
+		speedRunStats = new SpeedRunStats(config);
 		placeInvaderStats = new PlaceInvaderStats(config);
 		tankStats = new TankStats(config);
 		sound = Boolean.valueOf(config.getData("sound", "true"));
@@ -151,6 +154,10 @@ public class Player {
 		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));
+	}
+	
+	public SpeedRunStats getSpeedRunStats() {
+		return speedRunStats;
 	}
 	
 	public PlaceInvaderStats getPlaceInvaderStats() {

@@ -17,6 +17,7 @@ import net.epopy.epopy.player.stats.CarStats;
 import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.PongStats;
 import net.epopy.epopy.player.stats.SnakeStats;
+import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
 
 public class GameMenu extends AbstractGameMenu {
@@ -270,6 +271,11 @@ public class GameMenu extends AbstractGameMenu {
 					temps = placeInvaderStats.getTemps();
 					record = String.valueOf(placeInvaderStats.getRecord());
 					parties = String.valueOf(placeInvaderStats.getParties());
+				} else if (GameList.SPEEDRUN.toString().toLowerCase().equals(name.toLowerCase())) {
+					SpeedRunStats speedRunStats = Main.getPlayer().getSpeedRunStats();
+					temps = speedRunStats.getTemps();
+					record = speedRunStats.getRecordString();
+					parties = String.valueOf(speedRunStats.getParties());
 				}
 				// temps
 				int lastXTemps = ComponentsHelper.drawText("Temps de jeu", 780 - 10, 353, 30, new float[] { 1, 1f, 1, 1 });
