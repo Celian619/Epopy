@@ -56,7 +56,8 @@ public class SpeedRunGame extends AbstractGameMenu {
 		addStats = false;
 		if (Main.getPlayer().hasSound()) 
 			Audios.SPEEDRUN.setVolume(0.2f).start(true);
-
+		gameOver = false;
+		
 		paused = true;
 		pauseScreen = false;
 		timeTamp = 0;
