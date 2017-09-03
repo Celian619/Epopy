@@ -75,12 +75,15 @@ public class Player {
 		tankStats = new TankStats(config);
 		sound = Boolean.valueOf(config.getData("sound", "true"));
 	}
+
+	public int getSoundLevel() {
+		return Integer.parseInt(config.getData("sound_volume", "5"));
+	}
 	
-	/**
-	 * Donne la dernier dimension de l'ecran du joueur
-	 *
-	 * @return x, y , isfullscreen
-	 */
+	public void setSoundLevel(int value) {
+		config.setValue("sound_volume", String.valueOf(value));
+	}
+	
 	public boolean getLastDisplayWasFullScreen() {
 		return Boolean.valueOf(Main.getConfig("infos").getData("display_fullscreen"));
 	}

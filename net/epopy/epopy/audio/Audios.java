@@ -11,10 +11,12 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import net.epopy.epopy.Main;
+
 public class Audios {
 
 	//le volume du joueur
-	public static int VOLUME_VALUE = 5; //min 1 : max 10
+	public static int VOLUME_VALUE = Main.getPlayer().getSoundLevel(); //min 1 | max 10 | default 5
 
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 	private static List<Audios> audios = new ArrayList<Audios>(10);

@@ -71,6 +71,11 @@ public class NewPlayer {
 			write(w, "plainv_parties=" + 0);
 			write(w, "plainv_temps=" + 0);
 			
+			write(w, "speedrun_record=" + 0);
+			write(w, "speedrun_parties=" + 0);
+			write(w, "speedrun_temps=" + 0);
+			
+			write(w, "sound_volume=5");
 			write(w, "sound=true");
 			
 			w.close();

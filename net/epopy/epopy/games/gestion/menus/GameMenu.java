@@ -98,6 +98,7 @@ public class GameMenu extends AbstractGameMenu {
 		if(sound_moins.isClicked()) {
 			if(Audios.VOLUME_VALUE  > 1) {
 				Audios.VOLUME_VALUE-=1;
+				Main.getPlayer().setSoundLevel(Audios.VOLUME_VALUE);
 				Audios.updateAllVolume();
 			} 
 		}
@@ -105,6 +106,7 @@ public class GameMenu extends AbstractGameMenu {
 		if(sound_plus.isClicked()) {
 			if(Audios.VOLUME_VALUE < 10) {
 				Audios.VOLUME_VALUE+=1;
+				Main.getPlayer().setSoundLevel(Audios.VOLUME_VALUE);
 				Audios.updateAllVolume();
 			}
 		}
