@@ -1,5 +1,6 @@
 package net.epopy.epopy.games.snake.menus;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -34,8 +35,8 @@ public class SnakeGame extends AbstractGameMenu {
 	private double cubeY;
 	
 	private int ptsRecord;
-	private final List<Location> posSnake = new LinkedList<Location>();
-	private final List<Location> posFood = new LinkedList<Location>();
+	private List<Location> posSnake;
+	private List<mouse> posMouse;
 	
 	private int eat;
 	private int lastKey;
@@ -48,6 +49,9 @@ public class SnakeGame extends AbstractGameMenu {
 		if (Main.getPlayer().hasSound())
 			Audios.SNAKE.setVolume(0.2f).start(true);
 			
+		posSnake = new LinkedList<Location>();
+		posMouse = new ArrayList<mouse>(10);
+
 		addStats = false;
 		snakeSize = 1;
 		eat = 0;
@@ -57,10 +61,7 @@ public class SnakeGame extends AbstractGameMenu {
 		grilleSize = 100;
 		cubeX = defaultWidth / (double) grilleSize;
 		cubeY = 0.1 + defaultHeight / (double) grilleSize;
-		
-		posSnake.clear();
-		posFood.clear();
-		
+
 		Mouse.setGrabbed(true);
 		
 		posSnake.add(new Location(grilleSize / 2, grilleSize / 2, grilleSize, grilleSize));
@@ -180,13 +181,15 @@ public class SnakeGame extends AbstractGameMenu {
 				Mouse.setGrabbed(false);
 				gameOver = true;
 			}
-		for (Location loc : posFood)
+		for (mouse mouse : posMouse) {
+			Location loc = mouse.loc;
 			if (Math.abs(loc.getX() - x) < 4 && Math.abs(loc.getY() - y) < 5) {
 				eat += 5;
 				snakeSize++;
-				posFood.remove(loc);
+				posMouse.remove(mouse);
 				break;
 			}
+		}
 		if (eat == 0) {
 			Location loc = posSnake.get(posSnake.size() - 1);
 			posSnake.remove(posSnake.size() - 1);
@@ -198,7 +201,7 @@ public class SnakeGame extends AbstractGameMenu {
 			eat--;
 		}
 		
-		if (posSnake.size() + posFood.size() < Math.pow(grilleSize, 2) && timeFood == 0 && posFood.size() < maxFood) {
+		if (posSnake.size() + posMouse.size() < Math.pow(grilleSize, 2) && timeFood == 0 && posMouse.size() < maxFood) {
 			Boolean foodOk = false;
 			int xf;
 			int yf;
@@ -208,20 +211,16 @@ public class SnakeGame extends AbstractGameMenu {
 			while (!foodOk) {
 				xf = r.nextInt(grilleSize);
 				yf = r.nextInt(grilleSize);
-				locFood = new Location(xf, yf);
+				locFood = new Location(xf, yf, (r.nextBoolean() ? 1 : -1) * r.nextInt(180), grilleSize, grilleSize);
 				foodOk = true;
 				for (Location locSnake : posSnake)
-					if (locSnake.equals(locFood)) {
+					if (locSnake.distance(locFood) < 3) {
 						foodOk = false;
 						break;
 					}
-				for (Location locOldFood : posFood)
-					if (locOldFood.equals(locFood)) {
-						foodOk = false;
-						break;
-					}
+					
 				if (foodOk)
-					posFood.add(locFood);
+					posMouse.add(new mouse(locFood));
 					
 				i--;// si la grille est trop complete
 				if (i == 0) break;
@@ -231,6 +230,9 @@ public class SnakeGame extends AbstractGameMenu {
 		if (timeFood > 0)
 			timeFood--;
 		timeSecond = dontMoveTime;
+		
+		for (mouse mouse : posMouse)
+			mouse.move();
 	}
 	
 	private int c = 0;
@@ -244,14 +246,10 @@ public class SnakeGame extends AbstractGameMenu {
 		
 		Textures.GAME_SNAKE_LEVEL_BG.renderBackground();
 		
-		for (Location loc : posFood) {
-			int rotationModif = rotationFood + (int) loc.getX();
-			if (rotationModif > 360) rotationModif -= 360;
-			// rotation differente en sens et en emplacement
+		for (Location loc : getMouseLocations())
 			ComponentsHelper.drawCircle((int) (cubeX * loc.getX() + cubeX / 2), (int) (cubeY * loc.getY() + cubeY / 2), (int) (cubeX * 1), 5,
-					new float[] { 1, 1, 1, 1f }, loc.getX() > loc.getY() ? 360 - rotationModif : rotationModif);
-		}
-		
+					new float[] { 1, 1, 1, 1f }, loc.getDirection());
+
 		double pos = 0;
 		for (Location loc : posSnake) {
 			pos++;
@@ -342,5 +340,64 @@ public class SnakeGame extends AbstractGameMenu {
 				addStats = true;
 			}
 		}
+	}
+	
+	private List<Location> getMouseLocations() {
+		List<Location> locs = new ArrayList<Location>();
+		for (mouse mouse : posMouse) {
+			locs.add(mouse.loc);
+		}
+		return locs;
+	}
+	
+	class mouse {
+		
+		Location loc;
+		int directionModif;
+		Double speed;
+		
+		public mouse(final Location loc) {
+			this.loc = loc;
+			Random r = new Random();
+			directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
+			speed = r.nextDouble() / 2 + 0.2;
+		}
+		
+		private void move() {
+			Random r = new Random();
+			if (directionModif <= 5 && directionModif >= -5) {
+				loc.setDirection(loc.getDirection() + directionModif);
+
+				directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
+				
+			} else {
+
+				int i = r.nextInt(6);
+				if (directionModif < 0) i *= -1;
+
+				loc.setDirection(loc.getDirection() + i);
+				directionModif -= i;
+			}
+			double xAdd = speed * Math.cos(Math.toRadians(loc.getDirection()));
+			double yAdd = speed * Math.sin(Math.toRadians(loc.getDirection()));
+
+			Location locModif = loc.clone().add(xAdd, yAdd);
+			
+			double nearestDistS = loc.getNearestDistance(posSnake);
+			if (nearestDistS > 5 || locModif.getNearestDistance(posSnake) > nearestDistS) {
+				
+				loc.add(xAdd, yAdd);
+			}
+
+			speed += (r.nextBoolean() ? 1 : -1) * r.nextDouble() / 10;
+
+			if (speed > 0.7) speed = 0.7;
+			if (speed < 0.2) speed = 0.2;
+
+			if (loc.getDirection() > 180) loc.setDirection(loc.getDirection() - 360);
+
+			if (loc.getDirection() < -180) loc.setDirection(loc.getDirection() + 360);
+		}
+
 	}
 }
