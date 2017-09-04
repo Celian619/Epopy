@@ -26,6 +26,9 @@ public class FileDownload {
 			connection = url.openConnection();
 			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			connection.setRequestProperty("Accept-Encoding", "identity"); 
+			connection.setRequestProperty("Accept-Language", "zh-CN");
+			connection.setRequestProperty("Charset", "UTF-8");
+			connection.setRequestProperty("Connection", "Keep-Alive");
 			connection.setConnectTimeout(100000);
 			connection.setReadTimeout(10000);
 			
