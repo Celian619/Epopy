@@ -40,7 +40,7 @@ public class EpopyLauncher {
 	private static String PATH_FOLDER;
 	private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	
-	public static String VERSION = "Bêta-1.0.0";
+	public static String VERSION = "Bêta-1.0.0.0";
 	
 	// encryp
 	private static String KEY = "E1BB465D57CAE7ACDBBE8091F9CE83DF";
@@ -52,6 +52,7 @@ public class EpopyLauncher {
 		initFiles();
 		
 		new EpopyLauncher(PATH_FOLDER);
+		
 	}
 	
 	public EpopyLauncher(final String PATH_FOLDER) {
@@ -127,7 +128,8 @@ public class EpopyLauncher {
 				Gif.frame();
 		
 				long start = System.currentTimeMillis();
-				new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
+			//	new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
+				FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
 				String time = timeFormat.format(Calendar.getInstance().getTimeInMillis() - start - 3600000);
 				System.out.println("  Télechargement 'epopy.jar': " + time);
 				jar = new File(PATH_FOLDER + "/epopy.jar");
