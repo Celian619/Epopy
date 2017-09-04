@@ -81,9 +81,9 @@ public class Textures {
 	public static Textures GAME_MOUSE_DOWN = load("games/mouse_down");
 	public static Textures GAME_MOUSE_UP = load("games/mouse_up");
 
-	// pong
-	public static Textures GAME_PONG_BG = load("games/pong/bg");
-	public static Textures GAME_PONG_LEVEL_BG = load("games/pong/levels/bg");
+	// ping
+	public static Textures GAME_PING_BG = load("games/ping/bg");
+	public static Textures GAME_PING_LEVEL_BG = load("games/ping/levels/bg");
 	
 	// car
 	public static Textures GAME_CAR_VOITURE = load("games/car/voiture");

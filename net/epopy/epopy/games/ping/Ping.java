@@ -1,30 +1,30 @@
-package net.epopy.epopy.games.pong;
+package net.epopy.epopy.games.ping;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.gestion.AbstractGame;
 import net.epopy.epopy.games.gestion.GameLogger;
 import net.epopy.epopy.games.gestion.GameStatus;
-import net.epopy.epopy.games.pong.menus.PongGame;
-import net.epopy.epopy.games.pong.menus.PongOptions;
+import net.epopy.epopy.games.ping.menus.PingGame;
+import net.epopy.epopy.games.ping.menus.PingOptions;
 
-public class Pong extends AbstractGame {
-	
+public class Ping extends AbstractGame {
+
 	@Override
 	public void onEnable() {
 		gameLogger = new GameLogger(getName());
-		menuGame = new PongGame();
-		menuOptions = new PongOptions();
+		menuGame = new PingGame();
+		menuOptions = new PingOptions();
 		setStatus(GameStatus.MENU_CHOOSE_GAMES);
+	}
+	
+	@Override
+	public Textures getDefaultBackGround() {
+		return Textures.GAME_PING_BG;
 	}
 
 	@Override
-	public Textures getDefaultBackGround() {
-		return Textures.GAME_PONG_BG;
-	}
-	
-	@Override
 	public String getName() {
-		return "Pong";
+		return "Ping";
 	}
-	
+
 }

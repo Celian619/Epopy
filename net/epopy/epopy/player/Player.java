@@ -31,7 +31,7 @@ public class Player {
 	// stats games
 	private MarioStats marioStats;
 	private SnakeStats snakeStats;
-	private PongStats pongStats;
+	private PongStats pingStats;
 	private CarStats carStats;
 	private TankStats tankStats;
 	private PlaceInvaderStats placeInvaderStats;
@@ -69,7 +69,7 @@ public class Player {
 		marioStats = new MarioStats(config);
 		carStats = new CarStats(config);
 		snakeStats = new SnakeStats(config);
-		pongStats = new PongStats(config);
+		pingStats = new PongStats(config);
 		speedRunStats = new SpeedRunStats(config);
 		placeInvaderStats = new PlaceInvaderStats(config);
 		tankStats = new TankStats(config);
@@ -80,7 +80,7 @@ public class Player {
 		return Integer.parseInt(config.getData("sound_volume", "5"));
 	}
 	
-	public void setSoundLevel(int value) {
+	public void setSoundLevel(final int value) {
 		config.setValue("sound_volume", String.valueOf(value));
 	}
 	
@@ -97,7 +97,7 @@ public class Player {
 	public String getTotalTemps() {
 		long tempsTotal = 0;
 		
-		tempsTotal += Long.parseLong(config.getData("pong_temps"));
+		tempsTotal += Long.parseLong(config.getData("ping_temps"));
 		tempsTotal += Long.parseLong(config.getData("snake_temps"));
 		tempsTotal += Long.parseLong(config.getData("car_temps"));
 		tempsTotal += Long.parseLong(config.getData("tank_temps"));
@@ -171,8 +171,8 @@ public class Player {
 		return marioStats;
 	}
 	
-	public PongStats getPongStats() {
-		return pongStats;
+	public PongStats getPingStats() {
+		return pingStats;
 	}
 	
 	public SnakeStats getSnakeStats() {

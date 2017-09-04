@@ -27,7 +27,7 @@ public class GameMenu extends AbstractGameMenu {
 	private static ButtonGui retour = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);;
 	private static ButtonGui gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
 	private static ButtonGui droite = new ButtonGui(Textures.GAME_MENU_DROITE_OFF, Textures.GAME_MENU_DROITE_ON);;
-	private static ButtonGui jouer =  new ButtonGui("Jouer", new float[] { 0, 0.7f, 0, 1 }, 50, false);
+	private static ButtonGui jouer = new ButtonGui("Jouer", new float[] { 0, 0.7f, 0, 1 }, 50, false);
 	private static ButtonGui stats = new ButtonGui("Stats", new float[] { 1, 1, 1, 1 }, 30, false);
 	private static ButtonGui options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
 	private static ButtonGui quitterMenu = new ButtonGui(Textures.GAME_MENU_QUITTER_OFF, Textures.GAME_MENU_QUITTER_ON);
@@ -46,28 +46,30 @@ public class GameMenu extends AbstractGameMenu {
 	public void onEnable() {
 
 	}
+
 	private float i = 0;
 	boolean soundCrescendo;
+
 	@Override
 	public void update() {
-		if(!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) {
+		if (!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) {
 			Audios.LOBBY.setVolume(0.1f).start(true);
 			soundCrescendo = true;
-			i= 0;
+			i = 0;
 		}
 		
-		if(soundCrescendo) {
-			if(i == 10)
+		if (soundCrescendo) {
+			if (i == 10)
 				Audios.LOBBY.setVolume(0.15f);
-			else if(i == 20)
+			else if (i == 20)
 				Audios.LOBBY.setVolume(0.2f);
-			else if(i == 40)
+			else if (i == 40)
 				Audios.LOBBY.setVolume(0.25f);
-			else if(i == 80)
+			else if (i == 80)
 				Audios.LOBBY.setVolume(0.3f);
-			else if(i == 100)
+			else if (i == 100)
 				Audios.LOBBY.setVolume(0.35f);
-			else if(i == 120) {
+			else if (i == 120) {
 				Audios.LOBBY.setVolume(0.4f);
 				soundCrescendo = false;
 			}
@@ -95,17 +97,17 @@ public class GameMenu extends AbstractGameMenu {
 		sound_moins.update(80, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 		sound_plus.update(123, 21, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 
-		if(sound_moins.isClicked()) {
-			if(Audios.VOLUME_VALUE  > 1) {
-				Audios.VOLUME_VALUE-=1;
+		if (sound_moins.isClicked()) {
+			if (Audios.VOLUME_VALUE > 1) {
+				Audios.VOLUME_VALUE -= 1;
 				Main.getPlayer().setSoundLevel(Audios.VOLUME_VALUE);
 				Audios.updateAllVolume();
-			} 
+			}
 		}
 
-		if(sound_plus.isClicked()) {
-			if(Audios.VOLUME_VALUE < 10) {
-				Audios.VOLUME_VALUE+=1;
+		if (sound_plus.isClicked()) {
+			if (Audios.VOLUME_VALUE < 10) {
+				Audios.VOLUME_VALUE += 1;
 				Main.getPlayer().setSoundLevel(Audios.VOLUME_VALUE);
 				Audios.updateAllVolume();
 			}
@@ -235,7 +237,7 @@ public class GameMenu extends AbstractGameMenu {
 			sound.render();
 			sound_moins.render();
 			sound_plus.render();
-			ComponentsHelper.drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
+			ComponentsHelper.drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
 		}
 
 		if (showStats) {
@@ -253,11 +255,11 @@ public class GameMenu extends AbstractGameMenu {
 					temps = snakeStats.getTemps();
 					record = String.valueOf(snakeStats.getRecord() + " pts");
 					parties = String.valueOf(snakeStats.getParties());
-				} else if (GameList.PONG.toString().toLowerCase().equals(name.toLowerCase())) {
-					PongStats pongStats = Main.getPlayer().getPongStats();
-					temps = pongStats.getTemps();
-					record = pongStats.getRecordString();
-					parties = String.valueOf(pongStats.getParties());
+				} else if (GameList.PING.toString().toLowerCase().equals(name.toLowerCase())) {
+					PongStats pingStats = Main.getPlayer().getPingStats();
+					temps = pingStats.getTemps();
+					record = pingStats.getRecordString();
+					parties = String.valueOf(pingStats.getParties());
 				} else if (GameList.CAR.toString().toLowerCase().equals(name.toLowerCase())) {
 					CarStats carStats = Main.getPlayer().getCarStats();
 					temps = carStats.getTemps();
