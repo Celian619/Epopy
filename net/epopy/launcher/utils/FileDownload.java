@@ -24,8 +24,7 @@ public class FileDownload {
 
 			//On crée une connection vers cet URL
 			connection = url.openConnection();
-			connection.addRequestProperty("User-Agent", 
-					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			//On récupère la taille du fichier
 			int length = connection.getContentLength();
 
@@ -50,7 +49,8 @@ public class FileDownload {
 				currentBit = is.read(data, deplacement, data.length-deplacement);	
 				if(currentBit == -1)break;	
 				deplacement += currentBit;
-				pourcent+=0.22;
+				if(pourcent < 90)
+					pourcent+=0.020;
 			}
 
 			//Si on n'est pas arrivé à la fin du fichier, on lance une exception
@@ -58,13 +58,13 @@ public class FileDownload {
 				throw new IOException("Le fichier n'a pas été lu en entier (seulement " 
 						+ deplacement + " sur " + length + ")");
 			}		
-			if(pourcent < 100)pourcent+=2;
+			if(pourcent < 100)pourcent=94;
 			//On crée un stream sortant vers la destination
 			destinationFile = new FileOutputStream(destination); 
-			if(pourcent < 100)pourcent+=2;
+			if(pourcent < 100)pourcent=98;
 			//On écrit les données du fichier dans ce stream
 			destinationFile.write(data);
-			if(pourcent < 100)pourcent+=2;
+			if(pourcent < 100)pourcent=99;
 			//On vide le tampon et on ferme le stream
 			destinationFile.flush();
 			pourcent = 100;

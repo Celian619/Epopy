@@ -83,7 +83,7 @@ public class Textures {
 
 	// ping
 	public static Textures GAME_PING_BG = load("games/ping/bg");
-	public static Textures GAME_PING_LEVEL_BG = load("games/ping/levels/bg");
+	public static Textures GAME_PING_LEVEL_BG = load("games/ping/level/bg");
 	
 	// car
 	public static Textures GAME_CAR_VOITURE = load("games/car/voiture");
