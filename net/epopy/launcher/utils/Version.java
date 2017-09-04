@@ -28,5 +28,4 @@ public class Version {
 		if(file != null && file.exists()) 
 			file.delete();
 	}
-	
 }
