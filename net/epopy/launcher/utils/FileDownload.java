@@ -25,12 +25,16 @@ public class FileDownload {
 			//On crée une connection vers cet URL
 			connection = url.openConnection();
 			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			connection.setRequestProperty("Accept-Encoding", "identity"); 
+			connection.setConnectTimeout(100000);
+			connection.setReadTimeout(10000);
+			
 			//On récupère la taille du fichier
 			int length = connection.getContentLength();
 
 			//Si le fichier est inexistant, on lance une exception
 			if(length == -1){
-				System.out.println("[ERROR] Pas de connexion / ou le fichier est vide");
+				System.out.println("[ERROR] Pas de connexion / ou le fichier est vide (" + filePath+")");
 				return;
 			}
 

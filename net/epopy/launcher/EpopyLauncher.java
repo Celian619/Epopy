@@ -172,7 +172,12 @@ public class EpopyLauncher {
 			
 			@Override
 			public void mousePressed(final MouseEvent e) {
-			
+				PointerInfo a = MouseInfo.getPointerInfo();
+				Point b = a.getLocation();
+				int x = (int) b.getX();
+				int y = (int) b.getY();
+				if (x >= 1323 && y < 253)
+					System.exit(-1);
 			}
 			
 			@Override
@@ -187,12 +192,6 @@ public class EpopyLauncher {
 			
 			@Override
 			public void mouseClicked(final MouseEvent e) {
-				PointerInfo a = MouseInfo.getPointerInfo();
-				Point b = a.getLocation();
-				int x = (int) b.getX();
-				int y = (int) b.getY();
-				if (x >= 1323 && y < 253)
-					System.exit(-1);
 			}
 		});
 		
