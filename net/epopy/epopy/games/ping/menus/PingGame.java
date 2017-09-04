@@ -16,7 +16,7 @@ import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
-import net.epopy.epopy.player.stats.PongStats;
+import net.epopy.epopy.player.stats.PingStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
@@ -236,7 +236,7 @@ public class PingGame extends AbstractGameMenu {
 		if (gameOver) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
-			PongStats pingStats = Main.getPlayer().getPingStats();
+			PingStats pingStats = Main.getPlayer().getPingStats();
 			String timeString = timeFormat.format((long) timer.getTime() * 1000 - 3600000);
 			boolean record = timer.getTime() * 1000 > pingStats.getRecord();
 			renderEchap(false, timeString, record);

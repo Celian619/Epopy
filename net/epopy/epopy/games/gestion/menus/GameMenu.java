@@ -14,8 +14,8 @@ import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.player.guis.ChooseGameTypeMenu;
 import net.epopy.epopy.player.stats.CarStats;
+import net.epopy.epopy.player.stats.PingStats;
 import net.epopy.epopy.player.stats.PlaceInvaderStats;
-import net.epopy.epopy.player.stats.PongStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
@@ -256,7 +256,7 @@ public class GameMenu extends AbstractGameMenu {
 					record = String.valueOf(snakeStats.getRecord() + " pts");
 					parties = String.valueOf(snakeStats.getParties());
 				} else if (GameList.PING.toString().toLowerCase().equals(name.toLowerCase())) {
-					PongStats pingStats = Main.getPlayer().getPingStats();
+					PingStats pingStats = Main.getPlayer().getPingStats();
 					temps = pingStats.getTemps();
 					record = pingStats.getRecordString();
 					parties = String.valueOf(pingStats.getParties());

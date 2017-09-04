@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 import net.epopy.epopy.utils.Config;
 
-public class PongStats {
+public class PingStats {
 
 	private long record;
 	private final Config config;
@@ -12,7 +12,7 @@ public class PongStats {
 	private long tempsLong;
 	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-	public PongStats(final Config config) {
+	public PingStats(final Config config) {
 		this.config = config;
 		record = Long.parseLong(config.getData("ping_record"));
 		parties = Integer.parseInt(config.getData("ping_parties"));
