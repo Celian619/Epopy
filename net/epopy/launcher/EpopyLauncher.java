@@ -128,8 +128,8 @@ public class EpopyLauncher {
 				Gif.frame();
 		
 				long start = System.currentTimeMillis();
-			//	new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
-				FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
+				new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
+			//	FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
 				String time = timeFormat.format(Calendar.getInstance().getTimeInMillis() - start - 3600000);
 				System.out.println("  Télechargement 'epopy.jar': " + time);
 				jar = new File(PATH_FOLDER + "/epopy.jar");

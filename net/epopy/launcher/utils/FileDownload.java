@@ -86,7 +86,7 @@ public class FileDownload {
 		}
 	}
 	
-	public static void download(final String urlString, final File downloaded)
+	/*public static void download(final String urlString, final File downloaded)
 			throws IOException {
 		pourcent = 0;
 		BufferedOutputStream bout = null;
@@ -136,5 +136,5 @@ public class FileDownload {
 		}
 		System.out.println("File " + urlString + " downloaded");
 	}
-
+*/
 }

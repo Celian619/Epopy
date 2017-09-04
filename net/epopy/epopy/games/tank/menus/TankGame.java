@@ -22,6 +22,7 @@ import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
+import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.TankStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
@@ -373,11 +374,11 @@ public class TankGame extends AbstractGameMenu {
 					tankStats.setRecord(damage);
 					record = true;
 				}
-				
-				/**
-				 * if (tankStats.getRecord() >= tankStats.getObjectif()) if (Main.getPlayer().getLevel() <= GameList.TANK.getID())
-				 * Main.getPlayer().setLevel(GameList.TANK.getID() + 1);
-				 */
+
+				if (tankStats.getRecord() >= tankStats.getObjectif()) 
+					if (Main.getPlayer().getLevel() <= GameList.TANK.getID())
+						Main.getPlayer().setLevel(GameList.TANK.getID() + 1);
+
 			}
 			renderEchap(false, +damage + "", record);
 		}
