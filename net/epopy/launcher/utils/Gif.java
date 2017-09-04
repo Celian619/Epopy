@@ -13,7 +13,6 @@ import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class Gif extends JPanel {
-
 	Image image;
 	Image image2;
 
