@@ -8,7 +8,6 @@ import net.epopy.epopy.games.pong.Pong;
 import net.epopy.epopy.games.snake.Snake;
 import net.epopy.epopy.games.speedrun.SpeedRun;
 import net.epopy.epopy.games.tank.Tank;
-import net.epopy.epopy.games.tetras.Tetras;
 
 public enum GameList {
 	
@@ -17,12 +16,12 @@ public enum GameList {
 	SNAKE(3, Snake.class),
 	PLACEINVADER(4, PlaceInvader.class),
 	TANK(5, Tank.class),
-	TETRAS(6, Tetras.class),
-	SPEEDRUN(7, SpeedRun.class)
-	// EATMAN(5, Eatman.class),
-	// MARIO(6, Mario.class),
+	SPEEDRUN(6, SpeedRun.class),
+	// TETRAS(7, Tetras.class),
+	// EATMAN(8, Eatman.class),
+	// MARIO(9, Mario.class),
 	// si id > 1000, il n'est plus visible
-	// DECO(6, Deco.class),
+	// DECO(10, Deco.class),
 	;
 	
 	private int id;
