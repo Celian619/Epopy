@@ -57,7 +57,7 @@ public class GameMenu extends AbstractGameMenu {
 			soundCrescendo = true;
 			i = 0;
 		}
-		
+
 		if (soundCrescendo) {
 			if (i == 10)
 				Audios.LOBBY.setVolume(0.15f);
@@ -182,7 +182,7 @@ public class GameMenu extends AbstractGameMenu {
 			Main.getPlayer().setLastGame(GameList.valueOf(name.toUpperCase()).getID());
 			Audios.LOBBY.stop();
 		}
-		if (droite.isClicked() && game != null) {
+		if (droite.isClicked() && game != null && Main.getPlayer().getLevel() >= (GameList.valueOf(game.getName().toUpperCase()).getID()+1)) {
 			GameList gameList = GameList.valueOf(game.getName().toUpperCase());
 			int id = gameList.getID() + 1;
 			AbstractGame nextGame = Main.getGameManager().getAbstractGame(id);
@@ -199,7 +199,7 @@ public class GameMenu extends AbstractGameMenu {
 				}
 			}
 		}
-		if (gauche.isClicked()) {
+		if (gauche.isClicked() && GameList.valueOf(game.getName().toUpperCase()).getID()-1 != 0) {
 			int id = 1;
 			AbstractGame nextGame = null;
 			if (game == null) {
@@ -320,11 +320,12 @@ public class GameMenu extends AbstractGameMenu {
 			options.render();
 		}
 
-		// user.render();
 		retour.render();
 
-		gauche.render();
-		droite.render();
+		if(GameList.valueOf(game.getName().toUpperCase()).getID()-1 != 0)
+			gauche.render();
+		if(Main.getPlayer().getLevel() >= (GameList.valueOf(game.getName().toUpperCase()).getID()+1))
+			droite.render();
 		ComponentsHelper.drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
 		NotificationGui.render();
 	}
