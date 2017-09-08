@@ -321,7 +321,7 @@ public class GameMenu extends AbstractGameMenu {
 		}
 
 		retour.render();
-
+		
 		if(GameList.valueOf(game.getName().toUpperCase()).getID()-1 != 0)
 			gauche.render();
 		if(Main.getPlayer().getLevel() >= (GameList.valueOf(game.getName().toUpperCase()).getID()+1))
