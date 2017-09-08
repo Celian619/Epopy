@@ -2,14 +2,19 @@ package net.epopy.launcher.utils;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
+
+import net.epopy.launcher.EpopyLauncher;
 
 @SuppressWarnings("serial")
 public class Gif extends JPanel {
@@ -30,12 +35,16 @@ public class Gif extends JPanel {
 			g.setFont(new Font("Mirosoft Tai Le", Font.BOLD, 15));
 			g.setColor(Color.WHITE);
 			g.drawString((int) FileDownload.pourcent + "%", (int) FileDownload.pourcent < 10 ? 1000 / 2 - 12 : 1000 / 2 - 17, 300);
+			
+			g.drawImage(partenaire, 3, 610, partenaire.getWidth(null)/2, partenaire.getHeight(null)/2,this);
 		}
 	}
 
 	private static Window frame;
-
+	private static Image partenaire = null;
 	public static void frame() {
+		partenaire = FileDownload.getImage(EpopyLauncher.URL_PARTENAIRES);
+
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
