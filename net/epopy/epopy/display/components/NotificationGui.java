@@ -61,7 +61,7 @@ public class NotificationGui {
 
 	private static int x;
 	private static int w = 0;
-	private static int h = 30 + 20 + 20;
+	private static int h = 70;
 	private static int y = 30;
 	private static int removeTime = 0;
 	private static boolean reponseChoose;
@@ -80,28 +80,28 @@ public class NotificationGui {
 					int size = notif.information.length() > notif.notification.length() ? sizeInformations : sizeNotif;
 					FontUtils font = null;
 
-					if(ComponentsHelper.fonts.containsKey(size)) 
+					if (ComponentsHelper.fonts.containsKey(size))
 						font = ComponentsHelper.fonts.get(size);
-					 else
+					else
 						font = new FontUtils(size, "Impact");
 
 					double msgWidth = 200;
 
 					for (char c : message.toCharArray())
 						msgWidth += font.getCharWidth(c);
-				
+
 					if (w < msgWidth)
 						w += 10;
-							
-					x = AbstractGameMenu.defaultWidth - (w / 2);
+
+					x = AbstractGameMenu.defaultWidth - w / 2;
 				}
 
 				ComponentsHelper.renderTexture(Textures.MAIN_NOTIF, AbstractGameMenu.defaultWidth - w - 60, y, w + 60, h);
 
 				ButtonGui button = notif.error ? notif.refuse : notif.accept;
 
-				button.update((AbstractGameMenu.defaultWidth - w) - 30, y + h / 4, null, null, 30, 30);
-				button.setX((AbstractGameMenu.defaultWidth - w) - 30);
+				button.update(AbstractGameMenu.defaultWidth - w - 30, y + h / 4, null, null, 30, 30);
+				button.setX(AbstractGameMenu.defaultWidth - w - 30);
 				if (notif.error) GL11.glColor4f(1, 0, 0, 1);
 				button.render();
 
@@ -118,14 +118,14 @@ public class NotificationGui {
 				}
 
 				if (notif.reponse != null) {
-					notif.refuse.update((AbstractGameMenu.defaultWidth - w) + 5, y + h / 4, null, null, 30, 30);
-					notif.refuse.setX((AbstractGameMenu.defaultWidth - w) +5 );
+					notif.refuse.update(AbstractGameMenu.defaultWidth - w + 5, y + h / 4, null, null, 30, 30);
+					notif.refuse.setX(AbstractGameMenu.defaultWidth - w + 5);
 					GL11.glColor4f(1, 0, 0, 1);
 					notif.refuse.render();
 				}
 
 				ComponentsHelper.drawText(notif.notification, x, y + (notif.information.equals("null") ? 13 : 5), PositionWidth.MILIEU, PositionHeight.HAUT, sizeNotif, notif.color);
-				ComponentsHelper.drawText(notif.information.equals("null") ? "" : notif.information, x, y + 5 + sizeNotif + 5, PositionWidth.MILIEU, PositionHeight.HAUT, sizeInformations, notif.color);
+				ComponentsHelper.drawText(notif.information.equals("null") ? "" : notif.information, x, y + sizeNotif + 10, PositionWidth.MILIEU, PositionHeight.HAUT, sizeInformations, notif.color);
 
 				notif.time.getPauseString();
 

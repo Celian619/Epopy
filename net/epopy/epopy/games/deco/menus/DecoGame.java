@@ -94,7 +94,7 @@ public class DecoGame extends AbstractGameMenu {
 	public void render() {
 
 		Textures.GAME_DECO_LEVEL_BG.renderBackground();
-		float[] color = new float[] { 0, 1f, 0, 1 };
+		float[] color = new float[] { 0, 1, 0, 1 };
 		for (Prise p : prises) {
 			if (p.good)
 				ComponentsHelper.drawText("1", defaultWidth / 2 + 300 * (p.voie - 1), p.position, PositionWidth.MILIEU, PositionHeight.MILIEU, 60, color);

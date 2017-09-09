@@ -35,8 +35,9 @@ import net.epopy.epopy.utils.FileUtils;
 public class FontUtils {
 
 	// Constants
-	@SuppressWarnings("serial")
 	private final Map<Integer, String> CHARS = new HashMap<Integer, String>() {
+		private static final long serialVersionUID = 1L;
+		
 		{
 			put(0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 			put(1, "abcdefghijklmnopqrstuvwxyzéàè»«ê♥Êûô↓↑←→â©Φ•");
@@ -48,9 +49,9 @@ public class FontUtils {
 
 	// Variables
 	private java.awt.Font font;
-	private FontMetrics fontMetrics;
-	private BufferedImage bufferedImage;
-	private int fontTextureId;
+	private final FontMetrics fontMetrics;
+	private final BufferedImage bufferedImage;
+	private final int fontTextureId;
 
 	// Getters
 	public int getFontImageWidth() {
@@ -61,17 +62,17 @@ public class FontUtils {
 		return CHARS.keySet().size() * getCharHeight();
 	}
 
-	public int getCharX(char c) {
+	public int getCharX(final char c) {
 		String originStr = CHARS.values().stream().filter(e -> e.contains("" + c)).findFirst().orElse("" + c);
 		return (int) fontMetrics.getStringBounds(originStr.substring(0, originStr.indexOf(c)), null).getWidth();
 	}
 
-	public int getCharY(char c) {
+	public int getCharY(final char c) {
 		int lineId = CHARS.keySet().stream().filter(i -> CHARS.get(i).contains("" + c)).findFirst().orElse(0);
 		return getCharHeight() * lineId;
 	}
 
-	public int getCharWidth(char c) {
+	public int getCharWidth(final char c) {
 		return fontMetrics.charWidth(c);
 	}
 
@@ -80,12 +81,12 @@ public class FontUtils {
 	}
 
 	// Constructors
-	public FontUtils(int size, String police) {
+	public FontUtils(final int size, final String police) {
 		if (FileUtils.SYSTEM_NAME.equals("Linux"))
 			font = new Font("sans-serif", Font.BOLD, size);
-		else 
+		else
 			font = new Font(police, police.equals("Impact") ? Font.BOLD : Font.PLAIN, size);
-		
+
 		// Generate buffered image
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		Graphics2D graphics = gc.createCompatibleImage(1, 1, Transparency.TRANSLUCENT).createGraphics();
@@ -105,19 +106,19 @@ public class FontUtils {
 	}
 
 	// Functions
-	public int drawText(String text, int x, int y) {
+	public int drawText(final String text, final int x, final int y) {
 		glBindTexture(GL_TEXTURE_2D, fontTextureId);
 		glBegin(GL_QUADS);
 
 		int xTmp = x;
 		for (char c : text.toCharArray()) {
 
-			float width = getCharWidth(c)  ;
+			float width = getCharWidth(c);
 			float height = getCharHeight();
-			float cw = 1f / getFontImageWidth() * width;
-			float ch = 1f / getFontImageHeight() * height;
-			float cx = 1f / getFontImageWidth() * getCharX(c);
-			float cy = 1f / getFontImageHeight() * getCharY(c);
+			float cw = 1 / getFontImageWidth() * width;
+			float ch = 1 / getFontImageHeight() * height;
+			float cx = 1 / getFontImageWidth() * getCharX(c);
+			float cy = 1 / getFontImageHeight() * getCharY(c);
 
 			glTexCoord2f(cx, cy);
 			glVertex3f(xTmp, y, 0);

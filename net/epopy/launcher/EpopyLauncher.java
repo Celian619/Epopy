@@ -1,15 +1,9 @@
 package net.epopy.launcher;
 
 import java.awt.Desktop;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -28,7 +22,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JWindow;
 
 import net.epopy.launcher.utils.FileDownload;
@@ -37,32 +30,29 @@ import net.epopy.launcher.utils.Version;
 import net.epopy.sdk.security.Encryptor;
 
 public class EpopyLauncher {
-
-	// TODO utliser ces variables
-	private static String SYSTEM_NAME;
-	private static String URL_;
+	
 	private static String URL_JAR;
 	private static String URL_VERSION;
 	private static String PATH_FOLDER;
 	private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
+	
 	public static String VERSION = "Bêta-1.0.0.0";
 	public static String URL_PARTENAIRES;
-
+	
 	// encryp
-	private static String KEY = "E1BB465D57CAE7ACDBBE8091F9CE83DF";
+	private static String KEY = "E1BB465D57CAE7ACDBBE80919CE83DF";
 	private static String ALGORITMO = "AES/CBC/PKCS5Padding";
 	private static String CODIFICACION = "UTF-8";
 	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);;
-
+	
 	public static void main(final String[] args) {
 		initFiles();
-
+		
 		new EpopyLauncher(PATH_FOLDER);
 	}
-
+	
 	public EpopyLauncher(final String PATH_FOLDER) {
-
+		
 		/**
 		 * Quand on aurra un server ou mettre sur une dropbox URL = "http://eroz.pe.hu/retrogames/"; URL_VERSION = URL + SYSTEM_NAME +
 		 * "/version.txt"; URL_JAR = URL + SYSTEM_NAME + "/retrogames.jar";
@@ -92,23 +82,23 @@ public class EpopyLauncher {
 		} catch (IOException e) {
 			URL_JAR = "No connetion";
 		}
-
+		
 		File jar = new File(PATH_FOLDER + "/epopy.jar");
 		if (URL_JAR.equals("null") && !jar.exists()) {
 			showWindowsError("url_null");
 			return;
 		}
-
+		
 		try {
 			long startUpdate = System.currentTimeMillis();
 			/**
 			 * Current version
 			 */
-
+			
 			Version currentVersionFile = new Version(PATH_FOLDER + "/version.txt");
 			currentVersionFile.delete();
 			String currentVersion = currentVersionFile.getVersion();
-
+			
 			/*
 			 * Future version
 			 */
@@ -119,14 +109,14 @@ public class EpopyLauncher {
 			System.out.println("[VERSIONS]");
 			System.out.println("  Current version: " + currentVersion);
 			System.out.println("  Server version: " + newVersion);
-
+			
 			boolean needUpdate = !currentVersion.equals(newVersion);
 			if (jar == null || !jar.exists())
 				needUpdate = true;
 			System.out.println("  Need update: " + needUpdate);
 			System.out.println("");
 			System.out.println("[UPDATE]");
-
+			
 			if (needUpdate) {
 				File dir = new File(PATH_FOLDER);
 				File[] files = dir.listFiles();
@@ -134,12 +124,12 @@ public class EpopyLauncher {
 					if (file.getName().equals("epopy.jar"))
 						file.delete();
 				}
-
+				
 				Gif.frame();
-
+				
 				long start = System.currentTimeMillis();
 				new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
-				//	FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
+				// FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
 				String time = timeFormat.format(Calendar.getInstance().getTimeInMillis() - start - 3600000);
 				System.out.println("  Télechargement 'epopy.jar': " + time);
 				jar = new File(PATH_FOLDER + "/epopy.jar");
@@ -148,7 +138,7 @@ public class EpopyLauncher {
 			System.out.println("  Update: " + timeUpdate);
 		} catch (Exception e) {
 		}
-
+		
 		try {
 			if (jar != null && jar.exists()) {
 				Desktop.getDesktop().open(jar);
@@ -160,7 +150,7 @@ public class EpopyLauncher {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private static void showWindowsError(final String image) {
 		JWindow frame = new JWindow();
 		frame.setSize(1000, 630);
@@ -172,59 +162,54 @@ public class EpopyLauncher {
 			button.setContentAreaFilled(false);
 			button.addMouseListener(new MouseAdapter() {
 				@Override
-				public void mouseClicked(MouseEvent e) {
+				public void mouseClicked(final MouseEvent e) {
 					System.exit(0);
 				}
 			});
 			frame.add(button);
 			
-			//background
+			// background
 			frame.add(new JLabel(new ImageIcon(ImageIO.read(Gif.class.getResource("/net/epopy/launcher/" + image + ".png")))));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(EpopyLauncher.class.getResource("/net/epopy/launcher/logo.png")));
 		
-	
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(EpopyLauncher.class.getResource("/net/epopy/launcher/logo.png")));
 		
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
+	
 	private static void initFiles() {
 		String folderName = ".Epopy";
 		String FileFolder = System.getenv("APPDATA") + "\\" + folderName;
 		String os = System.getProperty("os.name").toUpperCase();
-
+		
 		String system = "no found !";
 		if (os.contains("WIN")) {
-			SYSTEM_NAME = "Win";
 			FileFolder = System.getenv("APPDATA") + "\\" + folderName;
 			system = "Windows";
 		} else if (os.contains("MAC")) {
-			SYSTEM_NAME = "Mac";
 			FileFolder = System.getProperty("user.home") + "/Library/Application " + "Support" + folderName;
 			system = "Mac";
 		} else if (os.contains("NUX")) {
-			SYSTEM_NAME = "Linux";
 			FileFolder = System.getProperty("user.dir") + "." + folderName;
 			system = "Linux";
 		}
-
+		
 		System.out.println("[SYSTEM] System name: " + system);
-
+		
 		File directory = new File(FileFolder);
 		PATH_FOLDER = directory.getPath() + "/";
-
+		
 		if (directory.exists())
 			System.out.println("[SYSTEM] Folder '.Epopy' was found !");
 		else {
 			directory.mkdir();
 			System.out.println("[SYSTEM] Folder '.Epopy' has been created !");
 		}
-
+		
 		/*
 		 * Infos.txt
 		 */
@@ -250,7 +235,7 @@ public class EpopyLauncher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		System.out.println(" ");
 	}
 }

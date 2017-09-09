@@ -94,14 +94,14 @@ public class GameOptionsMenu extends AbstractGameMenu {
 		 */
 		Main.getGameManager().getGameEnable().getDefaultBackGround().renderBackground();
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
-		ComponentsHelper.drawText("Options", defaultWidth / 2, 0, PositionWidth.MILIEU, PositionHeight.HAUT, 100, new float[] { 1, 1f, 1, 1 });
+		ComponentsHelper.drawText("Options", defaultWidth / 2, 0, PositionWidth.MILIEU, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 
 		/*
 		 * Title optins
 		 */
 		int hauteur = 330;
-		ComponentsHelper.drawText("Général", 150, hauteur - 30, 70, new float[] { 1, 1f, 1, 1 });
-		ComponentsHelper.drawText("Jeux", 1485, hauteur - 30, 70, new float[] { 1, 1f, 1, 1 });
+		ComponentsHelper.drawText("Général", 150, hauteur - 30, 70, new float[] { 1, 1, 1, 1 });
+		ComponentsHelper.drawText("Jeux", 1485, hauteur - 30, 70, new float[] { 1, 1, 1, 1 });
 
 		if(game != null && game.getMenuOptions() != null)
 			game.getMenuOptions().render();
@@ -112,8 +112,8 @@ public class GameOptionsMenu extends AbstractGameMenu {
 		 * réinitialiser
 		 */
 		if (validation) {
-			ComponentsHelper.drawText("Êtes-vous sûr", defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.BAS, 80, new float[] { 1, 1f, 1, 1 });
-			ComponentsHelper.drawText("vouloir réinitialiser ?", defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.HAUT, 80, new float[] { 1, 1f, 1, 1 });
+			ComponentsHelper.drawText("Êtes-vous sûr", defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.BAS, 80, new float[] { 1, 1, 1, 1 });
+			ComponentsHelper.drawText("vouloir réinitialiser ?", defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.HAUT, 80, new float[] { 1, 1, 1, 1 });
 			accept.render();
 			refuse.render();
 		}

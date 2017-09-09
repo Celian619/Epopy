@@ -17,7 +17,7 @@ public abstract class AbstractGameMenu {
 
 	protected ButtonGui reprendreButton = new ButtonGui("Reprendre", new float[] { 1, 1, 1, 1 }, 50, false);
 
-	protected ButtonGui quitterButton = new ButtonGui("Quitter", new float[] { 1f, 1f, 1f, 1f }, 50, false);
+	protected ButtonGui quitterButton = new ButtonGui("Quitter", new float[] { 1, 1, 1, 1 }, 50, false);
 
 	protected ButtonGui retour = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
 

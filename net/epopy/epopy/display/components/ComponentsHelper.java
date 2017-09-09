@@ -27,15 +27,15 @@ import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class ComponentsHelper {
-	
+
 	private static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789.;,:=+-'►✔✖*/(\\()!?@ ";
-	
+
 	public static void drawQuadData(int x, int y, int width, int height, final Vector4f color) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
 		height = getResponsiveY(height);
-		
+
 		glColor4f(color.x, color.y, color.z, color.w);
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);
@@ -45,13 +45,13 @@ public class ComponentsHelper {
 		glColor4f(1, 1, 1, 1);
 		glEnd();
 	}
-	
+
 	public static void drawQuadData(int x, int y, int width, int height, final float[] color) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
 		height = getResponsiveY(height);
-		
+
 		glColor4f(color[0], color[1], color[2], color[3]);
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);
@@ -61,28 +61,28 @@ public class ComponentsHelper {
 		glColor4f(1, 1, 1, 1);
 		glEnd();
 	}
-	
-	public static void drawCircle(final double x, final double y, final int radius, final int cote) {
-		drawCircle(x, y, radius, cote, new float[] { 1f, 1f, 1f, 1f }, 0);
-	}
 
+	public static void drawCircle(final double x, final double y, final int radius, final int cote) {
+		drawCircle(x, y, radius, cote, new float[] { 1, 1, 1, 1 }, 0);
+	}
+	
 	public static void drawCircle(final double x, final double y, final int radius, final int cote, final float[] color) {
 		drawCircle(x, y, radius, cote, color, 0);
 	}
-	
+
 	public static void drawCircle(final double x, final double y, final int radius, final int cote, final int rotation) {
-		drawCircle(x, y, radius, cote, new float[] { 1f, 1f, 1f, 1f }, rotation);
+		drawCircle(x, y, radius, cote, new float[] { 1, 1, 1, 1 }, rotation);
 	}
-	
+
 	public static void drawCircle(final double x, final double y, int radius, final int cote, final float[] color, final int rotation) {
 		radius = getResponsiveX(radius);
-		
+
 		glColor4f(color[0], color[1], color[2], color[3]);
 		glPushMatrix();
 		glTranslatef(getResponsiveX(x), getResponsiveY(y), 0);
 		glScalef(radius, radius, 1);
 		glRotatef(rotation, 0, 0, 1);
-		
+
 		glBegin(GL11.GL_TRIANGLE_FAN);
 		glVertex2f(0, 0);
 		for (int i = 0; i <= cote; i++) { // NUM_PIZZA_SLICES decides how round the circle looks.
@@ -91,9 +91,9 @@ public class ComponentsHelper {
 		}
 		glEnd();
 		glPopMatrix();
-		glColor4f(1, 1, 1, 1f);
+		glColor4f(1, 1, 1, 1);
 	}
-	
+
 	public static void drawString(String msg, final double x, final double y, int size, final float[] color) {
 		size = getResponsiveString(size);
 		msg = msg.toUpperCase();
@@ -106,67 +106,67 @@ public class ComponentsHelper {
 		glEnd();
 		Textures.unbind();
 	}
-	
-	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 
-	public static int drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size) {
-		return drawText(msg, x, y, posWidth, posHeight, size, new float[] { 1f, 1f, 1f, 1f });
-	}
+	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 	
+	public static int drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size) {
+		return drawText(msg, x, y, posWidth, posHeight, size, new float[] { 1, 1, 1, 1 });
+	}
+
 	public static int drawText(final String msg, final double x, final double y, final int size, final float[] color) {
 		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, color);
 	}
-	
+
 	public static int drawText(final String msg, final double x, final double y, final int size) {
-		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, new float[] { 1f, 1f, 1f, 1f });
+		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, new float[] { 1, 1, 1, 1 });
 	}
-	
+
 	public static int drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size, final float[] color) {
 		return drawText(msg, x, y, posWidth, posHeight, size, color, true);
 	}
-	
+
 	public static int drawText(final String msg, double x, double y, final PositionWidth posWidth, final PositionHeight posHeight, int size, final float[] color, final boolean resize) {
 		if (resize) {
 			x = getResponsiveX(x);
 			y = getResponsiveY(y);
 		}
 		size = getResponsiveX(size);
-		
+
 		if (!fonts.containsKey(size))
 			fonts.put(size, new FontUtils(size, "Impact"));
-			
+
 		FontUtils font = fonts.get(size);
-		
+
 		double msgHeight = font.getCharHeight();
 		double msgWidth = 0;
-		
+
 		for (char c : msg.toCharArray())
 			msgWidth += font.getCharWidth(c);
-			
+
 		if (posHeight == PositionHeight.BAS)
 			y -= msgHeight;
 		else if (posHeight == PositionHeight.MILIEU)
 			y -= msgHeight / 2;
-			
+
 		if (posWidth == PositionWidth.DROITE)
 			x -= msgWidth;
 		else if (posWidth == PositionWidth.MILIEU)
 			x -= msgWidth / 2;
-			
+
 		glColor4f(color[0], color[1], color[2], color[3]);
 		int lastX = font.drawText(msg, (int) x, (int) y);
-		glColor4f(1, 1, 1, 1f);
-		
+		glColor4f(1, 1, 1, 1);
+
 		return lastX;
 	}
-	
+
 	private static void drawChar(final int character, int x, int y, final int size) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
-		
+
 		int xo = chars.indexOf(character) % 26;
 		int yo = chars.indexOf(character) / 26;
-		
+
 		glTexCoord2f(xo / 26.0f, yo / 6.0f);
 		glVertex2f(x, y);
 		glTexCoord2f((xo + 1) / 26.0f, yo / 6.0f);
@@ -176,19 +176,19 @@ public class ComponentsHelper {
 		glTexCoord2f(xo / 26.0f, (yo + 1) / 6.0f);
 		glVertex2f(x, y + size);
 	}
-	
+
 	public static void drawQuad(final int x, final int y, final int width, final int height) {
-		drawQuad(x, y, width, height, new float[] { 1f, 1f, 1f, 1f });
-		
+		drawQuad(x, y, width, height, new float[] { 1, 1, 1, 1 });
+
 	}
-	
+
 	public static void drawQuad(int x, int y, int width, int height, final float[] color) {
-		
+
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
 		height = getResponsiveY(height);
-		
+
 		glColor4f(color[0], color[1], color[2], color[3]);
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);
@@ -198,20 +198,20 @@ public class ComponentsHelper {
 		glEnd();
 		glColor4f(1, 1, 1, 1);
 	}
-	
+
 	public static void renderTexture(final Textures textureUtils, final double x, final double y, final int width, final int height) {
 		renderTexture(textureUtils, x, y, width, height, 0);
 	}
-	
+
 	public static void renderTexture(final Textures textureUtils, double x, double y, int width, int height, final int rotation) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
 		height = getResponsiveY(height);
-		
+
 		glTranslatef((int) (x + width / 2), (int) (y + height / 2), 0);
 		glRotatef(rotation, 0, 0, 1);
-		
+
 		textureUtils.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
@@ -225,13 +225,13 @@ public class ComponentsHelper {
 		glEnd();
 		Textures.unbind();
 		glLoadIdentity();
+		
+	}
 
-	}
-	
 	public static void drawLine(final int x1, final int y1, final int x2, final int y2, final float width) {
-		drawLine(x1, y1, x2, y2, width, new float[] { 1f, 1f, 1f, 1f });
+		drawLine(x1, y1, x2, y2, width, new float[] { 1, 1, 1, 1 });
 	}
-	
+
 	public static void drawLine(double x1, double y1, double x2, double y2, float width, final float[] color) {
 		x2 = getResponsiveX(x2);
 		y2 = getResponsiveY(y2);
@@ -246,33 +246,33 @@ public class ComponentsHelper {
 		glColor4f(1, 1, 1, 1);
 		glEnd();
 	}
-	
+
 	public static int getResponsiveString(final double size) {// Height /2 car - modifie par la size
 		return (int) (size / (AbstractGameMenu.defaultWidth * (AbstractGameMenu.defaultHeight / 2)) * Display.getWidth() * (Display.getHeight() / 2) * 1.33);
 	}
-	
+
 	public static int getResponsiveX(final double size) {
 		return (int) (size / AbstractGameMenu.defaultWidth * Display.getWidth());
 	}
-	
+
 	public static int getResponsiveX(final double size, final int w) {
 		return (int) (size / w * Display.getWidth());
 	}
-	
+
 	public static int getResponsiveY(final double size) {
 		return (int) (size / AbstractGameMenu.defaultHeight * Display.getHeight());
 	}
-	
+
 	public enum PositionHeight {
 		BAS(),
 		HAUT(),
 		MILIEU();
 	}
-	
+
 	public enum PositionWidth {
 		DROITE(),
 		GAUCHE(),
 		MILIEU();
 	}
-	
+
 }

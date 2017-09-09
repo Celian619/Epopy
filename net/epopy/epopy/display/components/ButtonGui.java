@@ -15,13 +15,13 @@ import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.utils.Input;
 
 public class ButtonGui {
-
+	
 	/**
 	 * Quand on switch de button et qu'on reclique sur un autre
 	 */
 	public static int timeResetMenu = 90;
 	public static int resetMenu = 0;
-
+	
 	private boolean isClicked;
 	private int x;
 	private int y;
@@ -34,26 +34,26 @@ public class ButtonGui {
 	public Textures textureOff;
 	public Textures textureOn;
 	private boolean isOn = false;
-
+	
 	public String text = null;
 	private int textSize = 20;
 	public float[] textColor = new float[] { 1, 1, 1, 1 };
 	private boolean changeColor = true;
 	private FontUtils font;
-
-	public ButtonGui(Textures textureOff, Textures textureOn, int x, int y, PositionWidth posWidth, PositionHeight posHeight, int width, int height) {
+	
+	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
 		isClicked = false;
-
+		
 		if (posHeight == PositionHeight.BAS)
 			y -= height;
 		else if (posHeight == PositionHeight.MILIEU)
 			y -= height / 2;
-
+			
 		if (posWidth == PositionWidth.DROITE)
 			x -= width;
 		else if (posWidth == PositionWidth.MILIEU)
 			x -= width / 2;
-
+			
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -61,14 +61,14 @@ public class ButtonGui {
 		this.textureOff = textureOff;
 		this.textureOn = textureOn;
 	}
-
-	public ButtonGui(Textures textureOff, Textures textureOn) {
+	
+	public ButtonGui(final Textures textureOff, final Textures textureOn) {
 		height = width = y = x = 0;
 		this.textureOff = textureOff;
 		this.textureOn = textureOn;
 	}
-
-	public ButtonGui(String text, float[] color, int textSize) {
+	
+	public ButtonGui(final String text, final float[] color, final int textSize) {
 		x = y = -1;
 		width = text.length() * textSize;
 		height = textSize;
@@ -76,17 +76,18 @@ public class ButtonGui {
 		this.textSize = textSize;
 		textColor = color;
 		changeColor = true;
-	}	
-	public ButtonGui(String text, float[] color, int textSize, boolean change) {
+	}
+	
+	public ButtonGui(final String text, final float[] color, final int textSize, final boolean change) {
 		x = y = -1;
 		width = text.length() * textSize;
 		height = textSize;
 		this.text = text;
 		this.textSize = textSize;
-		this.textColor = color;
-		this.changeColor = change;
+		textColor = color;
+		changeColor = change;
 	}
-
+	
 	public boolean isClicked() {
 		if (resetMenu == 0) {
 			if (isClicked) {
@@ -94,20 +95,20 @@ public class ButtonGui {
 				isClicked = false;
 				return true;
 			}
-		} else return false;
+		}
 
 		return false;
 	}
-
+	
 	public void update() {
 		if (resetMenu > 0)
 			resetMenu--;
-
+			
 		int mx = Mouse.getX();
 		int my = Display.getHeight() - Mouse.getY();
 		int x2 = x + width;
 		int y2 = y + height;
-
+		
 		if (mx >= x && mx < x2 && my >= y && my < y2) {
 			isOn = true;
 			if (resetMenu == 0) {
@@ -124,55 +125,54 @@ public class ButtonGui {
 			isClicked = false;
 		}
 	}
-
+	
 	public boolean isOn() {
 		return isOn;
 	}
-
-
-	public void update(int x, int y, PositionWidth posWidth, PositionHeight posHeight) {
-		if(font == null) {
-			if(ComponentsHelper.fonts.containsKey(textSize))
+	
+	public void update(int x, int y, final PositionWidth posWidth, final PositionHeight posHeight) {
+		if (font == null) {
+			if (ComponentsHelper.fonts.containsKey(textSize))
 				font = ComponentsHelper.fonts.get(textSize);
 			else
 				font = new FontUtils(textSize, "Impact");
 		}
 		if (xx == -1) {
 			int width = 0;
-			for (char c : text.toCharArray()) 
+			for (char c : text.toCharArray())
 				width += font.getCharWidth(c);
-			
+				
 			if (posHeight == PositionHeight.BAS)
 				y -= textSize;
 			else if (posHeight == PositionHeight.MILIEU)
 				y -= textSize / 2;
-
+				
 			if (posWidth == PositionWidth.DROITE)
 				x -= width;
 			else if (posWidth == PositionWidth.MILIEU)
 				x -= width / 2;
-			
+				
 			xx = x;
 			yy = y;
 			ww = width;
 			hh = textSize;
 		}
-
+		
 		this.x = ComponentsHelper.getResponsiveX(xx);
 		this.y = ComponentsHelper.getResponsiveY(yy);
-		this.width = ComponentsHelper.getResponsiveX(ww);
-		this.height = ComponentsHelper.getResponsiveY(hh);
-
+		width = ComponentsHelper.getResponsiveX(ww);
+		height = ComponentsHelper.getResponsiveY(hh);
+		
 		update();
 	}
-
-	public void update(int x, int y, PositionWidth posWidth, PositionHeight posHeight, int width, int height) {
+	
+	public void update(int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
 		if (xx == -1) {
 			if (posHeight == PositionHeight.BAS)
 				y -= height;
 			else if (posHeight == PositionHeight.MILIEU)
 				y -= height / 2;
-
+				
 			if (posWidth == PositionWidth.DROITE)
 				x -= width;
 			else if (posWidth == PositionWidth.MILIEU)
@@ -182,35 +182,34 @@ public class ButtonGui {
 			ww = width;
 			hh = height;
 		}
-
+		
 		this.x = ComponentsHelper.getResponsiveX(xx);
 		this.y = ComponentsHelper.getResponsiveY(yy);
 		this.width = ComponentsHelper.getResponsiveX(ww);
 		this.height = ComponentsHelper.getResponsiveY(hh);
-
+		
 		update();
 	}
-
-
-	public void setX(int x) {
+	
+	public void setX(final int x) {
 		xx = x;
 		this.x = ComponentsHelper.getResponsiveX(x);
 	}
-
-	public void setClicked(boolean clicked) {
+	
+	public void setClicked(final boolean clicked) {
 		isClicked = clicked;
 	}
-
+	
 	public void render() {
 		if (xx == -1)
 			return;
-
+			
 		if (text == null) {
 			if (isOn)
 				textureOn.bind();
 			else
 				textureOff.bind();
-
+				
 			glBegin(GL_QUADS);
 			glTexCoord2f(0, 0);
 			glVertex2f(x, y);
@@ -223,25 +222,25 @@ public class ButtonGui {
 			glEnd();
 			Textures.unbind();
 		} else {
-			if(changeColor) {
+			if (changeColor) {
 				if (isOn)
 					textColor[3] = 1;
 				else
 					textColor[3] = 0.6f;
 				ComponentsHelper.drawText(text, xx, yy, isOn ? (int) (textSize * 1.02) : textSize, textColor);
-
+				
 			} else {
 				if (isOn)
 					textColor[3] = 0.7f;
-				else 
+				else
 					textColor[3] = 1;
 				ComponentsHelper.drawText(text, xx, yy, textSize, textColor);
 			}
 		}
 	}
-
-	public void setText(String text) {
+	
+	public void setText(final String text) {
 		this.text = text;
 	}
-
+	
 }

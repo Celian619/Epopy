@@ -79,7 +79,7 @@ public class TankOptions extends AbstractGameMenu {
 		controlBas.render();
 		controlHaut.render();
 
-		ComponentsHelper.drawText("Avancer", 1420-575, 350, 30, new float[] { 1, 1f, 1, 1 });
-		ComponentsHelper.drawText("Reculer", 1420-570, 718, 30, new float[] { 1,1f, 1, 1 });
+		ComponentsHelper.drawText("Avancer", 1420-575, 350, 30, new float[] { 1, 1, 1, 1 });
+		ComponentsHelper.drawText("Reculer", 1420-570, 718, 30, new float[] { 1,1, 1, 1 });
 	}
 }

@@ -69,6 +69,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 					
 					@Override
 					public <T> void callback(final T reponse) {
+
 						@SuppressWarnings("unchecked")
 						Map<String, Textures> texture = (Map<String, Textures>) reponse;
 						WaitingRoom.userProfilTexture.putAll(texture);
@@ -87,7 +88,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 			String team = data.split(":")[2];
 			NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
 			NetworkPlayer.getGame().clear();
-		       
+
 			new java.util.Timer().schedule(
 					new java.util.TimerTask() {
 						@Override

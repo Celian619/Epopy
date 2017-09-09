@@ -8,9 +8,8 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.player.stats.CarStats;
-import net.epopy.epopy.player.stats.MarioStats;
-import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.PingStats;
+import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
@@ -29,7 +28,6 @@ public class Player {
 	private final String name;
 
 	// stats games
-	private MarioStats marioStats;
 	private SnakeStats snakeStats;
 	private PingStats pingStats;
 	private CarStats carStats;
@@ -66,7 +64,6 @@ public class Player {
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		config = new Config(profil);
 		level = Integer.parseInt(config.getData("level"));
-		marioStats = new MarioStats(config);
 		carStats = new CarStats(config);
 		snakeStats = new SnakeStats(config);
 		pingStats = new PingStats(config);
@@ -152,7 +149,7 @@ public class Player {
 	
 	public void setLevel(final int level) {
 		if (this.level < level) {
-			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1f, 1, 1 }, false);
+			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1, 1, 1 }, false);
 			Audios.NEW_GAME.setVolume(0.5f).start(false);
 		}
 		this.level = level;
@@ -166,11 +163,7 @@ public class Player {
 	public PlaceInvaderStats getPlaceInvaderStats() {
 		return placeInvaderStats;
 	}
-
-	public MarioStats getMarioStats() {
-		return marioStats;
-	}
-
+	
 	public PingStats getPingStats() {
 		return pingStats;
 	}

@@ -236,7 +236,7 @@ public class SnakeGame extends AbstractGameMenu {
 	}
 
 	private int c = 0;
-	private float[] color = new float[] { 1f, 0f, 0f, 1f };
+	private float[] color = new float[] { 1, 0f, 0f, 1 };
 	private int rotationFood = 0;
 
 	@Override
@@ -259,7 +259,7 @@ public class SnakeGame extends AbstractGameMenu {
 		for (Location loc : posSnake) {
 			
 			pos++;
-			ComponentsHelper.drawCircle((int) (cubeX * loc.getX() + cubeX / 2), (int) (cubeY * loc.getY() + cubeX / 2), (int) (cubeX * 2), 10, new float[] { 0f, (float) (pos / posSnake.size()), 0f, 1f });
+			ComponentsHelper.drawCircle((int) (cubeX * loc.getX() + cubeX / 2), (int) (cubeY * loc.getY() + cubeX / 2), (int) (cubeX * 2), 10, new float[] { 0f, (float) (pos / posSnake.size()), 0f, 1 });
 		}
 		c++;
 		if (c > 20) {
@@ -270,9 +270,9 @@ public class SnakeGame extends AbstractGameMenu {
 
 		if (!gameOver && !paused) {
 			if (snakeSize < ptsRecord)
-				ComponentsHelper.drawText("Score: " + snakeSize, 0, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1f, 1f });
+				ComponentsHelper.drawText("Score: " + snakeSize, 0, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
 			else {
-				ComponentsHelper.drawText("Score: ", 0, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1f, 1f });
+				ComponentsHelper.drawText("Score: ", 0, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
 				ComponentsHelper.drawText(snakeSize + "", 170, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, color);
 			}
 		}

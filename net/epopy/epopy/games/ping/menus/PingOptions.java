@@ -112,9 +112,9 @@ public class PingOptions extends AbstractGameMenu {
 		
 		ComponentsHelper.drawText(type, 1580 - 475, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
 		
-		ComponentsHelper.drawText(option1, 1420 - 528 - 10, 350, 30, new float[] { 1, 1f, 1, 1 });
-		ComponentsHelper.drawText(option2, 1420 - 520, 530, 30, new float[] { 1, 1f, 1, 1 });
-		ComponentsHelper.drawText(option3, 1280 - 535 - 20, 718, 30, new float[] { 1, 1f, 1, 1 });
+		ComponentsHelper.drawText(option1, 1420 - 528 - 10, 350, 30, new float[] { 1, 1, 1, 1 });
+		ComponentsHelper.drawText(option2, 1420 - 520, 530, 30, new float[] { 1, 1, 1, 1 });
+		ComponentsHelper.drawText(option3, 1280 - 535 - 20, 718, 30, new float[] { 1, 1, 1, 1 });
 		
 	}
 }

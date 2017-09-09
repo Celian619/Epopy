@@ -75,7 +75,7 @@ public class TChat {
 
 		for(String message : messagesList) {
 			if(message.contains("&e"))
-				ComponentsHelper.drawText(message.replace("&e", ""), x, y, 30, new float[]{1f, 1f, 0, 1});
+				ComponentsHelper.drawText(message.replace("&e", ""), x, y, 30, new float[]{1, 1, 0, 1});
 			else
 				ComponentsHelper.drawText(message, x, y, 30);
 			y -= 30;

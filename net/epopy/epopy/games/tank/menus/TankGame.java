@@ -289,19 +289,19 @@ public class TankGame extends AbstractGameMenu {
 		Textures.GAME_TANK_BG.renderBackground();
 
 		if (!gameOver && !win && !pauseScreen)
-			ComponentsHelper.drawText("Score: " + damage, defaultWidth / 2, defaultHeight / 2 + 35, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.7f, 0.7f, 0.7f, 1f });
+			ComponentsHelper.drawText("Score: " + damage, defaultWidth / 2, defaultHeight / 2 + 35, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.7f, 0.7f, 0.7f, 1 });
 
 		// empreintes du tank
 		float f = 0.20f;
 		for (Location loc : tankPrintP) {
-			glColor4f(0.32f, 0.26f, 1f, f);
+			glColor4f(0.32f, 0.26f, 1, f);
 			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 26, loc.getY() - 24, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
 
 		f = 0.20f;
 		for (Location loc : tankPrintR) {
-			glColor4f(1f, 0f, 0f, f);
+			glColor4f(1, 0f, 0f, f);
 			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 26, loc.getY() - 24, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
@@ -310,9 +310,9 @@ public class TankGame extends AbstractGameMenu {
 
 		for (Ball b : balles) {
 			if (b.isPlayerBall())
-				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 0f, 0f, 1f, 1f });
+				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 0f, 0f, 1, 1 });
 			else
-				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 1f, 0f, 0f, 1f });
+				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 1, 0f, 0f, 1 });
 
 		}
 
@@ -327,7 +327,7 @@ public class TankGame extends AbstractGameMenu {
 
 		if (damaged > 0) {// a été touché
 			damaged--;
-			glColor4f(1f, 0f, 0f, 0.5f);
+			glColor4f(1, 0f, 0f, 0.5f);
 		}
 
 		ComponentsHelper.renderTexture(textureBot, locRobot.getX() - 26, locRobot.getY() - 24, 64, 56, locRobot.getDirection());

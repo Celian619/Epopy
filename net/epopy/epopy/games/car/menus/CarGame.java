@@ -164,7 +164,7 @@ public class CarGame extends AbstractGameMenu {
 
 			// la ligne de départ :
 			ComponentsHelper.drawLine((int) (middleWidth * cubeWidth), (int) (middleHeight *
-					cubeHeight), (int) (middleWidth * cubeWidth), (int) ((middleHeight + 1) * cubeHeight), 8, new float[] { 0f, 0f, 1f, 1 });
+					cubeHeight), (int) (middleWidth * cubeWidth), (int) ((middleHeight + 1) * cubeHeight), 8, new float[] { 0f, 0f, 1, 1 });
 
 			paintLiaisons(pointsInt);
 			paintLiaisons(pointsExt);
@@ -316,7 +316,7 @@ public class CarGame extends AbstractGameMenu {
 	}
 
 	private void paintLiaisons(final List<Location> points) {
-		float[] color = new float[] { 0f, 0f, 0f, 1f };
+		float[] color = new float[] { 0f, 0f, 0f, 1 };
 
 		// draw all the lines
 		for (Location loc : points) {
@@ -339,7 +339,7 @@ public class CarGame extends AbstractGameMenu {
 							glVertex2f(getImageX(loc), getImageY(loc));
 							glVertex2f(getImageX(locat), getImageY(locat));
 							glVertex2f(getImageX(locat2), getImageY(locat2));
-							glColor4f(1, 1, 1, 1f);
+							glColor4f(1, 1, 1, 1);
 							glEnd();
 
 						}

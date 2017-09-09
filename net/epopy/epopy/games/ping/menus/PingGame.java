@@ -42,7 +42,7 @@ public class PingGame extends AbstractGameMenu {
 	private static Timer timer;
 
 	// color
-	private float[] colorTimer = new float[] { 1f, 1f, 1f, 1f };
+	private float[] colorTimer = new float[] { 1, 1, 1, 1 };
 	private int colorTime;
 
 	private boolean addStats;
@@ -182,7 +182,7 @@ public class PingGame extends AbstractGameMenu {
 		}
 		ComponentsHelper.drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
 		ComponentsHelper.drawQuad(defaultWidth - paddleWidth - ecartBordPaddle, (int) yRobot, paddleWidth, paddleHeight);
-		ComponentsHelper.drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1f });
+		ComponentsHelper.drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
 		ComponentsHelper.drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
 
 		if (!pause.isFinish()) {

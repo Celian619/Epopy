@@ -5,29 +5,27 @@ import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.network.games.AbstractGameNetwork;
 
 public class TankBoutique extends AbstractGameNetwork {
-
+	
 	@Override
 	public void onEnable() {
-		// TODO Auto-generated method stub
-		
+	
 	}
-
+	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+	
 	}
-
+	
 	@Override
 	public void render() {
 		ComponentsHelper.drawText("Tank", 1197, 150, 48);
 		ComponentsHelper.drawLine(950, 588, 1554, 588, 1);
 		ComponentsHelper.drawText("Equipement", 1136, 600, 48);
 	}
-
+	
 	@Override
 	public Textures getDefaultBackGround() {
 		return null;
 	}
-
+	
 }

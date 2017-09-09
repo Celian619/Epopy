@@ -216,7 +216,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 			if (addsButtons.get(i).isOn())
 				GL11.glColor4f(0.7f, 0.7f, 0.7f, 1);
 			addsButtons.get(i).render();
-			GL11.glColor4f(1, 1, 1f, 1);
+			GL11.glColor4f(1, 1, 1, 1);
 		}
 
 		/*

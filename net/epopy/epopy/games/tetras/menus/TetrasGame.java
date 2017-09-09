@@ -45,8 +45,8 @@ public class TetrasGame extends AbstractGameMenu {
 		score = 0;
 		changeStopDown = false;
 		Random r = new Random();
-		color = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1f };
-		lastColor = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1f };
+		color = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1 };
+		lastColor = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1 };
 
 		isBlock = new boolean[grilleSectionX * grilleSectionY];
 		movingBlock = new block(new Location(grilleSectionX / 2, 2));
@@ -313,7 +313,7 @@ public class TetrasGame extends AbstractGameMenu {
 					movingBlock = new block(new Location(grilleSectionX / 2, 2));
 					Random r = new Random();
 					lastColor = color;
-					color = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1f };
+					color = new float[] { (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), (float) (0.5 + r.nextFloat() / 2), 1 };
 					changeStopDown = true;
 				}
 				
