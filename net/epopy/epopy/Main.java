@@ -21,10 +21,10 @@ public class Main {
 	private static Player player;
 	
 	// configs
-	private static Map<String, Config> configs = new TreeMap<>();;
+	private static Map<String, Config> configs = new TreeMap<>();
 	
 	// encryp
-	private static String KEY = "E1BB465D57CAE7ACDBBE80919CE83DF";
+	private static String KEY = "E1BB465D57CAE7ACDBBE8091F9CE83DF";
 	private static String ALGORITMO = "AES/CBC/PKCS5Padding";
 	private static String CODIFICACION = "UTF-8";
 	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);;

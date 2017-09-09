@@ -115,10 +115,10 @@ public class FontUtils {
 
 			float width = getCharWidth(c);
 			float height = getCharHeight();
-			float cw = 1 / getFontImageWidth() * width;
-			float ch = 1 / getFontImageHeight() * height;
-			float cx = 1 / getFontImageWidth() * getCharX(c);
-			float cy = 1 / getFontImageHeight() * getCharY(c);
+			float cw = 1f / getFontImageWidth() * width;
+			float ch = 1f / getFontImageHeight() * height;
+			float cx = 1f / getFontImageWidth() * getCharX(c);
+			float cy = 1f / getFontImageHeight() * getCharY(c);
 
 			glTexCoord2f(cx, cy);
 			glVertex3f(xTmp, y, 0);
