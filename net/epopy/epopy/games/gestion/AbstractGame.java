@@ -9,8 +9,6 @@ public abstract class AbstractGame {
 	// menu
 	protected AbstractGameMenu menuGame;
 	public AbstractGameMenu menuOptions;
-	// logger
-	protected GameLogger gameLogger;
 	/*
 	 * --> Pour cree un module de jeu Copier un autre module et changer les menus 'menuMain' (dans la fonction onEnable();) et changer le
 	 * nom du jeu dans le 'getName();'
@@ -27,20 +25,13 @@ public abstract class AbstractGame {
 		return menuOptions;
 	}
 	
-	public void setStatus(GameStatus gameStatus) {
+	public void setStatus(final GameStatus gameStatus) {
 		this.gameStatus = gameStatus;
 		if (getActualAbstract() != null)
 			getActualAbstract().onEnable();
 	}
 
 	public abstract Textures getDefaultBackGround();
-
-	/*
-	 * Pour get le logger du jeu
-	 */
-	public GameLogger getGameLogger() {
-		return gameLogger;
-	}
 
 	/*
 	 * Get le non du jeu
@@ -85,8 +76,8 @@ public abstract class AbstractGame {
 	private AbstractGameMenu getActualAbstract() {
 		if (gameStatus == GameStatus.IN_GAME)
 			return menuGame;
-		//else if (gameStatus == GameStatus.MENU_CHOOSE_GAMES)
-			//return ;
+		// else if (gameStatus == GameStatus.MENU_CHOOSE_GAMES)
+		// return ;
 		return null;
 	}
 

@@ -22,51 +22,51 @@ import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
 public class SnakeGame extends AbstractGameMenu {
-	
+
 	private int snakeSize;
 	private int timeFood = 0;
 	private int timeSecond = 0;
 	private final int dontMoveTime = 2;
-	
+
 	private int grilleSize;
 	private final int maxFood = 10;
-	
+
 	private double cubeX;
 	private double cubeY;
-	
+
 	private int ptsRecord;
 	private List<Location> posSnake;
 	private List<mouse> posMouse;
-	
+
 	private int eat;
 	private int lastKey;
-	
+
 	private boolean addStats;
 	private Timer timer;
-	
+
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound())
 			Audios.SNAKE.setVolume(0.2f).start(true);
-			
+
 		posSnake = new LinkedList<Location>();
 		posMouse = new ArrayList<mouse>(10);
-
+		
 		addStats = false;
 		snakeSize = 1;
 		eat = 0;
 		lastKey = 0;
-		
+
 		gameOver = false;
 		grilleSize = 100;
 		cubeX = defaultWidth / (double) grilleSize;
 		cubeY = 0.1 + defaultHeight / (double) grilleSize;
-
-		Mouse.setGrabbed(true);
 		
+		Mouse.setGrabbed(true);
+
 		posSnake.add(new Location(grilleSize / 2, grilleSize / 2, grilleSize, grilleSize));
 		ptsRecord = Main.getPlayer().getSnakeStats().getRecord();
-		
+
 		paused = true;
 		pauseScreen = false;
 		timeTamp = 0;
@@ -74,15 +74,15 @@ public class SnakeGame extends AbstractGameMenu {
 		timer.pause();
 		pause.startPause(5);
 	}
-	
+
 	private int timeTamp;
 	private boolean pauseScreen;
 	private boolean paused = true;
-
+	
 	@Override
 	public void update() {
 		Timer.tick();
-		
+
 		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -98,12 +98,12 @@ public class SnakeGame extends AbstractGameMenu {
 			}
 		} else
 			timeTamp--;
-			
+
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
 		}
-		
+
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
 				pause.startPause(3);
@@ -111,18 +111,18 @@ public class SnakeGame extends AbstractGameMenu {
 				Mouse.setGrabbed(true);
 			}
 		}
-		
+
 		if (pauseScreen || !pause.isFinish() || gameOver) {
 			timer.pause();
 			return;
 		}
-		
+
 		if (paused) {
 			timer.resume();
 			paused = false;
 			Mouse.setGrabbed(true);
 		}
-
+		
 		if (timeSecond != 0) {
 			timeSecond--;
 			return;
@@ -175,7 +175,7 @@ public class SnakeGame extends AbstractGameMenu {
 					break;
 			}
 		}
-		
+
 		for (Location loc : posSnake)
 			if (loc.getX() == x && loc.getY() == y) {
 				Mouse.setGrabbed(false);
@@ -195,12 +195,12 @@ public class SnakeGame extends AbstractGameMenu {
 			posSnake.remove(posSnake.size() - 1);
 			loc.setPos(x, y);
 			posSnake.add(0, loc);
-			
+
 		} else {
 			posSnake.add(0, new Location(x, y, grilleSize, grilleSize));
 			eat--;
 		}
-		
+
 		if (posSnake.size() + posMouse.size() < Math.pow(grilleSize, 2) && timeFood == 0 && posMouse.size() < maxFood) {
 			Boolean foodOk = false;
 			int xf;
@@ -218,10 +218,10 @@ public class SnakeGame extends AbstractGameMenu {
 						foodOk = false;
 						break;
 					}
-					
+
 				if (foodOk)
 					posMouse.add(new mouse(locFood));
-					
+
 				i--;// si la grille est trop complete
 				if (i == 0) break;
 			}
@@ -230,28 +230,34 @@ public class SnakeGame extends AbstractGameMenu {
 		if (timeFood > 0)
 			timeFood--;
 		timeSecond = dontMoveTime;
-		
+
 		for (mouse mouse : posMouse)
 			mouse.move();
 	}
-	
+
 	private int c = 0;
 	private float[] color = new float[] { 1f, 0f, 0f, 1f };
 	private int rotationFood = 0;
-	
+
 	@Override
 	public void render() {
 		rotationFood++;
 		if (rotationFood > 360) rotationFood -= 360;
-		
-		Textures.GAME_SNAKE_LEVEL_BG.renderBackground();
-		
-		for (Location loc : getMouseLocations())
-			ComponentsHelper.drawCircle((int) (cubeX * loc.getX() + cubeX / 2), (int) (cubeY * loc.getY() + cubeY / 2), (int) (cubeX * 1), 5,
-					new float[] { 1, 1, 1, 1f }, loc.getDirection());
 
+		Textures.GAME_SNAKE_LEVEL_BG.renderBackground();
+
+		for (mouse m : posMouse) {
+			Location loc = m.loc;
+			if (m.walk < 10)
+				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 65 / 2), 120, 65, loc.getDirection());
+			else
+				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS2, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 65 / 2), 120, 65, loc.getDirection());
+				
+		}
+		
 		double pos = 0;
 		for (Location loc : posSnake) {
+			
 			pos++;
 			ComponentsHelper.drawCircle((int) (cubeX * loc.getX() + cubeX / 2), (int) (cubeY * loc.getY() + cubeX / 2), (int) (cubeX * 2), 10, new float[] { 0f, (float) (pos / posSnake.size()), 0f, 1f });
 		}
@@ -261,7 +267,7 @@ public class SnakeGame extends AbstractGameMenu {
 			color = new float[] { random.nextFloat(), random.nextFloat(), random.nextFloat(), 1 };
 			c = 0;
 		}
-		
+
 		if (!gameOver && !paused) {
 			if (snakeSize < ptsRecord)
 				ComponentsHelper.drawText("Score: " + snakeSize, 0, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1f, 1f });
@@ -270,69 +276,69 @@ public class SnakeGame extends AbstractGameMenu {
 				ComponentsHelper.drawText(snakeSize + "", 170, 0, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, color);
 			}
 		}
-		
+
 		if (!pause.isFinish()) {
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();
-				
+
 				int x = 1093;
 				int y = 400;
 				int ecartement = 120;
-				
+
 				ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-				
+
 				ComponentsHelper.drawText("Haut", x - ecartement + 5, y, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				ComponentsHelper.drawText("Bas", x - ecartement + 10, y + 150, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				ComponentsHelper.drawText("Droite", x + ecartement / 2, y, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				ComponentsHelper.drawText("Gauche", x + ecartement / 2 - 10, y + 150, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				
+
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 45, 60, 60);
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 150 + 45, 60, 60);
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_UP), x + 16 - ecartement, y + 37, 50, new float[] { 0, 0, 0, 1 });
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 37, 50, new float[] { 0, 0, 0, 1 });
-				
+
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 45, 60, 60);
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 150 + 45, 60, 60);
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, new float[] { 0, 0, 0, 1 });
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 40, 50, new float[] { 0, 0, 0, 1 });
-				
+
 				// if(Main.getPlayer().getLevel() <= GameList.SNAKE.getID()) { BATTRE SON RECORD :
 				ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
 				// ComponentsHelper.drawText(Main.getPlayer().getSnakeStats().getObjectifString(), 730, 600, PositionWidth.MILIEU,
 				// PositionHeight.HAUT, 25, new float[]{0.8f, 0.8f, 0.8f, 1});
 				ComponentsHelper.drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 				ComponentsHelper.drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				
+
 				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 			} else
 				ComponentsHelper.drawText(pause.getPauseString(), defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.MILIEU, 60 * 2, new float[] { 1, 1, 1, 1 });
 		}
 		if (pauseScreen)
 			renderEchap(true);
-			
+
 		if (gameOver) {
 			char[] recordC = String.valueOf(snakeSize).toCharArray();
 			int n = recordC.length;
 			String newRecord = "";
-			
+
 			for (char chars : recordC) {
-				
+
 				if (n / 3 == n / (double) 3 && n != recordC.length)
 					newRecord += ",";
-					
+
 				newRecord += chars;
 				n--;
 			}
 			SnakeStats snakeStats = Main.getPlayer().getSnakeStats();
 			if (snakeSize > ptsRecord)
 				snakeStats.setRecord(snakeSize);
-				
+
 			if (snakeSize >= snakeStats.getObjectif()) {
 				if (Main.getPlayer().getLevel() <= GameList.SNAKE.getID())
 					Main.getPlayer().setLevel(GameList.SNAKE.getID() + 1);
 			}
-
+			
 			renderEchap(false, newRecord + " pts", snakeSize > ptsRecord);
 			if (!addStats) {
 				Main.getPlayer().getSnakeStats().addTemps((long) timer.getTime());
@@ -342,62 +348,60 @@ public class SnakeGame extends AbstractGameMenu {
 		}
 	}
 	
-	private List<Location> getMouseLocations() {
-		List<Location> locs = new ArrayList<Location>();
-		for (mouse mouse : posMouse) {
-			locs.add(mouse.loc);
-		}
-		return locs;
-	}
-	
 	class mouse {
-		
+
 		Location loc;
 		int directionModif;
 		Double speed;
-		
+		int walk;
+
 		public mouse(final Location loc) {
 			this.loc = loc;
 			Random r = new Random();
 			directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
 			speed = r.nextDouble() / 2 + 0.2;
+			walk = 0;
 		}
-		
+
 		private void move() {
+			walk++;
+			if (walk >= 20) {
+				walk = 0;
+			}
 			Random r = new Random();
 			if (directionModif <= 5 && directionModif >= -5) {
 				loc.setDirection(loc.getDirection() + directionModif);
-
-				directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
 				
-			} else {
+				directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
 
+			} else {
+				
 				int i = r.nextInt(6);
 				if (directionModif < 0) i *= -1;
-
+				
 				loc.setDirection(loc.getDirection() + i);
 				directionModif -= i;
 			}
 			double xAdd = speed * Math.cos(Math.toRadians(loc.getDirection()));
 			double yAdd = speed * Math.sin(Math.toRadians(loc.getDirection()));
-
-			Location locModif = loc.clone().add(xAdd, yAdd);
 			
+			Location locModif = loc.clone().add(xAdd, yAdd);
+
 			double nearestDistS = loc.getNearestDistance(posSnake);
 			if (nearestDistS > 5 || locModif.getNearestDistance(posSnake) > nearestDistS) {
-				
+
 				loc.add(xAdd, yAdd);
 			}
-
+			
 			speed += (r.nextBoolean() ? 1 : -1) * r.nextDouble() / 10;
-
+			
 			if (speed > 0.7) speed = 0.7;
 			if (speed < 0.2) speed = 0.2;
-
+			
 			if (loc.getDirection() > 180) loc.setDirection(loc.getDirection() - 360);
-
+			
 			if (loc.getDirection() < -180) loc.setDirection(loc.getDirection() + 360);
 		}
-
+		
 	}
 }
