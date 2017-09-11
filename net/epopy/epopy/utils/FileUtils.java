@@ -57,34 +57,6 @@ public class FileUtils {
 			System.out.println("[SYSTEM] Folder '.Epopy' has been created !");
 		}
 
-		/*
-		 * Infos.txt
-		 */
-		File infos = null;
-		try {
-			infos = new File(PATH_INFOS);
-			if (infos.createNewFile()) {
-				System.out.println("[SYSTEM] File 'infos.txt' has been created !");
-				try {
-					FileOutputStream is = new FileOutputStream(infos);
-					OutputStreamWriter osw = new OutputStreamWriter(is);
-					Writer w = new BufferedWriter(osw);
-					Encryptor encryptor = Main.getEncryptor();
-					w.write(encryptor.encrypt("lastGameType=null"));
-					w.close();
-				} catch (IOException e) {
-					System.err.println("Problem writing to the file info.txt");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				System.out.println("[SYSTEM] File 'infos.txt' was found !");
-			}
-			Main.setConfig("infos", new Config(infos));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		try {
 			/*
 			 * Lock.txt

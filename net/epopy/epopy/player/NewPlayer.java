@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.lwjgl.input.Keyboard;
+
 import net.epopy.epopy.Main;
 import net.epopy.epopy.utils.FileUtils;
 import net.epopy.sdk.security.Encryptor;
@@ -29,7 +31,8 @@ public class NewPlayer {
 			
 			String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 			write(w, "account_create_at=" + timeStamp);
-
+			write(w, "display_fullscreen=true");
+			
 			write(w, "level=" + 1);
 
 			write(w, "last_game=" + 1);
@@ -68,6 +71,10 @@ public class NewPlayer {
 			write(w, "speedrun_record=" + 0);
 			write(w, "speedrun_parties=" + 0);
 			write(w, "speedrun_temps=" + 0);
+			
+			write(w, "ping_control_bas=" +  String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "ping_control_haut=" + String.valueOf(Keyboard.KEY_UP));
+			write(w, "ping_control_mouse=" + "2");
 			
 			write(w, "sound_volume=5");
 			write(w, "sound=true");

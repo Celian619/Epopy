@@ -41,9 +41,10 @@ public class ChooseGameTypeMenu {
 	private int w2_Multi = 0;
 	
 	public ChooseGameTypeMenu() {
-		Config config = Main.getConfig("infos");
+		if (Main.getPlayer() == null)
+			Main.setPlayer(new Player("localhost"));
 		if (!Display.isCreated())
-			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
+			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(Main.getPlayer().getConfig().getData("display_fullscreen")), false);
 		ButtonGui soloButton = new ButtonGui("SOLO", new float[] { 1, 1, 1, 1 }, 50, false);
 		ButtonGui multiButton = new ButtonGui("MULTIJOUEUR", new float[] { 1, 1, 1, 1 }, 50, false);
 		
@@ -138,8 +139,6 @@ public class ChooseGameTypeMenu {
 			if (Display.isCloseRequested())
 				Main.exit();
 			else if (soloButton.isClicked()) {
-				if (Main.getPlayer() == null)
-					Main.setPlayer(new Player("localhost"));
 				Main.setGameManager(new GameManager());
 				break;
 			} else if (multiButton.isClicked()) {

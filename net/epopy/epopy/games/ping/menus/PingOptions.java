@@ -19,13 +19,17 @@ public class PingOptions extends AbstractGameMenu {
 	private static ButtonGui gauche;
 	private static ButtonGui droite;
 	
-	public static int KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_bas", String.valueOf(Keyboard.KEY_DOWN)));
-	public static int KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_haut", String.valueOf(Keyboard.KEY_UP)));
-	public static int MOUSE = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_mouse", "2"));// 0 = mouse | 1 = touches |
+	public static int KEY_DOWN;
+	public static int KEY_UP;
+	public static int MOUSE;
 	// 2 = touches & mouse
 	
 	@Override
 	public void onEnable() {
+		KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_bas"));
+		KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_haut"));
+		MOUSE = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_mouse"));// 0 = mouse | 1 = touches |
+		
 		controlBasClicked = false;
 		controlHautClicked = false;
 		gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
