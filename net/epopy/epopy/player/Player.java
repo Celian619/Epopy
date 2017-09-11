@@ -2,7 +2,6 @@ package net.epopy.epopy.player;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
@@ -17,16 +16,16 @@ import net.epopy.epopy.utils.Config;
 import net.epopy.epopy.utils.FileUtils;
 
 public class Player {
-
+	
 	// config du joueur
 	private Config config;
 	private boolean sound = true;
-
+	
 	// key data
 	private int level;
 	private int lastGameID = 0;
 	private final String name;
-
+	
 	// stats games
 	private SnakeStats snakeStats;
 	private PingStats pingStats;
@@ -34,9 +33,9 @@ public class Player {
 	private TankStats tankStats;
 	private PlaceInvaderStats placeInvaderStats;
 	private SpeedRunStats speedRunStats;
-
+	
 	public Player(final String name) {
-
+		
 		this.name = name;
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		try {
@@ -47,7 +46,7 @@ public class Player {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Fonction pour supprimer le joueur
 	 */
@@ -55,11 +54,11 @@ public class Player {
 		new NewPlayer(name);
 		init();
 	}
-
+	
 	public Config getConfig() {
 		return config;
 	}
-
+	
 	public void init() {
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		config = new Config(profil);
@@ -72,110 +71,89 @@ public class Player {
 		tankStats = new TankStats(config);
 		sound = Boolean.valueOf(config.getData("sound", "true"));
 	}
-	
+
 	public int getSoundLevel() {
 		return Integer.parseInt(config.getData("sound_volume", "5"));
 	}
-
+	
 	public void setSoundLevel(final int value) {
 		config.setValue("sound_volume", String.valueOf(value));
 	}
-
+	
 	public boolean getLastDisplayWasFullScreen() {
 		return Boolean.valueOf(Main.getConfig("infos").getData("display_fullscreen"));
 	}
-
+	
 	public void setDisplayFullScreen(final boolean fullscreen) {
 		Main.getConfig("infos").setValue("display_fullscreen", fullscreen + "");
 	}
 	
-	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
-	public String getTotalTemps() {
-		long tempsTotal = 0;
-
-		tempsTotal += Long.parseLong(config.getData("ping_temps"));
-		tempsTotal += Long.parseLong(config.getData("snake_temps"));
-		tempsTotal += Long.parseLong(config.getData("car_temps"));
-		tempsTotal += Long.parseLong(config.getData("tank_temps"));
-		tempsTotal += Long.parseLong(config.getData("plainv_temps"));
-
-		if (tempsTotal != 0)
-			return timeFormat.format(tempsTotal - 3600000);
-		else
-			return "00:00:00";
-	}
-
 	public String getName() {
 		return name;
 	}
-
+	
 	public String getDataAccountCreate() {
 		return config.getData("account_create_at");
 	}
-
+	
 	public boolean hasSound() {
 		return sound;
 	}
-
+	
 	public void setSoundStatus(final boolean sound) {
 		config.setValue("sound", String.valueOf(sound));
 		if (!sound)
 			Audios.stopAll();
 		else
-			Audios.LOBBY.setVolume(0.4f).start(true);
+			Audios.LOBBY.start(true).setVolume(0.4f);
 		this.sound = sound;
 	}
-
+	
 	public int getLastGame() {
 		if (lastGameID == 0)
 			lastGameID = Integer.parseInt(config.getData("last_game"));
 		return lastGameID;
 	}
-
+	
 	public void setLastGame(final int id) {
-
+		
 		lastGameID = id;
 		config.setValue("last_game", String.valueOf(id));
-	}
-
-	public boolean hasNewGame() {
-		return true;
 	}
 
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void setLevel(final int level) {
 		if (this.level < level) {
 			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1, 1, 1 }, false);
-			Audios.NEW_GAME.setVolume(0.5f).start(false);
+			Audios.NEW_GAME.start(false).setVolume(0.5f);
 		}
 		this.level = level;
 		config.setValue("level", String.valueOf(level));
 	}
-
+	
 	public SpeedRunStats getSpeedRunStats() {
 		return speedRunStats;
 	}
-
+	
 	public PlaceInvaderStats getPlaceInvaderStats() {
 		return placeInvaderStats;
 	}
-	
+
 	public PingStats getPingStats() {
 		return pingStats;
 	}
-
+	
 	public SnakeStats getSnakeStats() {
 		return snakeStats;
 	}
-
+	
 	public CarStats getCarStats() {
 		return carStats;
 	}
-
+	
 	public TankStats getTankStats() {
 		return tankStats;
 	}

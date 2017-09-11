@@ -52,8 +52,8 @@ public class GameMenu extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		if (!Audios.LOBBY.getClip().isRunning() && Main.getPlayer().hasSound()) {
-			Audios.LOBBY.setVolume(0.1f).start(true);
+		if (!Audios.LOBBY.isRunning() && Main.getPlayer().hasSound()) {
+			Audios.LOBBY.start(true).setVolume(0.1f);
 			soundCrescendo = true;
 			i = 0;
 		}

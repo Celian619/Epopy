@@ -2,7 +2,9 @@ package net.epopy.epopy.display.components;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLineWidth;
@@ -104,7 +106,7 @@ public class ComponentsHelper {
 			drawChar(msg.charAt(i), getResponsiveX(x) + i * (int) (size * (7.0f / 8.0f)), getResponsiveY(y), size);
 		glColor4f(1, 1, 1, 1);
 		glEnd();
-		Textures.unbind();
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
@@ -223,7 +225,7 @@ public class ComponentsHelper {
 		glTexCoord2f(0, 1);
 		glVertex3f(-width / 2, height / 2, 0);
 		glEnd();
-		Textures.unbind();
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glLoadIdentity();
 		
 	}

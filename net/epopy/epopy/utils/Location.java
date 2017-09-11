@@ -108,6 +108,7 @@ public class Location {
 		
 		this.x = x;
 		this.y = y;
+		this.direction = (int) direction;
 		
 		return this;
 	}

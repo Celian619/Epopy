@@ -47,28 +47,32 @@ public class PingGame extends AbstractGameMenu {
 
 	private boolean addStats;
 
+	private int timeTamp;
+	private boolean pauseScreen;
+	private boolean paused;
+
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound())
-			Audios.PING.setVolume(0.2f).start(true);
-
+			Audios.PING.start(true).setVolume(0.2f);
+			
 		speedBall = 8;
 		speedPaddle = 10;
 		addStats = false;
 		gameOver = false;
-
+		
 		Mouse.setCursorPosition(20, Display.getHeight() / 2);
 		lastMouseY = (Display.getHeight() - Mouse.getY()) / (double) Display.getHeight() * defaultHeight;
 		Mouse.setGrabbed(true);
-
+		
 		yPlayer = defaultHeight / 2 - paddleHeight / 2;
 		yRobot = defaultHeight / 2 - paddleHeight / 2;
-
+		
 		Random r = new Random();
 		direction = (int) (180 + r.nextInt(45) * r.nextGaussian());
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
-
+		
 		paused = true;
 		pauseScreen = false;
 		timeTamp = 0;
@@ -76,10 +80,6 @@ public class PingGame extends AbstractGameMenu {
 		timer.pause();
 		pause.startPause(5);
 	}
-
-	private int timeTamp;
-	private boolean pauseScreen;
-	private boolean paused = true;
 
 	@Override
 	public void update() {
