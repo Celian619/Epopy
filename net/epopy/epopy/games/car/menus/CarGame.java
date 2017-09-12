@@ -39,6 +39,7 @@ import net.epopy.epopy.utils.Location;
 
 public class CarGame extends AbstractGameMenu {
 	
+	// grille de construction de la map
 	private final int grilleWidth = 20;
 	private final int grilleHeight = 10;
 	private final int bord = grilleWidth / 10;
@@ -208,29 +209,29 @@ public class CarGame extends AbstractGameMenu {
 					int y = 400;
 					
 					ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-					ComponentsHelper.drawText("Droite", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-					ComponentsHelper.drawText("Gauche", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+					ComponentsHelper.drawText("Droite", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
+					ComponentsHelper.drawText("Gauche", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
 					
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
-					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 150 + 45, 60, 60);
+					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 195, 60, 60);
 					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x, y + 75, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
 					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 220, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
 					
 					// if(Main.getPlayer().getLevel() <= GameList.CAR.getID()) { BATTRE SON RECORD :
-					ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
+					ComponentsHelper.drawText("OBJECTIF", 660, 495, 30, new float[] { 1, 0.5f, 0, 1 });
 					ComponentsHelper.drawText("Finir en moins", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 					ComponentsHelper.drawText("d'une minute !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 					
-					ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+					ComponentsHelper.drawText(pause.getPauseString(), 660, 335, 100, new float[] { 1, 1, 1, 1 });
 				} else
 					ComponentsHelper.drawText(pause.getPauseString(), defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.MILIEU, 60 * 2, new float[] { 0.3f, 0.3f, 0.3f, 1 });
 				return;
 			}
 			if (!pauseScreen) {
 				if (!pause.isFinish())
-					ComponentsHelper.drawText(pause.getPauseString(), 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 1, 1, 1 });
+					ComponentsHelper.drawText(pause.getPauseString(), 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40);
 				else
-					ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 1, 1, 1 });
+					ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40);
 			}
 		}
 		

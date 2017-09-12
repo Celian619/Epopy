@@ -5,15 +5,12 @@ import java.util.Map;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.games.gestion.menus.GameMenu;
-import net.epopy.epopy.games.gestion.menus.GameOptionsMenu;
 
 public class GameManager {
 
 	private final Map<Integer, AbstractGame> games = new HashMap<>(GameList.values().length);
 	private AbstractGame gameEnable;
 	private final AbstractGameMenu menuGames;
-	private AbstractGameMenu menuUsers;
-	private final AbstractGameMenu options;
 
 	public GameManager() {
 		for (GameList gameList : GameList.values())
@@ -26,9 +23,6 @@ public class GameManager {
 		 */
 		menuGames = new GameMenu();
 		menuGames.onEnable();
-		
-		options = new GameOptionsMenu();
-		options.onEnable();
 
 		getGameEnable().setStatus(GameStatus.MENU_CHOOSE_GAMES);
 	}
@@ -49,13 +43,8 @@ public class GameManager {
 	 * @return un menu
 	 */
 	public AbstractGameMenu getMenu() {
-		if (getGameEnable().getGameStatus() == GameStatus.MENU_CHOOSE_GAMES)
-			return menuGames;
-		else if (getGameEnable().getGameStatus() == GameStatus.MENU_CHOOSE_USERS)
-			return menuUsers;
-		else if (getGameEnable().getGameStatus() == GameStatus.OPTIONS)
-			return options;
-		return null;
+		return menuGames;
+		
 	}
 
 	public void setGameEnable(final AbstractGame gameToEnable) {
