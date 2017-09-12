@@ -12,6 +12,7 @@ public class Ping extends AbstractGame {
 	public void onEnable() {
 		menuGame = new PingGame();
 		menuOptions = new PingOptions();
+		menuOptions.onEnable();
 		setStatus(GameStatus.MENU_CHOOSE_GAMES);
 	}
 

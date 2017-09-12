@@ -29,7 +29,6 @@ import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameManager;
 import net.epopy.epopy.player.Player;
-import net.epopy.epopy.utils.Config;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.WebPage;
 
@@ -41,10 +40,11 @@ public class ChooseGameTypeMenu {
 	private int w2_Multi = 0;
 	
 	public ChooseGameTypeMenu() {
-		Config config = Main.getConfig("infos");
+		
+		if (Main.getPlayer() == null)
+			Main.setPlayer(new Player("localhost"));
 		if (!Display.isCreated()) {
-			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
-			
+			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(Main.getPlayer().getConfig().getData("display_fullscreen")), false);
 		} else {
 			
 			Textures.unloadTextures();
@@ -144,11 +144,10 @@ public class ChooseGameTypeMenu {
 			if (Display.isCloseRequested())
 				Main.exit();
 			else if (soloButton.isClicked()) {
-				if (Main.getPlayer() == null)
-					Main.setPlayer(new Player("localhost"));
 				Textures.unloadTextures();
 				Main.setGameManager(new GameManager());
 				break;
+				
 			} else if (multiButton.isClicked()) {
 				/*
 				 * TODO new RegisterPlayerNetworkMenu(); break;

@@ -9,11 +9,13 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.lwjgl.input.Keyboard;
+
 import net.epopy.epopy.Main;
 import net.epopy.epopy.utils.FileUtils;
 
 public class NewPlayer {
-	
+
 	public NewPlayer(final String name) {
 		
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
@@ -25,14 +27,15 @@ public class NewPlayer {
 			FileOutputStream is = new FileOutputStream(profil);
 			OutputStreamWriter osw = new OutputStreamWriter(is);
 			Writer w = new BufferedWriter(osw);
-
+			
 			String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 			write(w, "account_create_at=" + timeStamp);
+			write(w, "display_fullscreen=true");
 			
-			write(w, "level=" + 10);// TODO Modifier ceci !
+			write(w, "level=" + 1);// TODO Modifier ceci !
 			
-			write(w, "last_game=1");
-
+			write(w, "last_game=" + 1);
+			
 			/*
 			 * Snake
 			 */
@@ -59,25 +62,29 @@ public class NewPlayer {
 			write(w, "tank_record=0");
 			write(w, "tank_parties=0");
 			write(w, "tank_temps=0");
-
+			
 			write(w, "plainv_pts=0");
 			write(w, "plainv_parties=0");
 			write(w, "plainv_temps=0");
-
+			
 			write(w, "speedrun_record=0");
 			write(w, "speedrun_parties=0");
 			write(w, "speedrun_temps=0");
-
+			
+			write(w, "ping_control_bas=" + String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "ping_control_haut=" + String.valueOf(Keyboard.KEY_UP));
+			write(w, "ping_control_mouse=2");
+			
 			write(w, "sound_volume=5");
 			write(w, "sound=true");
-
+			
 			w.close();
 			
 		} catch (Exception e) {
 		
 		}
 	}
-	
+
 	private void write(final Writer w, final String s) {
 		try {
 			w.write(Main.getEncryptor().encrypt(s));

@@ -47,7 +47,7 @@ public class Main {
 	}
 	
 	public static void exit() {
-		Main.getConfig("infos").setValue("display_fullscreen", Display.isFullscreen() + "");
+		getPlayer().getConfig().setValue("display_fullscreen", Display.isFullscreen() + "");
 		Display.destroy();
 		System.exit(0);
 	}
