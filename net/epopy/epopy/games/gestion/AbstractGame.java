@@ -34,7 +34,7 @@ public abstract class AbstractGame {
 	public abstract Textures getDefaultBackGround();
 
 	/*
-	 * Get le non du jeu
+	 * Get le nom du jeu
 	 */
 	public abstract String getName();
 
@@ -67,7 +67,7 @@ public abstract class AbstractGame {
 	}
 
 	/*
-	 * Get le status des fentres (in game, menu principal, options, pause)
+	 * Get le status des fenetres (in game, menu principal, options, pause)
 	 */
 	public GameStatus getGameStatus() {
 		return gameStatus;
@@ -76,8 +76,6 @@ public abstract class AbstractGame {
 	private AbstractGameMenu getActualAbstract() {
 		if (gameStatus == GameStatus.IN_GAME)
 			return menuGame;
-		// else if (gameStatus == GameStatus.MENU_CHOOSE_GAMES)
-		// return ;
 		return null;
 	}
 

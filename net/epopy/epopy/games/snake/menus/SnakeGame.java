@@ -63,14 +63,14 @@ public class SnakeGame extends AbstractGameMenu {
 		timer.pause();
 
 		posSnake = new LinkedList<Location>();
-		posSnake.add(new Location(grilleSize / 2, grilleSize / 2, grilleSize, grilleSize));// pos tete du snake
 		
 		posMouse = new ArrayList<mouse>(10);
 		
+		grilleSize = 100;
+
 		cubeX = defaultWidth / (double) grilleSize;
 		cubeY = 0.1 + defaultHeight / (double) grilleSize;
 
-		grilleSize = 100;
 		snakeSize = 1;
 		ptsRecord = Main.getPlayer().getSnakeStats().getRecord();
 		timeSecond = 0;
@@ -86,6 +86,8 @@ public class SnakeGame extends AbstractGameMenu {
 		gameOver = false;
 		
 		Mouse.setGrabbed(true);
+		
+		posSnake.add(new Location(grilleSize / 2, grilleSize / 2, grilleSize, grilleSize));// pos tete du snake
 
 	}
 
