@@ -111,12 +111,12 @@ public class SnakeGame extends AbstractGameMenu {
 			}
 		} else
 			timeTamp--;
-			
+
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
 		}
-		
+
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
 				pause.startPause(3);
@@ -124,12 +124,12 @@ public class SnakeGame extends AbstractGameMenu {
 				Mouse.setGrabbed(true);
 			}
 		}
-		
+
 		if (pauseScreen || !pause.isFinish() || gameOver) {
 			timer.pause();
 			return;
 		}
-		
+
 		if (paused) {
 			timer.resume();
 			paused = false;
@@ -198,12 +198,20 @@ public class SnakeGame extends AbstractGameMenu {
 					break;
 			}
 		}
-		
-		for (Location loc : posSnake)
-			if (loc.getX() == x && loc.getY() == y) {
+		int n = 1;
+		for (Location loc : posSnake) {
+
+			int distance = 4;
+			if (n < 7) {
+				distance = 0;
+				n++;
+			}
+
+			if (Math.abs(loc.getX() - x) < distance && Math.abs(loc.getY() - y) < distance) {
 				Mouse.setGrabbed(false);
 				gameOver = true;
 			}
+		}
 		for (mouse mouse : posMouse) {
 			Location loc = mouse.loc;
 			if (Math.abs(loc.getX() - x) < 4 && Math.abs(loc.getY() - y) < 5) {
@@ -218,12 +226,12 @@ public class SnakeGame extends AbstractGameMenu {
 			posSnake.remove(posSnake.size() - 1);
 			loc.setPos(x, y, direction);
 			posSnake.add(0, loc);
-			
+
 		} else {
 			posSnake.add(0, new Location(x, y, direction, grilleSize, grilleSize));
 			eat--;
 		}
-		
+
 		if (posSnake.size() + posMouse.size() < Math.pow(grilleSize, 2) && timeFood == 0 && posMouse.size() < maxFood) {
 			Boolean foodOk = false;
 			int xf;
@@ -241,10 +249,10 @@ public class SnakeGame extends AbstractGameMenu {
 						foodOk = false;
 						break;
 					}
-					
+
 				if (foodOk)
 					posMouse.add(new mouse(locFood));
-					
+
 				i--;// si la grille est trop complete
 				if (i == 0) break;
 			}
@@ -253,7 +261,7 @@ public class SnakeGame extends AbstractGameMenu {
 		if (timeFood > 0)
 			timeFood--;
 		timeSecond = dontMoveTime;
-		
+
 		for (mouse mouse : posMouse)
 			mouse.move();
 	}
