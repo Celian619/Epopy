@@ -64,12 +64,8 @@ public class GameMenu extends AbstractGameMenu {
 				Audios.LOBBY.setVolume(0.2f);
 			else if (i == 40)
 				Audios.LOBBY.setVolume(0.25f);
-			else if (i == 80)
+			else if (i == 80) { 
 				Audios.LOBBY.setVolume(0.3f);
-			else if (i == 100)
-				Audios.LOBBY.setVolume(0.35f);
-			else if (i == 120) {
-				Audios.LOBBY.setVolume(0.4f);
 				soundCrescendo = false;
 			}
 			i++;
