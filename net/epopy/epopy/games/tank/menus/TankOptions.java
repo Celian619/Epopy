@@ -16,11 +16,14 @@ public class TankOptions extends AbstractGameMenu {
 	private static boolean controlBasClicked;
 	private static boolean controlHautClicked;
 	
-	public static int KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("tank_control_bas", String.valueOf(Keyboard.KEY_DOWN)));
-	public static int KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("tank_control_haut", String.valueOf(Keyboard.KEY_UP)));
+	public static int KEY_DOWN;
+	public static int KEY_UP;
 	
 	@Override
 	public void onEnable() {
+		KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("tank_control_bas", String.valueOf(Keyboard.KEY_DOWN)));
+		KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("tank_control_haut", String.valueOf(Keyboard.KEY_UP)));
+		
 		controlBasClicked = false;
 		controlHautClicked = false;
 		controlBas = new ButtonGui(Keyboard.getKeyName(KEY_DOWN), new float[] { 0, 0.7f, 0, 1 }, 30);

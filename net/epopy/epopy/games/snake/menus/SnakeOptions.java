@@ -20,13 +20,18 @@ public class SnakeOptions extends AbstractGameMenu {
 	private static boolean controlGaucheClicked;
 	private static boolean controlDroiteClicked;
 	
-	public static int KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_bas", String.valueOf(Keyboard.KEY_DOWN)));
-	public static int KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_haut", String.valueOf(Keyboard.KEY_UP)));
-	public static int KEY_LEFT = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_gauche", String.valueOf(Keyboard.KEY_LEFT)));
-	public static int KEY_RIGHT = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_droite", String.valueOf(Keyboard.KEY_RIGHT)));
+	public static int KEY_DOWN;
+	public static int KEY_UP;
+	public static int KEY_LEFT;
+	public static int KEY_RIGHT;
 
 	@Override
 	public void onEnable() {
+		KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_bas", String.valueOf(Keyboard.KEY_DOWN)));
+		KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_haut", String.valueOf(Keyboard.KEY_UP)));
+		KEY_LEFT = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_gauche", String.valueOf(Keyboard.KEY_LEFT)));
+		KEY_RIGHT = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_droite", String.valueOf(Keyboard.KEY_RIGHT)));
+		
 		controlBasClicked = false;
 		controlHautClicked = false;
 		controlDroiteClicked = false;

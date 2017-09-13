@@ -33,11 +33,11 @@ public class Config {
 					infos.put(ligneDecrypt.split("=")[0], ligneDecrypt.split("=")[1]);
 					infosCrypt.put(ligneDecrypt.split("=")[0], ligne);
 				}
-				System.out.println(infos.toString());
+			System.out.println("[CONFIG] Config has been loaded");
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (file.getName().equals("infos.txt")) {
-					System.out.println("[CONFIG][ERROR] File : " + file.getPath() + " can't load ! (LE fichier à été modifé)");
+					System.out.println("[CONFIG][ERROR] File : " + file.getPath() + " can't load ! (Le fichier à été modifé)");
 					file.delete();
 					System.exit(-1);
 				}
