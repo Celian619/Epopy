@@ -259,9 +259,7 @@ public class Textures {
 		unbind();
 		for (Textures t : textures) {
 			if (t.id != -12) {
-
 				GL11.glDeleteTextures(t.id);
-				System.out.println("Delete : " + t.id);
 				t.id = -12;
 			}
 		}

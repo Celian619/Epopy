@@ -32,7 +32,7 @@ public class NewPlayer {
 			write(w, "account_create_at=" + timeStamp);
 			write(w, "display_fullscreen=true");
 			
-			write(w, "level=" + 1);// TODO Modifier ceci !
+			write(w, "level=" + 10);// TODO Modifier ceci !
 			
 			write(w, "last_game=" + 1);
 			
@@ -74,6 +74,23 @@ public class NewPlayer {
 			write(w, "ping_control_bas=" + String.valueOf(Keyboard.KEY_DOWN));
 			write(w, "ping_control_haut=" + String.valueOf(Keyboard.KEY_UP));
 			write(w, "ping_control_mouse=2");
+			
+			write(w, "car_control_gauche=" + String.valueOf(Keyboard.KEY_LEFT));
+			write(w, "car_control_droite=" +String.valueOf(Keyboard.KEY_RIGHT));
+			
+			write(w, "snake_control_bas="+ String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "snake_control_haut="+ String.valueOf(Keyboard.KEY_UP));
+			write(w, "snake_control_gauche=" + String.valueOf(Keyboard.KEY_LEFT));
+			write(w, "snake_control_droite=" + String.valueOf(Keyboard.KEY_RIGHT));
+			
+			write(w, "tank_control_bas=" + String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "tank_control_haut=" +String.valueOf(Keyboard.KEY_UP));
+			
+			write(w, "speedrun_control_sneak=" +String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "speedrun_control_jump=" + String.valueOf(Keyboard.KEY_UP));
+			
+			write(w, "placeinvader_control_gauche="+ String.valueOf(Keyboard.KEY_LEFT));
+			write(w, "placeinvader_control_droite=" + String.valueOf(Keyboard.KEY_RIGHT));
 			
 			write(w, "sound_volume=5");
 			write(w, "sound=true");

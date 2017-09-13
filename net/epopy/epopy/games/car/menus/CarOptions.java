@@ -16,11 +16,14 @@ public class CarOptions extends AbstractGameMenu {
 	private static boolean controlGaucheClicked;
 	private static boolean controlDroiteClicked;
 
-	public static int KEY_LEFT = Integer.parseInt(Main.getPlayer().getConfig().getData("car_control_gauche", String.valueOf(Keyboard.KEY_LEFT)));
-	public static int KEY_RIGHT = Integer.parseInt(Main.getPlayer().getConfig().getData("car_control_droite", String.valueOf(Keyboard.KEY_RIGHT)));
+	public static int KEY_LEFT;
+	public static int KEY_RIGHT;
 	
 	@Override
 	public void onEnable() {
+		KEY_LEFT = Integer.parseInt(Main.getPlayer().getConfig().getData("car_control_gauche"));
+		KEY_RIGHT = Integer.parseInt(Main.getPlayer().getConfig().getData("car_control_droite"));
+		
 		controlDroiteClicked = false;
 		controlGaucheClicked = false;
 		controlGauche = new ButtonGui(Keyboard.getKeyName(KEY_LEFT), new float[] { 0, 0.7f, 0, 1 }, 30);

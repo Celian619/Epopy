@@ -92,7 +92,8 @@ public class Audios {
 	private void updateVolume() {
 		vec = 110 - VOLUME_VALUE * 10;
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(vec * (float) Math.log10(volume));
+		float value = vec * (float) Math.log10(volume);
+		gainControl.setValue(value <= -80 ? -70.0f : value);
 	}
 	
 	/*

@@ -16,11 +16,14 @@ public class SpeedRunOptions extends AbstractGameMenu {
 	private static boolean controlGaucheClicked;
 	private static boolean controlDroiteClicked;
 
-	public static int KEY_SNEAK = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_sneak", String.valueOf(Keyboard.KEY_DOWN)));
-	public static int KEY_JUMP = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_jump", String.valueOf(Keyboard.KEY_UP)));
+	public static int KEY_SNEAK;
+	public static int KEY_JUMP;
 	
 	@Override
 	public void onEnable() {
+		KEY_SNEAK = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_sneak", String.valueOf(Keyboard.KEY_DOWN)));
+		KEY_JUMP = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_jump", String.valueOf(Keyboard.KEY_UP)));
+		
 		controlDroiteClicked = false;
 		controlGaucheClicked = false;
 		controlGauche = new ButtonGui(Keyboard.getKeyName(KEY_SNEAK), new float[] { 0, 0.7f, 0, 1 }, 30);
