@@ -4,17 +4,15 @@ import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.deco.menus.DecoGame;
 import net.epopy.epopy.games.deco.menus.DecoOptions;
 import net.epopy.epopy.games.gestion.AbstractGame;
-import net.epopy.epopy.games.gestion.GameStatus;
 
 public class Deco extends AbstractGame {
 	
 	@Override
 	public void onEnable() {
-		
 		menuGame = new DecoGame();
 		menuOptions = new DecoOptions();
 		menuOptions.onEnable();
-		setStatus(GameStatus.MENU_CHOOSE_GAMES);
+		setStatus(false);
 	}
 	
 	@Override

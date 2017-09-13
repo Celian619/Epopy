@@ -2,7 +2,6 @@ package net.epopy.epopy.games.ping;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.gestion.AbstractGame;
-import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.games.ping.menus.PingGame;
 import net.epopy.epopy.games.ping.menus.PingOptions;
 
@@ -13,7 +12,7 @@ public class Ping extends AbstractGame {
 		menuGame = new PingGame();
 		menuOptions = new PingOptions();
 		menuOptions.onEnable();
-		setStatus(GameStatus.MENU_CHOOSE_GAMES);
+		setStatus(false);
 	}
 
 	@Override

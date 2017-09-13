@@ -24,7 +24,7 @@ public class GameManager {
 		menuGames = new GameMenu();
 		menuGames.onEnable();
 		
-		getGameEnable().setStatus(GameStatus.MENU_CHOOSE_GAMES);
+		getGameEnable().setStatus(false);
 	}
 	
 	public AbstractGame getAbstractGame(final int id) {

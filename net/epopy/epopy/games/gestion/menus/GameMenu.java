@@ -11,7 +11,6 @@ import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.games.gestion.AbstractGame;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
-import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.player.guis.ChooseGameTypeMenu;
 import net.epopy.epopy.player.stats.CarStats;
 import net.epopy.epopy.player.stats.PingStats;
@@ -178,7 +177,7 @@ public class GameMenu extends AbstractGameMenu {
 			showOptions = false;
 			
 			Main.getGameManager().setGameEnable(game);
-			game.setStatus(GameStatus.IN_GAME);
+			game.setStatus(true);
 			Main.getPlayer().setLastGame(GameList.valueOf(name.toUpperCase()).getID());
 			Audios.LOBBY.stop();
 		}

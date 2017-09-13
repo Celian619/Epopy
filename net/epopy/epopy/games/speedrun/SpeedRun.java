@@ -2,7 +2,6 @@ package net.epopy.epopy.games.speedrun;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.gestion.AbstractGame;
-import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.games.speedrun.menus.SpeedRunGame;
 import net.epopy.epopy.games.speedrun.menus.SpeedRunOptions;
 
@@ -12,7 +11,7 @@ public class SpeedRun extends AbstractGame {
 	public void onEnable() {
 		menuGame = new SpeedRunGame();
 		menuOptions = new SpeedRunOptions();
-		setStatus(GameStatus.MENU_CHOOSE_GAMES);
+		setStatus(false);
 	}
 
 	@Override

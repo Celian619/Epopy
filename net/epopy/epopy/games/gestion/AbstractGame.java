@@ -5,7 +5,8 @@ import net.epopy.epopy.display.Textures;
 
 public abstract class AbstractGame {
 
-	protected GameStatus gameStatus;
+	private boolean inGame = false;
+	
 	// menu
 	protected AbstractGameMenu menuGame;
 	public AbstractGameMenu menuOptions;
@@ -25,8 +26,8 @@ public abstract class AbstractGame {
 		return menuOptions;
 	}
 	
-	public void setStatus(final GameStatus gameStatus) {
-		this.gameStatus = gameStatus;
+	public void setStatus(final boolean inGame) {
+		this.inGame = inGame;
 		if (getActualAbstract() != null)
 			getActualAbstract().onEnable();
 	}
@@ -59,24 +60,12 @@ public abstract class AbstractGame {
 			getActualAbstract().render();
 	}
 
-	/*
-	 * Pour lancer le jeu
-	 */
-	public void startGame() {
-		gameStatus = GameStatus.MENU_CHOOSE_GAMES;
+	public boolean inGame() {
+		return inGame;
 	}
-
-	/*
-	 * Get le status des fenetres (in game, menu principal, options, pause)
-	 */
-	public GameStatus getGameStatus() {
-		return gameStatus;
-	}
-
+	
 	private AbstractGameMenu getActualAbstract() {
-		if (gameStatus == GameStatus.IN_GAME)
-			return menuGame;
-		return null;
+		return inGame ? menuGame : null;
 	}
 
 }

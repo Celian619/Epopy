@@ -89,7 +89,7 @@ public abstract class AbstractGameMenu {
 		if (quitterButton.isClicked()) {
 			Audios.stopAll();
 			Textures.unloadTextures();
-			Main.getGameManager().getGameEnable().setStatus(GameStatus.MENU_CHOOSE_GAMES);
+			Main.getGameManager().getGameEnable().setStatus(false);
 		}
 	}
 

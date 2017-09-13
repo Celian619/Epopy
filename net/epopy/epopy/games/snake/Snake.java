@@ -2,7 +2,6 @@ package net.epopy.epopy.games.snake;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.games.gestion.AbstractGame;
-import net.epopy.epopy.games.gestion.GameStatus;
 import net.epopy.epopy.games.snake.menus.SnakeGame;
 import net.epopy.epopy.games.snake.menus.SnakeOptions;
 
@@ -10,11 +9,9 @@ public class Snake extends AbstractGame {
 	
 	@Override
 	public void onEnable() {
-		
 		menuGame = new SnakeGame();
 		menuOptions = new SnakeOptions();
-		
-		setStatus(GameStatus.MENU_CHOOSE_GAMES);
+		setStatus(false);
 	}
 
 	@Override
