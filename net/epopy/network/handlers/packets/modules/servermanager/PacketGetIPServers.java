@@ -3,10 +3,8 @@ package net.epopy.network.handlers.packets.modules.servermanager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import net.epopy.network.utils.DataBuffer;
 import net.epopy.network.utils.DataStream;
@@ -23,11 +21,11 @@ public class PacketGetIPServers {
 	public static int TEXTURE_PORT;
 	
 	// server manager
-	public static String MANAGER_IP = "86.192.80.89";
+	public static String MANAGER_IP = "37.59.205.252";
 	public static int MANAGER_PORT = 25565;
 	
 	public PacketGetIPServers() {
-		// TODO pour le dev
+		/**DEV
 		try {
 			if (InetAddress.getLocalHost().getHostAddress().equals("192.168.1.15"))
 				MANAGER_IP = "192.168.1.15";
@@ -35,6 +33,7 @@ public class PacketGetIPServers {
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
+		§*/
 		
 		try {
 			Socket socket = new Socket();
@@ -62,6 +61,8 @@ public class PacketGetIPServers {
 					
 					TEXTURE_IP = dataTexture.split(":")[0];
 					TEXTURE_PORT = Integer.parseInt(dataTexture.split(":")[1]);
+					
+					socket.close();
 					
 					// System.out.println("IPS: " + MATCH_MAKING_IP + ":" + MANAGER_PORT + " " + TEXTURE_IP + ":" + TEXTURE_PORT);
 				}

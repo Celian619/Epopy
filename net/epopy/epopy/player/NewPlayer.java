@@ -32,7 +32,7 @@ public class NewPlayer {
 			write(w, "account_create_at=" + timeStamp);
 			write(w, "display_fullscreen=true");
 
-			write(w, "level=" + 1);// TODO Modifier ceci !
+			write(w, "level=" + 10);// TODO Modifier ceci !
 
 			write(w, "last_game=" + 1);
 
