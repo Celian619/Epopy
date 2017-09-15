@@ -76,9 +76,6 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	public void update() {
 		Timer.tick();
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A))
-			gameOver = true;
-
 		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
