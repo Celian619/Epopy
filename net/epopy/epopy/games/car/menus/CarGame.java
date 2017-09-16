@@ -70,7 +70,7 @@ public class CarGame extends AbstractGameMenu {
 	
 	@Override
 	public void onEnable() {
-		if (Main.getPlayer().hasSound())
+		if (Main.getPlayer().hasSound() && !Audios.CAR.isRunning())
 			Audios.CAR.start(true).setVolume(0.2f);
 			
 		Mouse.setGrabbed(true);
@@ -229,9 +229,9 @@ public class CarGame extends AbstractGameMenu {
 			}
 			if (!pauseScreen) {
 				if (!pause.isFinish())
-					ComponentsHelper.drawText(pause.getPauseString(), 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40);
+					ComponentsHelper.drawText(pause.getPauseString(), 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.3f, 0.3f, 0.3f, 1 });
 				else
-					ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40);
+					ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.3f, 0.3f, 0.3f, 1 });
 			}
 		}
 		
