@@ -13,6 +13,7 @@ public class PacketPlayerMessage extends PacketAbstract {
 	
 	@Override
 	public void process(final NetworkPlayerHandlers networkPlayerHandlers, final DataBuffer dataBuffer) {
+		dataBuffer.getString();
 		RequestType type = RequestType.valueOf(dataBuffer.getString().toUpperCase());
 		String message = dataBuffer.getString();
 		boolean error = Boolean.parseBoolean(dataBuffer.getString());

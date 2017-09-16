@@ -127,9 +127,11 @@ public class NetworkPlayerHandlers implements Runnable {
 				if (packet != null)
 					packet.process(this, data);
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				break;
 			}
 		}
+		System.out.println("stop");
 		stop();
 	}
 
