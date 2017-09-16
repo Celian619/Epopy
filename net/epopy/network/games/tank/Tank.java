@@ -74,6 +74,7 @@ public class Tank extends AbstractGameNetwork {
 					}
 				}
 
+				
 				// inputs
 				if (Input.isKeyDown(Keyboard.KEY_S)) 
 					CalculTank.moove(true);
