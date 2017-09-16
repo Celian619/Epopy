@@ -280,9 +280,9 @@ public class SnakeGame extends AbstractGameMenu {
 		for (mouse m : posMouse) {
 			Location loc = m.loc;
 			if (m.walk < 5)
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 33), 120, 65, loc.getDirection());
+				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 17), 120, 34, loc.getDirection());
 			else
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS2, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 33), 120, 65, loc.getDirection());
+				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_SOURIS2, (int) (cubeX * loc.getX() - 60), (int) (cubeY * loc.getY() - 17), 120, 34, loc.getDirection());
 
 		}
 
