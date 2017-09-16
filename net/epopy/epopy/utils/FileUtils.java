@@ -71,7 +71,6 @@ public class FileUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public static void replaceSelected(final String replace, final String value, final String path) {

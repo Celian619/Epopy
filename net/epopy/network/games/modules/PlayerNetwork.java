@@ -64,7 +64,7 @@ public class PlayerNetwork {
 		if (printTexture >= 10) printTexture = 0;
 		
 		ComponentsHelper.drawText(getName(), getLocation().getX(), getLocation().getY() - 70, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());
-		ComponentsHelper.renderTexture(texture, (int) (getLocation().getX() - 26), (int) (getLocation().getY() - 24), 64, 56, (int) getLocation().getPitch());
+		ComponentsHelper.renderTexture(texture, (int) (getLocation().getX() - 26), (int) (getLocation().getY() - 24), 64, 56, (int) getLocation().getDirection());
 
 	}
 }

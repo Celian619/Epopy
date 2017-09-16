@@ -1,7 +1,6 @@
 package net.epopy.network.games.tank;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
@@ -14,6 +13,7 @@ import net.epopy.network.games.AbstractGameNetwork;
 import net.epopy.network.games.modules.Ball;
 import net.epopy.network.games.modules.PlayerNetwork;
 import net.epopy.network.games.tank.modules.CalculTank;
+import net.epopy.network.games.tank.modules.MapLoader;
 import net.epopy.network.games.tank.modules.Zone;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus;
@@ -25,7 +25,8 @@ public class Tank extends AbstractGameNetwork {
 
 	public static int TANK_SIZE = 25;
 	public static int TANK_SPEED = 2;
-
+	public static MapLoader MAP;
+	
 	private boolean shoot = false;
 
 	private TankMenuEnd tankMenuEnd;
@@ -36,6 +37,7 @@ public class Tank extends AbstractGameNetwork {
 
 	@Override
 	public void onEnable() { 
+		MAP = new MapLoader("/net/epopy/epopy/display/res/network/games/map-tank-default-game.png");
 	}
 
 	@Override
@@ -43,17 +45,16 @@ public class Tank extends AbstractGameNetwork {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		if(getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
 			if (player != null ) {
-				Display.setTitle((int)player.getLocation().getX() + "  " + (int)player.getLocation().getY());
 				// rotation du tank
 				int rotationSpeed = 5;
 				int directionMouse = CalculTank.getDirectionMouse(player.getLocation().getX(), player.getLocation().getY());
-				int directionPlayer = (int) player.getLocation().getPitch();
+				int directionPlayer = (int) player.getLocation().getDirection();
 
 				if (!CalculTank.isMouseDistanceNear(player.getLocation())) {
 					if (Math.abs(directionMouse - directionPlayer) <= rotationSpeed) {
 						if (player.getLocation().getPitch() != directionMouse) {
+							player.getLocation().setDirection(directionMouse);
 							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(directionMouse));
-							player.getLocation().setPitch(directionMouse);
 						}
 					} else {
 						boolean directionInverse = Math.abs(directionMouse - directionPlayer) > 180;
@@ -66,18 +67,19 @@ public class Tank extends AbstractGameNetwork {
 						}
 						if (directionPlayer >= 180) directionPlayer -= 360;
 						else if (directionPlayer < -180) directionPlayer += 360;
-						if (player.getLocation().getPitch() != directionPlayer) {
+						if (player.getLocation().getDirection() != directionPlayer) {
+							player.getLocation().setDirection(directionPlayer);
 							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(directionPlayer));
-							player.getLocation().setPitch(directionPlayer);
 						}
 					}
 				}
 
 				// inputs
 				if (Input.isKeyDown(Keyboard.KEY_S)) 
-					Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(1, 0, player.getLocation().getPitch()));
+					CalculTank.moove(true);
 				else if (Input.isKeyDown(Keyboard.KEY_Z)) 
-					Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(0, 1, player.getLocation().getPitch()));
+					CalculTank.moove(false);
+			//		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(0, 1, player.getLocation().getPitch()));
 
 				if (Input.isButtonDown(0)) {
 					if (!shoot) {

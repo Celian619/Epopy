@@ -17,7 +17,7 @@ public class PacketPlayerShootBall extends PacketAbstract {
 		packet.put(location.getY());
 		packet.put(location.getZ());
 		packet.put(location.getYaw());
-		packet.put(location.getPitch());
+		packet.put(location.getDirection());//TODO mmm
 		packet.flip();
 	}
 

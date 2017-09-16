@@ -4,12 +4,23 @@ public class Location3D {
 
 	private double x, y, z, yaw, pitch;
 	
+	private int direction;
+	
 	public Location3D(double x, double y, double z, double yaw, double pitch) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.yaw = yaw;
 		this.pitch = pitch;
+	}
+	
+	public Location3D(double x, double y, double z, double yaw, double pitch, int direction) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.direction = direction;
 	}
 	
 	public Location3D copy() {
@@ -99,9 +110,16 @@ public class Location3D {
 		this.yaw = yaw;
 		this.pitch = pitch;
 	}
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	
 	/*
 	 * Getters
 	 */
+	public int getDirection() {
+		return direction;
+	}
 	
 	public double getX() {
 		return x;

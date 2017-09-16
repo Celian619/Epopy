@@ -8,7 +8,6 @@ import net.epopy.network.utils.DataBuffer;
 
 public class PacketPlayerLocation extends PacketAbstract {
 
-
 	public PacketPlayerLocation() {}
 
 	public PacketPlayerLocation(double x, double y, double z, double yaw, double pitch) {
