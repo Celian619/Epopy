@@ -107,8 +107,9 @@ public class Textures {
 	// snake
 	public static Textures GAME_SNAKE_BG = load("games/snake/bg");
 	public static Textures GAME_SNAKE_LEVEL_BG = load("games/snake/levels/bg");
-	public static Textures GAME_SNAKE_SOURIS = load("games/snake/levels/souris");
-	public static Textures GAME_SNAKE_SOURIS2 = load("games/snake/levels/souris-2");
+	public static Textures GAME_SNAKE_FOOD = load("games/snake/levels/food");
+	public static Textures GAME_SNAKE_FOOD2 = load("games/snake/levels/food-2");
+	public static Textures GAME_SNAKE_FOOD3 = load("games/snake/levels/food-3");
 	public static Textures GAME_SNAKE_TETE = load("games/snake/levels/tete");
 	public static Textures GAME_SNAKE_CORP = load("games/snake/levels/corp");
 	
