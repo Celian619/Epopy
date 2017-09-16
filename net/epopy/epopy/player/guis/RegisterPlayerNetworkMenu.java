@@ -124,7 +124,7 @@ public class RegisterPlayerNetworkMenu {
 			keepUserButton.render();
 			if (keepUserButton.isClicked()) {
 				keepUser = !keepUser;
-				Main.getConfig("infos").setValue("keepConnexion", String.valueOf(keepUser));
+				config.setValue("keepConnexion", String.valueOf(keepUser));
 				if (!keepUser) {
 					config.setValue("username", "null");
 					config.setValue("password", "null");
