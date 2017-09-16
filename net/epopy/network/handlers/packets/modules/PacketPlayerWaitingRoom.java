@@ -88,7 +88,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 			String team = data.split(":")[2];
 			NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
 			NetworkPlayer.getGame().clear();
-
+			
 			new java.util.Timer().schedule(
 					new java.util.TimerTask() {
 						@Override

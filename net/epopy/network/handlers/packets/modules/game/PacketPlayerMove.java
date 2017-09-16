@@ -24,7 +24,7 @@ public class PacketPlayerMove extends PacketAbstract {
 		packet.put(0);
 		packet.put(0);
 		packet.put(0.0);
-		packet.put(direction);
+		packet.put(direction); //TODO mettre direction en double
 		packet.flip();
 	}
 	public PacketPlayerMove(double direction) {

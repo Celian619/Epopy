@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import net.epopy.epopy.display.components.NotificationGui;
+import net.epopy.launcher.EpopyLauncher;
 import net.epopy.network.Logger;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.display.DisplayManager;
@@ -136,6 +137,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		Logger.info("Client thread has been stopper");
 		if(networkPlayerHandlersUDP == null) {
 			new NotificationGui("Les serveurs se sont éteints", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
+			NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersWaitingRoom().disconnect();
 			DisplayManager.exitMulti();
 		} else {
 			NetworkPlayer.setGame(new WaitingRoom());

@@ -37,7 +37,7 @@ import net.epopy.network.utils.NetworkStatus;
 public class RegisterPlayerNetworkMenu {
 	
 	public RegisterPlayerNetworkMenu() {
-		Config config = Main.getConfig("infos");
+		Config config = Main.getPlayer().getConfig();
 		if (!Display.isCreated())
 			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
 			
