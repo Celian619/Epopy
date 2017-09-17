@@ -51,10 +51,10 @@ public class FileUtils {
 			System.out.println("[SYSTEM] Folder '.Epopy' has been created !");
 		}
 		
-	/**	try {
+		try {
 			/*
 			 * Lock.txt
-			 *
+			 */
 			File lock = null;
 			lock = new File(PATH_FOLDER + "lock.txt");
 			lock.createNewFile();
@@ -70,7 +70,7 @@ public class FileUtils {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}**/
+		}
 	}
 	
 	public static void replaceSelected(final String replace, final String value, final String path) {

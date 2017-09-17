@@ -110,6 +110,13 @@ public class Location3D {
 		this.yaw = yaw;
 		this.pitch = pitch;
 	}
+	public void setWithDirection(double x, double y, double z, double yaw, double direction) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = yaw;
+		this.direction = (int)direction;
+	}
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
