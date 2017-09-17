@@ -1,14 +1,9 @@
 package net.epopy.epopy.display;
 
-import static org.lwjgl.opengl.EXTFramebufferObject.glGenerateMipmapEXT;
-import static org.lwjgl.opengl.GL11.GL_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_LINEAR_MIPMAP_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_RGBA8;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
@@ -20,9 +15,6 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glGenTextures;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
@@ -57,8 +49,7 @@ public class Textures {
 	public static Textures NETWORK_GAME_TANK_MAP = load("network/games/map-tank-default");
 	public static Textures NETWORK_GAME_TANK_ZONE_SMALL = load("network/games/zone-tank-small");
 	public static Textures NETWORK_GAME_END_BG = load("network/games/end_bg");
-	
-	
+
 	public static Textures MENU_SOUND_ON = load("games/sound_on");
 	public static Textures MENU_BTN_SOUND_ON = load("games/btn_sound_on");
 	public static Textures MENU_SOUND_OFF = load("games/sound_off");
@@ -96,7 +87,7 @@ public class Textures {
 	public static Textures GAME_CAR_BG = load("games/car/bg");
 
 	// tank
-	public static Textures GAME_TANK_BG = load("games/tank/bg");
+	public static Textures GAME_TANK_WALL = load("games/tank/wall");
 	public static Textures GAME_TANK_TANK1 = load("games/tank/tank");
 	public static Textures GAME_TANK_TANK2 = load("games/tank/tank2");
 	public static Textures GAME_TANK_TANKPRINT = load("games/tank/tankPrint");
@@ -281,14 +272,7 @@ public class Textures {
 	public void renderTexture(final float w, final float h) {
 		glEnable(GL_TEXTURE_2D);
 		bind();
-		glGenerateMipmapEXT(GL_TEXTURE_2D);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glMatrixMode(GL_TEXTURE);
-		glLoadIdentity();
-		glScalef(1, 1, 1);
-		glMatrixMode(GL_MODELVIEW);
-
+		
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
 		glVertex2f(0, 0);

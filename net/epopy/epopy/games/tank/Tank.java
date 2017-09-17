@@ -16,7 +16,7 @@ public class Tank extends AbstractGame {
 	
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_TANK_BG;
+		return Textures.GAME_TANK_WALL;
 	}
 
 	@Override

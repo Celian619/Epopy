@@ -101,7 +101,7 @@ public class TankGame extends AbstractGameMenu {
 		tankAspectP = 0;
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(this.getClass().getResource(Textures.GAME_TANK_BG.getPath()));
+			img = ImageIO.read(this.getClass().getResource(Textures.GAME_TANK_WALL.getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -122,8 +122,8 @@ public class TankGame extends AbstractGameMenu {
 		while (true) {
 
 			int[] added = new int[nbrOfPixels];
-
 			int modifs = 0;
+			
 			for (int n = width; n < nbrOfPixels - width; n++) {
 
 				if (distanceBlocks[n] == 0) {
@@ -143,11 +143,10 @@ public class TankGame extends AbstractGameMenu {
 				if (distanceBlocks[n] == 0)
 					distanceBlocks[n] = added[n];
 			}
-
 			if (modifs == 0) break;
-			pause.startPause(5);
-			timer = new Timer();
 		}
+		pause.startPause(5);
+		timer = new Timer();
 	}
 
 	/*
@@ -222,14 +221,14 @@ public class TankGame extends AbstractGameMenu {
 		}
 
 		if (!isMouseDistanceNear()) {
-
-			// controle avant-arriere du tank
+			// controle avant-arriere du tank + souris
 			if (Input.isKeyDown(TankOptions.KEY_UP)) {
-				movePlayer(false);
+				movePlayer(false, true);
 			} else if (Input.isKeyDown(TankOptions.KEY_DOWN)) {
-				movePlayer(true);
+				movePlayer(true, true);
+			} else {
+				movePlayer(false, false);
 			}
-
 		}
 		// tir
 		if (Input.isButtonDown(0)) {
@@ -261,7 +260,8 @@ public class TankGame extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-		Textures.GAME_TANK_BG.renderBackground();
+
+		ComponentsHelper.drawQuad(0, 0, defaultWidth, defaultHeight, new float[] { 0, 0.3f, 0.1f, 1 });
 
 		if (!gameOver && !win && !pauseScreen && pause.isFinish())
 			ComponentsHelper.drawText("Score: " + damage, defaultWidth / 2, defaultHeight / 2 + 35, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.7f, 0.7f, 0.7f, 1 });
@@ -270,14 +270,14 @@ public class TankGame extends AbstractGameMenu {
 		float f = 0.20f;
 		for (Location loc : tankPrintP) {
 			glColor4f(0.32f, 0.26f, 1, f);
-			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 26, loc.getY() - 24, 64, 56, loc.getDirection());
+			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
 
 		f = 0.20f;
 		for (Location loc : tankPrintR) {
 			glColor4f(1, 0f, 0f, f);
-			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 26, loc.getY() - 24, 64, 56, loc.getDirection());
+			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
 
@@ -309,6 +309,9 @@ public class TankGame extends AbstractGameMenu {
 		ComponentsHelper.renderTexture(textureBot, locRobot.getX() - 32, locRobot.getY() - 28, 64, 56, locRobot.getDirection());
 		
 		glColor4f(1, 1, 1, 1);
+		
+		Textures.GAME_TANK_WALL.renderBackground();// les murs
+
 		if (!pause.isFinish()) {
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
@@ -547,21 +550,20 @@ public class TankGame extends AbstractGameMenu {
 		return false;
 	}
 
-	private void movePlayer(final boolean backward) {
-		
+	private void movePlayer(final boolean backward, final boolean move) {
+
 		// rotation du tank
 		int rotationSpeed = 5;
 		int directionM = getDirectionMouse();
 		int directionPlayer = locPlayer.getDirection();
 		int lastDirection = locPlayer.getDirection();
-		
+
 		if (Math.abs(directionM - directionPlayer) <= rotationSpeed) {
-			if (!isCollision(locPlayer.getX(), locPlayer.getY(), directionPlayer))
-				locPlayer.setDirection(directionM);
+			locPlayer.setDirection(directionM);
 		} else {
-			
+
 			boolean directionInverse = Math.abs(directionM - directionPlayer) > 180;
-			
+
 			if (directionPlayer < directionM) {
 				if (directionInverse) directionPlayer -= rotationSpeed;
 				else directionPlayer += rotationSpeed;
@@ -569,37 +571,41 @@ public class TankGame extends AbstractGameMenu {
 				if (directionInverse) directionPlayer += rotationSpeed;
 				else directionPlayer -= rotationSpeed;
 			}
-			
+
 			if (directionPlayer >= 180) directionPlayer -= 360;
 			else if (directionPlayer < -180) directionPlayer += 360;
+
+			locPlayer.setDirection(directionPlayer);
+
+		}
+		if (move) {
 			
-			if (!isCollision(locPlayer.getX(), locPlayer.getY(), directionPlayer))
-				locPlayer.setDirection(directionPlayer);
-				
-		}
-
-		double x = deplacedX(locPlayer, backward ? -speedTank : speedTank);
-		double y = deplacedY(locPlayer, backward ? -speedTank : speedTank);
-
-		tankAspectP++;
-		if (!isCollision(x, y, locPlayer.getDirection())) {
-			locPlayer.setPos(x, y);
-		} else if (!isCollision(x, y, lastDirection)) {
-			locPlayer.setPos(x, y, lastDirection);
-		} else if (!isCollision(x, locPlayer.getY(), locPlayer.getDirection())) {
-			locPlayer.setX(x);
-		} else if (!isCollision(x, locPlayer.getY(), lastDirection)) {
-			locPlayer.setPos(x, locPlayer.getY(), lastDirection);
-		} else if (!isCollision(locPlayer.getX(), y, locPlayer.getDirection())) {
-			locPlayer.setY(y);
-		} else if (!isCollision(locPlayer.getX(), y, lastDirection)) {
-			locPlayer.setPos(locPlayer.getX(), y, lastDirection);
-		} else if (!isCollision(locPlayer.getX(), locPlayer.getY(), lastDirection)) {
-			locPlayer.setDirection(lastDirection);
+			double x = deplacedX(locPlayer, backward ? -speedTank : speedTank);
+			double y = deplacedY(locPlayer, backward ? -speedTank : speedTank);
+			
+			tankAspectP++;
+			if (!isCollision(x, y, locPlayer.getDirection())) {
+				locPlayer.setPos(x, y);
+			} else if (!isCollision(x, y, lastDirection)) {
+				locPlayer.setPos(x, y, lastDirection);
+			} else if (!isCollision(x, locPlayer.getY(), locPlayer.getDirection())) {
+				locPlayer.setX(x);
+			} else if (!isCollision(x, locPlayer.getY(), lastDirection)) {
+				locPlayer.setPos(x, locPlayer.getY(), lastDirection);
+			} else if (!isCollision(locPlayer.getX(), y, locPlayer.getDirection())) {
+				locPlayer.setY(y);
+			} else if (!isCollision(locPlayer.getX(), y, lastDirection)) {
+				locPlayer.setPos(locPlayer.getX(), y, lastDirection);
+			} else if (!isCollision(locPlayer.getX(), locPlayer.getY(), lastDirection)) {
+				locPlayer.setDirection(lastDirection);
+			} else {
+				tankAspectP--;// pas bouge
+			}
 		} else {
-			tankAspectP--;// pas bouge
+			if (isCollision(locPlayer.getX(), locPlayer.getY(), locPlayer.getDirection())) {
+				locPlayer.setDirection(lastDirection);
+			}
 		}
-
 	}
 
 	protected boolean isBallCollision(final int x, final int y) {
