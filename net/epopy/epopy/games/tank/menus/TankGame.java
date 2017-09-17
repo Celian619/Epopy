@@ -382,7 +382,7 @@ public class TankGame extends AbstractGameMenu {
 			}
 			renderEchap(false, +damage + "", record);
 		}
-		
+		ComponentsHelper.drawLine(x1, y1, x2, y2, 2, new float[] { 1, 0, 0, 1 });
 	}
 	
 	/*
@@ -483,11 +483,11 @@ public class TankGame extends AbstractGameMenu {
 		double x = deplacedX(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
 		double y = deplacedY(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
 		
-		if (!isCollision((int) x, (int) y)) {
+		if (!isCollision((int) x, (int) y, locPlayer.getDirection())) {
 			locRobot.setPos(x, y);
-		} else if (!isCollision((int) x, (int) locRobot.getY())) {
+		} else if (!isCollision((int) x, (int) locRobot.getY(), locPlayer.getDirection())) {
 			locRobot.setPos(x, locRobot.getY());
-		} else if (!isCollision((int) locRobot.getX(), (int) y)) {
+		} else if (!isCollision((int) locRobot.getX(), (int) y, locPlayer.getDirection())) {
 			locRobot.setPos(locRobot.getX(), y);
 		}
 		
@@ -574,11 +574,11 @@ public class TankGame extends AbstractGameMenu {
 		double y = deplacedY(locPlayer, backward ? -speedTank : speedTank);
 		
 		tankAspectP++;
-		if (!isCollision((int) x, (int) y)) {
+		if (!isCollision((int) x, (int) y, locPlayer.getDirection())) {
 			locPlayer.setPos(x, y);
-		} else if (!isCollision((int) x, (int) locPlayer.getY())) {
+		} else if (!isCollision((int) x, (int) locPlayer.getY(), locPlayer.getDirection())) {
 			locPlayer.setPos(x, locPlayer.getY());
-		} else if (!isCollision((int) locPlayer.getX(), (int) y)) {
+		} else if (!isCollision((int) locPlayer.getX(), (int) y, locPlayer.getDirection())) {
 			locPlayer.setPos(locPlayer.getX(), y);
 		} else {
 			tankAspectP--;// pas bouge
@@ -589,9 +589,37 @@ public class TankGame extends AbstractGameMenu {
 	protected boolean isBallCollision(final int x, final int y) {
 		return distanceBlocks[1920 * y + x] == 1;
 	}
+
+	int x1 = 0;
+	int y1 = 0;
 	
-	private boolean isCollision(final int x, final int y) {
-		return distanceBlocks[1920 * y + x] < tankSize + 1;
+	int y2 = 0;
+	int x2 = 0;
+	
+	private boolean isCollision(int x, int y, final int direction) {
+		
+		x += (int) (-18 * Math.cos(Math.toRadians(direction + 25)));
+		y += (int) (-18 * Math.sin(Math.toRadians(direction + 25)));
+
+		boolean droiteArriere = distanceBlocks[1920 * y + x] == 1;
+
+		x += (int) (-18 * Math.cos(Math.toRadians(direction - 25)));
+		y += (int) (-18 * Math.sin(Math.toRadians(direction - 25)));
+		
+		boolean gaucheArriere = distanceBlocks[1920 * y + x] == 1;
+		
+		x += (int) (18 * Math.cos(Math.toRadians(direction + 25)));
+		y += (int) (18 * Math.sin(Math.toRadians(direction + 25)));
+
+		boolean droite = distanceBlocks[1920 * y + x] == 1;
+
+		x += (int) (18 * Math.cos(Math.toRadians(direction - 25)));
+		y += (int) (18 * Math.sin(Math.toRadians(direction - 25)));
+		
+		boolean gauche = distanceBlocks[1920 * y + x] == 1;
+
+		return droiteArriere || gaucheArriere || droite || gauche;
+
 	}
 	
 	private int getDirectionMouse() {
