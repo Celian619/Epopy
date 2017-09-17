@@ -382,7 +382,7 @@ public class TankGame extends AbstractGameMenu {
 
 			}
 		}
-
+		int lastDirection = locRobot.getDirection();
 		if (nearBalleLoc != null) {
 
 			double Xa = nearBalleLoc.getX() - locRobot.getX();
@@ -393,8 +393,7 @@ public class TankGame extends AbstractGameMenu {
 			int directionR = locRobot.getDirection();
 			directionR += (directionBalle - directionR) / 10.0;
 
-			if (!isCollision(locRobot.getX(), locRobot.getY(), directionR))
-				locRobot.setDirection(directionR);
+			locRobot.setDirection(directionR);
 			recul -= 5;
 
 			shootRobot();
@@ -455,24 +454,32 @@ public class TankGame extends AbstractGameMenu {
 
 			directionMax = Math.max(directionMax, locRobot.getDirection());
 
-			if (!isCollision(locPlayer.getX(), locPlayer.getY(), (int) bestDirection))
-				locRobot.setDirection((int) bestDirection);
+			locRobot.setDirection((int) bestDirection);
 		}
 		// speed = speed / 2;
+		if (isTankCollision(deplacedX(locRobot, speedRobot), deplacedY(locRobot, speedRobot), locRobot.getDirection()) && isTankCollision(deplacedX(locRobot, speedRobot), deplacedY(locRobot, speedRobot), lastDirection)) recul += 20;
 
-		// le robot avance toujours
 		double x = deplacedX(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
 		double y = deplacedY(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
-
-		if (!isCollision((int) x, (int) y, locRobot.getDirection())) {
-			locRobot.setPos(x, y);
-		} else if (!isCollision((int) x, (int) locRobot.getY(), locRobot.getDirection())) {
-			locRobot.setPos(x, locRobot.getY());
-		} else if (!isCollision((int) locRobot.getX(), (int) y, locRobot.getDirection())) {
-			locRobot.setPos(locRobot.getX(), y);
-		}
-
 		tankAspectR++;
+
+		if (!isTankCollision(x, y, locRobot.getDirection())) {
+			locRobot.setPos(x, y);
+		} else if (!isTankCollision(x, y, lastDirection)) {
+			locRobot.setPos(x, y, lastDirection);
+		} else if (!isTankCollision(x, locRobot.getY(), locRobot.getDirection())) {
+			locRobot.setX(x);
+		} else if (!isTankCollision(x, locRobot.getY(), lastDirection)) {
+			locRobot.setPos(x, locRobot.getY(), lastDirection);
+		} else if (!isTankCollision(locRobot.getX(), y, locRobot.getDirection())) {
+			locRobot.setY(y);
+		} else if (!isTankCollision(locRobot.getX(), y, lastDirection)) {
+			locRobot.setPos(locRobot.getX(), y, lastDirection);
+		} else if (!isTankCollision(locRobot.getX(), locRobot.getY(), lastDirection)) {
+			locRobot.setDirection(lastDirection);
+		} else {
+			tankAspectR--;
+		}
 
 	}
 
@@ -517,7 +524,7 @@ public class TankGame extends AbstractGameMenu {
 				Location locTo = locRobot.clone();
 				locTo.setDirection(direction);
 
-				int dist = distanceBlocks[1920 * (int) deplacedY(locTo, speed) + (int) deplacedX(locTo, speed)];
+				int dist = tankCollisionNumber(deplacedX(locTo, speed), deplacedY(locTo, speed), direction);
 
 				if (dist > bestGood) {
 					bestDirection = direction;
@@ -525,7 +532,7 @@ public class TankGame extends AbstractGameMenu {
 
 				}
 
-				if (i > 30 && bestGood > 35) {// dans un rayon de 30 + 30 ° sauf si mur
+				if (i > 30 && bestGood > 50) {// dans un rayon de 30 + 30 ° sauf si mur
 
 					return bestDirection;
 				}
@@ -584,25 +591,25 @@ public class TankGame extends AbstractGameMenu {
 			double y = deplacedY(locPlayer, backward ? -speedTank : speedTank);
 			
 			tankAspectP++;
-			if (!isCollision(x, y, locPlayer.getDirection())) {
+			if (!isTankCollision(x, y, locPlayer.getDirection())) {
 				locPlayer.setPos(x, y);
-			} else if (!isCollision(x, y, lastDirection)) {
+			} else if (!isTankCollision(x, y, lastDirection)) {
 				locPlayer.setPos(x, y, lastDirection);
-			} else if (!isCollision(x, locPlayer.getY(), locPlayer.getDirection())) {
+			} else if (!isTankCollision(x, locPlayer.getY(), locPlayer.getDirection())) {
 				locPlayer.setX(x);
-			} else if (!isCollision(x, locPlayer.getY(), lastDirection)) {
+			} else if (!isTankCollision(x, locPlayer.getY(), lastDirection)) {
 				locPlayer.setPos(x, locPlayer.getY(), lastDirection);
-			} else if (!isCollision(locPlayer.getX(), y, locPlayer.getDirection())) {
+			} else if (!isTankCollision(locPlayer.getX(), y, locPlayer.getDirection())) {
 				locPlayer.setY(y);
-			} else if (!isCollision(locPlayer.getX(), y, lastDirection)) {
+			} else if (!isTankCollision(locPlayer.getX(), y, lastDirection)) {
 				locPlayer.setPos(locPlayer.getX(), y, lastDirection);
-			} else if (!isCollision(locPlayer.getX(), locPlayer.getY(), lastDirection)) {
+			} else if (!isTankCollision(locPlayer.getX(), locPlayer.getY(), lastDirection)) {
 				locPlayer.setDirection(lastDirection);
 			} else {
 				tankAspectP--;// pas bouge
 			}
 		} else {
-			if (isCollision(locPlayer.getX(), locPlayer.getY(), locPlayer.getDirection())) {
+			if (isTankCollision(locPlayer.getX(), locPlayer.getY(), locPlayer.getDirection())) {
 				locPlayer.setDirection(lastDirection);
 			}
 		}
@@ -612,49 +619,54 @@ public class TankGame extends AbstractGameMenu {
 		return distanceBlocks[1920 * y + x] == 1;
 	}
 	
-	private boolean isCollision(final double xT, final double yT, final int direction) {
+	private boolean isTankCollision(final double xT, final double yT, final int direction) {
+		return tankCollisionNumber(xT, yT, direction) == 1;
+	}
+
+	private int tankCollisionNumber(final double xT, final double yT, final int direction) {
+		int min = 1000000;
 		
 		int x = (int) (xT + 35 * Math.cos(Math.toRadians(direction + 47)));
 		int y = (int) (yT + 35 * Math.sin(Math.toRadians(direction + 47)));
 
-		boolean avantDroite = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + 35 * Math.cos(Math.toRadians(direction - 47)));
 		y = (int) (yT + 35 * Math.sin(Math.toRadians(direction - 47)));
 		
-		boolean avantGauche = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + -40 * Math.cos(Math.toRadians(direction + 42)));
 		y = (int) (yT + -40 * Math.sin(Math.toRadians(direction + 42)));
 		
-		boolean droiteArriere = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + -40 * Math.cos(Math.toRadians(direction - 42)));
 		y = (int) (yT + -40 * Math.sin(Math.toRadians(direction - 42)));
 		
-		boolean gaucheArriere = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + 31 * Math.cos(Math.toRadians(direction)));
 		y = (int) (yT + 31 * Math.sin(Math.toRadians(direction)));
 		
-		boolean canon = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + -30 * Math.cos(Math.toRadians(direction)));
 		y = (int) (yT + -30 * Math.sin(Math.toRadians(direction)));
 		
-		boolean arriere = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + 29 * Math.cos(Math.toRadians(direction - 90)));
 		y = (int) (yT + 29 * Math.sin(Math.toRadians(direction - 90)));
 
-		boolean gauche = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 
 		x = (int) (xT + 29 * Math.cos(Math.toRadians(direction + 90)));
 		y = (int) (yT + 29 * Math.sin(Math.toRadians(direction + 90)));
 
-		boolean droite = distanceBlocks[1920 * y + x] == 1;
+		min = Math.min(distanceBlocks[1920 * y + x], min);
 		
-		return droiteArriere || gaucheArriere || avantDroite || avantGauche || canon || arriere || droite || gauche;
+		return min;
 		
 	}
 
