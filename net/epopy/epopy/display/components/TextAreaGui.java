@@ -229,10 +229,10 @@ public class TextAreaGui {
 			hh = height;
 		}
 		
-		x = ComponentsHelper.getResponsiveX(xx);
-		y = ComponentsHelper.getResponsiveY(yy);
-		width = ComponentsHelper.getResponsiveX(ww);
-		height = ComponentsHelper.getResponsiveY(hh);
+		x = (int) ComponentsHelper.getResponsiveX(xx);
+		y = (int) ComponentsHelper.getResponsiveY(yy);
+		width = (int) ComponentsHelper.getResponsiveX(ww);
+		height = (int) ComponentsHelper.getResponsiveY(hh);
 		
 		update(x, y, 16, -1, color0, color1, color2, maxletters);
 	}
@@ -309,8 +309,8 @@ public class TextAreaGui {
 			
 			if (i > 20 && i < 35) {
 				int x = lastX;
-				int width = x + ComponentsHelper.getResponsiveX(2);
-				int height = y + ComponentsHelper.getResponsiveY(49);
+				int width = x + (int) ComponentsHelper.getResponsiveX(2);
+				int height = y + (int) ComponentsHelper.getResponsiveY(49);
 				glColor4f(1, 1, 1, 1);
 				glBegin(GL_QUADS);
 				glVertex2f(x, y + 3);

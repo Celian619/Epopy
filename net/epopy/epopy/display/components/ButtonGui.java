@@ -160,10 +160,10 @@ public class ButtonGui {
 			hh = textSize;
 		}
 
-		this.x = ComponentsHelper.getResponsiveX(xx);
-		this.y = ComponentsHelper.getResponsiveY(yy);
-		width = ComponentsHelper.getResponsiveX(ww);
-		height = ComponentsHelper.getResponsiveY(hh);
+		this.x = (int) ComponentsHelper.getResponsiveX(xx);
+		this.y = (int) ComponentsHelper.getResponsiveY(yy);
+		width = (int) ComponentsHelper.getResponsiveX(ww);
+		height = (int) ComponentsHelper.getResponsiveY(hh);
 
 		update();
 	}
@@ -185,17 +185,17 @@ public class ButtonGui {
 			hh = height;
 		}
 
-		this.x = ComponentsHelper.getResponsiveX(xx);
-		this.y = ComponentsHelper.getResponsiveY(yy);
-		this.width = ComponentsHelper.getResponsiveX(ww);
-		this.height = ComponentsHelper.getResponsiveY(hh);
+		this.x = (int) ComponentsHelper.getResponsiveX(xx);
+		this.y = (int) ComponentsHelper.getResponsiveY(yy);
+		this.width = (int) ComponentsHelper.getResponsiveX(ww);
+		this.height = (int) ComponentsHelper.getResponsiveY(hh);
 
 		update();
 	}
 
 	public void setX(final int x) {
 		xx = x;
-		this.x = ComponentsHelper.getResponsiveX(x);
+		this.x = (int) ComponentsHelper.getResponsiveX(x);
 	}
 
 	public void setClicked(final boolean clicked) {

@@ -132,8 +132,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		} else if (Input.isKeyDown(PlaceInvaderOptions.KEY_LEFT)) {// aller a gauche
 			
 			xPlayer -= 10;
-			if (xPlayer < 0 + playerSize / 2) {
-				xPlayer = 0;
+			if (xPlayer < playerSize / 2) {
+				xPlayer = playerSize / 2;
 			}
 			
 		}
@@ -164,6 +164,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 			Location loc = locBalleP.get(i);
 			if (loc.getY() <= 1) {
 				locBalleP.remove(i);
+				Random r = new Random();
+				loc.setX(playerSize / 2 + r.nextInt(defaultWidth - playerSize));
 				locBalleR.add(loc);// rebonds du joueur
 			} else
 				loc.remove(0, 10);
