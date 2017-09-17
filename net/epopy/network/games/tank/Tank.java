@@ -52,7 +52,7 @@ public class Tank extends AbstractGameNetwork {
 
 				if (!CalculTank.isMouseDistanceNear(player.getLocation())) {
 					if (Math.abs(directionMouse - directionPlayer) <= rotationSpeed) {
-						if (player.getLocation().getPitch() != directionMouse) {
+						if (player.getLocation().getDirection() != directionMouse) {
 							player.getLocation().setDirection(directionMouse);
 							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(directionMouse));
 						}
