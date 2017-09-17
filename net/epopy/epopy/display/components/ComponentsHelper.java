@@ -202,31 +202,64 @@ public class ComponentsHelper {
 	}
 
 	public static void renderTexture(final Textures textureUtils, final double x, final double y, final int width, final int height) {
-		renderTexture(textureUtils, x, y, width, height, 0);
+		renderTexture(textureUtils, x, y, width, height, 0, false);
 	}
 
-	public static void renderTexture(final Textures textureUtils, double x, double y, int width, int height, final int rotation) {
+	public static void renderTexture(final Textures textureUtils, final double x, final double y, final int width, final int height, final int rotation) {
+		renderTexture(textureUtils, x, y, width, height, rotation, false);
+	}
+
+	public static void renderTexture(final Textures textureUtils, double x, double y, int width, int height, final int rotation, final boolean loopBorder) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
 		height = getResponsiveY(height);
-
-		glTranslatef((int) (x + width / 2), (int) (y + height / 2), 0);
-		glRotatef(rotation, 0, 0, 1);
-
-		textureUtils.bind();
-		glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);
-		glVertex3f(-width / 2, -height / 2, 0);
-		glTexCoord2f(1, 0);
-		glVertex3f(width / 2, -height / 2, 0);
-		glTexCoord2f(1, 1);
-		glVertex3f(width / 2, height / 2, 0);
-		glTexCoord2f(0, 1);
-		glVertex3f(-width / 2, height / 2, 0);
-		glEnd();
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glLoadIdentity();
+		boolean other = false;
+		boolean otherX = false;
+		boolean otherY = false;
+		do {
+			glTranslatef((int) (x + width / 2), (int) (y + height / 2), 0);
+			glRotatef(rotation, 0, 0, 1);
+			
+			textureUtils.bind();
+			glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(-width / 2, -height / 2, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(width / 2, -height / 2, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(width / 2, height / 2, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(-width / 2, height / 2, 0);
+			glEnd();
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glLoadIdentity();
+			
+			other = false;
+			if (!otherX) {
+				if (x + width > AbstractGameMenu.defaultWidth) {
+					x -= AbstractGameMenu.defaultWidth;
+					otherX = other = true;
+					
+				} else if (x - width < 0) {
+					x += AbstractGameMenu.defaultWidth;
+					otherX = other = true;
+				}
+			}
+			
+			if (!otherY) {
+				if (y + height > AbstractGameMenu.defaultHeight) {
+					y -= AbstractGameMenu.defaultHeight;
+					otherY = other = true;
+				} else if (y - height < 0) {
+					y += AbstractGameMenu.defaultHeight;
+					otherY = other = true;
+				}
+			}
+			if (loopBorder && (otherX || otherY)) {
+				System.out.println(otherX + "   " + otherY);
+			}
+		} while (other && loopBorder);
 		
 	}
 

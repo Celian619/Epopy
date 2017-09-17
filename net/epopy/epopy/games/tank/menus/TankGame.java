@@ -341,14 +341,14 @@ public class TankGame extends AbstractGameMenu {
 				int x = 1093;
 				int y = 400;
 				
-				ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-				ComponentsHelper.drawText("Avancer", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText("Reculer", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				ComponentsHelper.drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+				ComponentsHelper.drawText("Avancer", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				ComponentsHelper.drawText("Reculer", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
-				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 150 + 45, 60, 60);
+				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 150 + 25, 60, 60);
 				ComponentsHelper.drawText(Input.getKeyName(TankOptions.KEY_UP), x - 28 + 16, y + 38, 50, new float[] { 0, 0, 0, 1 });
-				ComponentsHelper.drawText(Input.getKeyName(TankOptions.KEY_DOWN), x - 28 + 16, y + 150 + 38, 50, new float[] { 0, 0, 0, 1 });
+				ComponentsHelper.drawText(Input.getKeyName(TankOptions.KEY_DOWN), x - 28 + 16, y + 150 + 18, 50, new float[] { 0, 0, 0, 1 });
 				
 				// if(Main.getPlayer().getLevel() <= GameList.CAR.getID()) { BATTRE SON RECORD :
 				ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });

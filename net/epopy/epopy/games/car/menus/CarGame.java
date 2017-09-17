@@ -208,14 +208,14 @@ public class CarGame extends AbstractGameMenu {
 					int x = 1093;
 					int y = 400;
 					
-					ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-					ComponentsHelper.drawText("Droite", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
-					ComponentsHelper.drawText("Gauche", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
+					ComponentsHelper.drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+					ComponentsHelper.drawText("Droite", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
+					ComponentsHelper.drawText("Gauche", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
 					
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
-					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 195, 60, 60);
+					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 175, 60, 60);
 					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x, y + 75, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
-					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 220, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
+					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
 					
 					// if(Main.getPlayer().getLevel() <= GameList.CAR.getID()) { BATTRE SON RECORD :
 					ComponentsHelper.drawText("OBJECTIF", 660, 495, 30, new float[] { 1, 0.5f, 0, 1 });

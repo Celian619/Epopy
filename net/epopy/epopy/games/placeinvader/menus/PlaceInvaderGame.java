@@ -238,16 +238,16 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 				int x = 1093;
 				int y = 400;
 				
-				ComponentsHelper.drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-				ComponentsHelper.drawText("Droite", x - 80, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				ComponentsHelper.drawText("CONTROLES", x, y - 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+				ComponentsHelper.drawText("Droite", x - 80, y + 5, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				ComponentsHelper.drawText("Gauche", x - 80, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				
 				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30 - 80, y + 45, 60, 60);
-				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30 - 80, y + 150 + 45, 60, 60);
+				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30 - 80, y + 150 + 35, 60, 60);
 				ComponentsHelper.drawText(Input.getKeyName(PlaceInvaderOptions.KEY_RIGHT), x - 28 - 80, y + 40, 50, new float[] { 0, 0, 0, 1 });
-				ComponentsHelper.drawText(Input.getKeyName(PlaceInvaderOptions.KEY_LEFT), x - 28 - 80, y + 150 + 40, 50, new float[] { 0, 0, 0, 1 });
+				ComponentsHelper.drawText(Input.getKeyName(PlaceInvaderOptions.KEY_LEFT), x - 28 - 80, y + 150 + 30, 50, new float[] { 0, 0, 0, 1 });
 				
-				ComponentsHelper.drawText("Tir", x + 80, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				ComponentsHelper.drawText("Tir", x + 80, y + 5, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				
 				ComponentsHelper.renderTexture(Textures.GAME_GAUCHE_SOURIS, x - 30 + 60, y + 45, 100, 100);
 				
