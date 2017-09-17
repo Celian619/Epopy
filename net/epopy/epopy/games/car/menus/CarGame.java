@@ -164,8 +164,8 @@ public class CarGame extends AbstractGameMenu {
 			}
 
 			// la ligne de départ :
-			ComponentsHelper.drawLine((int) (middleWidth * cubeWidth), (int) (middleHeight *
-					cubeHeight), (int) (middleWidth * cubeWidth), (int) ((middleHeight + 1) * cubeHeight), 8, new float[] { 0f, 0f, 1, 1 });
+			ComponentsHelper.drawLine(middleWidth * cubeWidth, middleHeight *
+					cubeHeight, middleWidth * cubeWidth, (middleHeight + 1) * cubeHeight, 8, new float[] { 0f, 0f, 1, 1 });
 
 			paintLiaisons(pointsInt);
 			paintLiaisons(pointsExt);
@@ -199,7 +199,7 @@ public class CarGame extends AbstractGameMenu {
 
 			if (contreSens) {
 				contreSens = false;
-				ComponentsHelper.drawText("Tu es serieux pourquoi tu roules à contre-sens ?", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
+				ComponentsHelper.drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
 			}
 			if (!pause.isFinish()) {
 				if (pause.getTimePauseTotal() == 5) {
@@ -259,22 +259,22 @@ public class CarGame extends AbstractGameMenu {
 		} else {
 			speed += 0.2 / speed;
 		}
-
-		if ((isLine((int) deplacedX(15), (int) deplacedY(15)) || isLine((int) deplacedX(), (int) deplacedY())) && timer.getTime() > 0.3 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
+		
+		if (isLine((int) deplacedX(), (int) deplacedY()) && timer.getTime() > 0.3 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
 			if (direction > 270 || direction < 90)
 				win = true;
 			else {
 				contreSens = true;
 				speed = 0;
 			}
-
+			
 		} else {
-			if (!isCircuit((int) deplacedX(15), (int) deplacedY(15)) || !isCircuit((int) deplacedX(), (int) deplacedY())) // crash
+			if (!isCircuit()) // crash
 				speed = 0;
-
+				
 			locCar.setPos(deplacedX(), deplacedY());
 		}
-
+		
 	}
 
 	private void upgradeMap() {
@@ -308,12 +308,31 @@ public class CarGame extends AbstractGameMenu {
 		return cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) == 0 && cm.getBlue(img.getRGB(x, y)) == 255;
 	}
 
-	private boolean isCircuit(final int x, final int y) {
+	private boolean isCircuit() {
+		int x = (int) deplacedX();
+		int y = (int) deplacedY();
+
 		BufferedImage img = map.getBuffImage();
 		ColorModel cm = img.getColorModel();
+		boolean centre = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
 
-		return cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+		x = (int) deplacedX(15);
+		y = (int) deplacedY(15);
 
+		boolean avant = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+
+		x = (int) (locCar.getX() + 10 * Math.cos(Math.toRadians(direction + 20)));
+		y = (int) (locCar.getY() + 10 * Math.cos(Math.toRadians(direction + 20)));
+
+		boolean droite = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+		
+		x = (int) (locCar.getX() + 10 * Math.cos(Math.toRadians(direction - 20)));
+		y = (int) (locCar.getY() + 10 * Math.cos(Math.toRadians(direction - 20)));
+
+		boolean gauche = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+
+		return centre && avant && droite && gauche;
+		
 	}
 
 	private void paintLiaisons(final List<Location> points) {
