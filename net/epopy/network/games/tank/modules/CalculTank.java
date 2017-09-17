@@ -61,6 +61,6 @@ public class CalculTank {
 			location.setPos(location.getX(), y, 0);
 		
 		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), 
-				new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+				new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getDirection()));
 	}
 }
