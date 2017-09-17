@@ -315,12 +315,13 @@ public class TankGame extends AbstractGameMenu {
 				ComponentsHelper.drawCircle(b.getLocation().getX(), b.getLocation().getY(), 5, 10, new float[] { 1, 0f, 0f, 1 });
 				
 		}
-		
+
 		// Affiche le joueur
 		Textures texturePlayer = tankAspectP <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
 		if (tankAspectP == 10) tankAspectP = 0;
 		
-		ComponentsHelper.renderTexture(texturePlayer, locPlayer.getX() - 26, locPlayer.getY() - 24, 64, 56, locPlayer.getDirection());
+		ComponentsHelper.renderTexture(texturePlayer, locPlayer.getX() - 32, locPlayer.getY() - 28, 64, 56, locPlayer.getDirection());
+
 		// Affiche le Bot
 		Textures textureBot = tankAspectR <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
 		if (tankAspectR == 10) tankAspectR = 0;
@@ -330,7 +331,13 @@ public class TankGame extends AbstractGameMenu {
 			glColor4f(1, 0f, 0f, 0.5f);
 		}
 		
-		ComponentsHelper.renderTexture(textureBot, locRobot.getX() - 26, locRobot.getY() - 24, 64, 56, locRobot.getDirection());
+		ComponentsHelper.renderTexture(textureBot, locRobot.getX() - 32, locRobot.getY() - 28, 64, 56, locRobot.getDirection());
+		
+		ComponentsHelper.drawCircle(x1, y1, 4, 4, new float[] { 1, 0, 0, 1 });
+		ComponentsHelper.drawCircle(x2, y2, 4, 4, new float[] { 1, 0, 0, 1 });
+		ComponentsHelper.drawCircle(x3, y3, 4, 4, new float[] { 1, 0, 0, 1 });
+		ComponentsHelper.drawCircle(x4, y4, 4, 4, new float[] { 1, 0, 0, 1 });
+		ComponentsHelper.drawCircle(x5, y5, 4, 4, new float[] { 1, 0, 0, 1 });
 		
 		glColor4f(1, 1, 1, 1);
 		if (!pause.isFinish()) {
@@ -382,7 +389,6 @@ public class TankGame extends AbstractGameMenu {
 			}
 			renderEchap(false, +damage + "", record);
 		}
-		ComponentsHelper.drawLine(x1, y1, x2, y2, 2, new float[] { 1, 0, 0, 1 });
 	}
 	
 	/*
@@ -483,11 +489,11 @@ public class TankGame extends AbstractGameMenu {
 		double x = deplacedX(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
 		double y = deplacedY(locRobot, (recul > 0 ? -1 : 1) * speedRobot);
 		
-		if (!isCollision((int) x, (int) y, locPlayer.getDirection())) {
+		if (!isCollision((int) x, (int) y, locRobot.getDirection())) {
 			locRobot.setPos(x, y);
-		} else if (!isCollision((int) x, (int) locRobot.getY(), locPlayer.getDirection())) {
+		} else if (!isCollision((int) x, (int) locRobot.getY(), locRobot.getDirection())) {
 			locRobot.setPos(x, locRobot.getY());
-		} else if (!isCollision((int) locRobot.getX(), (int) y, locPlayer.getDirection())) {
+		} else if (!isCollision((int) locRobot.getX(), (int) y, locRobot.getDirection())) {
 			locRobot.setPos(locRobot.getX(), y);
 		}
 		
@@ -595,30 +601,63 @@ public class TankGame extends AbstractGameMenu {
 	
 	int y2 = 0;
 	int x2 = 0;
+
+	int y3 = 0;
+	int x3 = 0;
+
+	int y4 = 0;
+	int x4 = 0;
+
+	int y5 = 0;
+	int x5 = 0;
 	
-	private boolean isCollision(int x, int y, final int direction) {
-		
-		x += (int) (-18 * Math.cos(Math.toRadians(direction + 25)));
-		y += (int) (-18 * Math.sin(Math.toRadians(direction + 25)));
+	private boolean isCollision(final int xT, final int yT, final int direction) {
 
+		int x = (int) (xT + 35 * Math.cos(Math.toRadians(direction + 47)));
+		int y = (int) (yT + 35 * Math.sin(Math.toRadians(direction + 47)));
+		if (direction == locPlayer.getDirection()) {
+			x1 = x;
+			y1 = y;
+		}
+		boolean droite = distanceBlocks[1920 * y + x] == 1;
+		
+		x = (int) (xT + 35 * Math.cos(Math.toRadians(direction - 47)));
+		y = (int) (yT + 35 * Math.sin(Math.toRadians(direction - 47)));
+
+		if (direction == locPlayer.getDirection()) {
+			x2 = x;
+			y2 = y;
+		}
+		boolean gauche = distanceBlocks[1920 * y + x] == 1;
+		
+		x = (int) (xT + -40 * Math.cos(Math.toRadians(direction + 42)));
+		y = (int) (yT + -40 * Math.sin(Math.toRadians(direction + 42)));
+
+		if (direction == locPlayer.getDirection()) {
+			x3 = x;
+			y3 = y;
+		}
 		boolean droiteArriere = distanceBlocks[1920 * y + x] == 1;
-
-		x += (int) (-18 * Math.cos(Math.toRadians(direction - 25)));
-		y += (int) (-18 * Math.sin(Math.toRadians(direction - 25)));
 		
+		x = (int) (xT + -40 * Math.cos(Math.toRadians(direction - 42)));
+		y = (int) (yT + -40 * Math.sin(Math.toRadians(direction - 42)));
+
+		if (direction == locPlayer.getDirection()) {
+			x4 = x;
+			y4 = y;
+		}
 		boolean gaucheArriere = distanceBlocks[1920 * y + x] == 1;
 		
-		x += (int) (18 * Math.cos(Math.toRadians(direction + 25)));
-		y += (int) (18 * Math.sin(Math.toRadians(direction + 25)));
+		x = (int) (xT + 31 * Math.cos(Math.toRadians(direction)));
+		y = (int) (yT + 31 * Math.sin(Math.toRadians(direction)));
 
-		boolean droite = distanceBlocks[1920 * y + x] == 1;
+		if (direction == locPlayer.getDirection()) {
+			x5 = x;
+			y5 = y;
+		}
+		boolean canon = distanceBlocks[1920 * y + x] == 1;
 
-		x += (int) (18 * Math.cos(Math.toRadians(direction - 25)));
-		y += (int) (18 * Math.sin(Math.toRadians(direction - 25)));
-		
-		boolean gauche = distanceBlocks[1920 * y + x] == 1;
-
-		return droiteArriere || gaucheArriere || droite || gauche;
+		return droiteArriere || gaucheArriere || droite || gauche || canon;
 
 	}
 	
