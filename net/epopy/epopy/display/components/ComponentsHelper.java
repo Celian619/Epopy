@@ -111,23 +111,23 @@ public class ComponentsHelper {
 
 	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 	
-	public static int drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size) {
+	public static float drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size) {
 		return drawText(msg, x, y, posWidth, posHeight, size, new float[] { 1, 1, 1, 1 });
 	}
 
-	public static int drawText(final String msg, final double x, final double y, final int size, final float[] color) {
+	public static float drawText(final String msg, final double x, final double y, final int size, final float[] color) {
 		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, color);
 	}
 
-	public static int drawText(final String msg, final double x, final double y, final int size) {
+	public static float drawText(final String msg, final double x, final double y, final int size) {
 		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, new float[] { 1, 1, 1, 1 });
 	}
 
-	public static int drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size, final float[] color) {
+	public static float drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size, final float[] color) {
 		return drawText(msg, x, y, posWidth, posHeight, size, color, true);
 	}
 
-	public static int drawText(final String msg, double x, double y, final PositionWidth posWidth, final PositionHeight posHeight, int size, final float[] color, final boolean resize) {
+	public static float drawText(final String msg, double x, double y, final PositionWidth posWidth, final PositionHeight posHeight, int size, final float[] color, final boolean resize) {
 		if (resize) {
 			x = getResponsiveX(x);
 			y = getResponsiveY(y);
@@ -156,7 +156,7 @@ public class ComponentsHelper {
 			x -= msgWidth / 2;
 
 		glColor4f(color[0], color[1], color[2], color[3]);
-		int lastX = font.drawText(msg, (int) x, (int) y);
+		float lastX = font.drawText(msg, (float) x, (float) y);
 		glColor4f(1, 1, 1, 1);
 
 		return lastX;

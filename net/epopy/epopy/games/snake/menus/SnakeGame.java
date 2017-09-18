@@ -73,17 +73,10 @@ public class SnakeGame extends AbstractGameMenu {
 		
 		snakeSize = 1;
 		ptsRecord = Main.getPlayer().getSnakeStats().getRecord();
-		timeSecond = 0;
-		timeTamp = 0;
-		timeFood = 0;
-		eat = 0;
-		lastKey = 0;
+		timeSecond = timeTamp = timeFood = eat = lastKey = 0;
 		
-		pauseScreen = false;
+		pauseScreen = addStats = gameOver = false;
 		paused = true;
-		addStats = false;
-
-		gameOver = false;
 
 		Mouse.setGrabbed(true);
 

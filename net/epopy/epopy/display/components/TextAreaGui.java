@@ -20,7 +20,7 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 
 public class TextAreaGui {
-	
+
 	private StringBuilder text;
 	private int x;
 	private int y;
@@ -32,7 +32,7 @@ public class TextAreaGui {
 	private int hh;
 	public int textSize = 30;
 	private boolean enter;
-	
+
 	private float[] color0;
 	private float[] color1;
 	private float[] color2;
@@ -43,7 +43,7 @@ public class TextAreaGui {
 	private boolean password;
 	private boolean cartereSpecial;
 	public boolean isOn;
-	
+
 	public TextAreaGui(final int x, final int y) {
 		text = new StringBuilder("");
 		this.x = x;
@@ -53,13 +53,13 @@ public class TextAreaGui {
 		color2 = new float[] { 0.658824f, 0.658824f, 0.658824f, 1 };
 		enter = false;
 	}
-	
+
 	public TextAreaGui(final int x, final int y, final boolean trasparent, final String infos) {
 		text = new StringBuilder("");
 		this.x = x;
 		this.y = y;
 		this.infos = infos;
-		
+
 		if (trasparent) {
 			color0 = new float[] { 1, 1, 1, 0 };
 			color1 = new float[] { 1, 1, 1, 0.0f };
@@ -71,14 +71,14 @@ public class TextAreaGui {
 		}
 		enter = false;
 	}
-	
+
 	public TextAreaGui(final int x, final int y, final boolean trasparent, final String infos, final boolean password) {
 		text = new StringBuilder("");
 		this.password = password;
 		this.x = x;
 		this.y = y;
 		this.infos = infos;
-		
+
 		if (trasparent) {
 			color0 = new float[] { 1, 1, 1, 0 };
 			color1 = new float[] { 1, 1, 1, 0.0f };
@@ -90,54 +90,54 @@ public class TextAreaGui {
 		}
 		enter = false;
 	}
-	
+
 	public String getText() {
 		return text.toString();
 	}
-	
+
 	public TextAreaGui setAccesCaratereSpecial(final boolean cartereSpecial) {
 		this.cartereSpecial = cartereSpecial;
 		return this;
 	}
-	
+
 	public TextAreaGui setText(final String text) {
 		this.text = new StringBuilder(text);
 		return this;
 	}
-	
+
 	public TextAreaGui addText(final String text) {
 		this.text.append(text);
 		letters++;
 		return this;
 	}
-	
+
 	public TextAreaGui setEnter(final boolean enter) {
 		this.enter = enter;
 		return this;
 	}
-	
+
 	public boolean isEnter() {
 		return enter;
 	}
-	
+
 	public void update(final int x, final int y, final int width, final int height, final float[] c0, final float[] c1, final float[] c2, final int maxletters) {
 		int mx = Mouse.getX();
 		int my = Display.getHeight() - Mouse.getY();
-		
+
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
+
 		color0 = c0;
 		color1 = c1;
 		color2 = c2;
-		
+
 		float x0 = x - 68;
 		float y0 = y - 3;
 		float x1 = x + 384;
 		float y1 = y + 32;
-		
+
 		if (width != -1 && height != -1) {
 			x0 = x - 4 - width;
 			y0 = y - 3;
@@ -146,7 +146,7 @@ public class TextAreaGui {
 		}
 		// ComponentsHelper.renderTexture(Textures.GAME_CAR_BG, (Mouse.getX() * 1920 / Display.getWidth()),( (Display.getHeight() -
 		// Mouse.getY()) * 1080 / Display.getHeight()), 50, 50);
-		
+
 		if (mx >= x0 && mx < x1 && my >= y0 && my < y1) {
 			/**
 			 * int cx = (Mouse.getX() * 1920 / Display.getWidth()); int cy = ((Display.getHeight() - Mouse.getY()) * 1080 /
@@ -158,13 +158,13 @@ public class TextAreaGui {
 			if (Mouse.isButtonDown(0))
 				enter = false;
 		}
-		
+
 		boolean isMaj = isCap && !Input.isKeyDown(54) && !Input.isKeyDown(42)
 				|| !isCap && Input.isKeyDown(54) && !Input.isKeyDown(42) ||
 				!isCap && !Input.isKeyDown(54) && Input.isKeyDown(42);
-				
+
 		if (removeTime > 0) removeTime--;
-		
+
 		if (enter) {
 			if (Input.getKeyDown(Keyboard.KEY_RETURN))
 				enter = false;
@@ -178,7 +178,7 @@ public class TextAreaGui {
 				isCap = !isCap;
 				Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, isCap);
 			} else {
-				
+
 				if (getText().length() <= maxletters) {
 					for (int i = 0; i < Keyboard.getKeyCount(); i++) {
 						if (Input.getKeyDown(i)) {
@@ -219,32 +219,32 @@ public class TextAreaGui {
 			}
 		}
 	}
-	
+
 	public void update(final int maxletters) {
-		
+
 		if (xx == -1) {
 			xx = x;
 			yy = y;
 			ww = width;
 			hh = height;
 		}
-		
+
 		x = (int) ComponentsHelper.getResponsiveX(xx);
 		y = (int) ComponentsHelper.getResponsiveY(yy);
 		width = (int) ComponentsHelper.getResponsiveX(ww);
 		height = (int) ComponentsHelper.getResponsiveY(hh);
-		
+
 		update(x, y, 16, -1, color0, color1, color2, maxletters);
 	}
-	
+
 	int i = 0;
-	
+
 	// pour la couleur du text
 	float c = 0.02f;
 	boolean moins = true;
 	boolean up = false;
 	int r = 0;
-	
+
 	public void render() {
 		
 		int x0 = xx - 20;
@@ -305,12 +305,12 @@ public class TextAreaGui {
 			ComponentsHelper.drawQuad(x0, y0, x1 - xx, y1 - yy, color2);
 			ComponentsHelper.drawQuad(x0 + 2, y0 + 2, x1 - 4 - xx, y1 - 4 - yy, color1);
 			
-			int lastX = ComponentsHelper.drawText(text, xText, yy + 7, password ? 60 : textSize, new float[] { 0.7f, 0.7f, 0.7f, 1 });
+			float lastX = ComponentsHelper.drawText(text, xText, yy + 7, password ? 60 : textSize, new float[] { 0.7f, 0.7f, 0.7f, 1 });
 			
 			if (i > 20 && i < 35) {
-				int x = lastX;
-				int width = x + (int) ComponentsHelper.getResponsiveX(2);
-				int height = y + (int) ComponentsHelper.getResponsiveY(49);
+				float x = lastX;
+				float width = x + (float) ComponentsHelper.getResponsiveX(2);
+				float height = y + (float) ComponentsHelper.getResponsiveY(49);
 				glColor4f(1, 1, 1, 1);
 				glBegin(GL_QUADS);
 				glVertex2f(x, y + 3);
@@ -327,5 +327,5 @@ public class TextAreaGui {
 			ComponentsHelper.drawText(text, xText, yy + 7, password ? 60 : textSize, new float[] { 0.7f, 0.7f, 0.7f, 1 });
 		}
 	}
-	
+
 }

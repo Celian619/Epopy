@@ -30,10 +30,8 @@ public class DecoGame extends AbstractGameMenu {
 		if (Main.getPlayer().hasSound() && !Audios.DECO.isRunning())
 			Audios.DECO.start(true).setVolume(0.2f);
 
-		right = false;
-		left = false;
-		speed = 1;
-		voiePlayer = 1;
+		right = left = false;
+		speed = voiePlayer = 1;
 	}
 
 	@Override

@@ -48,11 +48,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		if (Main.getPlayer().hasSound() && !Audios.PLACEINVADER.isRunning())
 			Audios.PLACEINVADER.start(true).setVolume(0.2f);
 			
-		playerShot = false;
-		gameOver = false;
-		shooted = 0;
-		scoreLevel = 0;
-		score = 0;
+		playerShot = gameOver = false;
+		shooted = scoreLevel = score = 0;
 		level = 1;
 		life = 3;
 		robots = new ArrayList<robot>();
