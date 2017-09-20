@@ -191,7 +191,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 		//render les infos de la waiting room, rank, jeu, map...
 		renderInfosRoom();
-
+		
 		if(waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && !waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.MATCH_FOUND))  
 			jouer.render();
 		else {

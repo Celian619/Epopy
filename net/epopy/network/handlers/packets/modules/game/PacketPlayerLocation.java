@@ -34,9 +34,13 @@ public class PacketPlayerLocation extends PacketAbstract {
 		double z = dataBuffer.getDouble();
 		double yaw = dataBuffer.getDouble();
 		double pitch = dataBuffer.getDouble();
+		
 		if(NetworkPlayer.getGame().containsPlayer(playerName)) {
 			PlayerNetwork player = NetworkPlayer.getGame().getPlayer(playerName);	
-			player.getLocation().setWithDirection(x, y, z, yaw, pitch);
+			if(pitch == -1)
+				player.getLocation().set(x, y, z);
+			else
+				player.getLocation().set(x, y, z, yaw, pitch);
 			player.addPrintTexture();
 		}
 	}

@@ -51,6 +51,7 @@ public class CalculTank {
 		double x = deplacedX(location, back ? -Tank.TANK_SPEED : Tank.TANK_SPEED);
 		double y = deplacedY(location, back ? -Tank.TANK_SPEED : Tank.TANK_SPEED);
 		NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).addPrintTexture();
+	
 		//TODO base
 		
 		if (!isCollision((int) x, (int) y)) {
@@ -60,7 +61,6 @@ public class CalculTank {
 		} else if (!isCollision((int) location.getX(), (int) y)) 
 			location.setPos(location.getX(), y, 0);
 		
-		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), 
-				new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getDirection()));
+		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), 0.0));
 	}
 }
