@@ -58,7 +58,7 @@ public class PingGame extends AbstractGameMenu {
 
 		speedBall = 8;
 		speedPaddle = 10;
-		addStats = gameOver = false;
+		addStats = pauseScreen = gameOver = false;
 
 		Mouse.setCursorPosition(20, Display.getHeight() / 2);
 		lastMouseY = (Display.getHeight() - Mouse.getY()) / (double) Display.getHeight() * defaultHeight;
@@ -71,7 +71,7 @@ public class PingGame extends AbstractGameMenu {
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 
-		paused = pauseScreen = true;
+		paused = false;
 		timeTamp = 0;
 		timer = new Timer();
 		timer.pause();
