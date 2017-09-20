@@ -179,18 +179,17 @@ public class ComponentsHelper {
 		glVertex2f((float) x, (float) (y + size));
 	}
 
-	public static void drawQuad(final double x, final double y, final double width, final double height) {
+	public static void drawQuad(final double x, final double y, final int width, final int height) {
 		drawQuad(x, y, width, height, new float[] { 1, 1, 1, 1 });
 
 	}
 
-	public static void drawQuad(double x, double y, double width, double height, final float[] color) {
+	public static void drawQuad(double x, double y, int width, int height, final float[] color) {
 
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
-		width = getResponsiveX(width);
-		height = getResponsiveY(height);
-
+		width = (int) getResponsiveX(width);
+		height = (int) getResponsiveY(height);
 		glColor4f(color[0], color[1], color[2], color[3]);
 		glBegin(GL_QUADS);
 		glVertex2f((float) x, (float) y);
@@ -263,16 +262,16 @@ public class ComponentsHelper {
 
 	}
 
-	public static void drawLine(final double x1, final double y1, final double x2, final double y2, final float width) {
+	public static void drawLine(final double x1, final double y1, final double x2, final double y2, final int width) {
 		drawLine(x1, y1, x2, y2, width, new float[] { 1, 1, 1, 1 });
 	}
 
-	public static void drawLine(double x1, double y1, double x2, double y2, float width, final float[] color) {
+	public static void drawLine(double x1, double y1, double x2, double y2, int width, final float[] color) {
 		x2 = getResponsiveX(x2);
 		y2 = getResponsiveY(y2);
 		x1 = getResponsiveX(x1);
 		y1 = getResponsiveY(y1);
-		width = getResponsiveString(width);
+		width = (int) getResponsiveString(width);
 		glColor4f(color[0], color[1], color[2], color[3]);
 		glLineWidth(width);
 		glBegin(GL_LINES);
@@ -315,7 +314,7 @@ public class ComponentsHelper {
 		HAUT(),
 		MILIEU();
 	}
-
+	
 	public enum PositionWidth {
 		DROITE(),
 		GAUCHE(),
