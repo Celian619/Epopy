@@ -156,7 +156,7 @@ public class ComponentsHelper {
 			x -= msgWidth / 2;
 
 		glColor4f(color[0], color[1], color[2], color[3]);
-		float lastX = font.drawText(msg, (float) x, (float) y);
+		float lastX = font.drawText(msg, (int) x, (int) y);
 		glColor4f(1, 1, 1, 1);
 
 		return lastX;

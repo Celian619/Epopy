@@ -104,11 +104,11 @@ public class FontUtils {
 	}
 
 	// Functions
-	public float drawText(final String text, final float x, final float y) {
+	public int drawText(final String text, final int x, final int y) {
 		glBindTexture(GL_TEXTURE_2D, fontTextureId);
 		glBegin(GL_QUADS);
 
-		float xTmp = x;
+		int xTmp = x;
 		for (char c : text.toCharArray()) {
 
 			float width = getCharWidth(c);
