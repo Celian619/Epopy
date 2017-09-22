@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
@@ -21,10 +23,12 @@ public class MapLoader {
 	private static int width;
 	public Map<String, Zone> ZONES = new TreeMap<>();
 
+	public static boolean LOADING = false;
+	
 	//16, 82, 60
 	public MapLoader(String path) {
 		MAP_PATH = path;
-		
+
 		if(img == null) {
 			try {
 				img = ImageIO.read(MapLoader.class.getResource(path));
@@ -33,7 +37,7 @@ public class MapLoader {
 			}
 		}	
 
-		 width = img.getWidth();
+		width = img.getWidth();
 		nbrOfPixels = img.getHeight() * img.getWidth();
 
 		distanceBlocks = new int[nbrOfPixels];
@@ -51,34 +55,51 @@ public class MapLoader {
 		add(distanceBlocks);
 		add(distanceZones);
 	}
+	private int i = 0;
+	private void add(int[] dBlock) {
+		//	while (true) {//TODO voir pour faire dans un runnable 
 
-	private int[] add(int[] dBlock) {
-		while (true) {//TODO voir pour faire dans un runnable 
-			int[] added = new int[nbrOfPixels];
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
 
-			int modifs = 0;
-			for (int n = width; n < nbrOfPixels - width; n++) {
-				if (dBlock[n] == 0) {
-					int max1 = Math.max(dBlock[n + 1], dBlock[n - 1]);
-					int max2 = Math.max(dBlock[n + width], dBlock[n - width]);
-					int maxTotal = Math.max(max1, max2);
 
-					if (maxTotal > 0) {
-						added[n] = maxTotal + 1;
-						modifs++;
+				int[] added = new int[nbrOfPixels];
+
+				int modifs = 0;
+				for (int n = width; n < nbrOfPixels - width; n++) {
+					if (dBlock[n] == 0) {
+						int max1 = Math.max(dBlock[n + 1], dBlock[n - 1]);
+						int max2 = Math.max(dBlock[n + width], dBlock[n - width]);
+						int maxTotal = Math.max(max1, max2);
+
+						if (maxTotal > 0) {
+							added[n] = maxTotal + 1;
+							modifs++;
+						}
+
 					}
-
 				}
-			}
 
-			for (int n = width; n < nbrOfPixels - width; n++) {
-				if (dBlock[n] == 0)
-					dBlock[n] = added[n];
-			}
+				for (int n = width; n < nbrOfPixels - width; n++) {
+					if (dBlock[n] == 0)
+						dBlock[n] = added[n];
+				}
 
-			if (modifs == 0) break;
-		}
-		return dBlock;
+				if (modifs == 0) {
+					timer.cancel();
+					i++;
+					System.out.println(i + "/2");
+					if(i == 2) {
+						LOADING = true;
+						System.out.println("loading !!");
+					}
+				}
+				//	}
+			}
+		}, 1, 1);
+		//return dBlock;
 	}
 
 }

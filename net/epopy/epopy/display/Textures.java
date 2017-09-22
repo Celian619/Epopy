@@ -52,6 +52,7 @@ public class Textures {
 	public static Textures NETWORK_SEARCH_ZONE = load("network/search_zone");
 	public static Textures NETWORK_WAITING_SHOP_ON = load("network/waitingroom/shop_on");
 	public static Textures NETWORK_WAITING_SHOP_OFF = load("network/waitingroom/shop_off");
+	public static Textures NETWORK_WAITING_LODING_MAP_TANK = load("network/waitingroom/chargement");
 	
 	// network game
 	public static Textures NETWORK_GAME_TANK_MAP = load("network/games/map-tank-default");

@@ -18,7 +18,7 @@ import net.epopy.network.games.tank.modules.Zone;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus.GameStatus;
-import net.epopy.network.handlers.packets.modules.game.PacketPlayerMove;
+import net.epopy.network.handlers.packets.modules.game.PacketPlayerDirection;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerShootBall;
 
 public class Tank extends AbstractGameNetwork {
@@ -26,7 +26,7 @@ public class Tank extends AbstractGameNetwork {
 	public static int TANK_SIZE = 25;
 	public static int TANK_SPEED = 2;
 	public static MapLoader MAP;
-	
+
 	private boolean shoot = false;
 
 	private TankMenuEnd tankMenuEnd;
@@ -37,7 +37,7 @@ public class Tank extends AbstractGameNetwork {
 
 	@Override
 	public void onEnable() { 
-		MAP = new MapLoader("/net/epopy/epopy/display/res/network/games/map-tank-default-game.png");
+	
 	}
 
 	@Override
@@ -48,13 +48,13 @@ public class Tank extends AbstractGameNetwork {
 				// rotation du tank
 				int rotationSpeed = 5;
 				int directionMouse = CalculTank.getDirectionMouse(player.getLocation().getX(), player.getLocation().getY());
-				int directionPlayer = (int) player.getLocation().getDirection();
+				int directionPlayer = player.getLocation().getDirection();
 
 				if (!CalculTank.isMouseDistanceNear(player.getLocation())) {
 					if (Math.abs(directionMouse - directionPlayer) <= rotationSpeed) {
 						if (player.getLocation().getDirection() != directionMouse) {
 							player.getLocation().setDirection(directionMouse);
-							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(directionMouse));
+							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerDirection(directionMouse));
 						}
 					} else {
 						boolean directionInverse = Math.abs(directionMouse - directionPlayer) > 180;
@@ -69,18 +69,16 @@ public class Tank extends AbstractGameNetwork {
 						else if (directionPlayer < -180) directionPlayer += 360;
 						if (player.getLocation().getDirection() != directionPlayer) {
 							player.getLocation().setDirection(directionPlayer);
-							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(directionPlayer));
+							Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerDirection(directionPlayer));
 						}
 					}
 				}
-
 				
 				// inputs
 				if (Input.isKeyDown(Keyboard.KEY_S)) 
 					CalculTank.moove(true);
 				else if (Input.isKeyDown(Keyboard.KEY_Z)) 
 					CalculTank.moove(false);
-			//		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerMove(0, 1, player.getLocation().getPitch()));
 
 				if (Input.isButtonDown(0)) {
 					if (!shoot) {
@@ -108,7 +106,7 @@ public class Tank extends AbstractGameNetwork {
 
 		for (Ball ball : getBalls())
 			ComponentsHelper.drawCircle(ball.getLocation().getX(), ball.getLocation().getY(), 5, 10, ball.getColor());
-		
+
 		if(getGameStatus().equals(GameStatus.IN_GAME)) {
 			ComponentsHelper.drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2-10, 20, PositionWidth.DROITE, PositionHeight.HAUT, 30, getTeam("BLUE").getColor());
 			ComponentsHelper.drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2+20, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, getTeam("RED").getColor());	
