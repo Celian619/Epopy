@@ -94,6 +94,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 			ip = data.split(":")[0];
 			port = Integer.parseInt(data.split(":")[1]);
 			team = data.split(":")[2];
+			System.out.println("starting...");
 			new java.util.Timer().schedule(
 					new java.util.TimerTask() {
 						@Override
@@ -101,30 +102,42 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 							NetworkPlayer.setGame(new LodingMap());
 						}
 					}, 500);
+			System.out.println(ip  + "  " + port);
 			break;
 		case GAME_READY:
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
+				boolean connexion = false;
 				@Override
 				public void run() {
 					if(MapLoader.LOADING) {
-						NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
-						NetworkPlayer.getGame().clear();
+						if(!connexion) {
+							connexion = true;
+							new java.util.Timer().schedule(
+									new java.util.TimerTask() {
+										@Override
+										public void run() {
+											NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
+											System.out.println("connexion: " + ip + "  " + port);
+											NetworkPlayer.getGame().clear();
+										}
+									}, 500);
 
-						new java.util.Timer().schedule(
-								new java.util.TimerTask() {
-									@Override
-									public void run() {
-										Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
-									}
-								}, 2000);
-						new java.util.Timer().schedule(
-								new java.util.TimerTask() {
-									@Override
-									public void run() {
-										NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
-									}
-								}, 4000);
+							new java.util.Timer().schedule(
+									new java.util.TimerTask() {
+										@Override
+										public void run() {
+											Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
+										}
+									}, 2000);
+							new java.util.Timer().schedule(
+									new java.util.TimerTask() {
+										@Override
+										public void run() {
+											NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
+										}
+									}, 4000);
+						}
 						timer.cancel();
 					}
 				}
