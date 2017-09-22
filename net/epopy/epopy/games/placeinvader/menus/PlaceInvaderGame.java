@@ -126,7 +126,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 				xPlayer = defaultWidth - playerSize / 2;
 			}
 			
-		} else if (Input.isKeyDown(PlaceInvaderOptions.KEY_LEFT)) {// aller a gauche
+		}
+		if (Input.isKeyDown(PlaceInvaderOptions.KEY_LEFT)) {// aller a gauche
 			
 			xPlayer -= 10;
 			if (xPlayer < playerSize / 2) {
