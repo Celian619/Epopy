@@ -7,51 +7,49 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
 public class FileDownload {
-	
+
 	public static double pourcent = 0;
-	
-	public FileDownload(final String filePath, final String destination) {
+
+	/*public FileDownload(final String filePath, final String destination) {
 		pourcent = 0;
 		URLConnection connection = null;
 		InputStream is = null;
 		FileOutputStream destinationFile = null;
-		
+
 		try {
 			// On crée l'URL
 			URL url = new URL(filePath);
-			
+
 			// On crée une connection vers cet URL
 			connection = url.openConnection();
 			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-			
+
 			// On récupère la taille du fichier
 			int length = connection.getContentLength();
-			
+
 			// Si le fichier est inexistant, on lance une exception
 			if (length == -1) {
 				System.out.println("[ERROR] Pas de connexion / ou le fichier est vide (" + filePath + ")");
 				return;
 			}
-			
+
 			// On récupère le stream du fichier
 			is = new BufferedInputStream(connection.getInputStream());
-			
+
 			// On prépare le tableau de bits pour les données du fichier
 			byte[] data = new byte[length];
-			
+
 			// On déclare les variables pour se retrouver dans la lecture du fichier
 			int currentBit = 0;
 			int deplacement = 0;
-			
+
 			// Tant que l'on n'est pas à la fin du fichier, on récupère des données
 			while (deplacement < length) {
 				currentBit = is.read(data, deplacement, data.length - deplacement);
@@ -60,7 +58,7 @@ public class FileDownload {
 				if (pourcent < 90)
 					pourcent += 0.020;
 			}
-			
+
 			// Si on n'est pas arrivé à la fin du fichier, on lance une exception
 			if (deplacement != length) { throw new IOException("Le fichier n'a pas été lu en entier (seulement "
 					+ deplacement + " sur " + length + ")"); }
@@ -86,18 +84,17 @@ public class FileDownload {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public static Image getImage(final String filePath) {
+	}*/
 
+	public static Image getImage(final String filePath) {
 		BufferedInputStream in = null;
 		HttpURLConnection connection = null;
 
 		try {
 			final URL url = new URL(filePath);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-			
+			//	connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+
 			final int filesize = connection.getContentLength();
 			float totalDataRead = 0;
 			in = new BufferedInputStream(connection.getInputStream());
@@ -125,23 +122,21 @@ public class FileDownload {
 		}
 		return null;
 	}
-	
-	public static void download(final String urlString, final File downloaded)
-			throws IOException {
+
+	public static void download(final String urlString, final File downloaded) throws IOException {
 		pourcent = 0;
 		BufferedOutputStream bout = null;
 		BufferedInputStream in = null;
 		HttpURLConnection connection = null;
-		
+
 		if (downloaded.getParentFile() != null
 				&& !downloaded.getParentFile().exists()) {
 			downloaded.getParentFile().mkdirs();
 		}
-		
-		if (downloaded.exists()) {
+
+		if (downloaded.exists()) 
 			downloaded.delete();
-		}
-		System.out.println("start");
+
 		try {
 			final URL url = new URL(urlString);
 			connection = (HttpURLConnection) url.openConnection();
@@ -174,6 +169,5 @@ public class FileDownload {
 				connection.disconnect();
 			}
 		}
-		System.out.println("File " + urlString + " downloaded");
 	}
 }
