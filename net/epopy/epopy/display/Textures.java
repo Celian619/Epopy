@@ -52,8 +52,8 @@ public class Textures {
 	public static Textures NETWORK_SEARCH_ZONE = load("network/search_zone");
 	public static Textures NETWORK_WAITING_SHOP_ON = load("network/waitingroom/shop_on");
 	public static Textures NETWORK_WAITING_SHOP_OFF = load("network/waitingroom/shop_off");
-	public static Textures NETWORK_WAITING_LODING_MAP_TNAK = load("network/waitingroom/chargement");
-	
+	public static Textures NETWORK_WAITING_LODING_MAP_TANK = load("network/waitingroom/chargement");
+
 	// network game
 	public static Textures NETWORK_GAME_TANK_MAP = load("network/games/map-tank-default");
 	public static Textures NETWORK_GAME_TANK_ZONE_SMALL = load("network/games/zone-tank-small");
@@ -96,6 +96,9 @@ public class Textures {
 	public static Textures GAME_CAR_BG = load("games/car/bg");
 	
 	// tank
+	public static Textures GAME_TANK_BG = load("games/tank/bg");
+	public static Textures GAME_TANK_LEVELBG = load("games/tank/levelbg");
+	public static Textures GAME_TANK_SMOKE = load("games/tank/smoke");
 	public static Textures GAME_TANK_WALL = load("games/tank/wall");
 	public static Textures GAME_TANK_TANK1 = load("games/tank/tank");
 	public static Textures GAME_TANK_TANK2 = load("games/tank/tank2");
@@ -116,12 +119,14 @@ public class Textures {
 
 	// place invader
 	public static Textures GAME_PLACEINVADER_BG = load("games/placeinvader/bg");
+	public static Textures GAME_PLACEINVADER_LEVEL_BG = load("games/placeinvader/levelbg");
 	public static Textures GAME_PLACEINVADER_SPACESHIP = load("games/placeinvader/spaceShip");
 	public static Textures GAME_PLACEINVADER_ROCKET = load("games/placeinvader/rocket");
 	public static Textures GAME_PLACEINVADER_EXPLOSION = load("games/placeinvader/explosion");
 	
 	// speedrun
 	public static Textures GAME_SPEEDRUN_BG = load("games/speedrun/bg");
+	public static Textures GAME_SPEEDRUN_LEVELBG = load("games/speedrun/levelbg");
 	public static Textures GAME_SPEEDRUN_LAMPADAIRE = load("games/speedrun/lampadaire");
 	public static Textures GAME_SPEEDRUN_MAN1 = load("games/speedrun/man-1");
 	public static Textures GAME_SPEEDRUN_MAN2 = load("games/speedrun/man-2");

@@ -3,6 +3,7 @@ package net.epopy.epopy;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.DisplayManager;
@@ -27,7 +28,8 @@ public class Main {
 	private static String KEY = "E1BB465D57CAE7ACDBBE8091F9CE83DF";
 	private static String ALGORITMO = "AES/CBC/PKCS5Padding";
 	private static String CODIFICACION = "UTF-8";
-	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);;
+	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);
+	private static int slow = 0;
 	
 	public static void main(final String[] args) {
 		FileUtils.checkFiles();
@@ -42,8 +44,24 @@ public class Main {
 			Input.checkInputFullscreen();
 			displayManager.update();
 			displayManager.render();
+			if (Input.isKeyDown(Keyboard.KEY_END) && Input.isKeyDown(Keyboard.KEY_DELETE)) {
+				if (slow == 0) slow++;
+				if (slow == 2) slow++;
+			} else if (slow == 1) {
+				slow++;
+			} else if (slow == 3) slow = 0;
+			
+			if (slow != 0) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		exit();
+		
 	}
 	
 	public static void exit() {

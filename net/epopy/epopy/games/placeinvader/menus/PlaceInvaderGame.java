@@ -74,7 +74,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		Timer.tick();
 		
 		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
 					pauseScreen = false;
 					pause.startPause(3);
@@ -126,7 +126,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 				xPlayer = defaultWidth - playerSize / 2;
 			}
 			
-		} else if (Input.isKeyDown(PlaceInvaderOptions.KEY_LEFT)) {// aller a gauche
+		}
+		if (Input.isKeyDown(PlaceInvaderOptions.KEY_LEFT)) {// aller a gauche
 			
 			xPlayer -= 10;
 			if (xPlayer < playerSize / 2) {
@@ -195,7 +196,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	
 	@Override
 	public void render() {
-		Textures.GAME_PLACEINVADER_BG.renderBackground();
+		Textures.GAME_PLACEINVADER_LEVEL_BG.renderBackground();
 		
 		if (shooted > 0 && (shooted - 5) / 10 == shooted / 10) glColor4f(1, 0.2f, 0.2f, 1);
 		ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_ROCKET, xPlayer - playerSize / 2, yPlayer, playerSize, 100);
