@@ -85,6 +85,8 @@ public class EpopyLauncher {
 		}
 
 		File jar = new File(PATH_FOLDER + "/epopy.jar");
+		File downloadedFile = new File(PATH_FOLDER + "/download.txt");
+
 		if (URL_JAR.equals("null") && !jar.exists()) {
 			showWindowsError("url_null");
 			return;
@@ -103,7 +105,8 @@ public class EpopyLauncher {
 			/*
 			 * Future version
 			 */
-			new FileDownload(URL_VERSION, PATH_FOLDER + "/version.txt");
+			FileDownload.download(URL_VERSION, new File(PATH_FOLDER + "/version.txt"));
+			//new FileDownload(URL_VERSION, PATH_FOLDER + "/version.txt");
 			Version newVersionFile = new Version(PATH_FOLDER + "/version.txt");
 			String newVersion = newVersionFile.getVersion();
 			VERSION = newVersion;
@@ -119,14 +122,21 @@ public class EpopyLauncher {
 			System.out.println("[UPDATE]");
 
 			if (needUpdate) {
-				if(jar.exists() && jar != null)
+				if(jar.exists())
 					jar.delete();
-				
+
+				if(!downloadedFile.exists()) 
+					downloadedFile.createNewFile();
+
 				Gif.frame();
 
 				long start = System.currentTimeMillis();
-				new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
-				// FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
+				//new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
+
+				FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
+
+				downloadedFile.delete();
+
 				String time = timeFormat.format(Calendar.getInstance().getTimeInMillis() - start - 3600000);
 				System.out.println("  Télechargement 'epopy.jar': " + time);
 				jar = new File(PATH_FOLDER + "/epopy.jar");
@@ -137,22 +147,15 @@ public class EpopyLauncher {
 		}
 
 		try {
-			if (jar != null && jar.exists()) {
-				if(!jar.canExecute()) {
-					jar.delete();
-					File v = new File(PATH_FOLDER + "/version.txt");
-					if(v.exists())v.delete();
-					Gif.frame();
-
-					long start = System.currentTimeMillis();
-					new FileDownload(URL_JAR, PATH_FOLDER + "/epopy.jar");
-					// FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
-					String time = timeFormat.format(Calendar.getInstance().getTimeInMillis() - start - 3600000);
-					System.out.println("  Télechargement 'epopy.jar': " + time);
-					jar = new File(PATH_FOLDER + "/epopy.jar");
+			if (jar.exists()) {
+				if(!downloadedFile.exists()) {
 					Desktop.getDesktop().open(jar);
 					System.exit(-1);
 				} else {
+					jar.delete();
+					Gif.frame();
+					FileDownload.download(URL_JAR, new File(PATH_FOLDER + "/epopy.jar"));
+					downloadedFile.delete();
 					Desktop.getDesktop().open(jar);
 					System.exit(-1);
 				}
@@ -162,6 +165,7 @@ public class EpopyLauncher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	private static void showWindowsError(final String image) {
