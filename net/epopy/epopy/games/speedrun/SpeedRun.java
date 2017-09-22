@@ -6,22 +6,22 @@ import net.epopy.epopy.games.speedrun.menus.SpeedRunGame;
 import net.epopy.epopy.games.speedrun.menus.SpeedRunOptions;
 
 public class SpeedRun extends AbstractGame {
-	
+
 	@Override
 	public void onEnable() {
 		menuGame = new SpeedRunGame();
 		menuOptions = new SpeedRunOptions();
 		setStatus(false);
 	}
-
+	
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_SPEEDRUN_BG;
+		return Textures.GAME_SPEEDRUN_LEVELBG;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "SpeedRun";
 	}
-	
+
 }
