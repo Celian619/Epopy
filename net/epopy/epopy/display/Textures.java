@@ -42,9 +42,9 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class Textures {
-	
-	private static List<Textures> textures = new ArrayList<Textures>(91);
 
+	private static List<Textures> textures = new ArrayList<Textures>(91);
+	
 	public static Textures NETWORK_WAITING_ROOM_BG_MATCHMAKING = load("network/waitingroom/bg_matchmaking");
 	public static Textures NETWORK_WAITING_ROOM_ADD = load("network/waitingroom/add");
 	public static Textures NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT = load("network/waitingroom/user");
@@ -53,48 +53,48 @@ public class Textures {
 	public static Textures NETWORK_WAITING_SHOP_ON = load("network/waitingroom/shop_on");
 	public static Textures NETWORK_WAITING_SHOP_OFF = load("network/waitingroom/shop_off");
 	public static Textures NETWORK_WAITING_LODING_MAP_TANK = load("network/waitingroom/chargement");
-
+	
 	// network game
 	public static Textures NETWORK_GAME_TANK_MAP = load("network/games/map-tank-default");
 	public static Textures NETWORK_GAME_TANK_ZONE_SMALL = load("network/games/zone-tank-small");
 	public static Textures NETWORK_GAME_END_BG = load("network/games/end_bg");
-	
+
 	public static Textures MENU_SOUND_ON = load("games/sound_on");
 	public static Textures MENU_BTN_SOUND_ON = load("games/btn_sound_on");
 	public static Textures MENU_SOUND_OFF = load("games/sound_off");
-
+	
 	public static Textures FONT = load("font");
 	public static Textures MAIN_BG = load("main/bg");
 	public static Textures MAIN_NOTIF = load("main/notif_bg");
-	
+
 	public static Textures GAME_ECHAP_BANDE = load("games/menu/echap/echap_band");
 	public static Textures GAME_STARTING_BG = load("games/starting_game_bg");
 	public static Textures GAME_GAUCHE_SOURIS = load("games/gauche_souris");
-	
+
 	public static Textures MAIN_CONNEXION_NETWORK_BG = load("main/network/bg");
 	public static Textures MAIN_CONNEXION_NETWORK_BOX_OFF = load("main/network/box_off");
 	public static Textures MAIN_CONNEXION_NETWORK_BOX_ON = load("main/network/box_on");
 	public static Textures MAIN_CONNEXION_NETWORK_BOX_CHECK = load("main/network/check");
-	
+
 	public static Textures LOGO_TWITTER_ON = load("main/twitter_on");
 	public static Textures LOGO_TWITTER_OFF = load("main/twitter_off");
 	public static Textures LOGO_FACEBOOK_ON = load("main/facebook_on");
 	public static Textures LOGO_FACEBOOK_OFF = load("main/facebook_off");
 	public static Textures LOGO_WEB_OFF = load("main/web_off");
 	public static Textures LOGO_WEB_ON = load("main/web_on");
-	
+
 	public static Textures GAME_TOUCHE_VIERGE = load("games/touche_vierge");
 	public static Textures GAME_MOUSE_DOWN = load("games/mouse_down");
 	public static Textures GAME_MOUSE_UP = load("games/mouse_up");
-
+	
 	// ping
 	public static Textures GAME_PING_BG = load("games/ping/bg");
 	public static Textures GAME_PING_LEVEL_BG = load("games/ping/level/bg");
-	
+
 	// car
 	public static Textures GAME_CAR_VOITURE = load("games/car/voiture");
 	public static Textures GAME_CAR_BG = load("games/car/bg");
-	
+
 	// tank
 	public static Textures GAME_TANK_BG = load("games/tank/bg");
 	public static Textures GAME_TANK_LEVELBG = load("games/tank/levelbg");
@@ -103,11 +103,11 @@ public class Textures {
 	public static Textures GAME_TANK_TANK1 = load("games/tank/tank");
 	public static Textures GAME_TANK_TANK2 = load("games/tank/tank2");
 	public static Textures GAME_TANK_TANKPRINT = load("games/tank/tankPrint");
-
+	
 	// tetras
 	public static Textures GAME_TETRAS_BG = load("games/tetras/bg");
 	public static Textures GAME_TETRAS_BLOCK = load("games/tetras/block");
-	
+
 	// snake
 	public static Textures GAME_SNAKE_BG = load("games/snake/bg");
 	public static Textures GAME_SNAKE_LEVEL_BG = load("games/snake/levels/bg");
@@ -116,14 +116,14 @@ public class Textures {
 	public static Textures GAME_SNAKE_FOOD3 = load("games/snake/levels/food-3");
 	public static Textures GAME_SNAKE_TETE = load("games/snake/levels/tete");
 	public static Textures GAME_SNAKE_CORP = load("games/snake/levels/corp");
-
+	
 	// place invader
 	public static Textures GAME_PLACEINVADER_BG = load("games/placeinvader/bg");
 	public static Textures GAME_PLACEINVADER_LEVEL_BG = load("games/placeinvader/levelbg");
 	public static Textures GAME_PLACEINVADER_SPACESHIP = load("games/placeinvader/spaceShip");
 	public static Textures GAME_PLACEINVADER_ROCKET = load("games/placeinvader/rocket");
 	public static Textures GAME_PLACEINVADER_EXPLOSION = load("games/placeinvader/explosion");
-	
+
 	// speedrun
 	public static Textures GAME_SPEEDRUN_BG = load("games/speedrun/bg");
 	public static Textures GAME_SPEEDRUN_LEVELBG = load("games/speedrun/levelbg");
@@ -148,12 +148,12 @@ public class Textures {
 	public static Textures GAME_SPEEDRUN_OTHERMEN8 = load("games/speedrun/other-men-8");
 	public static Textures GAME_SPEEDRUN_OTHERMENSOL1 = load("games/speedrun/other-sol-1");
 	public static Textures GAME_SPEEDRUN_OTHERMENSOL2 = load("games/speedrun/other-sol-2");
-
+	
 	// deco
 	public static Textures GAME_DECO_BG = load("games/deco/bg");
 	public static Textures GAME_DECO_LEVEL_BG = load("games/deco/levelbg");
 	public static Textures GAME_DECO_CABLE = load("games/deco/cable");
-	
+
 	// general
 	public static Textures GAME_BACKGROUND_80OPACITY = load("games/noir_80opacity");
 	public static Textures GAME_MENU_USERS_RETOUR_OFF = load("games/menu/users/retour_off");
@@ -172,81 +172,81 @@ public class Textures {
 	public static Textures GAME_MENU_QUITTER_ON = load("games/menu/quitter_on");
 	public static Textures GAME_MENU_SCOTCH = load("games/menu/scotch");
 	public static Textures GAME_MENU_BG_STATS = load("games/menu/bg_stats");
-	
+
 	private int width, height;
 	private int id = -12;
 	public String path;
 	public BufferedImage bufferedImage;
-	
+
 	private Textures(final String path) {
 		this.path = path;
 		textures.add(this);
 	}
-	
+
 	public Textures(final BufferedImage bufferedImage) {
 		this.bufferedImage = bufferedImage;
 		textures.add(this);
 	}
-	
-	public static Textures load(final String path) {
 
+	public static Textures load(final String path) {
+		
 		return new Textures("/net/epopy/epopy/display/res/" + path + ".png");
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
-	
+
 	public int getHeight() {
 		return height;
 	}
-
+	
 	public String getPath() {
 		return path;
 	}
-	
+
 	public void bind() {
 		if (id == -12) {
-
+			
 			try {
-				
+
 				if (bufferedImage == null)
 					bufferedImage = ImageIO.read(Textures.class.getResource(path));
 				BufferedImage image = bufferedImage;
-				
+
 				if (image == null)
 					System.err.println("[ERROR] Texture not found: " + path);
-					
+
 				width = image.getWidth();
 				height = image.getHeight();
-				
+
 				int[] pixels = new int[width * height];
 				image.getRGB(0, 0, width, height, pixels, 0, width);
-				
+
 				IntBuffer buffer = BufferUtils.createIntBuffer(width * height * 4);
-				
+
 				int[] data = new int[pixels.length];
 				for (int i = 0; i < data.length; i++) {
 					int a = (pixels[i] & 0xff000000) >> 24;
 					int r = (pixels[i] & 0xff0000) >> 16;
 					int g = (pixels[i] & 0xff00) >> 8;
 					int b = pixels[i] & 0xff;
-					
+
 					data[i] = a << 24 | b << 16 | g << 8 | r;
 				}
 				buffer.put(data);
 				buffer.flip();
-				
+
 				glBindTexture(GL_TEXTURE_2D, id = glGenTextures());
-				
+
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				
+
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				
+
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-				
+
 				unbind();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -254,14 +254,14 @@ public class Textures {
 			}
 		}
 		glBindTexture(GL_TEXTURE_2D, id);
-		
-	}
-	
-	private static void unbind() {
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}
-	
+
+	private static void unbind() {
+		glBindTexture(GL_TEXTURE_2D, 0);
+		
+	}
+
 	public static void unloadTextures() {
 		unbind();
 		for (Textures t : textures) {
@@ -270,23 +270,23 @@ public class Textures {
 				t.id = -12;
 			}
 		}
-		
+
 	}
-	
+
 	public void renderBackground() {
 		renderTexture(Display.getWidth(), Display.getHeight());
 	}
-	
+
 	public BufferedImage getBuffImage() {
 		if (id == -12)
 			bind();
 		return bufferedImage;
 	}
-	
+
 	public void renderTexture(final float w, final float h) {
 		glEnable(GL_TEXTURE_2D);
 		bind();
-
+		
 		glGenerateMipmapEXT(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -294,7 +294,7 @@ public class Textures {
 		glLoadIdentity();
 		glScalef(1, 1, 1);
 		glMatrixMode(GL_MODELVIEW);
-
+		
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
 		glVertex2f(0, 0);
@@ -307,5 +307,5 @@ public class Textures {
 		glEnd();
 		unbind();
 	}
-	
+
 }

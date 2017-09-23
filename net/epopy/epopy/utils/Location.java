@@ -169,6 +169,12 @@ public class Location {
 		if (isMax) {
 			finalX = normalizeX(finalX);
 			finalY = normalizeY(finalY);
+			if (finalX < this.x && x < 0 || finalX > this.x && x > 0) {
+				finalX = this.x + x;
+			}
+			if (finalY < this.y && y < 0 || finalY > this.y && y > 0) {
+				finalY = this.y + y;
+			}
 		}
 
 		this.x = finalX;
@@ -197,14 +203,14 @@ public class Location {
 	}
 	
 	private double normalizeX(double x) {
-		if (x > maxSizeX) x -= maxSizeX + 1;// bordure
-		else if (x < 0) x += maxSizeX + 1;
+		if (x > maxSizeX) x -= maxSizeX;// bordure
+		else if (x < 0) x += maxSizeX;
 		return x;
 	}
 
 	private double normalizeY(double y) {
-		if (y > maxSizeY) y -= maxSizeY + 1;// bordure
-		else if (y < 0) y += maxSizeY + 1;
+		if (y > maxSizeY) y -= maxSizeY;// bordure
+		else if (y < 0) y += maxSizeY;
 		return y;
 	}
 
