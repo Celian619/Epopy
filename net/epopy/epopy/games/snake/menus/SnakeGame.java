@@ -357,7 +357,7 @@ public class SnakeGame extends AbstractGameMenu {
 				
 				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 			} else
-				ComponentsHelper.drawText(pause.getPauseString(), defaultWidth / 2, defaultHeight / 2 - 100, PositionWidth.MILIEU, PositionHeight.MILIEU, 60 * 2, new float[] { 1, 1, 1, 1 });
+				pause.showRestartChrono();
 		}
 		if (pauseScreen)
 			renderEchap(true);

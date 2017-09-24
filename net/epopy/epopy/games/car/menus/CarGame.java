@@ -146,28 +146,28 @@ public class CarGame extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-
+		
 		if (creating) {
 			List<Location> pointsExt = new LinkedList<Location>();// exterieur
-
+			
 			for (int x = 0; x <= grilleWidth; x++) {
 				for (int y = 0; y <= grilleWidth; y++) {
 					Location loc = new Location(x, y);
 					if (loc.getNearest(pointsInt).distance(loc) > 0) pointsExt.add(loc);
 				}
 			}
-
+			
 			// la ligne de départ :
 			ComponentsHelper.drawLine(middleWidth * cubeWidth, middleHeight *
 					cubeHeight, middleWidth * cubeWidth, (middleHeight + 1) * cubeHeight, 8, new float[] { 0f, 0f, 1, 1 });
-
+					
 			paintLiaisons(pointsInt);
 			paintLiaisons(pointsExt);
-
+			
 		} else {
-
+			
 			map.renderBackground();
-
+			
 			if (win) {
 				CarStats carStats = Main.getPlayer().getCarStats();
 				renderEchap(false, (int) timer.getTime() + " sec", timer.getTime() < carStats.getRecord() || carStats.getRecord() == 0);
@@ -175,7 +175,7 @@ public class CarGame extends AbstractGameMenu {
 					addStats = true;
 					if (timer.getTime() < carStats.getRecord() || carStats.getRecord() < 1)
 						carStats.setRecord((int) timer.getTime());
-
+						
 					if (carStats.getRecord() <= carStats.getObjectif()) {
 						if (Main.getPlayer().getLevel() <= GameList.CAR.getID())
 							Main.getPlayer().setLevel(GameList.CAR.getID() + 1);
@@ -188,9 +188,9 @@ public class CarGame extends AbstractGameMenu {
 				renderEchap(true);
 				return;
 			}
-
+			
 			ComponentsHelper.renderTexture(Textures.GAME_CAR_VOITURE, locCar.getX() - 17.5, locCar.getY() - 8, 35, 16, direction);
-
+			
 			if (contreSens) {
 				contreSens = false;
 				ComponentsHelper.drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
@@ -198,35 +198,35 @@ public class CarGame extends AbstractGameMenu {
 			if (!pause.isFinish()) {
 				if (pause.getTimePauseTotal() == 5) {
 					Textures.GAME_STARTING_BG.renderBackground();
-
+					
 					int x = 1093;
 					int y = 400;
-
+					
 					ComponentsHelper.drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
 					ComponentsHelper.drawText("Droite", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
 					ComponentsHelper.drawText("Gauche", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
-
+					
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
 					ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 175, 60, 60);
 					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x, y + 75, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
 					ComponentsHelper.drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 0, 0, 0, 1 });
-
+					
 					// if(Main.getPlayer().getLevel() <= GameList.CAR.getID()) { BATTRE SON RECORD :
 					ComponentsHelper.drawText("OBJECTIF", 660, 495, 30, new float[] { 1, 0.5f, 0, 1 });
 					ComponentsHelper.drawText("Finir en moins", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 					ComponentsHelper.drawText("d'une minute !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-
+					
 					ComponentsHelper.drawText(pause.getPauseString(), 660, 335, 100, new float[] { 1, 1, 1, 1 });
 				} else
-					ComponentsHelper.drawText(pause.getPauseString(), defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0.5f, 0, 1 });
+					pause.showRestartChrono();
 				return;
 			}
 			
 			if (!pauseScreen && pause.isFinish())
 				ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 60);
-
+				
 		}
-
+		
 	}
 
 	/*

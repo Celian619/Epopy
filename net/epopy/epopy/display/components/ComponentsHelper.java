@@ -200,15 +200,15 @@ public class ComponentsHelper {
 		glColor4f(1, 1, 1, 1);
 	}
 	
-	public static void renderTexture(final Textures textureUtils, final double x, final double y, final double width, final double height) {
-		renderTexture(textureUtils, x, y, width, height, 0, false);
+	public static void renderTexture(final Textures texture, final double x, final double y, final double width, final double height) {
+		renderTexture(texture, x, y, width, height, 0, false);
 	}
 	
-	public static void renderTexture(final Textures textureUtils, final double x, final double y, final double width, final double height, final int rotation) {
-		renderTexture(textureUtils, x, y, width, height, rotation, false);
+	public static void renderTexture(final Textures texture, final double x, final double y, final double width, final double height, final int rotation) {
+		renderTexture(texture, x, y, width, height, rotation, false);
 	}
 	
-	public static void renderTexture(final Textures textureUtils, double x, double y, double width, double height, final int rotation, final boolean loopBorder) {
+	public static void renderTexture(final Textures texture, double x, double y, double width, double height, final int rotation, final boolean loopBorder) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
 		width = getResponsiveX(width);
@@ -220,7 +220,7 @@ public class ComponentsHelper {
 			glTranslatef((float) (x + width / 2), (float) (y + height / 2), 0);
 			glRotatef(rotation, 0, 0, 1);
 			
-			textureUtils.bind();
+			texture.bind();
 			glBegin(GL_QUADS);
 			glTexCoord2f(0, 0);
 			glVertex3f((float) (-width / 2), (float) (-height / 2), 0);

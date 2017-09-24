@@ -3,6 +3,10 @@ package net.epopy.epopy.games.gestion.utils;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.epopy.epopy.display.Textures;
+import net.epopy.epopy.display.components.ComponentsHelper;
+import net.epopy.epopy.games.gestion.AbstractGameMenu;
+
 public class Pause {
 
 	private long startPause; // début de la pause
@@ -94,5 +98,20 @@ public class Pause {
 			isFinish = true;
 
 		return "";
+	}
+
+	@SuppressWarnings("deprecation")
+	public void showRestartChrono() {
+		Date timeDiff = new Date(Calendar.getInstance().getTimeInMillis() - startPause - 3600000);
+		
+		int secondes = timePause - timeDiff.getSeconds();
+		if (secondes == 1)
+			ComponentsHelper.renderTexture(Textures.GAME_CHRONO_1, AbstractGameMenu.defaultWidth / 2 - 64, AbstractGameMenu.defaultHeight / 2 - 64, 128, 128);
+		else if (secondes == 2)
+			ComponentsHelper.renderTexture(Textures.GAME_CHRONO_2, AbstractGameMenu.defaultWidth / 2 - 64, AbstractGameMenu.defaultHeight / 2 - 64, 128, 128);
+		else if (secondes == 3)
+			ComponentsHelper.renderTexture(Textures.GAME_CHRONO_3, AbstractGameMenu.defaultWidth / 2 - 64, AbstractGameMenu.defaultHeight / 2 - 64, 128, 128);
+		else if (secondes < 0)
+			isFinish = true;
 	}
 }
