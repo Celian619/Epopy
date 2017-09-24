@@ -16,7 +16,7 @@ public class SpeedRun extends AbstractGame {
 	
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_SPEEDRUN_LEVELBG;
+		return Textures.SPEEDRUN_LEVELBG;
 	}
 
 	@Override

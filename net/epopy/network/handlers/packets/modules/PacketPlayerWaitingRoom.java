@@ -1,6 +1,5 @@
 package net.epopy.network.handlers.packets.modules;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +22,13 @@ import net.epopy.network.utils.Callback;
 import net.epopy.network.utils.DataBuffer;
 
 public class PacketPlayerWaitingRoom extends PacketAbstract {
-
+	
 	private static String ip, team;
 	private static int port;
-
+	
 	public PacketPlayerWaitingRoom() {
 	}
-
+	
 	public PacketPlayerWaitingRoom(final NetworkPlayer player, final String targetName, final PacketWaitingRoomType packetType) {
 		packet.put(player.getName());
 		packet.put(targetName);
@@ -37,7 +36,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 		packet.put("false");
 		packet.flip();
 	}
-
+	
 	public PacketPlayerWaitingRoom(final NetworkPlayer player, final String targetName, final PacketWaitingRoomType packetType, final boolean returnMessage) {
 		packet.put(player.getName());
 		packet.put(targetName);
@@ -45,12 +44,12 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 		packet.put(String.valueOf(returnMessage));
 		packet.flip();
 	}
-
+	
 	@Override
 	public void process(final NetworkPlayerHandlers networkPlayerHandlers, final DataBuffer dataBuffer) {
 		PacketWaitingRoomType type = PacketWaitingRoomType.valueOf(dataBuffer.getString().toUpperCase());
 		switch (type) {
-		case GET:
+			case GET:
 			WaitingRoomBuilder waitingRoom = WaitingRoom.waitingRoom;
 			waitingRoom.clear();
 			waitingRoom.setWaitinRoomStatus(WaitingRoomStatus.WAITING);
@@ -71,25 +70,25 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 			 */
 			if (!WaitingRoom.userProfilTexture.containsKey(waitingRoom.getLeader()) && !playerGetImage.contains(waitingRoom.getLeader()))
 				playerGetImage.add(waitingRoom.getLeader());
-
+				
 			if (playerGetImage.size() > 0) {
 				new PacketPlayerServerImage(playerGetImage, new Callback() {
-
+					
 					@Override
 					public <T> void callback(final T reponse) {
-
+						
 						@SuppressWarnings("unchecked")
 						Map<String, Textures> texture = (Map<String, Textures>) reponse;
 						WaitingRoom.userProfilTexture.putAll(texture);
 					}
 				});
 			}
-			break;
-		case GAME_STATUS:
+				break;
+			case GAME_STATUS:
 			WaitingRoomStatus waitingRoomStatus = WaitingRoomStatus.valueOf(dataBuffer.getString().toUpperCase());
 			WaitingRoom.waitingRoom.setWaitinRoomStatus(waitingRoomStatus);
-			break;
-		case GAME_IP:
+				break;
+			case GAME_IP:
 			String data = dataBuffer.getString();
 			ip = data.split(":")[0];
 			port = Integer.parseInt(data.split(":")[1]);
@@ -102,54 +101,55 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 							NetworkPlayer.setGame(new LodingMap());
 						}
 					}, 500);
-			System.out.println(ip  + "  " + port);
-			break;
-		case GAME_READY:
+			System.out.println(ip + "  " + port);
+				break;
+			case GAME_READY:
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
 				boolean connexion = false;
+				
 				@Override
 				public void run() {
-					if(MapLoader.LOADING) {
-						if(!connexion) {
+					if (MapLoader.LOADING) {
+						if (!connexion) {
 							connexion = true;
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
-										@Override
-										public void run() {
-											NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
-											System.out.println("connexion: " + ip + "  " + port);
-											NetworkPlayer.getGame().clear();
-										}
-									}, 500);
-
+								@Override
+								public void run() {
+									NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
+									System.out.println("connexion: " + ip + "  " + port);
+									NetworkPlayer.getGame().clear();
+								}
+							}, 500);
+							
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
-										@Override
-										public void run() {
-											Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
-										}
-									}, 2000);
+								@Override
+								public void run() {
+									Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
+								}
+							}, 2000);
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
-										@Override
-										public void run() {
-											NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
-										}
-									}, 4000);
+								@Override
+								public void run() {
+									NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
+								}
+							}, 4000);
 						}
 						timer.cancel();
 					}
 				}
 			}, 20, 20);
-			break;
-		default:
+				break;
+			default:
 			System.out.println("default");
-			break;
+				break;
 		}
-
+		
 	}
-
+	
 	public enum PacketWaitingRoomType {
 		GAME_READY(),
 		CHANGE_ID_GAME(),
@@ -165,5 +165,5 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 		ACCEPT_INVITE(),
 		REMOVE(),;
 	}
-
+	
 }

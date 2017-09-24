@@ -91,7 +91,7 @@ public class DecoGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 
-		Textures.GAME_DECO_LEVEL_BG.renderBackground();
+		Textures.DECO_LEVEL_BG.renderBackground();
 		float[] color = new float[] { 0, 1, 0, 1 };
 		for (Prise p : prises) {
 			if (p.good)

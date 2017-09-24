@@ -17,7 +17,7 @@ public class Deco extends AbstractGame {
 	
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_DECO_BG;
+		return Textures.DECO_BG;
 	}
 	
 	@Override

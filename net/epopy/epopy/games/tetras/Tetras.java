@@ -16,7 +16,7 @@ public class Tetras extends AbstractGame {
 	
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_TETRAS_BG;
+		return Textures.TETRAS_BG;
 	}
 
 	@Override

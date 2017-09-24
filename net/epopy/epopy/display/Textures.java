@@ -100,63 +100,63 @@ public class Textures {
 	public static Textures GAME_CAR_BG = load("games/car/bg");
 	
 	// tank
-	public static Textures GAME_TANK_BG = load("games/tank/bg");
-	public static Textures GAME_TANK_LEVELBG = load("games/tank/levelbg");
-	public static Textures GAME_TANK_SMOKE = load("games/tank/smoke");
-	public static Textures GAME_TANK_WALL = load("games/tank/wall");
-	public static Textures GAME_TANK_TANK1 = load("games/tank/tank");
-	public static Textures GAME_TANK_TANK2 = load("games/tank/tank2");
-	public static Textures GAME_TANK_TANKPRINT = load("games/tank/tankPrint");
+	public static Textures TANK_BG = load("games/tank/bg");
+	public static Textures TANK_LEVELBG = load("games/tank/levelbg");
+	public static Textures TANK_SMOKE = load("games/tank/smoke");
+	public static Textures TANK_WALL = load("games/tank/wall");
+	public static Textures TANK_TANK1 = load("games/tank/tank");
+	public static Textures TANK_TANK2 = load("games/tank/tank2");
+	public static Textures TANK_TANKPRINT = load("games/tank/tankPrint");
 
 	// tetras
-	public static Textures GAME_TETRAS_BG = load("games/tetras/bg");
-	public static Textures GAME_TETRAS_BLOCK = load("games/tetras/block");
+	public static Textures TETRAS_BG = load("games/tetras/bg");
+	public static Textures TETRAS_BLOCK = load("games/tetras/block");
 	
 	// snake
-	public static Textures GAME_SNAKE_BG = load("games/snake/bg");
-	public static Textures GAME_SNAKE_LEVEL_BG = load("games/snake/levels/bg");
-	public static Textures GAME_SNAKE_FOOD = load("games/snake/levels/food");
-	public static Textures GAME_SNAKE_FOOD2 = load("games/snake/levels/food-2");
-	public static Textures GAME_SNAKE_FOOD3 = load("games/snake/levels/food-3");
-	public static Textures GAME_SNAKE_TETE = load("games/snake/levels/tete");
-	public static Textures GAME_SNAKE_CORP = load("games/snake/levels/corp");
+	public static Textures SNAKE_BG = load("games/snake/bg");
+	public static Textures SNAKE_LEVEL_BG = load("games/snake/levels/bg");
+	public static Textures SNAKE_FOOD = load("games/snake/levels/food");
+	public static Textures SNAKE_FOOD2 = load("games/snake/levels/food-2");
+	public static Textures SNAKE_FOOD3 = load("games/snake/levels/food-3");
+	public static Textures SNAKE_TETE = load("games/snake/levels/tete");
+	public static Textures SNAKE_CORP = load("games/snake/levels/corp");
 
 	// place invader
-	public static Textures GAME_PLACEINVADER_BG = load("games/placeinvader/bg");
-	public static Textures GAME_PLACEINVADER_LEVEL_BG = load("games/placeinvader/levelbg");
-	public static Textures GAME_PLACEINVADER_SPACESHIP = load("games/placeinvader/spaceShip");
-	public static Textures GAME_PLACEINVADER_ROCKET = load("games/placeinvader/rocket");
-	public static Textures GAME_PLACEINVADER_EXPLOSION = load("games/placeinvader/explosion");
+	public static Textures PLACEINVADER_BG = load("games/placeinvader/bg");
+	public static Textures PLACEINVADER_LEVEL_BG = load("games/placeinvader/levelbg");
+	public static Textures PLACEINVADER_SPACESHIP = load("games/placeinvader/spaceShip");
+	public static Textures PLACEINVADER_ROCKET = load("games/placeinvader/rocket");
+	public static Textures PLACEINVADER_EXPLOSION = load("games/placeinvader/explosion");
 	
 	// speedrun
-	public static Textures GAME_SPEEDRUN_BG = load("games/speedrun/bg");
-	public static Textures GAME_SPEEDRUN_LEVELBG = load("games/speedrun/levelbg");
-	public static Textures GAME_SPEEDRUN_LAMPADAIRE = load("games/speedrun/lampadaire");
-	public static Textures GAME_SPEEDRUN_MAN1 = load("games/speedrun/man-1");
-	public static Textures GAME_SPEEDRUN_MAN2 = load("games/speedrun/man-2");
-	public static Textures GAME_SPEEDRUN_MAN3 = load("games/speedrun/man-3");
-	public static Textures GAME_SPEEDRUN_MAN4 = load("games/speedrun/man-4");
-	public static Textures GAME_SPEEDRUN_MAN5 = load("games/speedrun/man-5");
-	public static Textures GAME_SPEEDRUN_MAN6 = load("games/speedrun/man-6");
-	public static Textures GAME_SPEEDRUN_MAN7 = load("games/speedrun/man-7");
-	public static Textures GAME_SPEEDRUN_MAN8 = load("games/speedrun/man-8");
-	public static Textures GAME_SPEEDRUN_MANSOL1 = load("games/speedrun/sol-1");
-	public static Textures GAME_SPEEDRUN_MANSOL2 = load("games/speedrun/sol-2");
-	public static Textures GAME_SPEEDRUN_OTHERMEN1 = load("games/speedrun/other-men-1");
-	public static Textures GAME_SPEEDRUN_OTHERMEN2 = load("games/speedrun/other-men-2");
-	public static Textures GAME_SPEEDRUN_OTHERMEN3 = load("games/speedrun/other-men-3");
-	public static Textures GAME_SPEEDRUN_OTHERMEN4 = load("games/speedrun/other-men-4");
-	public static Textures GAME_SPEEDRUN_OTHERMEN5 = load("games/speedrun/other-men-5");
-	public static Textures GAME_SPEEDRUN_OTHERMEN6 = load("games/speedrun/other-men-6");
-	public static Textures GAME_SPEEDRUN_OTHERMEN7 = load("games/speedrun/other-men-7");
-	public static Textures GAME_SPEEDRUN_OTHERMEN8 = load("games/speedrun/other-men-8");
-	public static Textures GAME_SPEEDRUN_OTHERMENSOL1 = load("games/speedrun/other-sol-1");
-	public static Textures GAME_SPEEDRUN_OTHERMENSOL2 = load("games/speedrun/other-sol-2");
+	public static Textures SPEEDRUN_BG = load("games/speedrun/bg");
+	public static Textures SPEEDRUN_LEVELBG = load("games/speedrun/levelbg");
+	public static Textures SPEEDRUN_LAMPADAIRE = load("games/speedrun/lampadaire");
+	public static Textures SPEEDRUN_MAN1 = load("games/speedrun/man-1");
+	public static Textures SPEEDRUN_MAN2 = load("games/speedrun/man-2");
+	public static Textures SPEEDRUN_MAN3 = load("games/speedrun/man-3");
+	public static Textures SPEEDRUN_MAN4 = load("games/speedrun/man-4");
+	public static Textures SPEEDRUN_MAN5 = load("games/speedrun/man-5");
+	public static Textures SPEEDRUN_MAN6 = load("games/speedrun/man-6");
+	public static Textures SPEEDRUN_MAN7 = load("games/speedrun/man-7");
+	public static Textures SPEEDRUN_MAN8 = load("games/speedrun/man-8");
+	public static Textures SPEEDRUN_MANSOL1 = load("games/speedrun/sol-1");
+	public static Textures SPEEDRUN_MANSOL2 = load("games/speedrun/sol-2");
+	public static Textures SPEEDRUN_OTHERMEN1 = load("games/speedrun/other-men-1");
+	public static Textures SPEEDRUN_OTHERMEN2 = load("games/speedrun/other-men-2");
+	public static Textures SPEEDRUN_OTHERMEN3 = load("games/speedrun/other-men-3");
+	public static Textures SPEEDRUN_OTHERMEN4 = load("games/speedrun/other-men-4");
+	public static Textures SPEEDRUN_OTHERMEN5 = load("games/speedrun/other-men-5");
+	public static Textures SPEEDRUN_OTHERMEN6 = load("games/speedrun/other-men-6");
+	public static Textures SPEEDRUN_OTHERMEN7 = load("games/speedrun/other-men-7");
+	public static Textures SPEEDRUN_OTHERMEN8 = load("games/speedrun/other-men-8");
+	public static Textures SPEEDRUN_OTHERMENSOL1 = load("games/speedrun/other-sol-1");
+	public static Textures SPEEDRUN_OTHERMENSOL2 = load("games/speedrun/other-sol-2");
 
 	// deco
-	public static Textures GAME_DECO_BG = load("games/deco/bg");
-	public static Textures GAME_DECO_LEVEL_BG = load("games/deco/levelbg");
-	public static Textures GAME_DECO_CABLE = load("games/deco/cable");
+	public static Textures DECO_BG = load("games/deco/bg");
+	public static Textures DECO_LEVEL_BG = load("games/deco/levelbg");
+	public static Textures DECO_CABLE = load("games/deco/cable");
 	
 	// general
 	public static Textures GAME_BACKGROUND_80OPACITY = load("games/noir_80opacity");

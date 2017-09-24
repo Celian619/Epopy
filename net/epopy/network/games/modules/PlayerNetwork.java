@@ -60,7 +60,7 @@ public class PlayerNetwork {
 	public void render() {
 		// GL11.glColor4f(team.getColor()[0], team.getColor()[1],team.getColor()[2], 1);
 
-		Textures texture = printTexture <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
+		Textures texture = printTexture <= 5 ? Textures.TANK_TANK2 : Textures.TANK_TANK1;
 		if (printTexture >= 10) printTexture = 0;
 		
 		ComponentsHelper.drawText(getName(), getLocation().getX(), getLocation().getY() - 70, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());

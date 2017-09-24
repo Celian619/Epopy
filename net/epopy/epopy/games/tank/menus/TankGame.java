@@ -101,7 +101,7 @@ public class TankGame extends AbstractGameMenu {
 		tankAspectP = 0;
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(this.getClass().getResource(Textures.GAME_TANK_LEVELBG.getPath()));
+			img = ImageIO.read(this.getClass().getResource(Textures.TANK_LEVELBG.getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -286,7 +286,7 @@ public class TankGame extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-		Textures.GAME_TANK_LEVELBG.renderBackground();
+		Textures.TANK_LEVELBG.renderBackground();
 
 		if (!gameOver && !win && !pauseScreen && pause.isFinish())
 			ComponentsHelper.drawText("Score: " + damage, defaultWidth / 2, defaultHeight / 2 + 35, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 0.7f, 0.7f, 0.7f, 1 });
@@ -295,14 +295,14 @@ public class TankGame extends AbstractGameMenu {
 		float f = 0.20f;
 		for (Location loc : tankPrintP) {
 			glColor4f(0.32f, 0.26f, 1, f);
-			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
+			ComponentsHelper.renderTexture(Textures.TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
 
 		f = 0.20f;
 		for (Location loc : tankPrintR) {
 			glColor4f(1, 0f, 0f, f);
-			ComponentsHelper.renderTexture(Textures.GAME_TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
+			ComponentsHelper.renderTexture(Textures.TANK_TANKPRINT, loc.getX() - 32, loc.getY() - 28, 64, 56, loc.getDirection());
 			f -= 0.02f;
 		}
 
@@ -317,12 +317,12 @@ public class TankGame extends AbstractGameMenu {
 		}
 
 		// Affiche le joueur
-		Textures texturePlayer = tankAspectP <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
+		Textures texturePlayer = tankAspectP <= 5 ? Textures.TANK_TANK2 : Textures.TANK_TANK1;
 		if (tankAspectP == 10) tankAspectP = 0;
 
 		ComponentsHelper.renderTexture(texturePlayer, locPlayer.getX() - 32, locPlayer.getY() - 28, 64, 56, locPlayer.getDirection());
 		// Affiche le Bot
-		Textures textureBot = tankAspectR <= 5 ? Textures.GAME_TANK_TANK2 : Textures.GAME_TANK_TANK1;
+		Textures textureBot = tankAspectR <= 5 ? Textures.TANK_TANK2 : Textures.TANK_TANK1;
 		if (tankAspectR == 10) tankAspectR = 0;
 
 		if (damaged > 0) {// a été touché

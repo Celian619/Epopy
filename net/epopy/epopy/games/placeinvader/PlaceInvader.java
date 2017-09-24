@@ -17,7 +17,7 @@ public class PlaceInvader extends AbstractGame {
 
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_PLACEINVADER_BG;
+		return Textures.PLACEINVADER_BG;
 	}
 
 	@Override

@@ -196,17 +196,17 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-		Textures.GAME_PLACEINVADER_LEVEL_BG.renderBackground();
+		Textures.PLACEINVADER_LEVEL_BG.renderBackground();
 
 		if (shooted > 0 && (shooted - 5) / 10 == shooted / 10) glColor4f(1, 0.2f, 0.2f, 1);
-		ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_ROCKET, xPlayer - playerSize / 2, yPlayer, playerSize, 100);
+		ComponentsHelper.renderTexture(Textures.PLACEINVADER_ROCKET, xPlayer - playerSize / 2, yPlayer, playerSize, 100);
 		glColor4f(1, 1, 1, 1);
 
 		if (pauseScreen) {
 			renderEchap(true);
 			return;
 		} else if (gameOver) {
-			ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_EXPLOSION, xPlayer - playerSize / 2 - 18, yPlayer, 100, 100);
+			ComponentsHelper.renderTexture(Textures.PLACEINVADER_EXPLOSION, xPlayer - playerSize / 2 - 18, yPlayer, 100, 100);
 
 			boolean record = false;
 			if (!stats) {
@@ -264,10 +264,10 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		for (int i = robots.size() - 1; i >= 0; i--) {
 			if (robots.isEmpty()) break;
 			robot rob = robots.get(i);
-			ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_SPACESHIP, rob.loc.getX() - robotSize / 2, rob.loc.getY() - robotSize / 2, robotSize, robotSize);
+			ComponentsHelper.renderTexture(Textures.PLACEINVADER_SPACESHIP, rob.loc.getX() - robotSize / 2, rob.loc.getY() - robotSize / 2, robotSize, robotSize);
 			if (rob.dead) {
 				robots.remove(rob);
-				ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_EXPLOSION, rob.loc.getX() - robotSize / 2, rob.loc.getY() - robotSize / 2, robotSize + 10, robotSize);
+				ComponentsHelper.renderTexture(Textures.PLACEINVADER_EXPLOSION, rob.loc.getX() - robotSize / 2, rob.loc.getY() - robotSize / 2, robotSize + 10, robotSize);
 			}
 		}
 
@@ -280,7 +280,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		ComponentsHelper.drawText(score + " point" + (score < 2 ? "" : "s"), 30, 30, 30);
 
 		for (int i = 0; i < life; i++)
-			ComponentsHelper.renderTexture(Textures.GAME_PLACEINVADER_ROCKET, defaultWidth - (65 + i * 60), 40, 35, 50);
+			ComponentsHelper.renderTexture(Textures.PLACEINVADER_ROCKET, defaultWidth - (65 + i * 60), 40, 35, 50);
 
 	}
 

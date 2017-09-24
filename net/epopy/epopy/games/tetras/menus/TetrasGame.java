@@ -94,7 +94,7 @@ public class TetrasGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 		
-		Textures.GAME_TETRAS_BG.renderBackground();
+		Textures.TETRAS_BG.renderBackground();
 		Location locat = movingBlock.loc;
 		
 		for (Location loc : movingBlock.locs) {
@@ -105,7 +105,7 @@ public class TetrasGame extends AbstractGameMenu {
 			y *= grilleHeight;
 
 			glColor4f(color[0], color[1], color[2], color[3]);
-			ComponentsHelper.renderTexture(Textures.GAME_TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
+			ComponentsHelper.renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
 
 			glColor4f(1, 1, 1, 1);
 			/*
@@ -124,7 +124,7 @@ public class TetrasGame extends AbstractGameMenu {
 
 				glColor4f(lastColor[0], lastColor[1], lastColor[2], lastColor[3]);
 
-				ComponentsHelper.renderTexture(Textures.GAME_TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
+				ComponentsHelper.renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
 
 				glColor4f(1, 1, 1, 1);
 				/*

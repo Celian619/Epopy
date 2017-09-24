@@ -271,7 +271,7 @@ public class SnakeGame extends AbstractGameMenu {
 		rotationFood++;
 		if (rotationFood > 360) rotationFood -= 360;
 		
-		Textures.GAME_SNAKE_LEVEL_BG.renderBackground();
+		Textures.SNAKE_LEVEL_BG.renderBackground();
 		
 		for (mouse m : posMouse) {
 			Location loc = m.loc;
@@ -279,11 +279,11 @@ public class SnakeGame extends AbstractGameMenu {
 			double height = 7 * m.size;
 			
 			if (m.walk < 5)
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_FOOD, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
+				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
 			else if (m.walk < 10 || m.walk > 15)
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_FOOD2, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
+				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD2, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
 			else
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_FOOD3, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
+				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD3, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
 
 		}
 		
@@ -291,7 +291,7 @@ public class SnakeGame extends AbstractGameMenu {
 			Location loc = posSnake.get(i);
 			
 			if (i == 0) {
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_TETE, (int) (cubeX * loc.getX() - 50 / 2), (int) (cubeY * loc.getY() - 100 / 2), 50, 100, loc.getDirection());
+				ComponentsHelper.renderTexture(Textures.SNAKE_TETE, (int) (cubeX * loc.getX() - 50 / 2), (int) (cubeY * loc.getY() - 100 / 2), 50, 100, loc.getDirection());
 			} else {
 				int sizeX = 45;
 				int sizeY = 45;
@@ -305,7 +305,7 @@ public class SnakeGame extends AbstractGameMenu {
 					}
 				}
 				
-				ComponentsHelper.renderTexture(Textures.GAME_SNAKE_CORP, (int) (cubeX * loc.getX() - sizeX / 2), (int) (cubeY * loc.getY() - sizeY / 2), sizeX, sizeY, loc.getDirection());
+				ComponentsHelper.renderTexture(Textures.SNAKE_CORP, (int) (cubeX * loc.getX() - sizeX / 2), (int) (cubeY * loc.getY() - sizeY / 2), sizeX, sizeY, loc.getDirection());
 			}
 			
 		}

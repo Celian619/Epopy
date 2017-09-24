@@ -22,9 +22,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+@SuppressWarnings("unused")
 public class Test implements Runnable {
 
 	private Socket socket;
+	
 	private DataOutputStream dataOutputStream;
 	private DataInputStream dataInputStream;
 	private Thread thread;
@@ -32,19 +34,24 @@ public class Test implements Runnable {
 	static String urls = "http://puu.sh/xrmge/64e30ae6ed.txt";
 	static File path = new File("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
 
-	public static void main(String[] args) throws IOException {
+	public static void main(final String[] args) throws IOException {
 		
-		//	downloadFileFromUrlWithJavaIO(fileName, "https://puu.sh/xrmge/64e30ae6ed.txt");
-		TrustManager[] trustAllCerts = new TrustManager[]{
+		// downloadFileFromUrlWithJavaIO(fileName, "https://puu.sh/xrmge/64e30ae6ed.txt");
+		TrustManager[] trustAllCerts = new TrustManager[] {
 				new X509TrustManager() {
+					@Override
 					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 						return null;
 					}
+
+					@Override
 					public void checkClientTrusted(
-							java.security.cert.X509Certificate[] certs, String authType) {
+							final java.security.cert.X509Certificate[] certs, final String authType) {
 					}
+
+					@Override
 					public void checkServerTrusted(
-							java.security.cert.X509Certificate[] certs, String authType) {
+							final java.security.cert.X509Certificate[] certs, final String authType) {
 					}
 				}
 		};
@@ -65,41 +72,41 @@ public class Test implements Runnable {
 		int length = connection.getContentLength();
 		System.out.println("start: " + is.available());
 
-		//On prépare le tableau de bits pour les données du fichier
+		// On prépare le tableau de bits pour les données du fichier
 		byte[] data = new byte[length];
 
-		//On déclare les variables pour se retrouver dans la lecture du fichier
+		// On déclare les variables pour se retrouver dans la lecture du fichier
 		int currentBit = 0;
 		int deplacement = 0;
 
-		//Tant que l'on n'est pas à la fin du fichier, on récupère des données
-		while(deplacement < length){
-			currentBit = is.read(data, deplacement, data.length-deplacement);	
-			if(currentBit == -1)break;	
+		// Tant que l'on n'est pas à la fin du fichier, on récupère des données
+		while (deplacement < length) {
+			currentBit = is.read(data, deplacement, data.length - deplacement);
+			if (currentBit == -1) break;
 			deplacement += currentBit;
 
 		}
 
-		//Si on n'est pas arrivé à la fin du fichier, on lance une exception
-		if(deplacement != length){
-			throw new IOException("Le fichier n'a pas été lu en entier (seulement " 
-					+ deplacement + " sur " + length + ")");
-		}
-			//On crée un stream sortant vers la destination
-			
-			FileOutputStream destinationFile = new FileOutputStream("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt"); 
+		// Si on n'est pas arrivé à la fin du fichier, on lance une exception
+		if (deplacement != length) { throw new IOException("Le fichier n'a pas été lu en entier (seulement "
+				+ deplacement + " sur " + length + ")"); }
+		// On crée un stream sortant vers la destination
 
-			destinationFile.write(data);
+		FileOutputStream destinationFile = new FileOutputStream("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
 
-			destinationFile.flush();
+		destinationFile.write(data);
+
+		destinationFile.flush();
+		destinationFile.close();
 		
 	}
-	public static void downloadFileFromUrlWithJavaIO(String fileName, String fileUrl)
+
+	public static void downloadFileFromUrlWithJavaIO(final String fileName, final String fileUrl)
 			throws MalformedURLException, IOException {
 		BufferedInputStream inStream = null;
 		FileOutputStream outStream = null;
 		try {
-			URL fileUrlObj=new URL(fileUrl);
+			URL fileUrlObj = new URL(fileUrl);
 			inStream = new BufferedInputStream(fileUrlObj.openStream());
 			outStream = new FileOutputStream(fileName);
 
@@ -115,6 +122,7 @@ public class Test implements Runnable {
 				outStream.close();
 		}
 	}
+
 	public Test() {
 		// connect("192.168.1.15", 25565);
 
@@ -136,22 +144,6 @@ public class Test implements Runnable {
 			i++;
 		}
 
-	}
-
-	private void connect(final String ip, final int port) {
-		try {
-			socket = new Socket(ip, port);
-			socket.setTcpNoDelay(true);
-
-			dataInputStream = new DataInputStream(socket.getInputStream());
-			dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-			thread = new Thread(this);
-			thread.start();
-
-		} catch (IOException e) {
-
-		}
 	}
 
 	@Override

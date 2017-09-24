@@ -16,7 +16,7 @@ public class Snake extends AbstractGame {
 
 	@Override
 	public Textures getDefaultBackGround() {
-		return Textures.GAME_SNAKE_BG;
+		return Textures.SNAKE_BG;
 	}
 	
 	@Override
