@@ -62,6 +62,8 @@ public class TankGame extends AbstractGameMenu {
 	private boolean win;
 	private boolean stats;
 	private boolean record;
+	private boolean pauseScreen;
+	private boolean paused;
 
 	/*
 	 *
@@ -73,32 +75,23 @@ public class TankGame extends AbstractGameMenu {
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.TANK.isRunning())
 			Audios.TANK.start(true).setVolume(0.2f);
-
-		damaged = 0;
+			
 		cooldownRobot = 25;
-		robotBallesNbr = 0;
-		directionMax = 0;
+
+		damaged = damage = robotBallesNbr = directionMax = print = tankAspectR = tankAspectP = 0;
+
 		speedRobot = speedTank;
 		recul = -10;
 
 		paused = true;
-		record = false;
-		stats = false;
-		damage = 0;
-		timeTamp = 0;
-		pauseScreen = false;
-		win = false;
-		gameOver = false;
+		record = gameOver = stats = tir = pauseScreen = win = false;
+		
 		locPlayer = new Location(150, defaultHeight / 2, 0);
 		locRobot = new Location(1740, defaultHeight / 2, 180);
 
 		tankPrintP = new LinkedList<Location>();
 		tankPrintR = new LinkedList<Location>();
 		balles = new LinkedList<Ball>();
-		tir = false;
-		print = 0;
-		tankAspectR = 0;
-		tankAspectP = 0;
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(this.getClass().getResource(Textures.TANK_LEVELBG.getPath()));
@@ -156,15 +149,12 @@ public class TankGame extends AbstractGameMenu {
 	 *
 	 *
 	 */
-	private int timeTamp;
-	private boolean pauseScreen;
-	private boolean paused = true;
-
+	
 	@Override
 	public void update() {
 		Timer.tick();
-		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+		if (pause.isFinish() && !gameOver) {
+			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
 					pauseScreen = false;
 					pause.startPause(3);
@@ -173,11 +163,9 @@ public class TankGame extends AbstractGameMenu {
 					timer.pause();
 					paused = true;
 				}
-				timeTamp = 10;
 			}
-		} else
-			timeTamp--;
-
+		}
+		
 		if (gameOver || win) {
 			if (rejouerButton.isClicked())
 				onEnable();
@@ -334,6 +322,10 @@ public class TankGame extends AbstractGameMenu {
 
 		glColor4f(1, 1, 1, 1);
 		if (!pause.isFinish()) {
+			if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
+				pause.stopPause();
+				return;
+			}
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();

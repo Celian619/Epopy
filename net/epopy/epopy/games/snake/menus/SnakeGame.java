@@ -38,7 +38,6 @@ public class SnakeGame extends AbstractGameMenu {
 	private int snakeSize;
 	private int ptsRecord;
 	private int timeSecond;
-	private int timeTamp;
 	private int timeFood;
 	private int eat;
 	private int lastKey;
@@ -73,7 +72,7 @@ public class SnakeGame extends AbstractGameMenu {
 		
 		snakeSize = 1;
 		ptsRecord = Main.getPlayer().getSnakeStats().getRecord();
-		timeSecond = timeTamp = timeFood = eat = lastKey = 0;
+		timeSecond = timeFood = eat = lastKey = 0;
 		
 		pauseScreen = addStats = gameOver = false;
 		paused = true;
@@ -91,7 +90,7 @@ public class SnakeGame extends AbstractGameMenu {
 		// update le Timer
 		Timer.tick();
 
-		if (timeTamp <= 0 && pause.isFinish() && !gameOver) {
+		if (pause.isFinish() && !gameOver) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
 					pauseScreen = false;
@@ -102,11 +101,9 @@ public class SnakeGame extends AbstractGameMenu {
 					paused = true;
 					Mouse.setGrabbed(false);
 				}
-				timeTamp = 10;
 			}
-		} else
-			timeTamp--;
-
+		}
+		
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
@@ -326,6 +323,10 @@ public class SnakeGame extends AbstractGameMenu {
 		}
 		
 		if (!pause.isFinish()) {
+			if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
+				pause.stopPause();
+				return;
+			}
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();
