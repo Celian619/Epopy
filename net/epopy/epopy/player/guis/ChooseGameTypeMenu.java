@@ -152,7 +152,7 @@ public class ChooseGameTypeMenu {
 				/*
 				 * TODO new RegisterPlayerNetworkMenu(); break;
 				 */
-				new NotificationGui("Le multijoueur arrive bientôt !", "( Pour plus d'information, @EpopyOfficiel / Epopy.fr )", 5, new float[] { 1, 0, 0, 1 }, true);
+				//new NotificationGui("Le multijoueur arrive bientôt !", "( Pour plus d'information, @EpopyOfficiel / Epopy.fr )", 5, new float[] { 1, 0, 0, 1 }, true);
 				new RegisterPlayerNetworkMenu();
 				break;
 			}

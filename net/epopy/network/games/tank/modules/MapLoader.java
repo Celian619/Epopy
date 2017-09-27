@@ -54,11 +54,8 @@ public class MapLoader {
 		add(distanceZones);
 	}
 
-	private int i = 0;
-
+	private int statusLoading = 0;
 	private void add(final int[] dBlock) {
-		// while (true) {//TODO voir pour faire dans un runnable
-
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
@@ -88,17 +85,14 @@ public class MapLoader {
 
 				if (modifs == 0) {
 					timer.cancel();
-					i++;
-					System.out.println(i + "/2");
-					if (i == 2) {
+					statusLoading++;
+					if (statusLoading == 2) {
 						LOADING = true;
-						System.out.println("loading !!");
-					}
+						System.out.println("[Map - Network] Map has been loaded !");
+					} else System.out.println("[Map - Network] Map loading...");
 				}
-				// }
 			}
 		}, 1, 1);
-		// return dBlock;
 	}
 
 }

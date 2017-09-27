@@ -26,8 +26,14 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 			new Thread(this, "udp-thread").start();
 		} catch (SocketException e) {
 			e.printStackTrace();
+			System.out.println("SocketException");
+			System.out.println("Local port: " + networkPlayerHandlers.getSocket().getLocalPort());
+			System.out.println(port);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+			System.out.println("UnknownHostException");
+			System.out.println("Local port: " + networkPlayerHandlers.getSocket().getLocalPort());
+			System.out.println(port);
 		}
 	}
 

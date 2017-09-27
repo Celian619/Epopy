@@ -22,7 +22,6 @@ public class PacketPlayerMessage extends PacketAbstract {
 		switch (type) {
 		case FRIENDS:
 			new NotificationGui("FRIENDS", message, 2, color, error);
-			System.out.println("FRIENDS message :" + message);
 			break;
 		case WAITING_ROOM:
 			new NotificationGui("WAITING ROOM", message, 2, color, error);
