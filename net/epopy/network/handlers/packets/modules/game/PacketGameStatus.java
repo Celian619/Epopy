@@ -2,6 +2,8 @@ package net.epopy.network.handlers.packets.modules.game;
 
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.games.tank.TankMenuEnd;
+import net.epopy.network.games.waitingroom.LodingMap;
+import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.packets.PacketAbstract;
 import net.epopy.network.utils.DataBuffer;
@@ -22,12 +24,12 @@ public class PacketGameStatus extends PacketAbstract {
 	@Override
 	public void process(final NetworkPlayerHandlers networkPlayerHandlers, final DataBuffer dataBuffer) {
 		GameStatus gameStatus = GameStatus.valueOf(dataBuffer.getString().toUpperCase());
-		if (NetworkPlayer.getGame().getGameStatus() != gameStatus)
-			NetworkPlayer.getGame().setGameStatus(gameStatus);
+		
+		NetworkPlayer.getGame().setGameStatus(gameStatus);
+		
 		switch (gameStatus) {
 		case WAITING:
 			WAITING_MESSAGE = dataBuffer.getString();
-			;
 			break;
 		case IN_GAME:
 			// infos pendant le jeu
@@ -40,7 +42,10 @@ public class PacketGameStatus extends PacketAbstract {
 			String teamWinner = dataBuffer.getString();
 
 			System.out.println("[GAME-MANAGER] Fin de partie !");
-			TankMenuEnd.TEAM_WINNER = NetworkPlayer.getGame().getTeam(teamWinner.toUpperCase());
+			if(!teamWinner.equals("null"))
+				TankMenuEnd.TEAM_WINNER = NetworkPlayer.getGame().getTeam(teamWinner.toUpperCase());
+			else
+				TankMenuEnd.TEAM_WINNER = null;
 			TankMenuEnd.TOP_COINS = new String[] { topCoins.split(":")[0], topCoins.split(":")[1], topCoins.split(":")[2] };
 			TankMenuEnd.TOP_VICTIMES = new String[] { topVictimes.split(":")[0], topVictimes.split(":")[1], topVictimes.split(":")[2] };
 			TankMenuEnd.TOP_POINTS = new String[] { topPoints.split(":")[0], topPoints.split(":")[1], topPoints.split(":")[2] };
@@ -50,8 +55,6 @@ public class PacketGameStatus extends PacketAbstract {
 			TankMenuEnd.PLAYER_COINS = Integer.parseInt(playerStats.split(":")[2]);
 			TankMenuEnd.PLAYER_POINTS = Integer.parseInt(playerStats.split(":")[3]);
 
-			
-			
 			break;
 		default:
 			break;

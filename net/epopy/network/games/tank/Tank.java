@@ -88,7 +88,7 @@ public class Tank extends AbstractGameNetwork {
 				} else
 					shoot = false;
 			}
-		} else if(getGameStatus().equals(GameStatus.IN_GAME)) {
+		} else if(getGameStatus().equals(GameStatus.END)) {
 			if(tankMenuEnd != null)tankMenuEnd.update();
 		}
 	}
@@ -114,9 +114,10 @@ public class Tank extends AbstractGameNetwork {
 			ComponentsHelper.drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10,  40, PositionWidth.MILIEU, PositionHeight.MILIEU, 18, new float[]{1, 1, 1, 1});
 		} else if(getGameStatus().equals(GameStatus.END)) {
 			if(tankMenuEnd != null)tankMenuEnd.render();
+			else tankMenuEnd = new TankMenuEnd();
 		}
 	}
-
+	
 	@Override
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_GAME_TANK_MAP;

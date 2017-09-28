@@ -2,6 +2,7 @@ package net.epopy.network;
 
 import net.epopy.network.display.DisplayManager;
 import net.epopy.network.games.AbstractGameNetwork;
+import net.epopy.network.games.tank.TankMenuEnd;
 import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.packets.modules.servermanager.PacketGetIPServers;
