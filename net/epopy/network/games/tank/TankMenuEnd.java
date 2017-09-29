@@ -60,7 +60,6 @@ public class TankMenuEnd {
 		}
 
 		if (quitterButton.isClicked()) NetworkPlayer.setGame(new WaitingRoom());
-		System.out.println("update");
 	}
 
 	private final float[] colorTop = new float[] { 1, 1, 0, 1 };

@@ -23,17 +23,23 @@ public class PacketPlayerJoin extends PacketAbstract {
 		String playerTeamName = dataBuffer.getString();
 		String teamName = dataBuffer.getString();
 		AbstractGameNetwork game = NetworkPlayer.getGame();
+		//ajoute la teams
 		if(!teamName.equals("null")) {
-			double x = dataBuffer.getDouble();
-			double y = dataBuffer.getDouble();
-			double z = dataBuffer.getDouble();
-			double pitch = dataBuffer.getDouble();
-			double yaw = dataBuffer.getDouble();
-			float[] color = new float[]{dataBuffer.getFloat(),  dataBuffer.getFloat(), dataBuffer.getFloat(), 1};
-			game.addTeam(teamName, new Team(teamName, color, new Location3D(x, y, z, yaw, pitch)));
+			if(!game.containsTeam(teamName)) {
+				double x = dataBuffer.getDouble();
+				double y = dataBuffer.getDouble();
+				double z = dataBuffer.getDouble();
+				double pitch = dataBuffer.getDouble();
+				double yaw = dataBuffer.getDouble();
+				float[] color = new float[]{dataBuffer.getFloat(),  dataBuffer.getFloat(), dataBuffer.getFloat(), 1};
+				game.addTeam(teamName, new Team(teamName, color, new Location3D(x, y, z, yaw, pitch)));
+				System.out.println("[Server - Team] Register team: " + teamName);
+			}
 		}
 
-		if(game.containsTeam(playerTeamName))
+		if(game.containsTeam(playerTeamName)) {
 			game.addPlayer(playerName, playerTeamName);
+			System.out.println("[Server - Team] " + playerName + " join -> " + playerTeamName);
+		}
 	}
 }

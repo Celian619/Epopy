@@ -29,6 +29,7 @@ public abstract class AbstractGameNetwork {
 		balls.clear();
 		zones.clear();
 		gameStatus = GameStatus.WAITING;
+		System.out.println("[Server - Network] Datas have been clear !");
 	}
 	
 	/*
