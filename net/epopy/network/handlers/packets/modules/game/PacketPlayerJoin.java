@@ -36,8 +36,8 @@ public class PacketPlayerJoin extends PacketAbstract {
 				System.out.println("[Server - Team] Register team: " + teamName);
 			}
 		}
-
-		if(game.containsTeam(playerTeamName)) {
+		
+		if(game.containsTeam(playerTeamName) && !game.containsPlayer(playerTeamName)) {
 			game.addPlayer(playerName, playerTeamName);
 			System.out.println("[Server - Team] " + playerName + " join -> " + playerTeamName);
 		}
