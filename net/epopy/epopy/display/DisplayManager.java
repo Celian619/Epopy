@@ -56,7 +56,6 @@ public class DisplayManager {
 
 			Display.setVSyncEnabled(true);
 			Display.setResizable(true);
-
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

@@ -1,42 +1,34 @@
 package net.epopy.epopy.player.stats;
 
-import java.text.SimpleDateFormat;
-
 import net.epopy.epopy.utils.Config;
 
 public class TankStats {
 
 	private int record;
-	private Config config;
+	private final Config config;
 	private int parties;
-	private long tempsLong;
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	private int temps;
 
-	public TankStats(Config config) {
+	public TankStats(final Config config) {
 		this.config = config;
 		record = Integer.parseInt(config.getData("tank_record"));
 		parties = Integer.parseInt(config.getData("tank_parties"));
 
-		tempsLong = Long.parseLong(config.getData("tank_temps"));
+		temps = Integer.parseInt(config.getData("tank_temps"));
 	}
 
-	public String getTemps() {
-		if (tempsLong <= 0)
-			return "00:00:00";
-		return timeFormat.format(tempsLong - 3600000);
+	public int getTemps() {
+		
+		return temps;
 	}
 
-	public void addTemps(long start) {
-		tempsLong += start * 1000;
-		config.setValue("tank_temps", String.valueOf(tempsLong));
+	public void addTemps(final int temps) {
+		this.temps += temps;
+		config.setValue("tank_temps", this.temps + "");
 	}
-
-	public long getTempsLong() {
-		return tempsLong;
-	}
-
+	
 	public int getObjectif() {
-		return 10;//  10 tirs sur le bot
+		return 10;// 10 tirs sur le bot
 	}
 	
 	public String getObjectifString() {
@@ -48,8 +40,8 @@ public class TankStats {
 	}
 
 	public void addPartie() {
-		parties = parties + 1;
-		config.setValue("tank_parties", String.valueOf(parties));
+		parties++;
+		config.setValue("tank_parties", parties + "");
 	}
 
 	public int getRecord() {
@@ -57,13 +49,11 @@ public class TankStats {
 	}
 
 	public String getRecordString() {
-		if(record == 0)
-			return "?";
 		return "Tué " + record + " fois";
 	}
 
-	public void setRecord(int tir) {
+	public void setRecord(final int tir) {
 		record = tir;
-		config.setValue("tank_record", String.valueOf(record));
+		config.setValue("tank_record", tir + "");
 	}
 }

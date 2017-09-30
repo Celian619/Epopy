@@ -2,14 +2,12 @@ package net.epopy.epopy.games.speedrun.menus;
 
 import static org.lwjgl.opengl.GL11.glColor4f;
 
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.Timer;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
@@ -35,12 +33,10 @@ public class SpeedRunGame extends AbstractGameMenu {
 	List<Robot> robots = new LinkedList<Robot>();
 	List<Integer> lampadairesX = new LinkedList<Integer>();
 	
-	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-	private static Timer timer;
+	private static int timer;
 	private boolean addStats;
 
 	private boolean pauseScreen;
-	private boolean paused;
 	
 	@Override
 	public void onEnable() {
@@ -52,20 +48,19 @@ public class SpeedRunGame extends AbstractGameMenu {
 		playerWalk = height = 1;
 		newRobot = 50;
 		level = 12;
-		playerSneak = propulsion = 0;
+		playerSneak = propulsion = timer = 0;
 		robots.clear();
 		lampadairesX.clear();
-		
-		paused = true;
-		timer = new Timer();
-		timer.pause();
+
 		pause.startPause(5);
 	}
 
 	@Override
 	public void update() {
-		Timer.tick();
-
+		if (pause.isFinish() && !gameOver && !pauseScreen) {
+			timer++;
+		}
+		
 		if (pause.isFinish() && !gameOver) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -73,8 +68,6 @@ public class SpeedRunGame extends AbstractGameMenu {
 					pause.startPause(3);
 				} else {
 					pauseScreen = true;
-					timer.pause();
-					paused = true;
 				}
 			}
 		}
@@ -92,16 +85,8 @@ public class SpeedRunGame extends AbstractGameMenu {
 			}
 		}
 
-		if (pauseScreen || !pause.isFinish() || gameOver) {
-			timer.pause();
-			return;
-		}
-
-		if (paused) {
-			timer.resume();
-			paused = false;
-		}
-
+		if (pauseScreen || !pause.isFinish() || gameOver) return;
+		
 		if (Input.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			Mouse.setGrabbed(false);
 		}
@@ -253,11 +238,11 @@ public class SpeedRunGame extends AbstractGameMenu {
 			ComponentsHelper.renderTexture(playerTexture, 50, defaultHeight / 2 - 27 + height + 300, 100, -150);
 			glColor4f(1, 1, 1, 1);
 		}
-		if (!gameOver && !paused && !pauseScreen) {
-			if (timer != null) {
-				boolean record = (long) timer.getTime() > Main.getPlayer().getSpeedRunStats().getRecord();
-				ComponentsHelper.drawText(timeFormat.format((long) timer.getTime() * 1000 - 3600000), defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? new float[] { 0.7f, 0, 0, 1 } : new float[] { 0.6f, 0.6f, 0.6f, 1 });
-			}
+		if (!gameOver && !pauseScreen && pause.isFinish()) {
+
+			boolean record = timer / 60 > Main.getPlayer().getSpeedRunStats().getRecord();
+			ComponentsHelper.drawText(timer / 60 + "", defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? new float[] { 0.7f, 0, 0, 1 } : new float[] { 0.6f, 0.6f, 0.6f, 1 });
+			
 		}
 
 		if (!pause.isFinish()) {
@@ -299,15 +284,14 @@ public class SpeedRunGame extends AbstractGameMenu {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
 			SpeedRunStats speedRunStats = Main.getPlayer().getSpeedRunStats();
-			String timeString = timeFormat.format((long) timer.getTime() * 1000 - 3600000);
-			boolean record = timer.getTime() * 1000 > speedRunStats.getRecord();
-			renderEchap(false, timeString, record);
+			boolean record = timer / 60 > speedRunStats.getRecord();
+			renderEchap(false, timer / 60 + "s", record);
 			if (!addStats) {
 				speedRunStats.addPartie();
-				speedRunStats.addTemps((long) timer.getTime());
+				speedRunStats.addTemps(timer / 60);
 				// set best score
 				if (record)
-					speedRunStats.setRecord((long) timer.getTime());
+					speedRunStats.setRecord(timer / 60);
 					
 				/**
 				 * TODO if (timer.getTime() * 1000 > speedRunStats.getObjectif()) { if (Main.getPlayer().getLevel() <=

@@ -36,11 +36,13 @@ public class Main {
 		
 		new ChooseGameTypeMenu();
 		Display.setResizable(true);
+		
 		loop();
 	}
 	
 	private static void loop() {
 		while (!Display.isCloseRequested()) {
+			
 			Input.checkInputFullscreen();
 			displayManager.update();
 			displayManager.render();

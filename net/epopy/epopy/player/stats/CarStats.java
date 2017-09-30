@@ -1,42 +1,33 @@
 package net.epopy.epopy.player.stats;
 
-import java.text.SimpleDateFormat;
-
 import net.epopy.epopy.utils.Config;
 
 public class CarStats {
 
-	private double record;
-	private Config config;
+	private int record;
+	private final Config config;
 	private int parties;
-	private long tempsLong;
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	private int temps;
 
-	public CarStats(Config config) {
+	public CarStats(final Config config) {
 		this.config = config;
-		record = Double.parseDouble(config.getData("car_record"));
+		record = Integer.parseInt(config.getData("car_record"));
 		parties = Integer.parseInt(config.getData("car_parties"));
 
-		tempsLong = Long.parseLong(config.getData("car_temps"));
+		temps = Integer.parseInt(config.getData("car_temps"));
 	}
 
-	public String getTemps() {
-		if (tempsLong <= 0)
-			return "00:00:00";
-		return timeFormat.format(tempsLong - 3600000);
+	public void addTemps(final int temps) {
+		this.temps += temps;
+		config.setValue("car_temps", temps + "");
 	}
 
-	public void addTemps(long start) {
-		tempsLong += start * 1000;
-		config.setValue("car_temps", String.valueOf(tempsLong));
+	public int getTemps() {
+		return temps;
 	}
 
-	public long getTempsLong() {
-		return tempsLong;
-	}
-
-	public double getObjectif() {
-		return 60.99;// 60 s
+	public int getObjectif() {
+		return 60;// 60 s
 	}
 	
 	public String getObjectifString() {
@@ -48,22 +39,16 @@ public class CarStats {
 	}
 
 	public void addPartie() {
-		parties = parties + 1;
-		config.setValue("car_parties", String.valueOf(parties));
+		parties++;
+		config.setValue("car_parties", parties + "");
 	}
 
-	public double getRecord() {
+	public int getRecord() {
 		return record;
 	}
-
-	public String getRecordString() {
-		if (record <= 0)
-			return "00:00:00";
-		return timeFormat.format(record * 1000 - 3600000);
-	}
-
-	public void setRecord(double time) {
+	
+	public void setRecord(final int time) {
 		record = time;
-		config.setValue("car_record", String.valueOf(record));
+		config.setValue("car_record", record + "");
 	}
 }

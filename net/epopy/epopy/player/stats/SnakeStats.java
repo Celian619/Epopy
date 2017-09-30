@@ -1,55 +1,51 @@
 package net.epopy.epopy.player.stats;
 
-import java.text.SimpleDateFormat;
-
 import net.epopy.epopy.utils.Config;
 
 public class SnakeStats {
-
+	
 	private int pts;
-	private Config config;
+	private final Config config;
 	private int parties;
-	private long tempsLong;
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");;
-
-	public SnakeStats(Config config) {
+	private int temps;
+	
+	public SnakeStats(final Config config) {
 		this.config = config;
 		pts = Integer.parseInt(config.getData("snake_pts"));
 		parties = Integer.parseInt(config.getData("snake_parties"));
-
-		tempsLong = Long.parseLong(config.getData("snake_temps"));
+		
+		temps = Integer.parseInt(config.getData("snake_temps"));
 	}
+	
+	public int getTemps() {
 
-	public String getTemps() {
-		if (tempsLong <= 0)
-			return "00:00:00";
-		return timeFormat.format(tempsLong - 3600000);
+		return temps;
 	}
-
-	public void addTemps(long start) {
-		tempsLong += start * 1000;
-		config.setValue("snake_temps", String.valueOf(tempsLong));
+	
+	public void addTemps(final int temps) {
+		this.temps += temps;
+		config.setValue("snake_temps", this.temps + "");
 	}
-
+	
 	public int getObjectif() {
 		return 100;
 	}
-
+	
 	public int getParties() {
 		return parties;
 	}
-
+	
 	public void addPartie() {
-		parties = parties + 1;
-		config.setValue("snake_parties", String.valueOf(parties));
+		parties++;
+		config.setValue("snake_parties", parties + "");
 	}
-
+	
 	public int getRecord() {
 		return pts;
 	}
-
-	public void setRecord(int pts) {
+	
+	public void setRecord(final int pts) {
 		this.pts = pts;
-		config.setValue("snake_pts", String.valueOf(pts));
+		config.setValue("snake_pts", pts + "");
 	}
 }

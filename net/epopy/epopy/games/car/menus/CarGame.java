@@ -59,7 +59,7 @@ public class CarGame extends AbstractGameMenu {
 	private double speed;
 	private int direction;
 	private boolean start;
-	private static Timer timer;
+	private static int timer;
 
 	private boolean contreSens;
 	private boolean addStats;
@@ -74,12 +74,11 @@ public class CarGame extends AbstractGameMenu {
 		Mouse.setGrabbed(true);
 		pauseScreen = addStats = win = contreSens = start = false;
 		creating = true;
-		direction = 0;
+		direction = timer = 0;
 		speed = 0.1;
-		timer = new Timer();
 		map = null;
 		locCar = new Location(middleWidth * cubeWidth - 17.5, middleHeight * cubeHeight + cubeHeight / 2);
-		
+
 		pointsInt = new LinkedList<Location>();//
 		waitingPoints = new LinkedList<Location>();
 		for (int x = middleWidth - 5; x < middleWidth + 5; x++) {
@@ -91,6 +90,10 @@ public class CarGame extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
+		if (!creating && !pauseScreen && pause.isFinish() && !win) {
+			timer++;
+		}
+
 		if (pause.isFinish() && !win) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -100,7 +103,6 @@ public class CarGame extends AbstractGameMenu {
 					Mouse.setGrabbed(true);
 				} else {
 					pauseScreen = true;
-					timer.pause();
 					Mouse.setGrabbed(false);
 				}
 				
@@ -134,7 +136,6 @@ public class CarGame extends AbstractGameMenu {
 		} else if (pause.isFinish()) {
 			if (!start) {
 				start = true;
-				timer.resume();
 			}
 			movePlayer();
 		}
@@ -168,18 +169,20 @@ public class CarGame extends AbstractGameMenu {
 
 			if (win) {
 				CarStats carStats = Main.getPlayer().getCarStats();
-				renderEchap(false, (int) timer.getTime() + " sec", timer.getTime() < carStats.getRecord() || carStats.getRecord() == 0);
+				String timeString = timer / 60 + " sec";
+				boolean record = timer / 60 < carStats.getRecord() || carStats.getRecord() == 0;
+				renderEchap(false, timeString, record);
 				if (!addStats) {
 					addStats = true;
-					if (timer.getTime() < carStats.getRecord() || carStats.getRecord() < 1)
-						carStats.setRecord((int) timer.getTime());
+					if (record)
+						carStats.setRecord(timer / 60);
 
 					if (carStats.getRecord() <= carStats.getObjectif()) {
 						if (Main.getPlayer().getLevel() <= GameList.CAR.getID())
 							Main.getPlayer().setLevel(GameList.CAR.getID() + 1);
 					}
 					carStats.addPartie();
-					carStats.addTemps((long) timer.getTime());
+					carStats.addTemps(timer / 60);
 				}
 				return;
 			} else if (pauseScreen) {
@@ -202,7 +205,7 @@ public class CarGame extends AbstractGameMenu {
 				if (pause.getTimePauseTotal() == 5) {
 
 					Textures.GAME_STARTING_BG.renderBackground();
-					
+
 					int x = 1093;
 					int y = 400;
 
@@ -227,7 +230,7 @@ public class CarGame extends AbstractGameMenu {
 			}
 
 			if (!pauseScreen && pause.isFinish())
-				ComponentsHelper.drawText((int) timer.getTime() + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 60);
+				ComponentsHelper.drawText(timer / 60 + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 60);
 
 		}
 
@@ -244,11 +247,11 @@ public class CarGame extends AbstractGameMenu {
 	 */
 	
 	private void movePlayer() {
-		if (Input.isKeyDown(CarOptions.KEY_RIGHT) && timer.getTime() > 0.1) {
+		if (Input.isKeyDown(CarOptions.KEY_RIGHT) && timer > 6) {
 			speed -= speed / 5 - 0.5;// freine dans les virage a grande vitesse
 			direction += 2 + speed;
 			if (direction > 360) direction -= 360;
-		} else if (Input.isKeyDown(CarOptions.KEY_LEFT) && timer.getTime() > 0.1) {
+		} else if (Input.isKeyDown(CarOptions.KEY_LEFT) && timer > 6) {
 			speed -= speed / 5 - 0.5;
 			direction -= 2 + speed;
 			if (direction < 0) direction += 360;
@@ -256,7 +259,7 @@ public class CarGame extends AbstractGameMenu {
 			speed += 0.2 / speed;
 		}
 
-		if (isLine() && timer.getTime() > 0.3 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
+		if (isLine() && timer > 18 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
 			if (direction > 270 || direction < 90)
 				win = true;
 			else {
@@ -298,51 +301,41 @@ public class CarGame extends AbstractGameMenu {
 	}
 	
 	private boolean isLine() {
-		
-		int x = (int) deplacedX();
-		int y = (int) deplacedY();
 
-		BufferedImage img = map.getBuffImage();
-		ColorModel cm = img.getColorModel();
-		boolean centre = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) == 0 && cm.getBlue(img.getRGB(x, y)) == 255;
+		int x = (int) locCar.getX();
+		int y = (int) locCar.getY();
 
-		x = (int) deplacedX(15);
-		y = (int) deplacedY(15);
+		boolean xT = x > middleWidth * cubeWidth - 16 && x < middleWidth * cubeWidth;
+		boolean yT = y > middleHeight * cubeHeight && y < (middleHeight + 1) * cubeHeight;
 
-		boolean avant = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) == 0 && cm.getBlue(img.getRGB(x, y)) == 255;
-
-		x = (int) (locCar.getX() + 18 * Math.cos(Math.toRadians(direction + 25)));
-		y = (int) (locCar.getY() + 18 * Math.sin(Math.toRadians(direction + 25)));
-
-		boolean droite = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) == 0 && cm.getBlue(img.getRGB(x, y)) == 255;
-		
-		x = (int) (locCar.getX() + 18 * Math.cos(Math.toRadians(direction - 25)));
-		y = (int) (locCar.getY() + 18 * Math.sin(Math.toRadians(direction - 25)));
-
-		boolean gauche = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) == 0 && cm.getBlue(img.getRGB(x, y)) == 255;
-
-		return centre || avant || droite || gauche;
+		return xT && yT;
 	}
-	
+
 	private boolean isCircuit() {
 		int x = (int) deplacedX();
 		int y = (int) deplacedY();
-
+		
 		BufferedImage img = map.getBuffImage();
 		ColorModel cm = img.getColorModel();
-
+		boolean centre = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+		
+		x = (int) deplacedX(15);
+		y = (int) deplacedY(15);
+		
+		boolean avant = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
+		
 		x = (int) (locCar.getX() + 18 * Math.cos(Math.toRadians(direction + 25)));
 		y = (int) (locCar.getY() + 18 * Math.sin(Math.toRadians(direction + 25)));
-
+		
 		boolean droite = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
-
+		
 		x = (int) (locCar.getX() + 18 * Math.cos(Math.toRadians(direction - 25)));
 		y = (int) (locCar.getY() + 18 * Math.sin(Math.toRadians(direction - 25)));
-
+		
 		boolean gauche = cm.getRed(img.getRGB(x, y)) + cm.getGreen(img.getRGB(x, y)) + cm.getBlue(img.getRGB(x, y)) >= 10;
-
-		return droite && gauche;
-
+		
+		return droite && gauche && centre && avant;
+		
 	}
 	
 	private void paintLiaisons(final List<Location> points) {

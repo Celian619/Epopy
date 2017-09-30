@@ -8,7 +8,6 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.Timer;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
@@ -40,18 +39,17 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 	private List<robot> robots;
 	private List<Location> locBalleP;
 	private List<Location> locBalleR;
-	private boolean stats = false;
-	private static Timer timer;
+	private boolean stats;
+	private static int timer;
 	private boolean pauseScreen;
-	private boolean paused;
 	
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.PLACEINVADER.isRunning())
 			Audios.PLACEINVADER.start(true).setVolume(0.2f);
 			
-		playerShot = gameOver = false;
-		shooted = scoreLevel = score = 0;
+		playerShot = gameOver = stats = false;
+		shooted = scoreLevel = score = timer = 0;
 		level = 1;
 		life = 3;
 		robots = new ArrayList<robot>();
@@ -59,18 +57,16 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		locBalleP = new ArrayList<Location>();
 		locBalleR = new ArrayList<Location>();
 		
-		timer = new Timer();
-		
 		xPlayer = defaultWidth / 2;
-		paused = true;
 		pause.startPause(5);
 		Mouse.setGrabbed(true);
 	}
 	
 	@Override
 	public void update() {
-		Timer.tick();
-		
+		if (!pauseScreen && pause.isFinish() && !gameOver) {
+			timer++;
+		}
 		if (pause.isFinish() && !gameOver) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -79,8 +75,6 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 					Mouse.setGrabbed(true);
 				} else {
 					pauseScreen = true;
-					timer.pause();
-					paused = true;
 					Mouse.setGrabbed(false);
 				}
 			}
@@ -100,16 +94,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 			}
 		}
 		
-		if (!pause.isFinish() || pauseScreen) {
-			timer.pause();
-			return;
-		}
-		
-		if (paused) {
-			timer.resume();
-			paused = false;
-		}
-		
+		if (!pause.isFinish() || pauseScreen) return;
+
 		if (life < 0) {
 			gameOver = true;
 			Mouse.setGrabbed(false);
@@ -209,7 +195,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 				stats = true;
 				PlaceInvaderStats placeInvaderStats = Main.getPlayer().getPlaceInvaderStats();
 				placeInvaderStats.addPartie();
-				placeInvaderStats.addTemps((long) timer.getTime());
+				placeInvaderStats.addTemps(timer / 60);
 
 				if (score > placeInvaderStats.getRecord()) {
 					placeInvaderStats.setRecord(score);
