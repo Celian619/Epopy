@@ -183,8 +183,8 @@ public class SnakeGame extends AbstractGameMenu {
 		
 		for (Location loc : posSnake) {
 			
-			int distance = 3;
-			if (n < 7) {
+			int distance = 2;
+			if (n < 10) {
 				distance = 0;
 				n++;
 			}

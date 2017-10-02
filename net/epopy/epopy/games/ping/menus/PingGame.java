@@ -72,7 +72,7 @@ public class PingGame extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		if (!pauseScreen && !gameOver) {
+		if (!pauseScreen && !gameOver && pause.isFinish()) {
 			timer++;
 		}
 		
@@ -155,7 +155,7 @@ public class PingGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 		Textures.GAME_PING_LEVEL_BG.renderBackground();
-		if (!gameOver && !pauseScreen) {
+		if (!gameOver && !pauseScreen && pause.isFinish()) {
 			
 			boolean record = timer / (double) 60 > Main.getPlayer().getPingStats().getRecord();
 			
@@ -271,7 +271,15 @@ public class PingGame extends AbstractGameMenu {
 			direction = 540 - direction;
 			
 			direction += (ballPos.getY() - yPlayer - paddleHeight / 2) / 2;
+			
 			direction += new Random().nextGaussian();// - 1 ou + 1
+			
+			if (direction > 90 && direction < 100) {
+				direction = 88;
+			} else if (direction < 270) {
+				direction = 272;
+			}
+			
 			if (direction > 360)
 				direction -= 360;
 				
