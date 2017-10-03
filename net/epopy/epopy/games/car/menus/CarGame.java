@@ -145,6 +145,7 @@ public class CarGame extends AbstractGameMenu {
 	
 	@Override
 	public void render() {
+		ComponentsHelper.drawQuad(0, 0, defaultWidth, defaultHeight);
 
 		if (creating) {
 			List<Location> pointsExt = new LinkedList<Location>();// exterieur
@@ -170,7 +171,7 @@ public class CarGame extends AbstractGameMenu {
 			if (win) {
 				CarStats carStats = Main.getPlayer().getCarStats();
 				String timeString = timer / 60 + " sec";
-				boolean record = timer / 60 < carStats.getRecord() || carStats.getRecord() == 0;
+				boolean record = timer / 60 <= carStats.getRecord() || carStats.getRecord() == 0;
 				renderEchap(false, timeString, record);
 				if (!addStats) {
 					addStats = true;
