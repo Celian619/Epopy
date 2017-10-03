@@ -169,7 +169,7 @@ public class GameMenu extends AbstractGameMenu {
 			else w2Jouer = 280;
 		}
 		
-		if (jouer.isClicked() && !name.equals("? ? ? ?")) {
+		if (jouer.isClicked()) {
 			showStats = false;
 			showOptions = false;
 			
@@ -189,9 +189,6 @@ public class GameMenu extends AbstractGameMenu {
 					game.onEnable();
 					if (game.getMenuOptions() != null)
 						game.getMenuOptions().onEnable();
-				} else {
-					name = "? ? ? ?";
-					game = null;
 				}
 			}
 		}
@@ -325,6 +322,7 @@ public class GameMenu extends AbstractGameMenu {
 			droite.render();
 		ComponentsHelper.drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
 		NotificationGui.render();
+		showCookies();
 	}
 
 	public String changeTpsTxt(int seconds) {
@@ -341,5 +339,35 @@ public class GameMenu extends AbstractGameMenu {
 		
 		return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + +seconds;
 	}
-	
+
+	private final int cookie = 1;
+
+	public void showCookies() {
+		ComponentsHelper.drawText("Tu peux manger des cookies en attendant la prochaine MAJ !", 10, defaultHeight, PositionWidth.GAUCHE, PositionHeight.BAS, 30);
+		switch (cookie) {
+			case 1:
+			ComponentsHelper.renderTexture(Textures.COOKIE_1, 60, defaultHeight - 200, 90, 85);
+				break;
+
+			case 2:
+			ComponentsHelper.renderTexture(Textures.COOKIE_2, 60, defaultHeight - 200, 90, 85);
+				break;
+
+			case 3:
+			ComponentsHelper.renderTexture(Textures.COOKIE_3, 60, defaultHeight - 200, 90, 85);
+				break;
+
+			case 4:
+			ComponentsHelper.renderTexture(Textures.COOKIE_4, 60, defaultHeight - 200, 90, 85);
+				break;
+
+			case 5:
+			ComponentsHelper.renderTexture(Textures.COOKIE_5, 60, defaultHeight - 200, 90, 85);
+				break;
+
+			default:
+				break;
+		}
+		
+	}
 }

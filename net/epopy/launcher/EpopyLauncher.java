@@ -79,9 +79,9 @@ public class EpopyLauncher {
 			}
 			in.close();
 		} catch (MalformedURLException e) {
-			URL_JAR = "No connetion";
+			URL_JAR = "No connection";
 		} catch (IOException e) {
-			URL_JAR = "No connetion";
+			URL_JAR = "No connection";
 		}
 		
 		File jar = new File(PATH_FOLDER + "/epopy.jar");

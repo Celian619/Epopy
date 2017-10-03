@@ -15,7 +15,12 @@ public class CarStats {
 		record = (int) Double.parseDouble(config.getData("car_record"));
 		parties = Integer.parseInt(config.getData("car_parties"));
 		
-		temps = (int) Long.parseLong(config.getData("car_temps"));
+		try {
+			temps = Integer.parseInt(config.getData("car_temps"));
+		} catch (Exception e) {
+			temps = (int) (Long.parseLong(config.getData("car_temps")) / 1000);
+		}
+
 	}
 	
 	public void addTemps(final int temps) {

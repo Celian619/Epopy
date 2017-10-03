@@ -14,11 +14,14 @@ public class TankStats {
 		record = Integer.parseInt(config.getData("tank_record"));
 		parties = Integer.parseInt(config.getData("tank_parties"));
 		
-		temps = (int) Long.parseLong(config.getData("tank_temps"));
+		try {
+			temps = Integer.parseInt(config.getData("tank_temps"));
+		} catch (Exception e) {
+			temps = (int) (Long.parseLong(config.getData("tank_temps")) / 1000);
+		}
 	}
 	
 	public int getTemps() {
-
 		return temps;
 	}
 	
