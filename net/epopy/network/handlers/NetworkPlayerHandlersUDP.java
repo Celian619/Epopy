@@ -25,15 +25,15 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 			socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
 			new Thread(this, "udp-thread").start();
 		} catch (SocketException e) {
-			e.printStackTrace();
 			System.out.println("SocketException");
 			System.out.println("Local port: " + networkPlayerHandlers.getSocket().getLocalPort());
 			System.out.println(port);
-		} catch (UnknownHostException e) {
 			e.printStackTrace();
+		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException");
 			System.out.println("Local port: " + networkPlayerHandlers.getSocket().getLocalPort());
 			System.out.println(port);
+			e.printStackTrace();
 		}
 	}
 
