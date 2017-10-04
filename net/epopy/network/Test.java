@@ -36,69 +36,14 @@ public class Test implements Runnable {
 
 	public static void main(final String[] args) throws IOException {
 		
-		// downloadFileFromUrlWithJavaIO(fileName, "https://puu.sh/xrmge/64e30ae6ed.txt");
-		TrustManager[] trustAllCerts = new TrustManager[] {
-				new X509TrustManager() {
-					@Override
-					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-						return null;
-					}
+		long startTime = System.nanoTime();
+		for (int k = 0; k < 1000000; ++k)
+			System.out.println(k);
+		long endTime = System.nanoTime();
 
-					@Override
-					public void checkClientTrusted(
-							final java.security.cert.X509Certificate[] certs, final String authType) {
-					}
+		long duration = (endTime - startTime);
+		System.out.println("time" + duration/1000000000);
 
-					@Override
-					public void checkServerTrusted(
-							final java.security.cert.X509Certificate[] certs, final String authType) {
-					}
-				}
-		};
-
-		// Activate the new trust manager
-		try {
-			SSLContext sc = SSLContext.getInstance("SSL");
-			sc.init(null, trustAllCerts, new java.security.SecureRandom());
-			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-		} catch (Exception e) {
-		}
-
-		// And as before now you can use URL and URLConnection
-		URL url = new URL("https://www.catupload.com/files/a004c475919feb623fb60d9955c6b342.txt");
-		URLConnection connection = url.openConnection();
-		InputStream is = connection.getInputStream();
-
-		int length = connection.getContentLength();
-		System.out.println("start: " + is.available());
-
-		// On prépare le tableau de bits pour les données du fichier
-		byte[] data = new byte[length];
-
-		// On déclare les variables pour se retrouver dans la lecture du fichier
-		int currentBit = 0;
-		int deplacement = 0;
-
-		// Tant que l'on n'est pas à la fin du fichier, on récupère des données
-		while (deplacement < length) {
-			currentBit = is.read(data, deplacement, data.length - deplacement);
-			if (currentBit == -1) break;
-			deplacement += currentBit;
-
-		}
-
-		// Si on n'est pas arrivé à la fin du fichier, on lance une exception
-		if (deplacement != length) { throw new IOException("Le fichier n'a pas été lu en entier (seulement "
-				+ deplacement + " sur " + length + ")"); }
-		// On crée un stream sortant vers la destination
-
-		FileOutputStream destinationFile = new FileOutputStream("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
-
-		destinationFile.write(data);
-
-		destinationFile.flush();
-		destinationFile.close();
-		
 	}
 
 	public static void downloadFileFromUrlWithJavaIO(final String fileName, final String fileUrl)

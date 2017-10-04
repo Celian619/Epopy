@@ -63,7 +63,7 @@ public class RegisterPlayerNetworkMenu {
 		}
 
 		boolean initPlayer = false;
-		
+
 		while (true) {
 			view2D();
 
@@ -133,30 +133,50 @@ public class RegisterPlayerNetworkMenu {
 			if (keepUser)
 				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
 
+			//anti-spam
+			int timeStamp = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			if(timeStamp < 10) 
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (10 - timeStamp) + " seconde" + ((10 - timeStamp) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			else {
+				connexionButton.setOver(true);
+				connexionButton.textColor = new float[]{1, 1, 1, 1};
+			}
 			if (connexionButton.isClicked() || Input.getKeyDown(28)) {
 				if (keepUser && username.getText().length() > 0 && mdp.getText().length() > 0) {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-				ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
-				NotificationGui.render();
-				Display.update();
 
-				player = new NetworkPlayer(username.getText(), mdp.getText());
-				networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
+				if(timeStamp > 10) {
+					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
+					NotificationGui.render();
+					Display.update();
+
+					player = new NetworkPlayer(username.getText(), mdp.getText());
+					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
+				}
 			}
 
 			if (networkStatus != null) {
 				if (networkStatus.equals(NetworkStatus.USER_VALID)) {
+					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					connexionButton.setOver(false);
+					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
+
 					initPlayer = true;
 					break;
 				} else if (networkStatus.equals(NetworkStatus.USER_WAITING_CONFIRMATION)) {
 					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 				} else {
+					//anti-spam
+					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					connexionButton.setOver(false);
+					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
+
+
 					String message = "";
 					String infos = "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )";
-
 					if (networkStatus.equals(NetworkStatus.USER_NO_VALID))
 						message = "Identifiant incorrect !";
 					else if (networkStatus.equals(NetworkStatus.SERVER_OFFLINE))

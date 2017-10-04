@@ -42,7 +42,8 @@ public class ButtonGui {
 	public float[] textColor = new float[] { 1, 1, 1, 1 };
 	private boolean changeColor = true;
 	private FontUtils font;
-
+	private boolean canOver = true;
+	
 	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
 		isClicked = false;
 
@@ -100,6 +101,10 @@ public class ButtonGui {
 		}
 		
 		return false;
+	}
+	
+	public void setOver(boolean over) {
+		this.canOver = over;
 	}
 
 	public void update() {
@@ -225,14 +230,14 @@ public class ButtonGui {
 			glBindTexture(GL_TEXTURE_2D, 0);
 		} else {
 			if (changeColor) {
-				if (isOn)
+				if (isOn && canOver)
 					textColor[3] = 1;
 				else
 					textColor[3] = 0.6f;
 				ComponentsHelper.drawText(text, xx, yy, isOn ? (int) (textSize * 1.02) : textSize, textColor);
 
 			} else {
-				if (isOn)
+				if (isOn && canOver)
 					textColor[3] = 0.7f;
 				else
 					textColor[3] = 1;

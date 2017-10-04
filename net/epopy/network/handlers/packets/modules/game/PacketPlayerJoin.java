@@ -34,10 +34,11 @@ public class PacketPlayerJoin extends PacketAbstract {
 				float[] color = new float[]{dataBuffer.getFloat(),  dataBuffer.getFloat(), dataBuffer.getFloat(), 1};
 				game.addTeam(teamName, new Team(teamName, color, new Location3D(x, y, z, yaw, pitch)));
 				System.out.println("[Server - Team] Register team: " + teamName);
-			}
+			} else 	System.out.println("[Server - Team] Team alreay register: " + teamName);
 		}
-		
-		if(game.containsTeam(playerTeamName) && !game.containsPlayer(playerTeamName)) {
+		boolean ok = false;
+		if(game.containsTeam(playerTeamName) && !game.containsPlayer(playerTeamName) && !ok) {
+			ok = true;
 			game.addPlayer(playerName, playerTeamName);
 			System.out.println("[Server - Team] " + playerName + " join -> " + playerTeamName);
 		}
