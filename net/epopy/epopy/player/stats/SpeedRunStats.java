@@ -13,17 +13,15 @@ public class SpeedRunStats {
 		this.config = config;
 		parties = Integer.parseInt(config.getData("speedrun_parties"));
 
-		try {
-			record = Integer.parseInt(config.getData("speedrun_record"));
-		} catch (Exception e) {
-			record = (int) Long.parseLong(config.getData("speedrun_record"));
+		if (Integer.parseInt(config.getData("configUpgrade", "0")) == 0) {
+			config.setValue("speedrun_record", Integer.parseInt(config.getData("speedrun_record")) / 1000 + "");
+			config.setValue("speedrun_temps", Integer.parseInt(config.getData("speedrun_temps")) / 1000 + "");
 		}
-		
-		try {
-			temps = Integer.parseInt(config.getData("speedrun_temps"));
-		} catch (Exception e) {
-			temps = (int) (Long.parseLong(config.getData("speedrun_temps")) / 1000);
-		}
+
+		record = Integer.parseInt(config.getData("speedrun_record"));
+
+		temps = Integer.parseInt(config.getData("speedrun_temps"));
+
 	}
 
 	public int getTemps() {

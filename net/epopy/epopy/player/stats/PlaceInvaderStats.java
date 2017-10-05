@@ -14,11 +14,11 @@ public class PlaceInvaderStats {
 		pts = Integer.parseInt(config.getData("plainv_pts"));
 		parties = Integer.parseInt(config.getData("plainv_parties"));
 		
-		try {
-			temps = Integer.parseInt(config.getData("plainv_temps"));
-		} catch (Exception e) {
-			temps = (int) (Long.parseLong(config.getData("plainv_temps")) / 1000);
-		}
+		if (Integer.parseInt(config.getData("configUpgrade", "0")) == 0)
+			config.setValue("plainv_temps", Integer.parseInt(config.getData("plainv_temps")) / 1000 + "");
+			
+		temps = Integer.parseInt(config.getData("plainv_temps"));
+
 	}
 
 	public int getTemps() {

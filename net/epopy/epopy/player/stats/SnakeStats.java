@@ -14,11 +14,12 @@ public class SnakeStats {
 		pts = Integer.parseInt(config.getData("snake_pts"));
 		parties = Integer.parseInt(config.getData("snake_parties"));
 		
-		try {
-			temps = Integer.parseInt(config.getData("snake_temps"));
-		} catch (Exception e) {
-			temps = (int) (Long.parseLong(config.getData("snake_temps")) / 1000);
+		if (Integer.parseInt(config.getData("configUpgrade", "0")) == 0) {
+			config.setValue("snake_temps", Integer.parseInt(config.getData("snake_temps")) / 1000 + "");
 		}
+		
+		temps = Integer.parseInt(config.getData("snake_temps"));
+
 	}
 	
 	public int getTemps() {

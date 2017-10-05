@@ -1,8 +1,5 @@
 package net.epopy.epopy.games.gestion.menus;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
@@ -22,7 +19,6 @@ import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
-import net.epopy.epopy.utils.Input;
 
 public class GameMenu extends AbstractGameMenu {
 
@@ -217,17 +213,6 @@ public class GameMenu extends AbstractGameMenu {
 			}
 		}
 
-		if (Input.getButtonDown(0) && GameList.values().length == GameList.valueOf(game.getName().toUpperCase()).getID()) {
-			int x = 60;
-			int y = defaultHeight - 150;
-			int mx = (int) (Mouse.getX() / (double) Display.getWidth() * defaultWidth);
-			int my = (int) ((Display.getHeight() - Mouse.getY()) / (double) Display.getHeight() * defaultHeight);
-			int x2 = x + 90;
-			int y2 = y + 85;
-			if (mx >= x && mx < x2 && my >= y && my < y2) {
-				cookie++;
-			}
-		}
 	}
 
 	@Override
@@ -239,21 +224,21 @@ public class GameMenu extends AbstractGameMenu {
 			if (game.getMenuOptions() != null)
 				game.getMenuOptions().onEnable();
 		}
-
+		
 		Textures.GAME_MENU_BG.renderBackground();
-
+		
 		if (sound != null) {
 			sound.render();
 			sound_moins.render();
 			sound_plus.render();
 			ComponentsHelper.drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
 		}
-
+		
 		if (showStats) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
 			ComponentsHelper.drawText("Statistiques", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
-
+			
 			if (game != null) {
 				String temps = "";
 				String record = "";
@@ -263,7 +248,7 @@ public class GameMenu extends AbstractGameMenu {
 				if (GameList.SNAKE.toString().toLowerCase().equals(nom)) {
 					SnakeStats snakeStats = p.getSnakeStats();
 					temps = changeTpsTxt(snakeStats.getTemps());
-					record = snakeStats.getRecord() + " pts";
+					record = snakeStats.getRecord() + " point" + (snakeStats.getRecord() <= 1 ? "" : "s");
 					parties = snakeStats.getParties() + "";
 				} else if (GameList.PING.toString().toLowerCase().equals(nom)) {
 					PingStats pingStats = p.getPingStats();
@@ -283,7 +268,7 @@ public class GameMenu extends AbstractGameMenu {
 				} else if (GameList.PLACEINVADER.toString().toLowerCase().equals(nom)) {
 					PlaceInvaderStats placeInvaderStats = p.getPlaceInvaderStats();
 					temps = changeTpsTxt(placeInvaderStats.getTemps());
-					record = placeInvaderStats.getRecord() + " points";
+					record = placeInvaderStats.getRecord() + " point" + (placeInvaderStats.getRecord() <= 1 ? "" : "s");
 					parties = placeInvaderStats.getParties() + "";
 				} else if (GameList.SPEEDRUN.toString().toLowerCase().equals(nom)) {
 					SpeedRunStats speedRunStats = p.getSpeedRunStats();
@@ -301,12 +286,12 @@ public class GameMenu extends AbstractGameMenu {
 				float lastXRecord = ComponentsHelper.drawText("Record", 856 - 5, 718, 30, new float[] { 1, 1, 1, 1 });
 				ComponentsHelper.drawText(record, lastXRecord + 30, ComponentsHelper.getResponsiveY(718), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 			}
-
+			
 		} else if (showOptions) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
 			ComponentsHelper.drawText("Options", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
-
+			
 			if (game != null && game.getMenuOptions() != null)
 				game.getMenuOptions().render();
 		} else {
@@ -324,29 +309,25 @@ public class GameMenu extends AbstractGameMenu {
 			ComponentsHelper.drawQuad(1297 + 18, 930 - 10, w1Jouer == 280 ? 287 : w1Jouer, 2);
 			// Haut
 			ComponentsHelper.drawQuad(1768 + 18, 835 - 10, w2Jouer == 280 ? -287 : -w2Jouer, 2);
-
+			
 			jouer.render();
 			stats.render();
 			options.render();
 		}
-
+		
 		retour.render();
 		
 		if (GameList.valueOf(game.getName().toUpperCase()).getID() - 1 != 0)
 			gauche.render();
-
+			
 		if (Main.getPlayer().getLevel() > GameList.valueOf(game.getName().toUpperCase()).getID()) {
 			droite.render();
-
+			
 		}
 		
-		if (GameList.values().length == GameList.valueOf(game.getName().toUpperCase()).getID()) {
-			showCookies();
-		}
-
 		ComponentsHelper.drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
 		NotificationGui.render();
-
+		
 	}
 	
 	public String changeTpsTxt(int seconds) {
@@ -363,36 +344,5 @@ public class GameMenu extends AbstractGameMenu {
 
 		return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + +seconds;
 	}
-	
-	private int cookie = 1;
-	
-	public void showCookies() {
-		ComponentsHelper.drawText("Un petit cookie en attendant la prochaine MAJ  ?", 10, defaultHeight, PositionWidth.GAUCHE, PositionHeight.BAS, 30);
-		if (cookie > 5) cookie = 1;
-		switch (cookie) {
-			case 1:
-			ComponentsHelper.renderTexture(Textures.COOKIE_1, 60, defaultHeight - 150, 90, 85);
-				break;
-				
-			case 2:
-			ComponentsHelper.renderTexture(Textures.COOKIE_2, 60, defaultHeight - 150, 90, 85);
-				break;
-				
-			case 3:
-			ComponentsHelper.renderTexture(Textures.COOKIE_3, 60, defaultHeight - 150, 90, 85);
-				break;
-				
-			case 4:
-			ComponentsHelper.renderTexture(Textures.COOKIE_4, 60, defaultHeight - 150, 90, 85);
-				break;
-				
-			case 5:
-			ComponentsHelper.renderTexture(Textures.COOKIE_5, 60, defaultHeight - 150, 90, 85);
-				break;
-				
-			default:
-				break;
-		}
 
-	}
 }

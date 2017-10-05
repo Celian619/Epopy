@@ -11,16 +11,18 @@ public class CarStats {
 	
 	public CarStats(final Config config) {
 		this.config = config;
-		// TODO modifier les fichiers stats en Integer.parseInt sans cast à l'ouverture
-		record = (int) Double.parseDouble(config.getData("car_record"));
+
 		parties = Integer.parseInt(config.getData("car_parties"));
 		
-		try {
-			temps = Integer.parseInt(config.getData("car_temps"));
-		} catch (Exception e) {
-			temps = (int) (Long.parseLong(config.getData("car_temps")) / 1000);
+		if (Integer.parseInt(config.getData("configUpgrade", "0")) == 0) {// TODO enlever ça
+			config.setValue("car_record", Integer.parseInt(config.getData("car_record")) / 1000 + "");
+			config.setValue("car_temps", Integer.parseInt(config.getData("car_temps")) / 1000 + "");
 		}
+		
+		temps = Integer.parseInt(config.getData("car_temps"));
 
+		record = Integer.parseInt(config.getData("car_record"));
+		
 	}
 	
 	public void addTemps(final int temps) {
