@@ -27,77 +27,84 @@ import org.lwjgl.util.glu.GLU;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import net.epopy.epopy.Main;
+import net.epopy.epopy.utils.Config;
 import net.epopy.epopy.utils.Input;
 
 public class DisplayManager {
-
+	
 	public DisplayManager(final int width, final int height, final String title, boolean fullscreen, final boolean lastDisplaymode) {
-
+		
 		try {
 			if (lastDisplaymode) fullscreen = Main.getPlayer().getLastDisplayWasFullScreen();
-
+			
 			if (!fullscreen)
 				Display.setDisplayMode(new DisplayMode(width, height));
 			else {
 				Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
 				Display.setFullscreen(true);
 			}
-
+			
 			Display.setTitle(title);
-
+			
 			String path = "/net/epopy/epopy/display/res/main/";
 			Display.setIcon(new ByteBuffer[] {
 					getByteBuffer(getClass().getResource(path + "logo16.png")),
 					getByteBuffer(getClass().getResource(path + "logo32.png")),
 					getByteBuffer(getClass().getResource(path + "logo32.png")),
 			});
-
-			Display.create();
 			
+			Display.create();
+
 			Display.setVSyncEnabled(true);
 			Display.setResizable(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		Main.setDisplayManager(this);
-	}
 
+		Config c = Main.getPlayer().getConfig();
+		int x = Integer.parseInt(c.getData("display_x", 50 + ""));
+		int y = Integer.parseInt(c.getData("display_y", 50 + ""));
+
+		Display.setLocation(x, y);
+	}
+	
 	public void render() {
 		view2D();
-
+		
 		if (Main.getGameManager() != null)
 			Main.getGameManager().render();
 		Input.update();
 		Display.update();
 		Display.sync(60);
 	}
-
+	
 	public void update() {
 		if (Main.getGameManager() != null)
 			Main.getGameManager().update();
 	}
-
+	
 	private void view2D() {
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-
+		
 		glMatrixMode(GL_PROJECTION);
-
+		
 		glLoadIdentity();
-
+		
 		GLU.gluOrtho2D(0, Display.getWidth(), Display.getHeight(), 0);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
+		
 		glEnable(GL_TEXTURE_2D);
-
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		
 	}
-
+	
 	private static ByteBuffer getByteBuffer(final URL url) {
 		InputStream is = null;
 		try {
@@ -118,5 +125,5 @@ public class DisplayManager {
 		}
 		return null;
 	}
-
+	
 }
