@@ -153,18 +153,6 @@ public class Textures {
 	public static Textures SPEEDRUN_OTHERMENSOL1 = load("games/speedrun/other-sol-1");
 	public static Textures SPEEDRUN_OTHERMENSOL2 = load("games/speedrun/other-sol-2");
 	
-	// deco
-	public static Textures DECO_BG = load("games/deco/bg");
-	public static Textures DECO_LEVEL_BG = load("games/deco/levelbg");
-	public static Textures DECO_CABLE = load("games/deco/cable");
-
-	// last
-	public static Textures COOKIE_1 = load("games/last/cookie_1");
-	public static Textures COOKIE_2 = load("games/last/cookie_2");
-	public static Textures COOKIE_3 = load("games/last/cookie_3");
-	public static Textures COOKIE_4 = load("games/last/cookie_4");
-	public static Textures COOKIE_5 = load("games/last/cookie_5");
-
 	// general
 	public static Textures GAME_BACKGROUND_80OPACITY = load("games/noir_80opacity");
 	public static Textures GAME_MENU_USERS_RETOUR_OFF = load("games/menu/users/retour_off");

@@ -9,160 +9,165 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import net.epopy.epopy.Main;
+
 public class Input {
 
-	public static final int KEYBOARD_SIZE =  Keyboard.getKeyCount();
+	public static final int KEYBOARD_SIZE = Keyboard.getKeyCount();
 	public static final int MOUSE_SIZE = Mouse.getButtonCount();
 
 	private static boolean[] lastKeys = new boolean[KEYBOARD_SIZE];
 	private static boolean[] lastButtons = new boolean[MOUSE_SIZE];
 
 	public static void update() {
-		for(int i = 0; i < KEYBOARD_SIZE; i++)
+		for (int i = 0; i < KEYBOARD_SIZE; i++)
 			lastKeys[i] = isKeyDown(i);
 
-		for(int i = 0; i < MOUSE_SIZE; i++)
+		for (int i = 0; i < MOUSE_SIZE; i++)
 			lastButtons[i] = isButtonDown(i);
 	}
 
-	public static boolean isKeyDown(int key) {
+	public static boolean isKeyDown(final int key) {
 		return Keyboard.isKeyDown(key);
 	}
 
-	public static boolean getKeyDown(int key) {
+	public static boolean getKeyDown(final int key) {
 		return isKeyDown(key) && !lastKeys[key];
 	}
 
-	public static boolean getKeyUp(int key) {
+	public static boolean getKeyUp(final int key) {
 		return !isKeyDown(key) && lastKeys[key];
 	}
 
-	public static boolean isButtonDown(int button) {
+	public static boolean isButtonDown(final int button) {
 		return Mouse.isButtonDown(button);
 	}
 
-	public static boolean getButtonDown(int button) {
+	public static boolean getButtonDown(final int button) {
 		return isButtonDown(button) && !lastButtons[button];
 	}
 
-	public static boolean getButtonUp(int button) {
+	public static boolean getButtonUp(final int button) {
 		return !isButtonDown(button) && lastButtons[button];
 	}
 
 	private static List<Integer> letters = null;
 	private static List<Integer> lettersUTF8 = null;
 
-	public static String getKeyName(int key) {
-		if(Keyboard.getKeyName(key).equals("DOWN"))
+	public static String getKeyName(final int key) {
+		if (Keyboard.getKeyName(key).equals("DOWN"))
 			return "↓";
-		else if(Keyboard.getKeyName(key).equals("UP"))
+		else if (Keyboard.getKeyName(key).equals("UP"))
 			return "↑";
-		else if(Keyboard.getKeyName(key).equals("RIGHT"))
+		else if (Keyboard.getKeyName(key).equals("RIGHT"))
 			return "→";
-		else if(Keyboard.getKeyName(key).equals("LEFT"))
+		else if (Keyboard.getKeyName(key).equals("LEFT"))
 			return "←";
 		return Keyboard.getKeyName(key);
 	}
 
-	public static String getUTF8(Boolean isMaj, int i) {
-		if(!isMaj) { 
-			if(2 == i) 
+	public static String getUTF8(final Boolean isMaj, final int i) {
+		if (!isMaj) {
+			if (2 == i)
 				return "&";
-			if(3 == i) 
+			if (3 == i)
 				return Keyboard.isKeyDown(29) ? "~" : "é";
-			if(4 == i) 
+			if (4 == i)
 				return Keyboard.isKeyDown(29) ? "#" : "\"";
-			if(5 == i) 
+			if (5 == i)
 				return Keyboard.isKeyDown(29) ? "{" : "'";
-			if(6 == i) 
+			if (6 == i)
 				return Keyboard.isKeyDown(29) ? "[" : "(";
-			if(7 == i) 
+			if (7 == i)
 				return Keyboard.isKeyDown(29) ? "|" : "-";
-			if(8 == i) 
+			if (8 == i)
 				return Keyboard.isKeyDown(29) ? "`" : "è";
-			if(9 == i) 
+			if (9 == i)
 				return Keyboard.isKeyDown(29) ? "\\" : "_";
-			if(10 == i) 
+			if (10 == i)
 				return Keyboard.isKeyDown(29) ? "^" : "ç";
-			if(11 == i) 
+			if (11 == i)
 				return Keyboard.isKeyDown(29) ? "@" : "à";
-			if(26 == i) 
+			if (26 == i)
 				return Keyboard.isKeyDown(29) ? "]" : ")";
-			if(13 == i) 
+			if (13 == i)
 				return Keyboard.isKeyDown(29) ? "}" : "=";
-			if(27 == i) 
+			if (27 == i)
 				return "^";
-			if(39 == i) 
+			if (39 == i)
 				return Keyboard.isKeyDown(29) ? "¤" : "$";
-			if(41 == i) 
+			if (41 == i)
 				return "ù";
-			if(43 == i) 
+			if (43 == i)
 				return "*";
-		} else  {
-			if(26 == i) 
+		} else {
+			if (26 == i)
 				return "°";
-			if(13 == i) 
+			if (13 == i)
 				return "+";
-			if(27 == i) 
+			if (27 == i)
 				return "¨";
-			if(39 == i) 
+			if (39 == i)
 				return "£";
-			if(41 == i) 
+			if (41 == i)
 				return "%";
-			if(43 == i) 
+			if (43 == i)
 				return "*";
 		}
 		return Keyboard.getKeyName(i);
 	}
 
+	public static String getNumpadInput(final Boolean isMaj, final boolean utf8, final int i) {
 
-	public static String getNumpadInput(Boolean isMaj, boolean utf8, int i) {
-
-		if(Keyboard.KEY_NUMPAD0 == i) 
+		if (Keyboard.KEY_NUMPAD0 == i)
 			return "0";
-		if(Keyboard.KEY_NUMPAD1 == i) 
+		if (Keyboard.KEY_NUMPAD1 == i)
 			return "1";
-		if(Keyboard.KEY_NUMPAD2 == i) 
+		if (Keyboard.KEY_NUMPAD2 == i)
 			return "2";
-		if(Keyboard.KEY_NUMPAD3 == i) 
+		if (Keyboard.KEY_NUMPAD3 == i)
 			return "3";
-		if(Keyboard.KEY_NUMPAD4 == i) 
+		if (Keyboard.KEY_NUMPAD4 == i)
 			return "4";
-		if(Keyboard.KEY_NUMPAD5 == i) 
+		if (Keyboard.KEY_NUMPAD5 == i)
 			return "5";
-		if(Keyboard.KEY_NUMPAD6 == i) 
+		if (Keyboard.KEY_NUMPAD6 == i)
 			return "6";
-		if(Keyboard.KEY_NUMPAD7 == i) 
+		if (Keyboard.KEY_NUMPAD7 == i)
 			return "7";
-		if(Keyboard.KEY_NUMPAD8 == i) 
+		if (Keyboard.KEY_NUMPAD8 == i)
 			return "8";
-		if(Keyboard.KEY_NUMPAD9 == i) 
+		if (Keyboard.KEY_NUMPAD9 == i)
 			return "9";
 
-
-		//return getUTF8(isMaj, i); 
+		// return getUTF8(isMaj, i);
 		return utf8 ? getUTF8(isMaj, i) : Keyboard.getKeyName(i);
 	}
 
-	public static void checkInputFullscreen() {		
+	public static void checkInputFullscreen() {
 		if (Input.isKeyDown(Keyboard.KEY_F11)) {
 			try {
 				if (Display.isFullscreen()) {
-					Display.setDisplayMode(new DisplayMode((int)(1920/1.5), (int)(1080/1.5)));
+					Config c = Main.getPlayer().getConfig();
+					int width = Integer.parseInt(c.getData("display_width"));
+					int height = Integer.parseInt(c.getData("display_height"));
+					Display.setDisplayMode(new DisplayMode(width, height));
 					Display.setFullscreen(false);
 				} else {
 					Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
+					
 					Display.setFullscreen(true);
 				}
 			} catch (LWJGLException e) {
 				e.printStackTrace();
 			}
 		}
-	}		
+	}
+
 	public static List<Integer> getLettersUTF8() {
-		if(lettersUTF8 != null && letters != null)
+		if (lettersUTF8 != null && letters != null)
 			return lettersUTF8;
-		if(letters == null)
+		if (letters == null)
 			getLetters();
 		lettersUTF8 = new LinkedList<>();
 		lettersUTF8.add(52);
@@ -176,8 +181,9 @@ public class Input {
 		lettersUTF8.addAll(letters);
 		return lettersUTF8;
 	}
+
 	public static List<Integer> getLetters() {
-		if(letters != null)
+		if (letters != null)
 			return letters;
 		letters = new LinkedList<>();
 		letters.add(Keyboard.KEY_A);
@@ -228,17 +234,11 @@ public class Input {
 		letters.add(Keyboard.KEY_NUMPAD9);
 		letters.add(11);
 
-
 		/*
-		letters.add(52);
-
-		letters.add(83);
-		 letters.add(26);
-		 letters.add(13);
-		letters.add(27);
-		letters.add(39);
-		letters.add(41);
-		letters.add(43);**/
+		 * letters.add(52);
+		 *
+		 * letters.add(83); letters.add(26); letters.add(13); letters.add(27); letters.add(39); letters.add(41); letters.add(43);
+		 **/
 		return letters;
 	}
 }

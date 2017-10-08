@@ -44,6 +44,7 @@ public class Main {
 	
 	private static void loop() {
 		while (!Display.isCloseRequested()) {
+			
 			if (!Display.isVisible()) {
 
 				Display.update();
@@ -89,6 +90,7 @@ public class Main {
 		c.setValue("display_x", Display.getX() + "");
 		c.setValue("display_y", Display.getY() + "");
 		c.setValue("display_fullscreen", Display.isFullscreen() + "");
+		
 		Display.destroy();
 		System.exit(0);
 	}
