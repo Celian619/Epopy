@@ -37,7 +37,7 @@ public class PacketGetIPServers {
 		
 		try {
 			Socket socket = new Socket();
-			socket.connect(new InetSocketAddress(MANAGER_IP, MANAGER_PORT), 1000);
+			socket.connect(new InetSocketAddress(MANAGER_IP, MANAGER_PORT), 3000);
 			socket.setTcpNoDelay(true);
 			DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
 			DataBuffer packet = new DataBuffer(512);

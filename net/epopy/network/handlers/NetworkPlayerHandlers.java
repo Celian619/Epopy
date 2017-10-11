@@ -100,7 +100,7 @@ public class NetworkPlayerHandlers implements Runnable {
 			return NetworkStatus.SERVER_OFFLINE;
 		try {
 			socket = new Socket();
-			socket.connect(new InetSocketAddress(ip, port), 1000);// 10s de time out
+			socket.connect(new InetSocketAddress(ip, port), 4000);// 10s de time out
 			socket.setTcpNoDelay(true);
 			socket.setKeepAlive(true);
 			dataInputStream = new DataInputStream(socket.getInputStream());

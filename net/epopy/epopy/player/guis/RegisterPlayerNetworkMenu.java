@@ -134,9 +134,10 @@ public class RegisterPlayerNetworkMenu {
 				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
 
 			//anti-spam
+			int time = 12;
 			int timeStamp = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
-			if(timeStamp < 10) 
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (10 - timeStamp) + " seconde" + ((10 - timeStamp) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			if(timeStamp < time) 
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - timeStamp) + " seconde" + ((time - timeStamp) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[]{1, 1, 1, 1};
@@ -146,8 +147,9 @@ public class RegisterPlayerNetworkMenu {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-
-				if(timeStamp > 10) {
+				
+				System.out.println("T:" + timeStamp);
+				if(timeStamp >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();

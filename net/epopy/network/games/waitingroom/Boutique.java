@@ -17,6 +17,7 @@ public class Boutique extends AbstractGameNetwork {
 	@Override
 	public void onEnable() {
 		retourWaitingRoom = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
+		tankBoutique.onEnable();
 	}
 
 	@Override
