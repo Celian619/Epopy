@@ -7,9 +7,9 @@ import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 
-public class Carrosserie extends Model {
+public class Canon extends Model {
 	
-	public Carrosserie() {
+	public Canon() {
 		List<Level> levelsRegister = new ArrayList<>(10);
 		levelsRegister.add(new Level(1, 250));
 		levelsRegister.add(new Level(2, 250));
@@ -23,12 +23,12 @@ public class Carrosserie extends Model {
 
 	@Override
 	public String getName() {
-		return "Carrosserie";
+		return "Cadence de tir";
 	}
 
 	@Override
 	public void update() {
-		buttonBuy.update(815, 465, PositionWidth.MILIEU, PositionHeight.HAUT);
+		buttonBuy.update(1130, 465, PositionWidth.MILIEU, PositionHeight.HAUT);
 		
 		if(buttonBuy.isClicked()) {
 			System.out.println("request buy: " + getName());
@@ -37,7 +37,7 @@ public class Carrosserie extends Model {
 
 	@Override
 	public void render() {
-		int x = 815;
+		int x = 1130;
 		ComponentsHelper.drawText(getName() + " (" + getLevel().getLevel() + "/" + getMaxLevel().getLevel() + ")", x, 410, PositionWidth.MILIEU, PositionHeight.HAUT, 30);
 		ComponentsHelper.drawText("(" + getPrice() + " coins)", x, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});
 		

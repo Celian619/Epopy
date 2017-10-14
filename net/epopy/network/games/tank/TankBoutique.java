@@ -6,8 +6,11 @@ import java.util.List;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.network.games.AbstractGameNetwork;
+import net.epopy.network.games.tank.modules.boutique.Canon;
 import net.epopy.network.games.tank.modules.boutique.Carrosserie;
 import net.epopy.network.games.tank.modules.boutique.Model;
+import net.epopy.network.games.tank.modules.boutique.Munitions;
+import net.epopy.network.games.tank.modules.boutique.Vitesse;
 
 public class TankBoutique extends AbstractGameNetwork {
 
@@ -16,6 +19,9 @@ public class TankBoutique extends AbstractGameNetwork {
 	@Override
 	public void onEnable() {
 		models.add(new Carrosserie());
+		models.add(new Canon());
+		models.add(new Munitions());
+		models.add(new Vitesse());
 	}
 
 	@Override

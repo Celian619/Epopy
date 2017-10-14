@@ -9,7 +9,7 @@ public abstract class Model {
 	public List<Level> levels;
 	public Level currentLevel;
 	public Level maxLevel;
-	public ButtonGui buttonBuy = new ButtonGui("[Améliorer]", new float[]{0, 1, 0, 1}, 30);;
+	public ButtonGui buttonBuy = new ButtonGui("Améliorer", new float[]{0, 1, 0, 1}, 30);;
 	
 	public int getPrice() {
 		return getLevel().getPrice();
