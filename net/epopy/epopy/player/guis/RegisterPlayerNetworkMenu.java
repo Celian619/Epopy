@@ -135,9 +135,11 @@ public class RegisterPlayerNetworkMenu {
 
 			//anti-spam
 			int time = 12;
-			int timeStamp = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
-			if(timeStamp < time) 
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - timeStamp) + " seconde" + ((time - timeStamp) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			if(tempsRestant < 0) {
+				config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
+			} else if(tempsRestant < time) 
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[]{1, 1, 1, 1};
@@ -148,8 +150,8 @@ public class RegisterPlayerNetworkMenu {
 					config.setValue("password", mdp.getText());
 				}
 				
-				System.out.println("T:" + timeStamp);
-				if(timeStamp >= time) {
+				System.out.println("Cooldown: " + tempsRestant);
+				if(tempsRestant >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
