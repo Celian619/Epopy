@@ -136,8 +136,9 @@ public class RegisterPlayerNetworkMenu {
 			//anti-spam
 			int time = 12;
 			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			
 			if(tempsRestant < 0) {
-				config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
+				config.setValue("last_connection_time", String.valueOf(System.nanoTime()-1000));
 			} else if(tempsRestant < time) 
 				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
 			else {

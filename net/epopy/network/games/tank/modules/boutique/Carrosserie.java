@@ -3,6 +3,7 @@ package net.epopy.network.games.tank.modules.boutique;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
@@ -39,7 +40,9 @@ public class Carrosserie extends Model {
 	public void render() {
 		int x = 815;
 		ComponentsHelper.drawText(getName() + " (" + getLevel().getLevel() + "/" + getMaxLevel().getLevel() + ")", x, 410, PositionWidth.MILIEU, PositionHeight.HAUT, 30);
-		ComponentsHelper.drawText("(" + getPrice() + " coins)", x, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});
+		ComponentsHelper.drawText("(" + getPrice() + " coins)", x-5, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});
+		
+		ComponentsHelper.renderTexture(Textures.NETWORK_BOUTIQUE_TANK_CARROSSERIE, x-85, 300, 170, 104);
 		
 		buttonBuy.render();
 	}

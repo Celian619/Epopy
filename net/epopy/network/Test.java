@@ -6,21 +6,17 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 @SuppressWarnings("unused")
 public class Test implements Runnable {
@@ -36,14 +32,25 @@ public class Test implements Runnable {
 
 	public static void main(final String[] args) throws IOException {
 		
-		long startTime = System.nanoTime();
-		for (int k = 0; k < 1000000; ++k)
-			System.out.println(k);
-		long endTime = System.nanoTime();
-
-		long duration = (endTime - startTime);
-		System.out.println("time" + duration/1000000000);
-
+		//chiffre à diviser par 2
+		long d = 990200504654561570l;
+		
+		//divise par 2 jusqu a 0
+		long lastDiviseur = d;
+		List<Long> result = new ArrayList<>();
+		while(true) {
+			lastDiviseur = lastDiviseur/2;
+			result.add(lastDiviseur % 2);
+			if(lastDiviseur <= 0)break;
+		}
+		
+		//renverse la liste (msb / lsm)
+		Collections.reverse(result);
+		//print la liste 
+		System.out.print(d + "(10) = %");
+		for(long i : result)
+			System.out.print(i);
+		System.out.print( " || " + +result.size()+"bits" );
 	}
 
 	public static void downloadFileFromUrlWithJavaIO(final String fileName, final String fileUrl)

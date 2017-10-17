@@ -24,6 +24,7 @@ import net.epopy.network.handlers.packets.modules.PacketPlayerFriends;
 import net.epopy.network.handlers.packets.modules.PacketPlayerFriends.PacketFriendsType;
 import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom;
 import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom.PacketWaitingRoomType;
+import net.epopy.network.utils.PlayerStats;
 
 public class WaitingRoom extends AbstractGameNetwork {
 	
@@ -315,12 +316,15 @@ public class WaitingRoom extends AbstractGameNetwork {
 		/*
 		 * Stats du joueur
 		 */
-		ComponentsHelper.drawText("Coins: 30", 10, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
-		ComponentsHelper.drawText("Parties: 10/20", 10, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
+		//TODO changer quand il y aura d'autre jeu
+		PlayerStats tankStats = NetworkPlayer.getNetworkPlayer().getTankStats();
+		ComponentsHelper.drawText("Coins: " + tankStats.getCoins() + (tankStats.hasBooster() ? " - " + tankStats.getBooster() : ""), 10, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
 		
-		ComponentsHelper.drawText("Heures: 10h et 30min", 350, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
-		// Beginner{1, 2, 3} SILVER{1, 2, 3} GOLD{1, 2, 3} MASTER{1, 2, 3} SUPREM MASTER
-		ComponentsHelper.drawText("Rank: Beginner I", 350, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
+		ComponentsHelper.drawText("Parties: " + tankStats.getParties(), 10, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
+		
+		ComponentsHelper.drawText("Heures: " + tankStats.getPlayTime(), 350, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
+	
+		ComponentsHelper.drawText("Rank: " + tankStats.getRank(), 350, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
 		boolean waiting = waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING);
 		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && waiting) {
 			droite.render();

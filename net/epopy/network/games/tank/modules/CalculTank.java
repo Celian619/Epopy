@@ -1,12 +1,9 @@
 package net.epopy.network.games.tank.modules;
 
-import java.awt.geom.Rectangle2D;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
-import de.matthiasmann.twl.Rect;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.games.modules.Location3D;
