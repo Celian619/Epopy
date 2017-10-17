@@ -12,14 +12,14 @@ public class Munitions extends Model {
 	
 	public Munitions() {
 		List<Level> levelsRegister = new ArrayList<>(10);
-		levelsRegister.add(new Level(1, 250));
-		levelsRegister.add(new Level(2, 250));
-		levelsRegister.add(new Level(3, 250));
+		levelsRegister.add(new Level(0, 500));
+		levelsRegister.add(new Level(1, 700));
+		levelsRegister.add(new Level(2, 1000));
+		levelsRegister.add(new Level(3, 1500));
+		levelsRegister.add(new Level(4, -1));
 		
 		this.levels = levelsRegister;
 		this.maxLevel = this.levels.get(levels.size()-1);
-		int playerLevel = 0;//TODO bdd
-		this.currentLevel = this.levels.get(playerLevel);
 	}
 
 	@Override
@@ -29,21 +29,24 @@ public class Munitions extends Model {
 
 	@Override
 	public void update() {
-		buttonBuy.update(1445, 465, PositionWidth.MILIEU, PositionHeight.HAUT);
+		if(getLevel() == getMaxLevel()) 
+			return;	
 		
-		if(buttonBuy.isClicked()) {
-			System.out.println("request buy: " + getName());
-		}
+		buttonBuy.update(1445, 465, PositionWidth.MILIEU, PositionHeight.HAUT);
+		if(buttonBuy.isClicked()) 
+			buy();
 	}
 
 	@Override
 	public void render() {
 		int x = 1445;
 		ComponentsHelper.drawText(getName() + " (" + getLevel().getLevel() + "/" + getMaxLevel().getLevel() + ")", x, 410, PositionWidth.MILIEU, PositionHeight.HAUT, 30);
-		ComponentsHelper.drawText("(" + getPrice() + " coins)", x-5, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});
-		
 		ComponentsHelper.renderTexture(Textures.NETWORK_BOUTIQUE_TANK_MUNITIONS, x-69, 300, 139, 113);
 		
+		if(getLevel() == getMaxLevel()) 
+			return;	
+		
+		ComponentsHelper.drawText("(" + getPrice() + " coins)", x-5, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});	
 		buttonBuy.render();
 	}
 

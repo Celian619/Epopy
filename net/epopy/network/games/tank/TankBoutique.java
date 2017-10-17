@@ -14,14 +14,18 @@ import net.epopy.network.games.tank.modules.boutique.Vitesse;
 
 public class TankBoutique extends AbstractGameNetwork {
 
-	private List<Model> models = new ArrayList<>(10);
-
-	@Override
-	public void onEnable() {
+	public static List<Model> models = new ArrayList<>(10);
+		
+	public static void loadModels() {
 		models.add(new Carrosserie());
 		models.add(new Canon());
 		models.add(new Munitions());
 		models.add(new Vitesse());
+	}
+	
+	@Override
+	public void onEnable() {
+	
 	}
 
 	@Override

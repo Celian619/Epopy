@@ -150,8 +150,6 @@ public class RegisterPlayerNetworkMenu {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-				
-				System.out.println("Cooldown: " + tempsRestant);
 				if(tempsRestant >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
