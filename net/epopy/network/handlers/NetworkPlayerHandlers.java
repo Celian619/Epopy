@@ -124,16 +124,16 @@ public class NetworkPlayerHandlers implements Runnable {
 				byte[] bytes = DataStream.readPacket(dataInputStream);
 				DataBuffer data = new DataBuffer(bytes);
 				PacketAbstract packet = Packets.getPacket(data.getString());
-				String name = packet.getName();
-				System.out.println(name);
-				if (packet != null)
+				if (packet != null) {
 					packet.process(this, data);
+					System.out.println("Packet: " + packet.getName());
+				} else 
+					break;
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				break;
 			}
 		}
-		System.out.println("stop");
 		stop();
 	}
 	
