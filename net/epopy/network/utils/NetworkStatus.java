@@ -8,6 +8,7 @@ public enum NetworkStatus {
 	SERVER_OFFLINE(),
 	
 	//user
+	USER_OLD_VERSION(),
 	USER_NO_VALID(),
 	USER_VALID(),
 	USER_ALREADY_CONNECTED(),

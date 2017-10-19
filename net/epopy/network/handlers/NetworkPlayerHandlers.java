@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.network.Logger;
 import net.epopy.network.NetworkPlayer;
@@ -39,7 +40,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		this.player = player;
 		networkStatus = connect(ip, port);
 		if (!networkStatus.equals(NetworkStatus.SERVER_OFFLINE))
-			Packets.sendPacket(this, new PacketPlayerLogin());
+			Packets.sendPacket(this, new PacketPlayerLogin(Main.getVersion()));
 		if (udp)
 			networkPlayerHandlersUDP = new NetworkPlayerHandlersUDP(this, ip, port);
 	}
@@ -123,6 +124,8 @@ public class NetworkPlayerHandlers implements Runnable {
 				byte[] bytes = DataStream.readPacket(dataInputStream);
 				DataBuffer data = new DataBuffer(bytes);
 				PacketAbstract packet = Packets.getPacket(data.getString());
+				String name = packet.getName();
+				System.out.println(name);
 				if (packet != null)
 					packet.process(this, data);
 			} catch (Exception ex) {

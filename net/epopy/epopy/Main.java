@@ -32,13 +32,14 @@ public class Main {
 	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);
 	private static int slow = 0;
 	private static boolean wasInvisible = false;
+	private static String version;
 	
 	public static void main(final String[] args) {
 		FileUtils.checkFiles();
 		
 		new ChooseGameTypeMenu();
 		Display.setResizable(true);
-		
+	
 		loop();
 	}
 	
@@ -110,6 +111,10 @@ public class Main {
 		Main.displayManager = displayManager;
 	}
 	
+	public static void setVersion(String v) {
+		version = v;
+	}
+	
 	public static void setConfig(final String key, final Config config) {
 		configs.put(key, config);
 	}
@@ -135,6 +140,10 @@ public class Main {
 	
 	public static Config getConfig(final String key) {
 		return configs.get(key);
+	}
+	
+	public static String getVersion() {
+		return version;
 	}
 	
 }

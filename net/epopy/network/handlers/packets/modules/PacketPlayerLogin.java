@@ -10,6 +10,11 @@ public class PacketPlayerLogin extends PacketAbstract {
 	public PacketPlayerLogin() {
 		packet.flip();
 	}
+	
+	public PacketPlayerLogin(String version) {
+		packet.put(version);
+		packet.flip();
+	}
 
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
