@@ -36,12 +36,9 @@ public class PacketPlayerJoin extends PacketAbstract {
 				System.out.println("[Server - Team] Register team: " + teamName);
 			} else 	System.out.println("[Server - Team] Team alreay register: " + teamName);
 		}
-		boolean ok = false;
-		if(game.containsTeam(playerTeamName) && !game.containsPlayer(playerTeamName) && !ok) {
-			ok = true;
-			int hp =  dataBuffer.getInt();
-			game.addPlayer(playerName, playerTeamName, hp);
-			System.out.println("[Server - Team] " + playerName + " join -> " + playerTeamName + " " + hp);
+		if(game.containsTeam(playerTeamName) && !game.containsPlayer(playerTeamName)) {
+			game.addPlayer(playerName, playerTeamName, dataBuffer.getInt());
+			System.out.println("[Server - Team] " + playerName + " join -> " + playerTeamName);
 		}
 	}
 }

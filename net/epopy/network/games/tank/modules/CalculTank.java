@@ -10,6 +10,7 @@ import net.epopy.network.games.modules.Location3D;
 import net.epopy.network.games.modules.PlayerNetwork;
 import net.epopy.network.games.modules.Team;
 import net.epopy.network.games.tank.Tank;
+import net.epopy.network.games.tank.TankBoutique;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerLocation;
 
@@ -75,8 +76,21 @@ public class CalculTank {
 		PlayerNetwork player = NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		Location3D location = player.getLocation();
 
-		double x = deplacedX(location, back ? -Tank.TANK_SPEED : Tank.TANK_SPEED);
-		double y = deplacedY(location, back ? -Tank.TANK_SPEED : Tank.TANK_SPEED);
+		double speed = 1.5;
+		int level = TankBoutique.LEVEL_VITESSE;
+		if(level == 0)
+			speed = 1.8;
+		else if(level == 1)
+			speed = 1.9;
+		else if(level == 2)
+			speed = 2.1;
+		else if(level == 3)
+			speed = 2.2;
+		else if(level == 4)
+			speed = 2.3;
+
+		double x = deplacedX(location, back ? -speed : speed);
+		double y = deplacedY(location, back ? -speed : speed);
 
 		player.addPrintTexture();
 
@@ -92,7 +106,7 @@ public class CalculTank {
 				return;
 			else if(x < 334 && y < 285)  isInBase = true;
 		}
-	
+
 		if (!isCollision((int) x, (int) y)) {
 			if(!isInBase) {
 				if(!hasCollisionTank(player,(int)x, (int)y))

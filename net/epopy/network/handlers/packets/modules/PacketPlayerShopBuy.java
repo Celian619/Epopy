@@ -41,6 +41,10 @@ public class PacketPlayerShopBuy extends PacketAbstract {
 				if(model.getName().equals(modelName)) 
 					model.currentLevel = model.levels.get(level);
 			}
+			if(modelName.equals("Vitesse")) 
+				TankBoutique.LEVEL_VITESSE = level;
+			else if(modelName.equals("Cadence de tir")) 
+				TankBoutique.LEVEL_CANON = level;
 		}
 	}
 

@@ -11,6 +11,7 @@ import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.network.Logger;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.display.DisplayManager;
+import net.epopy.network.games.tank.modules.MapLoader;
 import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.packets.PacketAbstract;
 import net.epopy.network.handlers.packets.Packets;
@@ -21,21 +22,21 @@ import net.epopy.network.utils.DataStream;
 import net.epopy.network.utils.NetworkStatus;
 
 public class NetworkPlayerHandlers implements Runnable {
-	
+
 	private final NetworkPlayer player;
-	
+
 	// network
 	private Socket socket;
 	private DataOutputStream dataOutputStream;
 	private DataInputStream dataInputStream;
-	
+
 	// externe
 	private Thread thread;
-	
+
 	private NetworkStatus networkStatus;
-	
+
 	private NetworkPlayerHandlersUDP networkPlayerHandlersUDP;
-	
+
 	public NetworkPlayerHandlers(final NetworkPlayer player, final String ip, final int port, final boolean udp) {
 		this.player = player;
 		networkStatus = connect(ip, port);
@@ -44,19 +45,19 @@ public class NetworkPlayerHandlers implements Runnable {
 		if (udp)
 			networkPlayerHandlersUDP = new NetworkPlayerHandlersUDP(this, ip, port);
 	}
-	
+
 	/*
 	 * -- Getters --
 	 */
-	
+
 	public Socket getSocket() {
 		return socket;
 	}
-	
+
 	public NetworkPlayerHandlersUDP getServerUDP() {
 		return networkPlayerHandlersUDP;
 	}
-	
+
 	/**
 	 * donne le status du network
 	 *
@@ -65,19 +66,19 @@ public class NetworkPlayerHandlers implements Runnable {
 	public NetworkStatus getNetworkStatus() {
 		return networkStatus;
 	}
-	
+
 	public DataOutputStream getDataOutputStream() {
 		return dataOutputStream;
 	}
-	
+
 	public NetworkPlayer getNetworkPlayer() {
 		return player;
 	}
-	
+
 	/*
 	 * Setters
 	 */
-	
+
 	public void disconnect() {
 		Packets.sendPacket(this, new PacketPlayerDisconnect());
 		try {
@@ -85,7 +86,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		} catch (IOException e) {
 		}
 	}
-	
+
 	/**
 	 *
 	 * Connection a un server
@@ -106,9 +107,9 @@ public class NetworkPlayerHandlers implements Runnable {
 			socket.setKeepAlive(true);
 			dataInputStream = new DataInputStream(socket.getInputStream());
 			dataOutputStream = new DataOutputStream(socket.getOutputStream());
-			
+
 			new Packets();
-			
+
 			thread = new Thread(this, "tcp-" + socket.getLocalPort());
 			thread.start();
 			return NetworkStatus.USER_WAITING_CONFIRMATION;
@@ -116,7 +117,7 @@ public class NetworkPlayerHandlers implements Runnable {
 			return NetworkStatus.SERVER_OFFLINE;
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		while (socket != null) {
@@ -126,7 +127,6 @@ public class NetworkPlayerHandlers implements Runnable {
 				PacketAbstract packet = Packets.getPacket(data.getString());
 				if (packet != null) {
 					packet.process(this, data);
-					System.out.println("Packet: " + packet.getName());
 				} else 
 					break;
 			} catch (Exception ex) {
@@ -136,7 +136,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		}
 		stop();
 	}
-	
+
 	public void stop() {
 		Logger.info("Client thread has been stopper");
 		if (networkPlayerHandlersUDP == null) {
@@ -144,13 +144,14 @@ public class NetworkPlayerHandlers implements Runnable {
 			NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersWaitingRoom().disconnect();
 			DisplayManager.exitMulti();
 		} else {
-			NetworkPlayer.setGame(new WaitingRoom());
-			new NotificationGui("Votre serveur de jeu vient de s'éteindre", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
+			//TODO voir pour send que quand il y a vraiment besoin
+			//	NetworkPlayer.setGame(new WaitingRoom());
+			//new NotificationGui("Votre serveur de jeu vient de s'éteindre", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
 		}
 	}
-	
+
 	public void setNetworkStatus(final NetworkStatus networkStatus) {
 		this.networkStatus = networkStatus;
 	}
-	
+
 }

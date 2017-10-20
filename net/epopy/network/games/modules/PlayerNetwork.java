@@ -72,8 +72,8 @@ public class PlayerNetwork {
 		Textures texture = printTexture <= 5 ? Textures.TANK_TANK2 : Textures.TANK_TANK1;
 		if (printTexture >= 10) printTexture = 0;
 		
-		ComponentsHelper.drawText(getName(), getLocation().getX(), getLocation().getY() - 70, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());
-		ComponentsHelper.renderTexture(texture, (int) (getLocation().getX() - 26), (int) (getLocation().getY() - 24), 64, 56, (int) getLocation().getDirection());
+		ComponentsHelper.drawText(getName() + " - " + getHP() + " HP", getLocation().getX(), getLocation().getY() - 75, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());
+		ComponentsHelper.renderTexture(texture,  (getLocation().getX() - 26),  (getLocation().getY() - 24), 64, 56, getLocation().getDirection());
 
 	}
 }

@@ -17,6 +17,7 @@ import net.epopy.network.handlers.packets.modules.PacketPlayerStatsNetwork;
 import net.epopy.network.handlers.packets.modules.PacketPlayerTChat;
 import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus;
+import net.epopy.network.handlers.packets.modules.game.PacketPlayerDamage;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerDirection;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerJoin;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerLeave;
@@ -55,6 +56,7 @@ public class Packets {
 			packets.put(PacketTeamPoints.class.getSimpleName(), PacketTeamPoints.class);
 			packets.put(PacketTeamCaptureZone.class.getSimpleName(), PacketTeamCaptureZone.class);
 			packets.put(PacketGameStatus.class.getSimpleName(), PacketGameStatus.class);
+			packets.put(PacketPlayerDamage.class.getSimpleName(), PacketPlayerDamage.class);
 
 			Logger.info("[Packets] init packet (" + packets.size() + ")");
 		}

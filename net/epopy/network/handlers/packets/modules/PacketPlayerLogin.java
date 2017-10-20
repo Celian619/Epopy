@@ -19,7 +19,6 @@ public class PacketPlayerLogin extends PacketAbstract {
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		NetworkStatus status = NetworkStatus.valueOf(dataBuffer.getString());
-		System.out.println("Status: " + status);
 		if(status != null)  
 			networkPlayerHandlers.setNetworkStatus(status);	
 		networkPlayerHandlers.getNetworkPlayer().setPseudo(dataBuffer.getString());
