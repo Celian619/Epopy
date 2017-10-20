@@ -70,6 +70,11 @@ public class DisplayManager {
 		running = true;
 		Display.setVSyncEnabled(true);
 		while (running) {
+			if (!Display.isVisible()) {
+				Display.update();
+				Display.sync(4);
+				continue;
+			}
 			if(Display.isCloseRequested())
 				Main.exit();
 			Input.checkInputFullscreen();
