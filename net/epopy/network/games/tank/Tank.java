@@ -26,11 +26,13 @@ public class Tank extends AbstractGameNetwork {
 
 	public static int TANK_SIZE = 25;
 	public static MapLoader MAP;
-
+	
 	private boolean shoot = false;
 
 	private TankMenuEnd tankMenuEnd;
-
+	
+	public static boolean unloadTexture = false;
+	
 	public Tank() {
 		tankMenuEnd = new TankMenuEnd();
 	}
@@ -105,7 +107,10 @@ public class Tank extends AbstractGameNetwork {
 	private static float[] colorReload = new float[]{0, 0, 0, 1};
 	@Override
 	public void render() {
-
+		if(unloadTexture) {
+			Textures.unloadTextures();
+			unloadTexture = false;
+		}
 		getDefaultBackGround().renderBackground();
 
 		for(Zone zone : getZones())
