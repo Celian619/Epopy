@@ -11,8 +11,6 @@ import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.network.Logger;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.display.DisplayManager;
-import net.epopy.network.games.tank.modules.MapLoader;
-import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.packets.PacketAbstract;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.PacketPlayerDisconnect;
