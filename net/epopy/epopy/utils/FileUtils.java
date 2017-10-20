@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 
+import net.epopy.epopy.Main;
+
 public class FileUtils {
 
 	public static String PATH_FOLDER;
@@ -41,13 +43,27 @@ public class FileUtils {
 		PATH_FOLDER = directory.getPath() + "/";
 		PATH_INFOS = PATH_FOLDER + "infos.txt";
 
+		File version = new File(PATH_FOLDER + "version.txt");
+		if(version.exists()) {
+			try (BufferedReader br = new BufferedReader(new FileReader(PATH_FOLDER + "version.txt"))) {
+				String ligne;
+				while ((ligne = br.readLine()) != null) {
+					Main.setVersion(ligne);
+					break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else Main.setVersion("-1");
+
+
 		if (directory.exists()) {
 			System.out.println("[SYSTEM] Folder '.Epopy' was found !");
 		} else {
 			directory.mkdir();
 			System.out.println("[SYSTEM] Folder '.Epopy' has been created !");
 		}
-		
+
 	}
 
 	public static void replaceSelected(final String replace, final String value, final String path) {

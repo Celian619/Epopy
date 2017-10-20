@@ -25,7 +25,6 @@ import net.epopy.network.handlers.packets.modules.game.PacketPlayerShootBall;
 public class Tank extends AbstractGameNetwork {
 
 	public static int TANK_SIZE = 25;
-	public static int TANK_SPEED = 2;
 	public static MapLoader MAP;
 
 	private boolean shoot = false;
@@ -41,6 +40,7 @@ public class Tank extends AbstractGameNetwork {
 
 	}
 
+	private int timeReload;
 	@Override
 	public void update() {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
@@ -84,20 +84,25 @@ public class Tank extends AbstractGameNetwork {
 					else if (Input.isKeyDown(Keyboard.KEY_Z)) 
 						CalculTank.moove(false);
 
-					if (Input.isButtonDown(0)) {
-						if (!shoot) {
-							Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerShootBall(player.getLocation()));
-							shoot = true;
-						}
-					} else
-						shoot = false;
+					if(timeReload <= 0) {
+						if (Input.isButtonDown(0)) {
+							if (!shoot) {
+								timeReload = getTankReload();//TODO time tank
+								Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerShootBall(player.getLocation()));
+								shoot = true;
+							}
+						} else
+							shoot = false;		
+					} else 
+						timeReload--;
+
 				}
 			} else if(getGameStatus().equals(GameStatus.END)) {
 				if(tankMenuEnd != null)tankMenuEnd.update();
 			}
 		}
 	}
-
+	private static float[] colorReload = new float[]{0, 0, 0, 1};
 	@Override
 	public void render() {
 
@@ -121,10 +126,35 @@ public class Tank extends AbstractGameNetwork {
 			if(tankMenuEnd != null)tankMenuEnd.render();
 			else tankMenuEnd = new TankMenuEnd();
 		}
+
+		if(timeReload > 0) {
+			PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
+			if(player != null) {
+				double y = player.getLocation().getY()-40;
+				ComponentsHelper.drawLine(player.getLocation().getX(), y, player.getLocation().getX() + timeReload, y, 2, colorReload);
+				ComponentsHelper.drawLine(player.getLocation().getX(), y, player.getLocation().getX() - timeReload, y, 2, colorReload);
+			}
+		}
 	}
 
 	@Override
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_GAME_TANK_MAP;
 	}
+
+	public int getTankReload() {
+		int level = TankBoutique.LEVEL_CANON;
+		if(level == 0) 
+			return 50;
+		if(level == 1) 
+			return 45;
+		if(level == 2) 
+			return 40;
+		if(level == 3) 
+			return 35;
+		if(level == 4) 
+			return 30;
+		return 50;
+	}
+
 }

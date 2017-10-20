@@ -11,6 +11,11 @@ public class PacketPlayerLogin extends PacketAbstract {
 		packet.flip();
 	}
 
+	public PacketPlayerLogin(String version) {
+		packet.put(version);
+		packet.flip();
+	}
+
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		NetworkStatus status = NetworkStatus.valueOf(dataBuffer.getString());

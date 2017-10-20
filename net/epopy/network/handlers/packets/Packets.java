@@ -11,10 +11,13 @@ import net.epopy.network.handlers.packets.modules.PacketPlayerFriends;
 import net.epopy.network.handlers.packets.modules.PacketPlayerLogin;
 import net.epopy.network.handlers.packets.modules.PacketPlayerMessage;
 import net.epopy.network.handlers.packets.modules.PacketPlayerRequest;
+import net.epopy.network.handlers.packets.modules.PacketPlayerShopBuy;
+import net.epopy.network.handlers.packets.modules.PacketPlayerStats;
 import net.epopy.network.handlers.packets.modules.PacketPlayerStatsNetwork;
 import net.epopy.network.handlers.packets.modules.PacketPlayerTChat;
 import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus;
+import net.epopy.network.handlers.packets.modules.game.PacketPlayerDamage;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerDirection;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerJoin;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerLeave;
@@ -40,6 +43,8 @@ public class Packets {
 			packets.put(PacketPlayerDisconnect.class.getSimpleName(), PacketPlayerDisconnect.class);
 			packets.put(PacketPlayerTChat.class.getSimpleName(), PacketPlayerTChat.class);
 			packets.put(PacketPlayerStatsNetwork.class.getSimpleName(), PacketPlayerStatsNetwork.class);
+			packets.put(PacketPlayerStats.class.getSimpleName(), PacketPlayerStats.class);
+			packets.put(PacketPlayerShopBuy.class.getSimpleName(), PacketPlayerShopBuy.class);
 
 			// Game
 			packets.put(PacketPlayerDirection.class.getSimpleName(), PacketPlayerDirection.class);
@@ -51,6 +56,7 @@ public class Packets {
 			packets.put(PacketTeamPoints.class.getSimpleName(), PacketTeamPoints.class);
 			packets.put(PacketTeamCaptureZone.class.getSimpleName(), PacketTeamCaptureZone.class);
 			packets.put(PacketGameStatus.class.getSimpleName(), PacketGameStatus.class);
+			packets.put(PacketPlayerDamage.class.getSimpleName(), PacketPlayerDamage.class);
 
 			Logger.info("[Packets] init packet (" + packets.size() + ")");
 		}

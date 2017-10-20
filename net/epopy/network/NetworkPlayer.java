@@ -2,10 +2,10 @@ package net.epopy.network;
 
 import net.epopy.network.display.DisplayManager;
 import net.epopy.network.games.AbstractGameNetwork;
-import net.epopy.network.games.tank.TankMenuEnd;
 import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.packets.modules.servermanager.PacketGetIPServers;
+import net.epopy.network.utils.PlayerStats;
 
 public class NetworkPlayer {
 	
@@ -17,6 +17,8 @@ public class NetworkPlayer {
 	
 	private static NetworkPlayer networkPlayer;
 	private static AbstractGameNetwork game;
+	
+	private PlayerStats tankStats = new PlayerStats();
 	
 	public NetworkPlayer(String name, String password) {
 		this.name = name; 	
@@ -39,6 +41,13 @@ public class NetworkPlayer {
 		return password;
 	}
 
+	/*
+	 * Donne les stats du tank
+	 */
+	public PlayerStats getTankStats() {
+		return tankStats;
+	}
+	
 	/**
 	 * Donne le nom du joueur
 	 * 

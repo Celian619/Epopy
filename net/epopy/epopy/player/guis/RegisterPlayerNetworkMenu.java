@@ -134,9 +134,13 @@ public class RegisterPlayerNetworkMenu {
 				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
 
 			//anti-spam
-			int timeStamp = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
-			if(timeStamp < 10) 
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (10 - timeStamp) + " seconde" + ((10 - timeStamp) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			int time = 12;
+			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			if(tempsRestant < 0) {
+				config.setValue("last_connection_time", String.valueOf(System.nanoTime()+1000));
+				tempsRestant = 0;
+			} else if(tempsRestant < time) 
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[]{1, 1, 1, 1};
@@ -146,8 +150,7 @@ public class RegisterPlayerNetworkMenu {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-
-				if(timeStamp > 10) {
+				if(tempsRestant >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
@@ -187,6 +190,10 @@ public class RegisterPlayerNetworkMenu {
 						message = "Les serveurs sont cours de maintenance !";
 					else if (networkStatus.equals(NetworkStatus.USER_ALREADY_CONNECTED))
 						message = "Vous êtes déjà connnecté !";
+					else if (networkStatus.equals(NetworkStatus.USER_OLD_VERSION)) {
+						message = "Vous avez une ancienne version !";
+						infos = "( Veuillez faire la mise à jour )";
+					}
 
 					new NotificationGui(message, infos, 3, new float[] { 1, 0, 0, 1 }, true);
 					networkStatus = null;

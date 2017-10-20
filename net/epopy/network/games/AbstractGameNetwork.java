@@ -61,8 +61,8 @@ public abstract class AbstractGameNetwork {
 		gameStatus = g;
 	}
 	// ----- JOUEURS -----
-	public void addPlayer(final String name, final String teamName) {
-		PlayerNetwork player = new PlayerNetwork(name, teams.get(teamName));
+	public void addPlayer(final String name, final String teamName, int hp) {
+		PlayerNetwork player = new PlayerNetwork(name, teams.get(teamName), hp);
 		updatePlayer();
 		if (!players.containsKey(name)) 
 			playersADD.put(name, player);
