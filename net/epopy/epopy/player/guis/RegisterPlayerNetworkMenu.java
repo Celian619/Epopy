@@ -65,6 +65,12 @@ public class RegisterPlayerNetworkMenu {
 		boolean initPlayer = false;
 
 		while (true) {
+			if (!Display.isVisible()) {
+				Display.update();
+				Display.sync(4);
+				continue;
+			}
+			
 			view2D();
 
 			Textures.MAIN_CONNEXION_NETWORK_BG.renderBackground();
@@ -133,7 +139,7 @@ public class RegisterPlayerNetworkMenu {
 			if (keepUser)
 				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
 
-			//anti-spam
+
 			int time = 12;
 			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
 			if(tempsRestant < 0) {

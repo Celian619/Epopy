@@ -76,7 +76,7 @@ public class CalculTank {
 		PlayerNetwork player = NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		Location3D location = player.getLocation();
 
-		double speed = 1.5;
+		double speed = 1.8;
 		int level = TankBoutique.LEVEL_VITESSE;
 		if(level == 0)
 			speed = 1.8;
