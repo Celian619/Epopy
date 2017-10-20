@@ -109,18 +109,18 @@ public class RegisterPlayerNetworkMenu {
 
 			if (twitterButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_TWITTER_EPOPY);
-			if (facebookButton.isClicked())
+			else if (facebookButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_FACEBOOK_EPOPY);
-			if (webButton.isClicked())
+			else if (webButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_EPOPY);
-			if (inscriptionButton.isClicked())
+			else if (inscriptionButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_EPOPY_USER);
 
 			/**
 			 * Rester connexion
 			 */
 			ComponentsHelper.drawText("Rester connecté", 680, 325 + 145 * 2 + 1, 27);
-			keepUserButton.update(647, 325 + 145 * 2 + 2, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+			keepUserButton.update(647, 617, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 			keepUserButton.render();
 			if (keepUserButton.isClicked()) {
 				keepUser = !keepUser;
@@ -131,26 +131,27 @@ public class RegisterPlayerNetworkMenu {
 				}
 			}
 			if (keepUser)
-				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
+				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 655, 612, 30, 30);
 
-			//anti-spam
+			// anti-spam
 			int time = 12;
-			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
-			if(tempsRestant < 0) {
-				config.setValue("last_connection_time", String.valueOf(System.nanoTime()+1000));
+			int tempsRestant = (int) ((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			if (tempsRestant < 0) {
+				config.setValue("last_connection_time", String.valueOf(System.nanoTime() + 1000));
 				tempsRestant = 0;
-			} else if(tempsRestant < time) 
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			} else if (tempsRestant < time)
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40,
+						new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
-				connexionButton.textColor = new float[]{1, 1, 1, 1};
+				connexionButton.textColor = new float[] { 1, 1, 1, 1 };
 			}
 			if (connexionButton.isClicked() || Input.getKeyDown(28)) {
 				if (keepUser && username.getText().length() > 0 && mdp.getText().length() > 0) {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-				if(tempsRestant >= time) {
+				if (tempsRestant >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
@@ -162,7 +163,7 @@ public class RegisterPlayerNetworkMenu {
 
 			if (networkStatus != null) {
 				if (networkStatus.equals(NetworkStatus.USER_VALID)) {
-					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
 					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
 
@@ -172,11 +173,10 @@ public class RegisterPlayerNetworkMenu {
 					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 				} else {
-					//anti-spam
-					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					// anti-spam
+					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
 					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
-
 
 					String message = "";
 					String infos = "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )";
