@@ -14,7 +14,7 @@ import net.epopy.network.games.tank.modules.boutique.Vitesse;
 
 public class TankBoutique extends AbstractGameNetwork {
 
-	public static List<Model> models = new ArrayList<>(10);
+	public static List<Model> models = new ArrayList<>(4);
 		
 	public static int LEVEL_VITESSE = 0;
 	public static int LEVEL_CANON = 0;
