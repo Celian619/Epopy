@@ -141,9 +141,9 @@ public class RegisterPlayerNetworkMenu {
 
 
 			int time = 12;
-			int tempsRestant = (int)((System.nanoTime() - Long.parseLong(config.getData("last_connection_time"))) / 1000000000.0);
+			int tempsRestant = (int)((System.currentTimeMillis() - Long.parseLong(config.getData("last_connection_time"))) / 1000);
 			if(tempsRestant < 0) {
-				config.setValue("last_connection_time", String.valueOf(System.nanoTime()+1000));
+				config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()+1000));
 				tempsRestant = 0;
 			} else if(tempsRestant < time) 
 				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
@@ -170,7 +170,7 @@ public class RegisterPlayerNetworkMenu {
 				if (networkStatus.equals(NetworkStatus.USER_VALID)) {
 					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
 					connexionButton.setOver(false);
-					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
+					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
 
 					initPlayer = true;
 					break;
@@ -181,8 +181,7 @@ public class RegisterPlayerNetworkMenu {
 					//anti-spam
 					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
 					connexionButton.setOver(false);
-					config.setValue("last_connection_time", String.valueOf(System.nanoTime()));
-
+					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
 
 					String message = "";
 					String infos = "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )";
