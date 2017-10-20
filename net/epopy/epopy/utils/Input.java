@@ -9,8 +9,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import net.epopy.epopy.Main;
-
 public class Input {
 
 	public static final int KEYBOARD_SIZE = Keyboard.getKeyCount();
@@ -148,10 +146,7 @@ public class Input {
 		if (Input.isKeyDown(Keyboard.KEY_F11)) {
 			try {
 				if (Display.isFullscreen()) {
-					Config c = Main.getPlayer().getConfig();
-					int width = Integer.parseInt(c.getData("display_width"));
-					int height = Integer.parseInt(c.getData("display_height"));
-					Display.setDisplayMode(new DisplayMode(width, height));
+					Display.setDisplayMode(new DisplayMode((int) (1920 / 1.5), (int) (1080 / 1.5)));
 					Display.setFullscreen(false);
 				} else {
 					Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());

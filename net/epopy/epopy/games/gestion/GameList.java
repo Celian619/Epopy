@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import net.epopy.epopy.games.car.Car;
 import net.epopy.epopy.games.ping.Ping;
 import net.epopy.epopy.games.placeinvader.PlaceInvader;
+import net.epopy.epopy.games.reflexion.Reflexion;
 import net.epopy.epopy.games.snake.Snake;
 import net.epopy.epopy.games.speedrun.SpeedRun;
 import net.epopy.epopy.games.tank.Tank;
@@ -17,9 +18,8 @@ public enum GameList {
 	PLACEINVADER(4, PlaceInvader.class),
 	TANK(5, Tank.class),
 	SPEEDRUN(6, SpeedRun.class),
-	// TETRAS(7, Tetras.class),
-	// EATMAN(8, Eatman.class),
-	// MARIO(9, Mario.class),
+	REFLEXION(7, Reflexion.class)
+	// TETRAS(8, Tetras.class),
 	// si id > 1000, il n'est plus visible
 	;
 	

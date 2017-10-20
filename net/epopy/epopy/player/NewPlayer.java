@@ -15,7 +15,7 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.utils.FileUtils;
 
 public class NewPlayer {
-
+	
 	public NewPlayer(final String name) {
 		
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
@@ -31,12 +31,12 @@ public class NewPlayer {
 			String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 			write(w, "account_create_at=" + timeStamp);
 			write(w, "display_fullscreen=true");
-
+			
 			write(w, "display_x=" + 0);
 			write(w, "display_y=" + 0);
 			write(w, "display_width=" + (int) (1920 / 1.5));
 			write(w, "display_height=" + (int) (1080 / 1.5));
-
+			
 			write(w, "configUpgrade=" + 1);
 			
 			write(w, "level=" + 1);// TODO Modifier ceci !
@@ -108,7 +108,7 @@ public class NewPlayer {
 		
 		}
 	}
-
+	
 	private void write(final Writer w, final String s) {
 		try {
 			w.write(Main.getEncryptor().encrypt(s));

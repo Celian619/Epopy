@@ -283,7 +283,7 @@ public class PingGame extends AbstractGameMenu {
 			if (direction > 360)
 				direction -= 360;
 				
-			speedBall += 10 * defaultWidth / AbstractGameMenu.defaultWidth / speedBall;
+			speedBall += 10 / speedBall;
 			speedPaddle = Math.abs(speedBall * Math.sin(Math.toRadians(50))) + 1;
 			
 		} else
@@ -291,7 +291,7 @@ public class PingGame extends AbstractGameMenu {
 			
 		// Rebond si rencontre sol || plafond
 		
-		if (deplacedY() > defaultHeight - ballSize || deplacedY() < 0 + ballSize) {
+		if (deplacedY() > defaultHeight - ballSize || deplacedY() < ballSize) {
 			direction = 360 - direction;
 			
 			int directionBis = direction;
