@@ -12,6 +12,7 @@ import net.epopy.network.games.modules.Ball;
 import net.epopy.network.games.modules.Location3D;
 import net.epopy.network.games.modules.PlayerNetwork;
 import net.epopy.network.games.modules.Team;
+import net.epopy.network.games.tank.Tank;
 import net.epopy.network.games.tank.modules.Zone;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus.GameStatus;
 
@@ -29,6 +30,7 @@ public abstract class AbstractGameNetwork {
 	private static GameStatus gameStatus = GameStatus.WAITING;
 
 	public void clear() {
+		Tank.unloadTexture = true;
 		players.clear();
 		teams.clear();
 		balls.clear();

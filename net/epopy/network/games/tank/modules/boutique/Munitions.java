@@ -29,7 +29,7 @@ public class Munitions extends Model {
 
 	@Override
 	public void update() {
-		if(getLevel() == getMaxLevel()) 
+		if(getLevel().getLevel() == getMaxLevel().getLevel()) 
 			return;	
 		
 		buttonBuy.update(1445, 465, PositionWidth.MILIEU, PositionHeight.HAUT);
@@ -43,7 +43,7 @@ public class Munitions extends Model {
 		ComponentsHelper.drawText(getName() + " (" + getLevel().getLevel() + "/" + getMaxLevel().getLevel() + ")", x, 410, PositionWidth.MILIEU, PositionHeight.HAUT, 30);
 		ComponentsHelper.renderTexture(Textures.NETWORK_BOUTIQUE_TANK_MUNITIONS, x-69, 300, 139, 113);
 		
-		if(getLevel() == getMaxLevel()) 
+		if(getLevel().getLevel() == getMaxLevel().getLevel()) 
 			return;	
 		
 		ComponentsHelper.drawText("(" + getPrice() + " coins)", x-5, 498, PositionWidth.MILIEU, PositionHeight.HAUT, 20, new float[]{1, 0.1f, 0.1f, 1});	
