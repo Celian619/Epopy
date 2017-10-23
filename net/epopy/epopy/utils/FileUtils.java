@@ -56,7 +56,6 @@ public class FileUtils {
 			}
 		} else Main.setVersion("-1");
 
-
 		if (directory.exists()) {
 			System.out.println("[SYSTEM] Folder '.Epopy' was found !");
 		} else {

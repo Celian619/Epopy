@@ -15,6 +15,8 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.io.File;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
 
@@ -30,6 +32,7 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameManager;
 import net.epopy.epopy.player.Player;
 import net.epopy.epopy.utils.Config;
+import net.epopy.epopy.utils.FileUtils;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.WebPage;
 
@@ -41,9 +44,18 @@ public class ChooseGameTypeMenu {
 	private int w2_Multi = 0;
 
 	public ChooseGameTypeMenu() {
-
 		if (Main.getPlayer() == null)
 			Main.setPlayer(new Player("localhost"));
+		
+		if (Integer.parseInt(Main.getPlayer().getConfig().getData("configUpgrade", "0")) == 0) {
+			File localhost = new File(FileUtils.PATH_FOLDER + "localhost.txt");
+			if(localhost.exists()) 
+				localhost.delete();
+			Main.setPlayer(new Player("localhost"));
+			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
+			new NotificationGui("Vos statistiques ont été réinitialiser", "pour le passage à la version publique.", 5, new float[]{1, 0, 0, 1}, true);
+		}
+		
 		if (!Display.isCreated()) {
 			Config c = Main.getPlayer().getConfig();
 			int width = Integer.parseInt(c.getData("display_width", (int) (1920 / 1.5) + ""));
