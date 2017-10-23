@@ -322,7 +322,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 		
 		ComponentsHelper.drawText("Parties: " + tankStats.getParties(), 10, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
 		
-		ComponentsHelper.drawText("Heures: " + tankStats.getPlayTime(), 350, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
+		ComponentsHelper.drawText("Temps: " + tankStats.getPlayTime(), 350, 500, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
 	
 		ComponentsHelper.drawText("Rank: " + tankStats.getRank(), 350, 555, PositionWidth.GAUCHE, PositionHeight.HAUT, 24);
 		boolean waiting = waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING);

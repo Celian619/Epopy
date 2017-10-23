@@ -9,20 +9,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
 public class Test implements Runnable {
 
 	private Socket socket;
-	
+
 	private DataOutputStream dataOutputStream;
 	private DataInputStream dataInputStream;
 	private Thread thread;
@@ -31,28 +29,38 @@ public class Test implements Runnable {
 	static File path = new File("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
 
 	public static void main(final String[] args) throws IOException {
-		
-		//chiffre à diviser par 2
-		long d = 990200504654561570l;
-		
-		//divise par 2 jusqu a 0
-		long lastDiviseur = d;
-		List<Long> result = new ArrayList<>();
-		while(true) {
-			lastDiviseur = lastDiviseur/2;
-			result.add(lastDiviseur % 2);
-			if(lastDiviseur <= 0)break;
-		}
-		
-		//renverse la liste (msb / lsm)
-		Collections.reverse(result);
-		//print la liste 
-		System.out.print(d + "(10) = %");
-		for(long i : result)
-			System.out.print(i);
-		System.out.print( " || " + +result.size()+"bits" );
-	}
+		long timeBooster = Long.parseLong("-1");
+		System.out.print(timeBooster);
 
+		if(timeBooster > 0)
+			timeBooster = timeBooster * 1000;
+		System.out.print(timeBooster);
+
+	}
+	public static String getDurationBreakdown(long millis)
+	{
+		if(millis < 0)
+		{
+			throw new IllegalArgumentException("Duration must be greater than zero!");
+		}
+
+		//  long days = TimeUnit.MILLISECONDS.toDays(millis);
+		// millis -= TimeUnit.DAYS.toMillis(days);
+		long hours = TimeUnit.MILLISECONDS.toHours(millis);
+		millis -= TimeUnit.HOURS.toMillis(hours);
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+		millis -= TimeUnit.MINUTES.toMillis(minutes);
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+		StringBuilder sb = new StringBuilder(64);
+
+		sb.append(hours);
+		sb.append("h et ");
+		sb.append(minutes);
+		sb.append("min");
+
+		return(sb.toString());
+	}
 	public static void downloadFileFromUrlWithJavaIO(final String fileName, final String fileUrl)
 			throws MalformedURLException, IOException {
 		BufferedInputStream inStream = null;

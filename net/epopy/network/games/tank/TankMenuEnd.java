@@ -93,10 +93,10 @@ public class TankMenuEnd {
 		 * Classement des Meilleur joueurs
 		 */
 		ComponentsHelper.drawText("Meilleur joueurs", AbstractGameMenu.defaultWidth / 2 - 400, 330, PositionWidth.MILIEU, PositionHeight.HAUT, 35);
-		ComponentsHelper.drawText("© Top coins ©", AbstractGameMenu.defaultWidth / 2 - 400, 380, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
+		ComponentsHelper.drawText("© Points obtenus ©", AbstractGameMenu.defaultWidth / 2 - 400, 380, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
-			if (!TOP_COINS[i - 1].equals("null"))
-				ComponentsHelper.drawText(TOP_COINS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 390 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
+			if (!TOP_POINTS[i - 1].equals("null"))
+				ComponentsHelper.drawText(TOP_POINTS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 390 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
 		}
 		// top pour celui qui à tuer le plus de personne
 		ComponentsHelper.drawText("Φ Top victimes Φ", AbstractGameMenu.defaultWidth / 2 - 400, 515, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
@@ -104,12 +104,12 @@ public class TankMenuEnd {
 			if (!TOP_VICTIMES[i - 1].equals("null"))
 				ComponentsHelper.drawText(TOP_VICTIMES[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 520 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
 		}
-		// total de points captures pour l'equipe
+		/** total de points captures pour l'equipe
 		ComponentsHelper.drawText("• Points obtenus •", AbstractGameMenu.defaultWidth / 2 - 400, 643, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
 			if (!TOP_POINTS[i - 1].equals("null"))
 				ComponentsHelper.drawText(TOP_POINTS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 650 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
-		}
+		}*/
 		/*
 		 * Statistique du joueur
 		 */
