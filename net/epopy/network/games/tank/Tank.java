@@ -26,13 +26,13 @@ public class Tank extends AbstractGameNetwork {
 
 	public static int TANK_SIZE = 25;
 	public static MapLoader MAP;
-	
-	private boolean shoot = false;
 
 	private TankMenuEnd tankMenuEnd;
-	
 	public static boolean unloadTexture = false;
-	
+
+	private boolean shoot = false;
+	public static int balls = CalculTank.getMunitions();
+
 	public Tank() {
 		tankMenuEnd = new TankMenuEnd();
 	}
@@ -87,14 +87,17 @@ public class Tank extends AbstractGameNetwork {
 						CalculTank.moove(false);
 
 					if(timeReload <= 0) {
-						if (Input.isButtonDown(0)) {
-							if (!shoot) {
-								timeReload = getTankReload();//TODO time tank
-								Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerShootBall(player.getLocation()));
-								shoot = true;
-							}
-						} else
-							shoot = false;		
+						if(balls > 0) {
+							if (Input.isButtonDown(0)) {
+								if (!shoot) {
+									timeReload = getTankReload();//TODO time tank
+									Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerShootBall(player.getLocation()));
+									shoot = true;
+									balls--;
+								}
+							} else
+								shoot = false;		
+						}
 					} else 
 						timeReload--;
 
@@ -104,6 +107,7 @@ public class Tank extends AbstractGameNetwork {
 			}
 		}
 	}
+	
 	private static float[] colorReload = new float[]{0, 0, 0, 1};
 	@Override
 	public void render() {
@@ -111,6 +115,7 @@ public class Tank extends AbstractGameNetwork {
 			Textures.unloadTextures();
 			unloadTexture = false;
 		}
+		
 		getDefaultBackGround().renderBackground();
 
 		for(Zone zone : getZones())
@@ -125,13 +130,16 @@ public class Tank extends AbstractGameNetwork {
 		if(getGameStatus().equals(GameStatus.IN_GAME)) {
 			ComponentsHelper.drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2-10, 20, PositionWidth.DROITE, PositionHeight.HAUT, 30, getTeam("BLUE").getColor());
 			ComponentsHelper.drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2+20, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, getTeam("RED").getColor());	
+			if(balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920/2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
 		} else if(getGameStatus().equals(GameStatus.WAITING)) {
 			ComponentsHelper.drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10,  40, PositionWidth.MILIEU, PositionHeight.MILIEU, 18, new float[]{1, 1, 1, 1});
+			if(balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920/2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
 		} else if(getGameStatus().equals(GameStatus.END)) {
 			if(tankMenuEnd != null)tankMenuEnd.render();
 			else tankMenuEnd = new TankMenuEnd();
 		}
-
+	
+		
 		if(timeReload > 0) {
 			PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 			if(player != null) {

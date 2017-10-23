@@ -1,8 +1,8 @@
 package net.epopy.network.handlers.packets;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import net.epopy.network.Logger;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
@@ -34,7 +34,7 @@ public class Packets {
 	
 	public Packets() {
 		if (packets == null) {
-			packets = new HashMap<>();
+			packets = new TreeMap<>();
 			packets.put(PacketPlayerLogin.class.getSimpleName(), PacketPlayerLogin.class);
 			packets.put(PacketPlayerFriends.class.getSimpleName(), PacketPlayerFriends.class);
 			packets.put(PacketPlayerWaitingRoom.class.getSimpleName(), PacketPlayerWaitingRoom.class);

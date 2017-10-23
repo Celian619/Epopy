@@ -45,6 +45,8 @@ public class PacketPlayerShopBuy extends PacketAbstract {
 				TankBoutique.LEVEL_VITESSE = level;
 			else if(modelName.equals("Cadence de tir")) 
 				TankBoutique.LEVEL_CANON = level;
+			else if(modelName.equals("Munitions")) 
+				TankBoutique.LEVEL_MUNITIONS = level;
 		}
 	}
 

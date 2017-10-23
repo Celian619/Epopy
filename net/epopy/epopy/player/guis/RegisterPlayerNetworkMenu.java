@@ -19,6 +19,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
 
 import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.DisplayManager;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
@@ -37,6 +38,8 @@ import net.epopy.network.utils.NetworkStatus;
 public class RegisterPlayerNetworkMenu {
 
 	public RegisterPlayerNetworkMenu() {
+		Audios.stopAll();
+
 		Config config = Main.getPlayer().getConfig();
 		if (!Display.isCreated())
 			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
@@ -50,7 +53,7 @@ public class RegisterPlayerNetworkMenu {
 		ButtonGui webButton = new ButtonGui(Textures.LOGO_WEB_OFF, Textures.LOGO_WEB_ON);
 
 		ButtonGui connexionButton = new ButtonGui("ME CONNECTER", new float[] { 1, 1, 1, 1 }, 50, false);
-		ButtonGui inscriptionButton = new ButtonGui("Mot de passe oublié / m'inscrire", new float[] { 0.7f, 0.7f, 0.7f, 1 }, 20, false);
+		ButtonGui inscriptionButton = new ButtonGui("Mot de passe oublié / m'inscrire", new float[] { 0.7f, 0.7f, 0.7f, 1 }, 25, false);
 
 		ButtonGui keepUserButton = new ButtonGui(Textures.MAIN_CONNEXION_NETWORK_BOX_OFF, Textures.MAIN_CONNEXION_NETWORK_BOX_ON);
 
@@ -70,7 +73,7 @@ public class RegisterPlayerNetworkMenu {
 				Display.sync(4);
 				continue;
 			}
-			
+
 			view2D();
 
 			Textures.MAIN_CONNEXION_NETWORK_BG.renderBackground();
@@ -86,10 +89,10 @@ public class RegisterPlayerNetworkMenu {
 			ComponentsHelper.drawText("Pseudo ou Email", 655, 325 + 2 - 10, 30);
 			ComponentsHelper.drawText("Mot de passe", 655, 325 + 145 + 2 - 10, 30);
 
-			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT, 330, 50);
+			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT);
 			connexionButton.render();
 
-			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 10, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
+			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 5, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
 			inscriptionButton.render();
 
 			retourButton.update(1440, 130, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, 50);
@@ -151,7 +154,19 @@ public class RegisterPlayerNetworkMenu {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[]{1, 1, 1, 1};
 			}
-			if (connexionButton.isClicked() || Input.getKeyDown(28)) {
+			if(username.getText().isEmpty() || mdp.getText().isEmpty()) {
+				if(connexionButton.canOver) {
+					connexionButton.setOver(false);
+					connexionButton.textColor = new float[]{0.4f, 0.4f, 0.4f, 1};
+				}
+			} else {
+				if(!connexionButton.canOver) {
+					connexionButton.setOver(true);
+					connexionButton.textColor = new float[]{1, 1, 1, 1};
+				}
+			}
+			
+			if (connexionButton.isClicked() || Input.getKeyDown(28) && connexionButton.canOver) {
 				if (keepUser && username.getText().length() > 0 && mdp.getText().length() > 0) {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());

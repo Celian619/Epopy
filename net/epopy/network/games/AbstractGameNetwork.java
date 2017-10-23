@@ -2,6 +2,7 @@ package net.epopy.network.games;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +21,7 @@ public abstract class AbstractGameNetwork {
 
 	private static Map<String, PlayerNetwork> players = new TreeMap<>();
 	private static Map<String, PlayerNetwork> playersADD = new TreeMap<>();
-	private static Map<String, PlayerNetwork> playersREMOVE = new TreeMap<>();
+	private static List<String> playersREMOVE = new LinkedList<>();
 	
 	private static Map<String, Team> teams = new TreeMap<>(); // STRING = nom de la team
 	private static Map<String, Ball> balls = new TreeMap<>(); // STRING = nom de la team
@@ -46,8 +47,8 @@ public abstract class AbstractGameNetwork {
 			playersADD.clear();
 		}
 		if(!playersREMOVE.isEmpty()) {
-			for(Entry<String, PlayerNetwork> player : playersADD.entrySet())
-				players.put(player.getKey(), player.getValue());
+			for(String player : playersREMOVE)
+				players.remove(player);
 			playersREMOVE.clear();
 		}
 	}
@@ -73,7 +74,8 @@ public abstract class AbstractGameNetwork {
 	public void removePlayer(final String name) {
 		updatePlayer();
 		if (players.containsKey(name))
-			playersREMOVE.remove(name);
+			playersREMOVE.add(name);
+		updatePlayer();
 	}
 
 	public PlayerNetwork getPlayer(final String name) {

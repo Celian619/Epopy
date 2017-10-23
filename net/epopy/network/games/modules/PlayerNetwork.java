@@ -4,6 +4,8 @@ import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.network.NetworkPlayer;
+import net.epopy.network.games.tank.Tank;
 
 public class PlayerNetwork {
 	
@@ -13,7 +15,7 @@ public class PlayerNetwork {
 	
 	private int hp;
 	private int printTexture;
-
+	
 	public PlayerNetwork(final String name, final Team team, int hp) {
 		this.name = name;
 		this.team = team;
@@ -67,13 +69,10 @@ public class PlayerNetwork {
 	 * Fonction
 	 */
 	public void render() {
-		// GL11.glColor4f(team.getColor()[0], team.getColor()[1],team.getColor()[2], 1);
-
 		Textures texture = printTexture <= 5 ? Textures.TANK_TANK2 : Textures.TANK_TANK1;
 		if (printTexture >= 10) printTexture = 0;
-		
-		ComponentsHelper.drawText(getName() + " - " + getHP() + " HP", getLocation().getX(), getLocation().getY() - 75, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());
+	
+		ComponentsHelper.drawText((getName().equals(NetworkPlayer.getNetworkPlayer().getName()) ?  Tank.balls + " Obu" + (Tank.balls > 1 ? "s" : "") + " | " : "") + getName() + " - " + getHP() + " HP", getLocation().getX(), getLocation().getY() - 75, PositionWidth.MILIEU, PositionHeight.HAUT, 30, team.getColor());
 		ComponentsHelper.renderTexture(texture,  (getLocation().getX() - 26),  (getLocation().getY() - 24), 64, 56, getLocation().getDirection());
-
 	}
 }
