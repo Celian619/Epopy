@@ -53,7 +53,7 @@ public class ChooseGameTypeMenu {
 				localhost.delete();
 			Main.setPlayer(new Player("localhost"));
 			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
-			new NotificationGui("Vos statistiques ont été réinitialiser", "pour le passage à la version publique.", 5, new float[]{1, 0, 0, 1}, true);
+			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[]{1, 0, 0, 1}, true);
 		}
 		
 		if (!Display.isCreated()) {
