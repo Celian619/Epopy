@@ -18,6 +18,7 @@ public class TankBoutique extends AbstractGameNetwork {
 		
 	public static int LEVEL_VITESSE = 0;
 	public static int LEVEL_CANON = 0;
+	public static int LEVEL_MUNITIONS = 0;
 	
 	public static void loadModels() {
 		models.add(new Carrosserie());

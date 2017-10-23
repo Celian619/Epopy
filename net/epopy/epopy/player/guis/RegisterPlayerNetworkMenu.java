@@ -19,6 +19,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
 
 import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.DisplayManager;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
@@ -35,35 +36,38 @@ import net.epopy.network.NetworkPlayer;
 import net.epopy.network.utils.NetworkStatus;
 
 public class RegisterPlayerNetworkMenu {
-
+	
 	public RegisterPlayerNetworkMenu() {
+		Audios.stopAll();
+		
 		Config config = Main.getPlayer().getConfig();
 		if (!Display.isCreated())
 			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
-			
+
 		TextAreaGui username = new TextAreaGui(675, 325 + 30, true, "");
 		TextAreaGui mdp = new TextAreaGui(675, 325 + 145 + 2 + 30, true, "", true);
 		username.setEnter(true);
-		
+
 		ButtonGui twitterButton = new ButtonGui(Textures.LOGO_TWITTER_OFF, Textures.LOGO_TWITTER_ON);
 		ButtonGui facebookButton = new ButtonGui(Textures.LOGO_FACEBOOK_OFF, Textures.LOGO_FACEBOOK_ON);
 		ButtonGui webButton = new ButtonGui(Textures.LOGO_WEB_OFF, Textures.LOGO_WEB_ON);
-		
+
 		ButtonGui connexionButton = new ButtonGui("ME CONNECTER", new float[] { 1, 1, 1, 1 }, 50, false);
-		ButtonGui inscriptionButton = new ButtonGui("Mot de passe oublié / m'inscrire", new float[] { 0.7f, 0.7f, 0.7f, 1 }, 20, false);
+		
+		ButtonGui inscriptionButton = new ButtonGui("Mot de passe oublié / m'inscrire", new float[] { 0.7f, 0.7f, 0.7f, 1 }, 25, false);
 		
 		ButtonGui keepUserButton = new ButtonGui(Textures.MAIN_CONNEXION_NETWORK_BOX_OFF, Textures.MAIN_CONNEXION_NETWORK_BOX_ON);
-		
+
 		ButtonGui retourButton = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
-		
+
 		boolean keepUser = Boolean.parseBoolean(config.getData("keepConnexion", "true"));
 		if (!config.getData("username", "null").equals("null")) {
 			username.addText(config.getData("username", "null"));
 			mdp.addText(config.getData("password", "null"));
 		}
-		
+
 		boolean initPlayer = false;
-		
+
 		while (true) {
 			if (!Display.isVisible()) {
 				Display.update();
@@ -72,9 +76,9 @@ public class RegisterPlayerNetworkMenu {
 			}
 			
 			view2D();
-			
+
 			Textures.MAIN_CONNEXION_NETWORK_BG.renderBackground();
-			
+
 			/*
 			 * text area
 			 */
@@ -82,37 +86,38 @@ public class RegisterPlayerNetworkMenu {
 			username.render();
 			mdp.update(9999);
 			mdp.render();
-			
+
 			ComponentsHelper.drawText("Pseudo ou Email", 655, 325 + 2 - 10, 30);
 			ComponentsHelper.drawText("Mot de passe", 655, 325 + 145 + 2 - 10, 30);
 			
-			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT, 330, 50);
+			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT);
 			connexionButton.render();
 			
-			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 10, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
-			inscriptionButton.render();
+			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 5, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
 			
+			inscriptionButton.render();
+
 			retourButton.update(1440, 130, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, 50);
 			retourButton.render();
-			
+
 			if (retourButton.isClicked()) {
 				NotificationGui.clear();
 				new ChooseGameTypeMenu();
 				break;
 			}
-			
+
 			/**
 			 * Lien
 			 */
 			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			twitterButton.render();
-			
+
 			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			facebookButton.render();
-			
+
 			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			webButton.render();
-			
+
 			if (twitterButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_TWITTER_EPOPY);
 			else if (facebookButton.isClicked())
@@ -121,7 +126,7 @@ public class RegisterPlayerNetworkMenu {
 				new WebPage(WebPage.WEB_PAGE_EPOPY);
 			else if (inscriptionButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_EPOPY_USER);
-				
+
 			/**
 			 * Rester connexion
 			 */
@@ -138,7 +143,7 @@ public class RegisterPlayerNetworkMenu {
 			}
 			if (keepUser)
 				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 655, 612, 30, 30);
-				
+
 			int time = 12;
 			int tempsRestant = (int) ((System.currentTimeMillis() - Long.parseLong(config.getData("last_connection_time"))) / 1000);
 			if (tempsRestant < 0) {
@@ -151,7 +156,19 @@ public class RegisterPlayerNetworkMenu {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[] { 1, 1, 1, 1 };
 			}
-			if (connexionButton.isClicked() || Input.getKeyDown(28)) {
+			if (username.getText().isEmpty() || mdp.getText().isEmpty()) {
+				if (connexionButton.canOver) {
+					connexionButton.setOver(false);
+					connexionButton.textColor = new float[] { 0.4f, 0.4f, 0.4f, 1 };
+				}
+			} else {
+				if (!connexionButton.canOver) {
+					connexionButton.setOver(true);
+					connexionButton.textColor = new float[] { 1, 1, 1, 1 };
+				}
+			}
+
+			if (connexionButton.isClicked() || Input.getKeyDown(28) && connexionButton.canOver) {
 				if (keepUser && username.getText().length() > 0 && mdp.getText().length() > 0) {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
@@ -160,18 +177,18 @@ public class RegisterPlayerNetworkMenu {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
-					
+
 					player = new NetworkPlayer(username.getText(), mdp.getText());
 					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
 				}
 			}
-			
+
 			if (networkStatus != null) {
 				if (networkStatus.equals(NetworkStatus.USER_VALID)) {
 					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
 					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
-					
+
 					initPlayer = true;
 					break;
 				} else if (networkStatus.equals(NetworkStatus.USER_WAITING_CONFIRMATION)) {
@@ -181,9 +198,9 @@ public class RegisterPlayerNetworkMenu {
 					// anti-spam
 					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
-					
+
 					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
-					
+
 					String message = "";
 					String infos = "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )";
 					if (networkStatus.equals(NetworkStatus.USER_NO_VALID))
@@ -200,7 +217,7 @@ public class RegisterPlayerNetworkMenu {
 						message = "Vous avez une ancienne version !";
 						infos = "( Veuillez faire la mise à jour )";
 					}
-					
+
 					new NotificationGui(message, infos, 3, new float[] { 1, 0, 0, 1 }, true);
 					networkStatus = null;
 				}
@@ -210,33 +227,33 @@ public class RegisterPlayerNetworkMenu {
 			Input.update();
 			Display.update();
 			Display.sync(60);
-			
+
 			if (Display.isCloseRequested())
 				Main.exit();
-				
+
 		}
 		if (initPlayer)
 			player.init();
 	}
-
+	
 	NetworkPlayer player = null;
 	NetworkStatus networkStatus = null;
-
+	
 	private void view2D() {
 		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-
+		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
+		
 		GLU.gluOrtho2D(0, Display.getWidth(), Display.getHeight(), 0);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
+		
 		glEnable(GL_TEXTURE_2D);
-
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}

@@ -44,6 +44,7 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 				DatagramPacket receive = new DatagramPacket(bytes, bytes.length);
 				socket.receive(receive);
 				DataBuffer data = new DataBuffer(receive.getData());
+				receive.setLength(bytes.length);
 				PacketAbstract packet = Packets.getPacket(data.getString());
 				if (packet != null)
 					packet.process(null, data);
@@ -60,6 +61,7 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 				try {
 					DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, port);
 					socket.send(packet);
+					packet.setLength(bytes.length);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

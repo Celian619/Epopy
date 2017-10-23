@@ -53,8 +53,9 @@ public class ButtonGui {
 	public float[] textColor = new float[] { 1, 1, 1, 1 };
 	private boolean changeColor = true;
 	private FontUtils font;
-	private boolean canOver = true;
-
+	
+	public boolean canOver = true;
+	
 	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
 		isClicked = false;
 		
@@ -103,6 +104,8 @@ public class ButtonGui {
 	}
 	
 	public boolean isClicked() {
+		if (!canOver)
+			return false;
 		if (resetMenu == 0) {
 			if (isClicked) {
 				resetMenu = timeResetMenu;
@@ -110,10 +113,10 @@ public class ButtonGui {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
-
+	
 	public void setOver(final boolean over) {
 		canOver = over;
 	}
@@ -200,7 +203,7 @@ public class ButtonGui {
 			ww = width;
 			hh = height;
 		}
-
+		
 		this.x = (int) ComponentsHelper.getResponsiveX(xx);
 		this.y = (int) ComponentsHelper.getResponsiveY(yy);
 		this.width = (int) ComponentsHelper.getResponsiveX(ww);
@@ -233,7 +236,7 @@ public class ButtonGui {
 			glLoadIdentity();
 			glScalef(1, 1, 1);
 			glMatrixMode(GL_MODELVIEW);
-
+			
 			glBegin(GL_QUADS);
 			glTexCoord2f(0, 0);
 			glVertex2f(x, y);
@@ -247,17 +250,21 @@ public class ButtonGui {
 			glBindTexture(GL_TEXTURE_2D, 0);
 		} else {
 			if (changeColor) {
-				if (isOn && canOver)
-					textColor[3] = 1;
-				else
-					textColor[3] = 0.6f;
+				if (canOver) {
+					if (isOn)
+						textColor[3] = 1;
+					else
+						textColor[3] = 0.6f;
+				}
 				ComponentsHelper.drawText(text, xx, yy, isOn ? (int) (textSize * 1.02) : textSize, textColor);
 				
 			} else {
-				if (isOn && canOver)
-					textColor[3] = 0.7f;
-				else
-					textColor[3] = 1;
+				if (canOver) {
+					if (isOn)
+						textColor[3] = 0.7f;
+					else
+						textColor[3] = 1;
+				}
 				ComponentsHelper.drawText(text, xx, yy, textSize, textColor);
 			}
 		}

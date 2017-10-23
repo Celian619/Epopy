@@ -14,7 +14,9 @@ public class PacketPlayerLeave extends PacketAbstract {
 
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
+		System.out.print("Packet leave :");
 		String playerName = dataBuffer.getString();
+		System.out.print(playerName);
 		AbstractGameNetwork game = NetworkPlayer.getGame();
 		if(game != null && game.containsPlayer(playerName)) 
 			game.removePlayer(playerName);

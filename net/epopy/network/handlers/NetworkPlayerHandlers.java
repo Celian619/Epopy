@@ -125,7 +125,7 @@ public class NetworkPlayerHandlers implements Runnable {
 				PacketAbstract packet = Packets.getPacket(data.getString());
 				if (packet != null) {
 					packet.process(this, data);
-					System.out.println("Packet: " + packet.getName());
+			//		System.out.println("Packet: " + packet.getName());
 				} else 
 					break;
 			} catch (Exception ex) {

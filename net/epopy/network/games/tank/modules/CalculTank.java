@@ -107,6 +107,11 @@ public class CalculTank {
 			else if(x < 334 && y < 285)  isInBase = true;
 		}
 
+		if(isInBase) {
+			if(Tank.balls < getMunitions())
+				Tank.balls = getMunitions();
+		}
+		
 		if (!isCollision((int) x, (int) y)) {
 			if(!isInBase) {
 				if(!hasCollisionTank(player,(int)x, (int)y))
@@ -143,5 +148,19 @@ public class CalculTank {
 			}
 		}
 		return false;
+	}
+	
+	public static int getMunitions() {
+		if(TankBoutique.LEVEL_MUNITIONS == 0)
+			return 4;
+		if(TankBoutique.LEVEL_MUNITIONS == 1)
+			return 7;
+		if(TankBoutique.LEVEL_MUNITIONS == 2)
+			return 10;
+		if(TankBoutique.LEVEL_MUNITIONS == 3)
+			return 13;
+		if(TankBoutique.LEVEL_MUNITIONS == 4)
+			return 16;
+		return 4;
 	}
 }
