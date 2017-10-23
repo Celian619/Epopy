@@ -8,7 +8,7 @@ import net.epopy.network.games.AbstractGameNetwork;
 import net.epopy.network.games.tank.Tank;
 import net.epopy.network.games.tank.modules.MapLoader;
 
-public class LodingMap extends AbstractGameNetwork {
+public class LoadingMap extends AbstractGameNetwork {
 	
 	@Override
 	public void onEnable() {

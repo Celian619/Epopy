@@ -54,17 +54,18 @@ public class DisplayManager {
 			});
 
 			Display.create();
-
+			
 			Display.setVSyncEnabled(true);
 			Display.setResizable(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		Main.setDisplayManager(this);
-
+		
 		Config c = Main.getPlayer().getConfig();
 		int x = Integer.parseInt(c.getData("display_x", 0 + ""));
 		int y = Integer.parseInt(c.getData("display_y", 0 + ""));
+		
 		if(x != 0 && y != 0)
 			Display.setLocation(x, y);
 	}

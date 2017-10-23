@@ -36,10 +36,10 @@ import net.epopy.network.NetworkPlayer;
 import net.epopy.network.utils.NetworkStatus;
 
 public class RegisterPlayerNetworkMenu {
-
+	
 	public RegisterPlayerNetworkMenu() {
 		Audios.stopAll();
-
+		
 		Config config = Main.getPlayer().getConfig();
 		if (!Display.isCreated())
 			new DisplayManager((int) (1920 / 1.5), (int) (1080 / 1.5), "Epopy", Boolean.parseBoolean(config.getData("display_fullscreen", "true")), false);
@@ -53,8 +53,9 @@ public class RegisterPlayerNetworkMenu {
 		ButtonGui webButton = new ButtonGui(Textures.LOGO_WEB_OFF, Textures.LOGO_WEB_ON);
 
 		ButtonGui connexionButton = new ButtonGui("ME CONNECTER", new float[] { 1, 1, 1, 1 }, 50, false);
+		
 		ButtonGui inscriptionButton = new ButtonGui("Mot de passe oublié / m'inscrire", new float[] { 0.7f, 0.7f, 0.7f, 1 }, 25, false);
-
+		
 		ButtonGui keepUserButton = new ButtonGui(Textures.MAIN_CONNEXION_NETWORK_BOX_OFF, Textures.MAIN_CONNEXION_NETWORK_BOX_ON);
 
 		ButtonGui retourButton = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
@@ -73,7 +74,7 @@ public class RegisterPlayerNetworkMenu {
 				Display.sync(4);
 				continue;
 			}
-
+			
 			view2D();
 
 			Textures.MAIN_CONNEXION_NETWORK_BG.renderBackground();
@@ -88,11 +89,12 @@ public class RegisterPlayerNetworkMenu {
 
 			ComponentsHelper.drawText("Pseudo ou Email", 655, 325 + 2 - 10, 30);
 			ComponentsHelper.drawText("Mot de passe", 655, 325 + 145 + 2 - 10, 30);
-
+			
 			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT);
 			connexionButton.render();
-
+			
 			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 5, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
+			
 			inscriptionButton.render();
 
 			retourButton.update(1440, 130, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, 50);
@@ -118,18 +120,18 @@ public class RegisterPlayerNetworkMenu {
 
 			if (twitterButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_TWITTER_EPOPY);
-			if (facebookButton.isClicked())
+			else if (facebookButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_FACEBOOK_EPOPY);
-			if (webButton.isClicked())
+			else if (webButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_EPOPY);
-			if (inscriptionButton.isClicked())
+			else if (inscriptionButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_EPOPY_USER);
 
 			/**
 			 * Rester connexion
 			 */
 			ComponentsHelper.drawText("Rester connecté", 680, 325 + 145 * 2 + 1, 27);
-			keepUserButton.update(647, 325 + 145 * 2 + 2, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+			keepUserButton.update(647, 617, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 			keepUserButton.render();
 			if (keepUserButton.isClicked()) {
 				keepUser = !keepUser;
@@ -140,38 +142,38 @@ public class RegisterPlayerNetworkMenu {
 				}
 			}
 			if (keepUser)
-				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 647 + 8, 325 + 145 * 2 - 3, 30, 30);
-
+				ComponentsHelper.renderTexture(Textures.MAIN_CONNEXION_NETWORK_BOX_CHECK, 655, 612, 30, 30);
 
 			int time = 12;
-			int tempsRestant = (int)((System.currentTimeMillis() - Long.parseLong(config.getData("last_connection_time"))) / 1000);
-			if(tempsRestant < 0) {
-				config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()+1000));
+			int tempsRestant = (int) ((System.currentTimeMillis() - Long.parseLong(config.getData("last_connection_time"))) / 1000);
+			if (tempsRestant < 0) {
+				config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis() + 1000));
 				tempsRestant = 0;
-			} else if(tempsRestant < time) 
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + ((time - tempsRestant) > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+			} else if (tempsRestant < time)
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40,
+						new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
-				connexionButton.textColor = new float[]{1, 1, 1, 1};
+				connexionButton.textColor = new float[] { 1, 1, 1, 1 };
 			}
-			if(username.getText().isEmpty() || mdp.getText().isEmpty()) {
-				if(connexionButton.canOver) {
+			if (username.getText().isEmpty() || mdp.getText().isEmpty()) {
+				if (connexionButton.canOver) {
 					connexionButton.setOver(false);
-					connexionButton.textColor = new float[]{0.4f, 0.4f, 0.4f, 1};
+					connexionButton.textColor = new float[] { 0.4f, 0.4f, 0.4f, 1 };
 				}
 			} else {
-				if(!connexionButton.canOver) {
+				if (!connexionButton.canOver) {
 					connexionButton.setOver(true);
-					connexionButton.textColor = new float[]{1, 1, 1, 1};
+					connexionButton.textColor = new float[] { 1, 1, 1, 1 };
 				}
 			}
-			
+
 			if (connexionButton.isClicked() || Input.getKeyDown(28) && connexionButton.canOver) {
 				if (keepUser && username.getText().length() > 0 && mdp.getText().length() > 0) {
 					config.setValue("username", username.getText());
 					config.setValue("password", mdp.getText());
 				}
-				if(tempsRestant >= time) {
+				if (tempsRestant >= time) {
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
@@ -183,7 +185,7 @@ public class RegisterPlayerNetworkMenu {
 
 			if (networkStatus != null) {
 				if (networkStatus.equals(NetworkStatus.USER_VALID)) {
-					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
 					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
 
@@ -193,9 +195,10 @@ public class RegisterPlayerNetworkMenu {
 					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
 					ComponentsHelper.drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 				} else {
-					//anti-spam
-					connexionButton.textColor = new float[]{0.5f, 0.5f, 0.5f, 1};
+					// anti-spam
+					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };
 					connexionButton.setOver(false);
+
 					config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis()));
 
 					String message = "";
@@ -223,6 +226,7 @@ public class RegisterPlayerNetworkMenu {
 			NotificationGui.render();
 			Input.update();
 			Display.update();
+			Display.sync(60);
 
 			if (Display.isCloseRequested())
 				Main.exit();
@@ -231,25 +235,25 @@ public class RegisterPlayerNetworkMenu {
 		if (initPlayer)
 			player.init();
 	}
-
+	
 	NetworkPlayer player = null;
 	NetworkStatus networkStatus = null;
-
+	
 	private void view2D() {
 		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-
+		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
+		
 		GLU.gluOrtho2D(0, Display.getWidth(), Display.getHeight(), 0);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
+		
 		glEnable(GL_TEXTURE_2D);
-
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
