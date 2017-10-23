@@ -86,10 +86,10 @@ public class Main {
 
 	public static void exit() {
 		Config c = getPlayer().getConfig();
-		c.setValue("display_width", Display.getWidth() + 2 + "");
-		c.setValue("display_height", Display.getHeight() + 2 + "");
-		c.setValue("display_x", Display.getX() + 2 + "");
-		c.setValue("display_y", Display.getY() + 2 + "");
+		c.setValue("display_width", Display.getWidth() + "");
+		c.setValue("display_height", Display.getHeight() + "");
+		c.setValue("display_x", Display.getX() + "");
+		c.setValue("display_y", Display.getY() + "");
 		c.setValue("display_fullscreen", Display.isFullscreen() + "");
 
 		Display.destroy();

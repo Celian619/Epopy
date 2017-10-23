@@ -10,7 +10,7 @@ import net.epopy.epopy.display.Textures;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.games.GameListNetwork;
 import net.epopy.network.games.tank.modules.MapLoader;
-import net.epopy.network.games.waitingroom.LodingMap;
+import net.epopy.network.games.waitingroom.LoadingMap;
 import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.games.waitingroom.modules.WaitingRoomBuilder;
 import net.epopy.network.games.waitingroom.modules.WaitingRoomBuilder.WaitingRoomStatus;
@@ -98,7 +98,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 					new java.util.TimerTask() {
 						@Override
 						public void run() {
-							NetworkPlayer.setGame(new LodingMap());
+							NetworkPlayer.setGame(new LoadingMap());
 						}
 					}, 500);
 			break;

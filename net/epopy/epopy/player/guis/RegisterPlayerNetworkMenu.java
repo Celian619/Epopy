@@ -209,6 +209,7 @@ public class RegisterPlayerNetworkMenu {
 			NotificationGui.render();
 			Input.update();
 			Display.update();
+			Display.sync(60);
 			
 			if (Display.isCloseRequested())
 				Main.exit();
