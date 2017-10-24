@@ -80,17 +80,21 @@ public class Tank extends AbstractGameNetwork {
 						}
 					}
 
-					// inputs
-					if (Input.isKeyDown(Keyboard.KEY_S)) 
-						CalculTank.moove(true);
-					else if (Input.isKeyDown(Keyboard.KEY_Z)) 
-						CalculTank.moove(false);
+					if(!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") && 
+							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") &&
+							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
+						// inputs
+						if (Input.isKeyDown(Keyboard.KEY_S)) 
+							CalculTank.moove(true);
+						else if (Input.isKeyDown(Keyboard.KEY_Z)) 
+							CalculTank.moove(false);
+					} 
 
 					if(timeReload <= 0) {
 						if(balls > 0) {
 							if (Input.isButtonDown(0)) {
 								if (!shoot) {
-									timeReload = getTankReload();//TODO time tank
+									timeReload = getTankReload();
 									Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerShootBall(player.getLocation()));
 									shoot = true;
 									balls--;
@@ -107,7 +111,7 @@ public class Tank extends AbstractGameNetwork {
 			}
 		}
 	}
-	
+
 	private static float[] colorReload = new float[]{0, 0, 0, 1};
 	@Override
 	public void render() {
@@ -115,8 +119,17 @@ public class Tank extends AbstractGameNetwork {
 			Textures.unloadTextures();
 			unloadTexture = false;
 		}
-		
+
 		getDefaultBackGround().renderBackground();
+
+		if(PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") || 
+				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") ||
+				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
+
+			if(!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) 
+				ComponentsHelper.drawText("Capturer les zones pour gagner des points !", 1920/2, 1030/2, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
+
+		}
 
 		for(Zone zone : getZones())
 			zone.render();
@@ -138,8 +151,8 @@ public class Tank extends AbstractGameNetwork {
 			if(tankMenuEnd != null)tankMenuEnd.render();
 			else tankMenuEnd = new TankMenuEnd();
 		}
-	
-		
+
+
 		if(timeReload > 0) {
 			PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 			if(player != null) {

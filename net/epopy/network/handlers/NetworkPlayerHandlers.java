@@ -137,12 +137,12 @@ public class NetworkPlayerHandlers implements Runnable {
 	}
 
 	public void stop() {
-		Logger.info("Client thread has been stopper");
 		if (networkPlayerHandlersUDP == null) {
 			new NotificationGui("Les serveurs se sont éteints", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
 			NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersWaitingRoom().disconnect();
 			DisplayManager.exitMulti();
 		} else {
+			Logger.info("Server game has been stopped");
 			//TODO voir pour send que quand il y a vraiment besoin
 			//	NetworkPlayer.setGame(new WaitingRoom());
 			//new NotificationGui("Votre serveur de jeu vient de s'éteindre", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);

@@ -117,6 +117,16 @@ public class Location3D {
 		this.z = z;
 	}
 	
+	public void set(Location3D location) {
+		location = location.copy();
+		this.x = location.getX();
+		this.y = location.getY();
+		this.z = location.getZ();
+		this.yaw = location.getYaw();
+		this.pitch = location.getPitch();
+		this.direction = location.getDirection();
+	}
+	
 	public void setWithDirection(double x, double y, double z, double yaw, double direction) {
 		this.x = x;
 		this.y = y;

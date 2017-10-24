@@ -150,8 +150,7 @@ public class RegisterPlayerNetworkMenu {
 				config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis() + 1000));
 				tempsRestant = 0;
 			} else if (tempsRestant < time)
-				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40,
-						new float[] { 1, 0, 0, 1 });
+				ComponentsHelper.drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40,new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[] { 1, 1, 1, 1 };
@@ -162,7 +161,7 @@ public class RegisterPlayerNetworkMenu {
 					connexionButton.textColor = new float[] { 0.4f, 0.4f, 0.4f, 1 };
 				}
 			} else {
-				if (!connexionButton.canOver) {
+				if (!connexionButton.canOver && tempsRestant > time) {
 					connexionButton.setOver(true);
 					connexionButton.textColor = new float[] { 1, 1, 1, 1 };
 				}
@@ -232,8 +231,10 @@ public class RegisterPlayerNetworkMenu {
 				Main.exit();
 
 		}
-		if (initPlayer)
+		if (initPlayer) {
+			initPlayer = false;
 			player.init();
+		}
 	}
 	
 	NetworkPlayer player = null;

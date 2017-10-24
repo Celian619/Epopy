@@ -1,9 +1,11 @@
 package net.epopy.network.handlers.packets.modules.game;
 
 import net.epopy.network.NetworkPlayer;
+import net.epopy.network.games.modules.Location3D;
 import net.epopy.network.games.tank.TankMenuEnd;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.packets.PacketAbstract;
+import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.utils.DataBuffer;
 
 public class PacketGameStatus extends PacketAbstract {
@@ -22,15 +24,21 @@ public class PacketGameStatus extends PacketAbstract {
 	@Override
 	public void process(final NetworkPlayerHandlers networkPlayerHandlers, final DataBuffer dataBuffer) {
 		GameStatus gameStatus = GameStatus.valueOf(dataBuffer.getString().toUpperCase());
-		
+
 		NetworkPlayer.getGame().setGameStatus(gameStatus);
-		
+
 		switch (gameStatus) {
 		case WAITING:
 			WAITING_MESSAGE = dataBuffer.getString();
+			if(WAITING_MESSAGE.equals("Lancement dans 00:02")) {
+				// infos pendant le jeu
+				Location3D location = NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getLocation();
+				Location3D teamLoc =  NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getTeam().getSpawnLocation();
+				location.set(teamLoc.copy());
+				Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), 0.0));
+			}
 			break;
 		case IN_GAME:
-			// infos pendant le jeu
 			break;
 		case END:
 			String topCoins = dataBuffer.getString();
