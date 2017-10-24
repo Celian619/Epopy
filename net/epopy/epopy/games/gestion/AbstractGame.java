@@ -4,9 +4,9 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.display.Textures;
 
 public abstract class AbstractGame {
-
-	private boolean inGame = false;
 	
+	private boolean inGame = false;
+
 	// menu
 	public AbstractGameMenu menuGame;
 	public AbstractGameMenu menuOptions;
@@ -16,24 +16,28 @@ public abstract class AbstractGame {
 	 *
 	 *
 	 */
-
+	
 	/*
 	 * Quand le module se load
 	 */
 	public abstract void onEnable();
-
+	
 	public AbstractGameMenu getMenuOptions() {
 		return menuOptions;
 	}
-	
+
 	public void setStatus(final boolean inGame) {
 		this.inGame = inGame;
 		if (getActualAbstract() != null)
 			getActualAbstract().onEnable();
 	}
-
+	
+	public boolean getStatus() {
+		return inGame;
+	}
+	
 	public abstract Textures getDefaultBackGround();
-
+	
 	/*
 	 * Get le nom du jeu
 	 */
@@ -47,9 +51,9 @@ public abstract class AbstractGame {
 			Main.getGameManager().getMenu().update();
 		else
 			getActualAbstract().update();
-
+			
 	}
-
+	
 	/*
 	 * Render le jeu
 	 */
@@ -59,9 +63,9 @@ public abstract class AbstractGame {
 		else
 			getActualAbstract().render();
 	}
-	
+
 	private AbstractGameMenu getActualAbstract() {
 		return inGame ? menuGame : null;
 	}
-
+	
 }

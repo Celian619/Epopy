@@ -16,14 +16,24 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 
 public class MasterMind extends AbstractGameMenu {
-	
+	@SuppressWarnings("serial")
+	private static final List<float[]> colors = new ArrayList<float[]>() {
+		{
+			add(new float[] { 1, 0, 0, 1 });
+			add(new float[] { 0, 1, 0, 1 });
+			add(new float[] { 0, 0, 1, 1 });
+			add(new float[] { 1, 1, 1, 1 });
+			add(new float[] { 1, 1, 0, 1 });
+			add(new float[] { 1, 0.5f, 0, 1 });
+			add(new float[] { 0.2f, 0.2f, 0.2f, 1 });// gris : vide
+		}
+	};
 	private final int caseSize = 20;
 	private final int debutX = 70;
 	private final int debutY = 70;
 	private final int ecartX = 70;
 	private final int ecartY = 70;
-	
-	private List<float[]> colors;
+
 	private List<line> lines;
 	
 	private List<ButtonGui> rightArrow;
@@ -34,17 +44,8 @@ public class MasterMind extends AbstractGameMenu {
 	@Override
 	public void onEnable() {
 		selected = new Boolean[] { false, false, false, false };
-		
-		lines = new ArrayList<line>();
-		colors = new ArrayList<float[]>();
-		colors.add(new float[] { 1, 0, 0, 1 });// rouge
-		colors.add(new float[] { 0, 1, 0, 1 });// vert
-		colors.add(new float[] { 0, 0, 1, 1 });// bleu
-		colors.add(new float[] { 1, 1, 1, 1 });// blanc
-		colors.add(new float[] { 1, 1, 0, 1 });// jaune
-		colors.add(new float[] { 1, 0.5f, 0, 1 });// orange
 
-		colors.add(new float[] { 0.2f, 0.2f, 0.2f, 1 });// gris : vide
+		lines = new ArrayList<line>();
 		Random r = new Random();
 		List<Integer> colors = new ArrayList<Integer>();
 
@@ -70,6 +71,7 @@ public class MasterMind extends AbstractGameMenu {
 
 	@Override
 	public void update() {
+		if (win) return;
 		int yB = debutY + ecartY * (lines.size() - 1) - caseSize / 2;
 		int x = 0;
 		if (Input.getButtonDown(0)) {
@@ -136,22 +138,27 @@ public class MasterMind extends AbstractGameMenu {
 
 		}
 		if (selected[0] && selected[1] && selected[2] && selected[3]) {
+			
 			lines.get(lines.size() - 1).calcResult();
 			if (win) return;
 			else if (lines.size() == 10) {
 				onEnable();// gameOver
+				update();
+				return;
 			}
 			lines.add(new line(null, lines.size()));
 			for (int i = 0; i < 4; i++) {
 				selected[i] = false;
 			}
-
 			update();
 		}
 	}
 	
 	@Override
 	public void render() {
+		if (win) {
+			ComponentsHelper.drawQuadData(debutX - 38, debutY + ecartY * (lines.size() - 1) - 28, ecartX * 4 + 6, ecartY - 15, 5, new float[] { 0.2f, 0.2f, 1, 1 });
+		}
 		int i = 0;
 		for (ButtonGui button : rightArrow) {
 			if (!selected[i]) {
@@ -166,10 +173,13 @@ public class MasterMind extends AbstractGameMenu {
 			}
 			i++;
 		}
-		
-		for (line l : lines)
-			l.draw();
-			
+		boolean first = true;
+		for (line l : lines) {
+			if (!first)
+				l.draw();
+			else first = false;
+		}
+
 	}
 
 	private class line {
@@ -223,24 +233,23 @@ public class MasterMind extends AbstractGameMenu {
 		}
 
 		private void draw() {
-			if (nbr == 0 && win || nbr != 0) {
-				for (int i = 0; i < 4; i++) {
-					int x = debutX + ecartX * i;
+			for (int i = 0; i < 4; i++) {
+				int x = debutX + ecartX * i;
+				int y = debutY + ecartY * nbr;
+				ComponentsHelper.drawCircle(x, y, caseSize, 4, colors.get(couleurs.get(i)));
+				
+			}
+			if (result != null) {
+				int place = 2;
+				for (boolean b : result) {
+					int x = debutX + ecartX * 3 + place * 30;
 					int y = debutY + ecartY * nbr;
-					ComponentsHelper.drawCircle(x, y, caseSize, 4, colors.get(couleurs.get(i)));
+					ComponentsHelper.drawCircle(x, y, 10, 10, b ? new float[] { 0, 1, 0, 1 } : new float[] { 0, 0, 1, 1 });
 					
-				}
-				if (result != null) {
-					int place = 2;
-					for (boolean b : result) {
-						int x = debutX + ecartX * 3 + place * 30;
-						int y = debutY + ecartY * nbr;
-						ComponentsHelper.drawCircle(x, y, 10, 10, b ? new float[] { 0, 1, 0, 1 } : new float[] { 0, 0, 1, 1 });
-						
-						place++;
-					}
+					place++;
 				}
 			}
+
 		}
 	}
 
