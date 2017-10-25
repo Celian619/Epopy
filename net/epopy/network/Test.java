@@ -29,11 +29,11 @@ public class Test implements Runnable {
 	static File path = new File("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
 
 	public static void main(final String[] args) throws IOException {
-		if (1%2 != 0)
-			System.out.print("impaire");
-		else
-			System.out.print("pair");
+		String c = "maxplayer 5";
+		System.out.println(c.length() + " = " +  c.charAt(c.length()-3) + c.charAt(c.length()-2) + c.charAt(c.length()-1));
 	}
+	
+	
 	public static String getDurationBreakdown(long millis)
 	{
 		if(millis < 0)

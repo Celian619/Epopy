@@ -51,6 +51,7 @@ public class FileUtils {
 					Main.setVersion(ligne);
 					break;
 				}
+				br.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
