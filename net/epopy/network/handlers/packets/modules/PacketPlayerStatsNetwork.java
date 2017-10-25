@@ -38,7 +38,7 @@ public class PacketPlayerStatsNetwork extends PacketAbstract {
 				if(add) AddPlayersMenu.friendsOnline.add(friendOnlineName);
 			}
 		}
-	/**	System.out.println("Network: " + AddPlayersMenu.playersNetwork.toString());
+	/*	System.out.println("Network: " + AddPlayersMenu.playersNetwork.toString());
 		System.out.println("Friends: " +AddPlayersMenu.friends.toString());
 		System.out.println("Friends online: " +AddPlayersMenu.friendsOnline.toString());
 		System.out.println("-------------------------------");*/

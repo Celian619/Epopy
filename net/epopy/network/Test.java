@@ -29,13 +29,10 @@ public class Test implements Runnable {
 	static File path = new File("C:\\Users\\SEVEN\\AppData\\Roaming\\.Epopy\\epopytest.txt");
 
 	public static void main(final String[] args) throws IOException {
-		long timeBooster = Long.parseLong("-1");
-		System.out.print(timeBooster);
-
-		if(timeBooster > 0)
-			timeBooster = timeBooster * 1000;
-		System.out.print(timeBooster);
-
+		if (1%2 != 0)
+			System.out.print("impaire");
+		else
+			System.out.print("pair");
 	}
 	public static String getDurationBreakdown(long millis)
 	{

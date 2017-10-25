@@ -27,7 +27,7 @@ import net.epopy.network.NetworkPlayer;
 public class DisplayManager {
 
 	private static boolean running = true;
-	
+	private boolean vSync = false;
 	public DisplayManager() {
 		NotificationGui.clear();
 		/**int FRAME_CAP = 9000;//max
@@ -68,7 +68,10 @@ public class DisplayManager {
 			}
 		}*/
 		running = true;
-		Display.setVSyncEnabled(true);
+		/**if(!vSync) {
+			Display.setVSyncEnabled(true);
+			vSync = true;
+		}*/
 		while (running) {
 			if (!Display.isVisible()) {
 				Display.update();
@@ -81,14 +84,14 @@ public class DisplayManager {
 			update();
 			render();
 		}
-		
+
 		new RegisterPlayerNetworkMenu();
 	}
-	
+
 	public static void exitMulti() {
 		running = false;
 	}
-	
+
 	public void update() {
 		//update game
 		NetworkPlayer.getGame().update();
