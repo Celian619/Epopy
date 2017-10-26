@@ -1,5 +1,9 @@
 package net.epopy.network.games.tank;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawCircle;
+import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -23,39 +27,40 @@ import net.epopy.network.handlers.packets.modules.game.PacketPlayerDirection;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerShootBall;
 
 public class Tank extends AbstractGameNetwork {
-
+	
 	public static int TANK_SIZE = 25;
 	public static MapLoader MAP;
-
+	
 	private TankMenuEnd tankMenuEnd;
 	public static boolean unloadTexture = false;
-
+	
 	private boolean shoot = false;
 	public static int balls = CalculTank.getMunitions();
-
+	
 	public Tank() {
 		tankMenuEnd = new TankMenuEnd();
 	}
-
+	
 	@Override
-	public void onEnable() { 
-
+	public void onEnable() {
+	
 	}
-
+	
 	private int timeReload;
+	
 	@Override
 	public void update() {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
-		if(player != null) {
+		if (player != null) {
 			Display.setTitle("Epopy - " + player.getName());
-
-			if(getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
-				if (player != null ) {
+			
+			if (getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
+				if (player != null) {
 					// rotation du tank
 					int rotationSpeed = 5;
 					int directionMouse = CalculTank.getDirectionMouse(player.getLocation().getX(), player.getLocation().getY());
 					int directionPlayer = player.getLocation().getDirection();
-
+					
 					if (!CalculTank.isMouseDistanceNear(player.getLocation())) {
 						if (Math.abs(directionMouse - directionPlayer) <= rotationSpeed) {
 							if (player.getLocation().getDirection() != directionMouse) {
@@ -79,19 +84,19 @@ public class Tank extends AbstractGameNetwork {
 							}
 						}
 					}
-
-					if(!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") && 
+					
+					if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") &&
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") &&
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
 						// inputs
-						if (Input.isKeyDown(Keyboard.KEY_S)) 
+						if (Input.isKeyDown(Keyboard.KEY_S))
 							CalculTank.moove(true);
-						else if (Input.isKeyDown(Keyboard.KEY_Z)) 
+						else if (Input.isKeyDown(Keyboard.KEY_Z))
 							CalculTank.moove(false);
-					} 
-
-					if(timeReload <= 0) {
-						if(balls > 0) {
+					}
+					
+					if (timeReload <= 0) {
+						if (balls > 0) {
 							if (Input.isButtonDown(0)) {
 								if (!shoot) {
 									timeReload = getTankReload();
@@ -100,87 +105,87 @@ public class Tank extends AbstractGameNetwork {
 									balls--;
 								}
 							} else
-								shoot = false;		
+								shoot = false;
 						}
-					} else 
+					} else
 						timeReload--;
-
+						
 				}
-			} else if(getGameStatus().equals(GameStatus.END)) {
-				if(tankMenuEnd != null)tankMenuEnd.update();
+			} else if (getGameStatus().equals(GameStatus.END)) {
+				if (tankMenuEnd != null) tankMenuEnd.update();
 			}
 		}
 	}
-
-	private static float[] colorReload = new float[]{0, 0, 0, 1};
+	
+	private static float[] colorReload = new float[] { 0, 0, 0, 1 };
+	
 	@Override
 	public void render() {
-		if(unloadTexture) {
+		if (unloadTexture) {
 			Textures.unloadTextures();
 			unloadTexture = false;
 		}
-
+		
 		getDefaultBackGround().renderBackground();
-
-		if(PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") || 
+		
+		if (PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") ||
 				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") ||
 				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
-
-			if(!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) 
-				ComponentsHelper.drawText("Capturer les zones pour gagner des points !", 1920/2, 1030/2, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
-
+				
+			if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03"))
+				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+				
 		}
-
-		for(Zone zone : getZones())
+		
+		for (Zone zone : getZones())
 			zone.render();
-
+			
 		for (PlayerNetwork player : getPlayers())
 			player.render();
-
+			
 		for (Ball ball : getBalls())
-			ComponentsHelper.drawCircle(ball.getLocation().getX(), ball.getLocation().getY(), 5, 10, ball.getColor());
-
-		if(getGameStatus().equals(GameStatus.IN_GAME)) {
-			ComponentsHelper.drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2-10, 20, PositionWidth.DROITE, PositionHeight.HAUT, 30, getTeam("BLUE").getColor());
-			ComponentsHelper.drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2+20, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, getTeam("RED").getColor());	
-			if(balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920/2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
-		} else if(getGameStatus().equals(GameStatus.WAITING)) {
-			ComponentsHelper.drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10,  40, PositionWidth.MILIEU, PositionHeight.MILIEU, 18, new float[]{1, 1, 1, 1});
-			if(balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920/2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[]{1, 0.1f, 0.1f, 1});
-		} else if(getGameStatus().equals(GameStatus.END)) {
-			if(tankMenuEnd != null)tankMenuEnd.render();
+			drawCircle(ball.getLocation().getX(), ball.getLocation().getY(), 5, 10, ball.getColor());
+			
+		if (getGameStatus().equals(GameStatus.IN_GAME)) {
+			drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2 - 10, 20, PositionWidth.DROITE, PositionHeight.HAUT, 30, getTeam("BLUE").getColor());
+			drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2 + 20, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, getTeam("RED").getColor());
+			if (balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+		} else if (getGameStatus().equals(GameStatus.WAITING)) {
+			drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10, 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 18, new float[] { 1, 1, 1, 1 });
+			if (balls <= 0) drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+		} else if (getGameStatus().equals(GameStatus.END)) {
+			if (tankMenuEnd != null) tankMenuEnd.render();
 			else tankMenuEnd = new TankMenuEnd();
 		}
-
-
-		if(timeReload > 0) {
+		
+		if (timeReload > 0) {
 			PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
-			if(player != null) {
-				double y = player.getLocation().getY()-40;
-				ComponentsHelper.drawLine(player.getLocation().getX(), y, player.getLocation().getX() + timeReload, y, 2, colorReload);
-				ComponentsHelper.drawLine(player.getLocation().getX(), y, player.getLocation().getX() - timeReload, y, 2, colorReload);
+			if (player != null) {
+				double y = player.getLocation().getY() - 40;
+				drawLine(player.getLocation().getX(), y, player.getLocation().getX() + timeReload, y, 2, colorReload);
+				drawLine(player.getLocation().getX(), y, player.getLocation().getX() - timeReload, y, 2, colorReload);
 			}
 		}
 	}
-
+	
 	@Override
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_GAME_TANK_MAP;
 	}
-
+	
 	public int getTankReload() {
 		int level = TankBoutique.LEVEL_CANON;
-		if(level == 0) 
+		if (level == 0)
 			return 50;
-		if(level == 1) 
+		if (level == 1)
 			return 45;
-		if(level == 2) 
+		if (level == 2)
 			return 40;
-		if(level == 3) 
+		if (level == 3)
 			return 35;
-		if(level == 4) 
+		if (level == 4)
 			return 30;
 		return 50;
 	}
-
+	
 }

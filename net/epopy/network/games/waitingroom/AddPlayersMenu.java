@@ -1,5 +1,9 @@
 package net.epopy.network.games.waitingroom;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+import static net.epopy.epopy.display.components.ComponentsHelper.renderTexture;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +12,6 @@ import java.util.TreeMap;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.display.components.NotificationGui;
@@ -20,37 +23,37 @@ import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom;
 import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom.PacketWaitingRoomType;
 
 public class AddPlayersMenu extends AbstractGameNetwork {
-	
+
 	// liste d'information
 	public static List<String> friends = new LinkedList<>();// liste de tous ses amis
 	public static List<String> friendsOnline = new LinkedList<>();// liste de ses amis en lignes
 	public static List<String> playersNetwork = new LinkedList<>();// liste de tous les joueurs sur le network
-	
+
 	// render
 	public static List<String> addfriendsButtons = new ArrayList<>(5);// liste des personnes qui veut ajouter à sa waiting room
 	private static List<ButtonGui> friendsButtons = new LinkedList<>();// tous les amis à render
 	private final Map<String, ButtonGui> playersRender = new TreeMap<>();// list des joueurs du network à render
-	
+
 	// variable de changement
 	private static int sizeTextArea = 0;// nombre de lettre dans la recherche de joueur. Cette variable permet de savoir si il a modifier ça
 										// recherche
 	private static TextAreaGui searchPlayer;
 	private static ButtonGui validPlayers;
-	
+
 	private static ButtonGui retourWaitingRoom;
-	
+
 	/**
 	 * -- Class --
 	 */
-	
+
 	@Override
 	public void onEnable() {
 		validPlayers = new ButtonGui("Valider", new float[] { 0, 0.7f, 0, 1 }, 50, false);
 		searchPlayer = new TextAreaGui(1082, 225, true, "");
 		retourWaitingRoom = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);
-		
+
 	}
-	
+
 	/**
 	 * Fonction pour reload les pages d'amis
 	 */
@@ -63,7 +66,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			} else
 				buttonsOnlinePlayers.add(button.text);
 		}
-		
+
 		// ajouts les amis en lignes
 		for (String friend : friendsOnline) {
 			if (!buttonsOnlinePlayers.contains(friend)) {
@@ -72,7 +75,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			}
 		}
 	}
-	
+
 	/**
 	 * Fonction pour reset (la bare de recherche, les amis cochés...)
 	 */
@@ -84,20 +87,20 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		searchPlayer.setText("");
 		colone = 0;
 	}
-	
+
 	// variable pour eviter la reclick sur le button des amis
 	private int clickTime = 0;
 	private int lastX = 770;
 	private int ySearchPlayer = 300;
-	
+
 	// Default variables
 	private final int ecartLigne = 40;
 	private final int maxColone = 3;
-	
+
 	private final int defaultX = 730;// 770
 	private final int ecartX = 450;
 	private static int colone = 0;
-	
+
 	@Override
 	public void update() {
 		// text ara pour chercher un joueur
@@ -106,18 +109,18 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		validPlayers.update(1265, 900, PositionWidth.MILIEU, PositionHeight.HAUT, 170, 50);
 		// button pour retourner à la salle d'attente
 		retourWaitingRoom.update(1803, 115, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, 30);
-		
+
 		if (retourWaitingRoom.isClicked()) {
 			reset();
 			WaitingRoom.showAddPlayersMenu = false;
 			return;
 		}
-		
+
 		// variables for friends
 		int y = 300;
 		int x = defaultX;
 		int idfriendsButtons = 0;
-		
+
 		/**
 		 * Handler quand il click sur le button valider
 		 */
@@ -133,7 +136,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			WaitingRoom.showAddPlayersMenu = false;
 			return;
 		}
-		
+
 		/**
 		 * On check si il a update la barre de recherche (ex: Ro | update: Roro -> donc on update la recherche)
 		 */
@@ -144,11 +147,11 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			lastX = defaultX;
 			clickTime = 0;
 		}
-		
+
 		// check si le joueur peut reclicker sur un button
 		if (clickTime > 0)
 			clickTime--;
-			
+
 		/**
 		 * Si la barre de recherche n'est pas vide on cherche sur la network le joueur demandé
 		 */
@@ -203,7 +206,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 						}
 					} else if (playersRender.containsKey(pls))
 						playersRender.remove(pls);
-						
+
 				} else {
 					if (playersRender.containsKey(pls)) {
 						playersRender.remove(pls);
@@ -212,7 +215,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			}
 			return;
 		}
-		
+
 		while (idfriendsButtons < friendsButtons.size()) { // TODO page par la suite
 			ButtonGui button = friendsButtons.get(idfriendsButtons);
 			if (WaitingRoom.waitingRoom.getPlayers().contains(button.text) || WaitingRoom.waitingRoom.getLeader().equals(button.text)) {
@@ -226,9 +229,9 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 					x = defaultX;
 				}
 				colone++;
-				
+
 				button.update(x, y, null, null);
-				
+
 				if (button.isClicked()) {
 					button.setClicked(false);
 					if (clickTime == 0) {
@@ -252,21 +255,21 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			}
 		}
 	}
-	
+
 	@Override
 	public void render() {
 		getDefaultBackGround().renderBackground();
-		ComponentsHelper.renderTexture(Textures.NETWORK_SEARCH_ZONE, 1060, 230, 383 + 10, 32 + 10);
+		renderTexture(Textures.NETWORK_SEARCH_ZONE, 1060, 230, 383 + 10, 32 + 10);
 		/*
 		 * HEADER
 		 */
 		searchPlayer.render();
 		validPlayers.render();
 		retourWaitingRoom.render();
-		
+
 		if (searchPlayer.getText().length() == 0)
-			ComponentsHelper.drawText("Rechercher un joueur", 1135, 225 + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 24, new float[] { 0.7f, 0.7f, 0.7f, 1 });
-		ComponentsHelper.drawText("AJOUTER DES JOUEURS", 1250, 160, PositionWidth.MILIEU, PositionHeight.HAUT, 50);
+			drawText("Rechercher un joueur", 1135, 225 + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 24, new float[] { 0.7f, 0.7f, 0.7f, 1 });
+		drawText("AJOUTER DES JOUEURS", 1250, 160, PositionWidth.MILIEU, PositionHeight.HAUT, 50);
 		/**
 		 * LIST des joueurs
 		 */
@@ -278,11 +281,11 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 			// dans ses amis
 			for (ButtonGui friend : friendsButtons) {
 				if (friend.textColor[0] == 0)
-					ComponentsHelper.drawLine(friend.xx - 10, friend.yy + 18, friend.xx - 23, friend.yy + 18, 1);
+					drawLine(friend.xx - 10, friend.yy + 18, friend.xx - 23, friend.yy + 18, 1);
 				friend.render();
 			}
 		}
-		
+
 		int[] ligneId = new int[] { 0, 0, 0 };
 		for (ButtonGui friend : !searchPlayer.getText().isEmpty() ? playersRender.values() : friendsButtons) {
 			if (friend.xx == defaultX) {
@@ -293,13 +296,13 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 				ligneId[2] = ligneId[2] + 1;
 		}
 		if (ligneId[0] != 0)// -15
-			ComponentsHelper.drawLine(715, 300, 715, 300 + ecartLigne * ligneId[0], 1);
+			drawLine(715, 300, 715, 300 + ecartLigne * ligneId[0], 1);
 		if (ligneId[1] != 0)
-			ComponentsHelper.drawLine(715 + ecartX, 300, 715 + ecartX, 300 + ecartLigne * ligneId[1], 1);
+			drawLine(715 + ecartX, 300, 715 + ecartX, 300 + ecartLigne * ligneId[1], 1);
 		if (ligneId[2] != 0)
-			ComponentsHelper.drawLine(715 + ecartX * 2, 300, 715 + ecartX * 2, 300 + ecartLigne * ligneId[2], 1);
+			drawLine(715 + ecartX * 2, 300, 715 + ecartX * 2, 300 + ecartLigne * ligneId[2], 1);
 	}
-	
+
 	@Override
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_WAITING_ROOM_BG;

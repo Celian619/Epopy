@@ -28,10 +28,10 @@ import net.epopy.network.handlers.packets.modules.game.PacketTeamCaptureZone;
 import net.epopy.network.handlers.packets.modules.game.PacketTeamPoints;
 
 public class Packets {
-	
+
 	public static int MAX_SIZE = 512;
 	private static Map<String, Class<?>> packets;
-	
+
 	public Packets() {
 		if (packets == null) {
 			packets = new TreeMap<>();
@@ -45,7 +45,7 @@ public class Packets {
 			packets.put(PacketPlayerStatsNetwork.class.getSimpleName(), PacketPlayerStatsNetwork.class);
 			packets.put(PacketPlayerStats.class.getSimpleName(), PacketPlayerStats.class);
 			packets.put(PacketPlayerShopBuy.class.getSimpleName(), PacketPlayerShopBuy.class);
-
+			
 			// Game
 			packets.put(PacketPlayerDirection.class.getSimpleName(), PacketPlayerDirection.class);
 			packets.put(PacketPlayerLocation.class.getSimpleName(), PacketPlayerLocation.class);
@@ -57,11 +57,11 @@ public class Packets {
 			packets.put(PacketTeamCaptureZone.class.getSimpleName(), PacketTeamCaptureZone.class);
 			packets.put(PacketGameStatus.class.getSimpleName(), PacketGameStatus.class);
 			packets.put(PacketPlayerDamage.class.getSimpleName(), PacketPlayerDamage.class);
-
+			
 			Logger.info("[Packets] init packet (" + packets.size() + ")");
 		}
 	}
-	
+
 	public static void sendPacket(final NetworkPlayerHandlers clientHandlers, final PacketAbstract packetAbstract) {
 		if (packetAbstract.getPacket().getData().length > 0 && clientHandlers != null && clientHandlers.getDataOutputStream() != null) {
 			try {
@@ -73,23 +73,21 @@ public class Packets {
 			}
 		}
 	}
-	
+
 	public static void sendPacketUDP(final NetworkPlayerHandlers clientHandlers, final PacketAbstract packetAbstract) {
 		if (packetAbstract.getPacket().getData().length > 0 && clientHandlers != null && clientHandlers.getDataOutputStream() != null)
 			clientHandlers.getServerUDP().send(packetAbstract.getPacket().getData());
 	}
-	
+
 	public static PacketAbstract getPacket(final String name) {
 		if (packets.containsKey(name)) {
 			try {
 				return (PacketAbstract) packets.get(name).newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}
 		return null;
 	}
-	
+
 }
