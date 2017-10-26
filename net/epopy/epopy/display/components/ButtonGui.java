@@ -23,8 +23,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.utils.Input;
 
 public class ButtonGui {
@@ -56,17 +56,17 @@ public class ButtonGui {
 
 	public boolean canOver = true;
 
-	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
+	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PosWidth posWidth, final PosHeight posHeight, final int width, final int height) {
 		isClicked = false;
 
-		if (posHeight == PositionHeight.BAS)
+		if (posHeight == PosHeight.BAS)
 			y -= height;
-		else if (posHeight == PositionHeight.MILIEU)
+		else if (posHeight == PosHeight.MILIEU)
 			y -= height / 2;
 
-		if (posWidth == PositionWidth.DROITE)
+		if (posWidth == PosWidth.DROITE)
 			x -= width;
-		else if (posWidth == PositionWidth.MILIEU)
+		else if (posWidth == PosWidth.MILIEU)
 			x -= width / 2;
 
 		this.x = x;
@@ -152,7 +152,7 @@ public class ButtonGui {
 		return isOn;
 	}
 
-	public void update(int x, int y, final PositionWidth posWidth, final PositionHeight posHeight) {
+	public void update(int x, int y, final PosWidth posWidth, final PosHeight posHeight) {
 		if (font == null) {
 			if (ComponentsHelper.fonts.containsKey(textSize))
 				font = ComponentsHelper.fonts.get(textSize);
@@ -164,14 +164,14 @@ public class ButtonGui {
 			for (char c : text.toCharArray())
 				width += font.getCharWidth(c);
 
-			if (posHeight == PositionHeight.BAS)
+			if (posHeight == PosHeight.BAS)
 				y -= textSize;
-			else if (posHeight == PositionHeight.MILIEU)
+			else if (posHeight == PosHeight.MILIEU)
 				y -= textSize / 2;
 
-			if (posWidth == PositionWidth.DROITE)
+			if (posWidth == PosWidth.DROITE)
 				x -= width;
-			else if (posWidth == PositionWidth.MILIEU)
+			else if (posWidth == PosWidth.MILIEU)
 				x -= width / 2;
 
 			xx = x;
@@ -188,15 +188,15 @@ public class ButtonGui {
 		update();
 	}
 
-	public void update(int x, int y, final PositionWidth posWidth, final PositionHeight posHeight, final int width, final int height) {
-		if (posHeight == PositionHeight.BAS)
+	public void update(int x, int y, final PosWidth posWidth, final PosHeight posHeight, final int width, final int height) {
+		if (posHeight == PosHeight.BAS)
 			y -= height;
-		else if (posHeight == PositionHeight.MILIEU)
+		else if (posHeight == PosHeight.MILIEU)
 			y -= height / 2;
 
-		if (posWidth == PositionWidth.DROITE)
+		if (posWidth == PosWidth.DROITE)
 			x -= width;
-		else if (posWidth == PositionWidth.MILIEU)
+		else if (posWidth == PosWidth.MILIEU)
 			x -= width / 2;
 		if (xx == -1 || xx != x || yy != y || ww != width || hh != height) {
 			xx = x;

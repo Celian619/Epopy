@@ -25,8 +25,8 @@ import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.DisplayManager;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.display.components.TextAreaGui;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
@@ -91,14 +91,14 @@ public class RegisterPlayerNetworkMenu {
 			drawText("Pseudo ou Email", 655, 325 + 2 - 10, 30);
 			drawText("Mot de passe", 655, 325 + 145 + 2 - 10, 30);
 
-			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PositionWidth.MILIEU, PositionHeight.HAUT);
+			connexionButton.update(AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 + 200, PosWidth.MILIEU, PosHeight.HAUT);
 			connexionButton.render();
 
-			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 5, AbstractGameMenu.defaultHeight / 2 + 250, PositionWidth.MILIEU, PositionHeight.HAUT);
+			inscriptionButton.update(AbstractGameMenu.defaultWidth / 2 - 5, AbstractGameMenu.defaultHeight / 2 + 250, PosWidth.MILIEU, PosHeight.HAUT);
 
 			inscriptionButton.render();
 			
-			retourButton.update(1440, 130, PositionWidth.GAUCHE, PositionHeight.HAUT, 50, 50);
+			retourButton.update(1440, 130, PosWidth.GAUCHE, PosHeight.HAUT, 50, 50);
 			retourButton.render();
 			
 			if (retourButton.isClicked()) {
@@ -110,13 +110,13 @@ public class RegisterPlayerNetworkMenu {
 			/**
 			 * Lien
 			 */
-			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			twitterButton.render();
 			
-			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			facebookButton.render();
 			
-			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			webButton.render();
 			
 			if (twitterButton.isClicked())
@@ -132,7 +132,7 @@ public class RegisterPlayerNetworkMenu {
 			 * Rester connexion
 			 */
 			drawText("Rester connecté", 680, 325 + 145 * 2 + 1, 27);
-			keepUserButton.update(647, 617, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+			keepUserButton.update(647, 617, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
 			keepUserButton.render();
 			if (keepUserButton.isClicked()) {
 				keepUser = !keepUser;
@@ -151,7 +151,7 @@ public class RegisterPlayerNetworkMenu {
 				config.setValue("last_connection_time", String.valueOf(System.currentTimeMillis() + 1000));
 				tempsRestant = 0;
 			} else if (tempsRestant < time)
-				drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
+				drawText("Vous pouvez vous reconnecter dans " + (time - tempsRestant) + " seconde" + (time - tempsRestant > 1 ? "s" : ""), AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 150, PosWidth.MILIEU, PosHeight.HAUT, 40, new float[] { 1, 0, 0, 1 });
 			else {
 				connexionButton.setOver(true);
 				connexionButton.textColor = new float[] { 1, 1, 1, 1 };
@@ -174,7 +174,7 @@ public class RegisterPlayerNetworkMenu {
 					config.setValue("password", mdp.getText());
 				}
 				if (tempsRestant >= time) {
-					drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
+					drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PosWidth.MILIEU, PosHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 					NotificationGui.render();
 					Display.update();
 					
@@ -193,7 +193,7 @@ public class RegisterPlayerNetworkMenu {
 					break;
 				} else if (networkStatus.equals(NetworkStatus.USER_WAITING_CONFIRMATION)) {
 					networkStatus = player.getNetworkPlayerHandlersWaitingRoom().getNetworkStatus();
-					drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PositionWidth.MILIEU, PositionHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
+					drawText("Connexion en cours..", AbstractGameMenu.defaultWidth / 2 + 20, AbstractGameMenu.defaultHeight / 2 + 130, PosWidth.MILIEU, PosHeight.HAUT, 60, new float[] { 1, 0, 0, 1 });
 				} else {
 					// anti-spam
 					connexionButton.textColor = new float[] { 0.5f, 0.5f, 0.5f, 1 };

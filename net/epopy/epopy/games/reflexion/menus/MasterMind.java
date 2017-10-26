@@ -10,8 +10,8 @@ import org.lwjgl.opengl.Display;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
 import net.epopy.epopy.display.components.ComponentsHelper;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 
@@ -111,7 +111,7 @@ public class MasterMind extends AbstractGameMenu {
 			}
 			
 			int xB = debutX + ecartX * x + 15;
-			button.update(xB, yB, PositionWidth.GAUCHE, PositionHeight.MILIEU, 16, 26);
+			button.update(xB, yB, PosWidth.GAUCHE, PosHeight.MILIEU, 16, 26);
 
 		}
 		
@@ -134,7 +134,7 @@ public class MasterMind extends AbstractGameMenu {
 			}
 
 			int xB = debutX + ecartX * x - 15;
-			button.update(xB, yB, PositionWidth.DROITE, PositionHeight.MILIEU, 16, 26);
+			button.update(xB, yB, PosWidth.DROITE, PosHeight.MILIEU, 16, 26);
 
 		}
 		if (selected[0] && selected[1] && selected[2] && selected[3]) {

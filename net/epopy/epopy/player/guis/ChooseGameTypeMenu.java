@@ -25,8 +25,8 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.display.DisplayManager;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameManager;
@@ -83,11 +83,11 @@ public class ChooseGameTypeMenu {
 			/*
 			 * Buttons
 			 */
-			soloButton.update(430, 795, PositionWidth.MILIEU, PositionHeight.HAUT, 150, 70);
-			multiButton.update(1565, 200, PositionWidth.MILIEU, PositionHeight.HAUT, 300, 70);
+			soloButton.update(430, 795, PosWidth.MILIEU, PosHeight.HAUT, 150, 70);
+			multiButton.update(1565, 200, PosWidth.MILIEU, PosHeight.HAUT, 300, 70);
 			
 			if (Display.isFullscreen()) {
-				quitterButton.update(AbstractGameMenu.defaultWidth - 12, 12, PositionWidth.DROITE, PositionHeight.HAUT, 20, 20);
+				quitterButton.update(AbstractGameMenu.defaultWidth - 12, 12, PosWidth.DROITE, PosHeight.HAUT, 20, 20);
 				quitterButton.render();
 				if (quitterButton.isClicked())
 					Main.exit();
@@ -135,13 +135,13 @@ public class ChooseGameTypeMenu {
 			soloButton.render();
 			multiButton.render();
 			
-			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			twitterButton.render();
 			
-			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			facebookButton.render();
 			
-			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 			webButton.render();
 			
 			if (twitterButton.isClicked())

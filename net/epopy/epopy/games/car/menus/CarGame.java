@@ -35,8 +35,8 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.CarStats;
@@ -201,7 +201,7 @@ public class CarGame extends AbstractGameMenu {
 
 			if (contreSens) {
 				contreSens = false;
-				drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
+				drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PosWidth.MILIEU, PosHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
 			}
 			if (!pause.isFinish()) {
 				if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
@@ -212,23 +212,20 @@ public class CarGame extends AbstractGameMenu {
 				if (pause.getTimePauseTotal() == 5) {
 
 					Textures.GAME_STARTING_BG.renderBackground();
-
-					int x = 1093;
-					int y = 400;
-
+					
 					float[] orange = new float[] { 1, 0.5f, 0, 1 };
-					drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, orange);
-					drawText("Droite", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
-					drawText("Gauche", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25);
+					drawText("CONTROLES", 1093, 370, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
+					drawText("Droite", 1093, 410, PosWidth.MILIEU, PosHeight.HAUT, 25);
+					drawText("Gauche", 1093, 540, PosWidth.MILIEU, PosHeight.HAUT, 25);
 					
 					float[] white = new float[] { 1, 1, 1, 1 };
-					drawText(Input.getKeyName(CarOptions.KEY_RIGHT), x, y + 75, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, white);
-					drawText(Input.getKeyName(CarOptions.KEY_LEFT), x, y + 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, white);
+					drawText(Input.getKeyName(CarOptions.KEY_RIGHT), 1093, 475, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
+					drawText(Input.getKeyName(CarOptions.KEY_LEFT), 1093, 600, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
 
 					drawText("OBJECTIF", 660, 495, 30, orange);
 					float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-					drawText("Finir en moins", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
-					drawText("d'une minute !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
+					drawText("Finir en moins", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+					drawText("d'une minute !", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 
 					drawText(pause.getPauseString(), 660, 335, 100, white);
 				} else
@@ -237,7 +234,7 @@ public class CarGame extends AbstractGameMenu {
 			}
 
 			if (!pauseScreen && pause.isFinish())
-				drawText(timer / 60 + "", 1920 / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 60);
+				drawText(timer / 60 + "", 960, 10, PosWidth.MILIEU, PosHeight.HAUT, 60);
 
 		}
 

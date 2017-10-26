@@ -9,8 +9,8 @@ import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 import net.epopy.network.NetworkPlayer;
@@ -133,7 +133,7 @@ public class Tank extends AbstractGameNetwork {
 				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
 				
 			if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03"))
-				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
 				
 		}
 		
@@ -147,12 +147,12 @@ public class Tank extends AbstractGameNetwork {
 			drawCircle(ball.getLocation().getX(), ball.getLocation().getY(), 5, 10, ball.getColor());
 			
 		if (getGameStatus().equals(GameStatus.IN_GAME)) {
-			drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2 - 10, 20, PositionWidth.DROITE, PositionHeight.HAUT, 30, getTeam("BLUE").getColor());
-			drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2 + 20, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, getTeam("RED").getColor());
-			if (balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+			drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2 - 10, 20, PosWidth.DROITE, PosHeight.HAUT, 30, getTeam("BLUE").getColor());
+			drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2 + 20, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, getTeam("RED").getColor());
+			if (balls <= 0) ComponentsHelper.drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
 		} else if (getGameStatus().equals(GameStatus.WAITING)) {
-			drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10, 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 18, new float[] { 1, 1, 1, 1 });
-			if (balls <= 0) drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PositionWidth.MILIEU, PositionHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+			drawText(PacketGameStatus.WAITING_MESSAGE, AbstractGameMenu.defaultWidth / 2 + 10, 40, PosWidth.MILIEU, PosHeight.MILIEU, 18, new float[] { 1, 1, 1, 1 });
+			if (balls <= 0) drawText("Retourner à votre base, pour vous recharger en munitions.", 1920 / 2, 1030, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
 		} else if (getGameStatus().equals(GameStatus.END)) {
 			if (tankMenuEnd != null) tankMenuEnd.render();
 			else tankMenuEnd = new TankMenuEnd();

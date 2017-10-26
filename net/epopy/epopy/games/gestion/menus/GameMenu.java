@@ -8,8 +8,8 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.games.gestion.AbstractGame;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
@@ -80,10 +80,10 @@ public class GameMenu extends AbstractGameMenu {
 			i++;
 		}
 		if (showStats) {
-			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+			quitterMenu.update(482 - 13, 263 - 13, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
 
 		} else if (showOptions) {
-			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
+			quitterMenu.update(482 - 13, 263 - 13, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
 			if (game != null && game.getMenuOptions() != null)
 				game.getMenuOptions().update();
 		}
@@ -97,10 +97,10 @@ public class GameMenu extends AbstractGameMenu {
 		 * sound
 		 */
 
-		sound.update(10, 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 65, 65);
-		sound_moins.update(80, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
-		sound_plus.update(123, 21, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
-		twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
+		sound.update(10, 10, PosWidth.GAUCHE, PosHeight.HAUT, 65, 65);
+		sound_moins.update(80, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
+		sound_plus.update(123, 21, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
+		twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PosWidth.GAUCHE, PosHeight.BAS, 50, 50);
 
 		if (sound_moins.isClicked()) {
 			if (Audios.VOLUME_VALUE > 1) {
@@ -134,14 +134,14 @@ public class GameMenu extends AbstractGameMenu {
 			new WebPage("https://twitter.com/intent/tweet?screen_name=EpopyOfficiel&ref_src=twsrc%5Etfw");
 		}
 
-		retour.update(AbstractGameMenu.defaultWidth - 17, 17, PositionWidth.DROITE, PositionHeight.HAUT, 50, 50);
-		droite.update(AbstractGameMenu.defaultWidth - 200, AbstractGameMenu.defaultHeight / 2, PositionWidth.DROITE, PositionHeight.MILIEU, 165, 148);
-		gauche.update(200, AbstractGameMenu.defaultHeight / 2, PositionWidth.GAUCHE, PositionHeight.MILIEU, 165, 148);
+		retour.update(AbstractGameMenu.defaultWidth - 17, 17, PosWidth.DROITE, PosHeight.HAUT, 50, 50);
+		droite.update(AbstractGameMenu.defaultWidth - 200, AbstractGameMenu.defaultHeight / 2, PosWidth.DROITE, PosHeight.MILIEU, 165, 148);
+		gauche.update(200, AbstractGameMenu.defaultHeight / 2, PosWidth.GAUCHE, PosHeight.MILIEU, 165, 148);
 
-		jouer.update(1550, 840, PositionWidth.MILIEU, PositionHeight.HAUT, 130, 50);
+		jouer.update(1550, 840, PosWidth.MILIEU, PosHeight.HAUT, 130, 50);
 
-		stats.update(1280, 980, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
-		options.update(1730, 730, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
+		stats.update(1280, 980, PosWidth.GAUCHE, PosHeight.HAUT, 100, 30);
+		options.update(1730, 730, PosWidth.GAUCHE, PosHeight.HAUT, 100, 30);
 
 		if (stats.isOn())
 			stats.setText(" Stats");
@@ -240,18 +240,18 @@ public class GameMenu extends AbstractGameMenu {
 		
 		Textures.GAME_MENU_BG.renderBackground();
 		if (twitterButton.isOn())
-			drawText("Partage ton expérience de jeu !", AbstractGameMenu.defaultWidth - 70, AbstractGameMenu.defaultHeight - 24, PositionWidth.DROITE, PositionHeight.BAS, 20);
+			drawText("Partage ton expérience de jeu !", AbstractGameMenu.defaultWidth - 70, AbstractGameMenu.defaultHeight - 24, PosWidth.DROITE, PosHeight.BAS, 20);
 		if (sound != null) {
 			sound.render();
 			sound_moins.render();
 			sound_plus.render();
-			drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, white);
+			drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, white);
 		}
 		
 		if (showStats) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
-			drawText("Statistiques", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, white);
+			drawText("Statistiques", AbstractGameMenu.defaultWidth / 2, 299, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
 			
 			if (game != null) {
 				String temps = "";
@@ -298,20 +298,20 @@ public class GameMenu extends AbstractGameMenu {
 
 				float[] green = new float[] { 0, 0.7f, 0, 1 };
 				// temps
-				drawText("Temps de jeu", 930, 368, PositionWidth.DROITE, PositionHeight.MILIEU, 30, white);
-				drawText(temps, 990, 368, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, green);
+				drawText("Temps de jeu", 930, 368, PosWidth.DROITE, PosHeight.MILIEU, 30, white);
+				drawText(temps, 990, 368, PosWidth.GAUCHE, PosHeight.MILIEU, 30, green);
 				// nombre de partie jouées
-				drawText("Parties jouées", 930, 547, PositionWidth.DROITE, PositionHeight.MILIEU, 30, white);
-				drawText(parties, 990, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, green);
+				drawText("Parties jouées", 930, 547, PosWidth.DROITE, PosHeight.MILIEU, 30, white);
+				drawText(parties, 990, 547, PosWidth.GAUCHE, PosHeight.MILIEU, 30, green);
 				// dernier record
-				drawText("Record", 930, 736, PositionWidth.DROITE, PositionHeight.MILIEU, 30, white);
-				drawText(record, 990, 736, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, green);
+				drawText("Record", 930, 736, PosWidth.DROITE, PosHeight.MILIEU, 30, white);
+				drawText(record, 990, 736, PosWidth.GAUCHE, PosHeight.MILIEU, 30, green);
 			}
 			
 		} else if (showOptions) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
-			drawText("Options", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, white);
+			drawText("Options", AbstractGameMenu.defaultWidth / 2, 299, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
 			
 			if (game != null && game.getMenuOptions() != null)
 				game.getMenuOptions().render();
@@ -342,7 +342,7 @@ public class GameMenu extends AbstractGameMenu {
 			
 		}
 		
-		drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
+		drawText(name, 370, 200, PosWidth.MILIEU, PosHeight.MILIEU, 65);
 		NotificationGui.render();
 		
 	}

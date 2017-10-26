@@ -121,23 +121,23 @@ public class ComponentsHelper {
 
 	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 	
-	public static float drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size) {
+	public static float drawText(final String msg, final double x, final double y, final PosWidth posWidth, final PosHeight posHeight, final int size) {
 		return drawText(msg, x, y, posWidth, posHeight, size, new float[] { 1, 1, 1, 1 });
 	}
 
 	public static float drawText(final String msg, final double x, final double y, final int size, final float[] color) {
-		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, color);
+		return drawText(msg, x, y, PosWidth.GAUCHE, PosHeight.HAUT, size, color);
 	}
 
 	public static float drawText(final String msg, final double x, final double y, final int size) {
-		return drawText(msg, x, y, PositionWidth.GAUCHE, PositionHeight.HAUT, size, new float[] { 1, 1, 1, 1 });
+		return drawText(msg, x, y, PosWidth.GAUCHE, PosHeight.HAUT, size, new float[] { 1, 1, 1, 1 });
 	}
 
-	public static float drawText(final String msg, final double x, final double y, final PositionWidth posWidth, final PositionHeight posHeight, final int size, final float[] color) {
+	public static float drawText(final String msg, final double x, final double y, final PosWidth posWidth, final PosHeight posHeight, final int size, final float[] color) {
 		return drawText(msg, x, y, posWidth, posHeight, size, color, true);
 	}
 
-	public static float drawText(final String msg, double x, double y, final PositionWidth posWidth, final PositionHeight posHeight, int size, final float[] color, final boolean resize) {
+	public static float drawText(final String msg, double x, double y, final PosWidth posWidth, final PosHeight posHeight, int size, final float[] color, final boolean resize) {
 		if (resize) {
 			x = getResponsiveX(x);
 			y = getResponsiveY(y);
@@ -155,14 +155,14 @@ public class ComponentsHelper {
 		for (char c : msg.toCharArray())
 			msgWidth += font.getCharWidth(c);
 
-		if (posHeight == PositionHeight.BAS)
+		if (posHeight == PosHeight.BAS)
 			y -= msgHeight;
-		else if (posHeight == PositionHeight.MILIEU)
+		else if (posHeight == PosHeight.MILIEU)
 			y -= msgHeight / 2;
 
-		if (posWidth == PositionWidth.DROITE)
+		if (posWidth == PosWidth.DROITE)
 			x -= msgWidth;
-		else if (posWidth == PositionWidth.MILIEU)
+		else if (posWidth == PosWidth.MILIEU)
 			x -= msgWidth / 2;
 
 		glColor4f(color[0], color[1], color[2], color[3]);
@@ -296,13 +296,13 @@ public class ComponentsHelper {
 		return (float) (size / AbstractGameMenu.defaultHeight * Display.getHeight());
 	}
 
-	public enum PositionHeight {
+	public enum PosHeight {
 		BAS(),
 		HAUT(),
 		MILIEU();
 	}
 	
-	public enum PositionWidth {
+	public enum PosWidth {
 		DROITE(),
 		GAUCHE(),
 		MILIEU();

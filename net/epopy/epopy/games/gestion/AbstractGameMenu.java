@@ -7,8 +7,8 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.utils.Pause;
 
 public abstract class AbstractGameMenu {
@@ -38,13 +38,13 @@ public abstract class AbstractGameMenu {
 		// Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 		Textures.GAME_ECHAP_BANDE.renderBackground();
 		if (!pause) {
-			drawText(title, defaultWidth / 2 + (subtitle.equals("") ? -7 : 30), defaultHeight / 2 - (subtitle.equals("") ? 0 : 40), PositionWidth.MILIEU, PositionHeight.MILIEU, 90, new float[] { 1, 1, 1, 1 });
+			drawText(title, defaultWidth / 2 + (subtitle.equals("") ? -7 : 30), defaultHeight / 2 - (subtitle.equals("") ? 0 : 40), PosWidth.MILIEU, PosHeight.MILIEU, 90, new float[] { 1, 1, 1, 1 });
 			if (!subtitle.equals(""))
-				drawText(subtitle, defaultWidth / 2 + 30, defaultHeight / 2 + 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 0.8f });
+				drawText(subtitle, defaultWidth / 2 + 30, defaultHeight / 2 + 40, PosWidth.MILIEU, PosHeight.MILIEU, 50, new float[] { 1, 1, 1, 0.8f });
 		}
 		ButtonGui button = pause ? reprendreButton : rejouerButton;
-		button.update(pause ? 1560 : 1590, 200, PositionWidth.MILIEU, PositionHeight.HAUT, 300, 50);
-		quitterButton.update(450 - 55, 795, PositionWidth.MILIEU, PositionHeight.HAUT, 150, 50);
+		button.update(pause ? 1560 : 1590, 200, PosWidth.MILIEU, PosHeight.HAUT, 300, 50);
+		quitterButton.update(450 - 55, 795, PosWidth.MILIEU, PosHeight.HAUT, 150, 50);
 
 		button.render();
 		quitterButton.render();

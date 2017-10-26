@@ -5,8 +5,8 @@ import org.lwjgl.input.Keyboard;
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.ButtonGui;
 import net.epopy.epopy.display.components.ComponentsHelper;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class CarOptions extends AbstractGameMenu {
@@ -32,8 +32,8 @@ public class CarOptions extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		controlDroite.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-		controlGauche.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlDroite.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
+		controlGauche.update(985, 735, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 		/*
 		 * Gauche
 		 */
@@ -89,7 +89,7 @@ public class CarOptions extends AbstractGameMenu {
 		controlDroite.render();
 
 		float[] color = new float[] { 1, 1, 1, 1 };
-		ComponentsHelper.drawText("Gauche", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		ComponentsHelper.drawText("Droite", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Gauche", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Droite", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 	}
 }
