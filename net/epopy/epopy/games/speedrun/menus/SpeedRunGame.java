@@ -128,17 +128,14 @@ public class SpeedRunGame extends AbstractGameMenu {
 				if (r.normalORsneakORlampadaire == 0) {
 					if (!sneak) {
 						gameOver = true;
-						System.out.println("GameOver");
 					}
 				} else if (r.normalORsneakORlampadaire == 1) {
 					if (height < 60) {
 						gameOver = true;
-						System.out.println("GameOver");
 					}
 				} else {// lampadaire
 					if (height > 130 || sneak) {
 						gameOver = true;
-						System.out.println("GameOver");
 					}
 				}
 
@@ -267,8 +264,8 @@ public class SpeedRunGame extends AbstractGameMenu {
 				ComponentsHelper.drawText(Input.getKeyName(SpeedRunOptions.KEY_SNEAK), x + 16 - 30, y + 130 + 37, 50, new float[] { 0, 0, 0, 1 });
 				
 				ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				ComponentsHelper.drawText("Tenir plus d'", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				ComponentsHelper.drawText("1 minute 20", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				ComponentsHelper.drawText("Tenir plus de", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				ComponentsHelper.drawText("2 minutes", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 				
 				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 			} else
