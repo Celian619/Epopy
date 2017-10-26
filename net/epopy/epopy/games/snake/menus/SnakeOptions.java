@@ -151,10 +151,11 @@ public class SnakeOptions extends AbstractGameMenu {
 		controlHaut.render();
 		controlGauche.render();
 		controlDroite.render();
-		
-		ComponentsHelper.drawText("Haut", 1420 - 528, 353, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText("Bas", 1420 - 520, 720, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText("Gauche", 1400 - 543, 353 + 100, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText("Droite", 1400 - 525, 720 - 100, 30, new float[] { 1, 1, 1, 1 });
+
+		float[] color = new float[] { 1, 1, 1, 1 };
+		ComponentsHelper.drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Bas", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Gauche", 935, 472, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Droite", 935, 640, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
 	}
 }

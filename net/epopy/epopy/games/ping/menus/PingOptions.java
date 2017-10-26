@@ -104,11 +104,7 @@ public class PingOptions extends AbstractGameMenu {
 		droite.render();
 		controlBas.render();
 		controlHaut.render();
-
-		String option1 = "Haut";
-		String option2 = "Bas";
-		String option3 = "Type de contrôle";
-
+		
 		String type = "";
 		if (MOUSE == 0) type = "Souris";
 		else if (MOUSE == 1) type = "Touches";
@@ -116,9 +112,10 @@ public class PingOptions extends AbstractGameMenu {
 
 		ComponentsHelper.drawText(type, 1580 - 475, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
 
-		ComponentsHelper.drawText(option1, 1420 - 528 - 10, 350, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText(option2, 1420 - 520, 530, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText(option3, 1280 - 535 - 20, 718, 30, new float[] { 1, 1, 1, 1 });
+		float[] color = new float[] { 1, 1, 1, 1 };
+		ComponentsHelper.drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Bas", 935, 550, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Type de contrôle", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
 
 	}
 }

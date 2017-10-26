@@ -88,7 +88,8 @@ public class SpeedRunOptions extends AbstractGameMenu {
 		controlGauche.render();
 		controlDroite.render();
 
-		ComponentsHelper.drawText("Jump", 1400 - 525, 350, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText("Sneak", 1400 - 540, 717, 30, new float[] { 1, 1, 1, 1 });
+		float[] color = new float[] { 1, 1, 1, 1 };
+		ComponentsHelper.drawText("Jump", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Sneak", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
 	}
 }

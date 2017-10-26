@@ -35,7 +35,6 @@ public class TankOptions extends AbstractGameMenu {
 		controlBas.update(1495 - 510, 718, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
 		controlHaut.update(1495 - 510, 350, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
 
-	
 		if (!controlBas.isOn() && controlBasClicked) {
 			controlBasClicked = false;
 			controlBas.setText(Keyboard.getKeyName(KEY_DOWN));
@@ -78,11 +77,12 @@ public class TankOptions extends AbstractGameMenu {
 
 	@Override
 	public void render() {
-	
+
 		controlBas.render();
 		controlHaut.render();
 
-		ComponentsHelper.drawText("Avancer", 1420-575, 350, 30, new float[] { 1, 1, 1, 1 });
-		ComponentsHelper.drawText("Reculer", 1420-570, 718, 30, new float[] { 1,1, 1, 1 });
+		float[] color = new float[] { 1, 1, 1, 1 };
+		ComponentsHelper.drawText("Avancer", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		ComponentsHelper.drawText("Reculer", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
 	}
 }

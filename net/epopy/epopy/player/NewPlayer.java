@@ -93,12 +93,16 @@ public class NewPlayer {
 			write(w, "tank_control_bas=" + String.valueOf(Keyboard.KEY_DOWN));
 			write(w, "tank_control_haut=" + String.valueOf(Keyboard.KEY_UP));
 			
-			write(w, "speedrun_control_sneak=" + String.valueOf(Keyboard.KEY_DOWN));
-			write(w, "speedrun_control_jump=" + String.valueOf(Keyboard.KEY_UP));
-			
 			write(w, "placeinvader_control_gauche=" + String.valueOf(Keyboard.KEY_LEFT));
 			write(w, "placeinvader_control_droite=" + String.valueOf(Keyboard.KEY_RIGHT));
 			
+			write(w, "speedrun_control_sneak=" + String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "speedrun_control_jump=" + String.valueOf(Keyboard.KEY_UP));
+
+			write(w, "tetras_control_bas=" + String.valueOf(Keyboard.KEY_DOWN));
+			write(w, "tetras_control_gauche=" + String.valueOf(Keyboard.KEY_LEFT));
+			write(w, "tetras_control_droite=" + String.valueOf(Keyboard.KEY_RIGHT));
+
 			write(w, "sound_volume=5");
 			write(w, "sound=true");
 			
