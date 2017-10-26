@@ -23,63 +23,63 @@ import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
 public class PingGame extends AbstractGameMenu {
-
+	
 	private static final int paddleWidth = 43;
 	private static final int paddleHeight = 163;
 	private static final int ballSize = 30;
 	private static final int ecartBordPaddle = 15;
-
+	
 	// modifier pour change la difficulte
 	private double speedPaddle = 10;
 	private double speedBall = 8;
-
+	
 	private double yPlayer;
 	private double yRobot;
 	private double lastMouseY;
-
+	
 	private Location ballPos;
 	private int direction;
-	
-	private int timer;
 
+	private int timer;
+	
 	// color
 	private float[] colorTimer = new float[] { 1, 1, 1, 1 };
 	private int colorTime;
-
+	
 	private boolean addStats;
-
+	
 	private boolean pauseScreen;
-
+	
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.PING.isRunning())
 			Audios.PING.start(true).setVolume(0.2f);
-			
+
 		speedBall = 8;
 		speedPaddle = 10;
 		addStats = pauseScreen = gameOver = false;
-		
+
 		Mouse.setCursorPosition(20, Display.getHeight() / 2);
 		lastMouseY = (Display.getHeight() - Mouse.getY()) / (double) Display.getHeight() * defaultHeight;
 		Mouse.setGrabbed(true);
-		
+
 		yPlayer = yRobot = defaultHeight / 2 - paddleHeight / 2;
-		
+
 		Random r = new Random();
 		direction = (int) (180 + r.nextInt(45) * r.nextGaussian());
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
-
+		
 		timer = 0;
 		pause.startPause(5);
 	}
-
+	
 	@Override
 	public void update() {
 		if (!pauseScreen && !gameOver && pause.isFinish()) {
 			timer++;
 		}
-
+		
 		/*
 		 * Random color
 		 */
@@ -89,7 +89,7 @@ public class PingGame extends AbstractGameMenu {
 			colorTimer = new float[] { random.nextFloat(), random.nextFloat(), random.nextFloat(), 1 };
 			colorTime = 0;
 		}
-
+		
 		if (pause.isFinish() && !gameOver) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -101,12 +101,12 @@ public class PingGame extends AbstractGameMenu {
 				}
 			}
 		}
-
+		
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
 		}
-
+		
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
 				pause.startPause(3);
@@ -114,9 +114,9 @@ public class PingGame extends AbstractGameMenu {
 				Mouse.setGrabbed(true);
 			}
 		}
-
+		
 		if (pauseScreen || !pause.isFinish() || gameOver) return;
-
+		
 		if (Input.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			Mouse.setGrabbed(false);
 		}
@@ -142,35 +142,35 @@ public class PingGame extends AbstractGameMenu {
 					yPlayer = defaultHeight - paddleHeight;
 				else
 					yPlayer = lastMouseY - paddleHeight / 2;
-
+					
 			}
 		}
-
+		
 		// rebond mur / plafond ou avance
 		rebond();
-
+		
 		// IA du robot
 		yRobot = ballPos.getY() - paddleHeight / 2;
 		if (yRobot < 0) yRobot = 0;
 		if (yRobot > defaultHeight - paddleHeight) yRobot = defaultHeight - paddleHeight;
-		
-	}
 
+	}
+	
 	@Override
 	public void render() {
 		Textures.GAME_PING_LEVEL_BG.renderBackground();
 		if (!gameOver && !pauseScreen && pause.isFinish()) {
-
-			boolean record = timer / (double) 60 >= Main.getPlayer().getPingStats().getRecord();
-
-			drawText(timer / 60 + "", defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
 			
+			boolean record = timer / (double) 60 >= Main.getPlayer().getPingStats().getRecord();
+			
+			drawText(timer / 60 + "", defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
+
 		}
 		drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
 		drawQuad(defaultWidth - paddleWidth - ecartBordPaddle, (int) yRobot, paddleWidth, paddleHeight);
 		drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
 		drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
-
+		
 		if (!pause.isFinish()) {
 			if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
 				pause.stopPause();
@@ -178,44 +178,44 @@ public class PingGame extends AbstractGameMenu {
 			}
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
-
+				
 				Textures.GAME_STARTING_BG.renderBackground();
-
+				
 				int x = 1093;
 				int y = 400;
 				int ecartement = 120;
-
-				drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-
-				drawText("Haut", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Bas", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-
+				
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, orange);
+				float[] white = new float[] { 1, 1, 1, 1 };
+				drawText("Haut", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, white);
+				drawText("Bas", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, white);
+				
 				if (PingOptions.MOUSE == 2) {
-					drawText("ou", x, y + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 0.5f, 0, 1 });
-					drawText("ou", x, y + 150 + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 0.5f, 0, 1 });
+					drawText("ou", x, y + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, orange);
+					drawText("ou", x, y + 150 + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, orange);
 				}
-
+				
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 1) {
-					renderTexture(Textures.GAME_TOUCHE_VIERGE, x - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 45, 60, 60);
-					renderTexture(Textures.GAME_TOUCHE_VIERGE, x - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 150 + 45, 60, 60);
-					drawText(Input.getKeyName(PingOptions.KEY_UP), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 37, 50, new float[] { 0, 0, 0, 1 });
-					drawText(Input.getKeyName(PingOptions.KEY_DOWN), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 150 + 37, 50, new float[] { 0, 0, 0, 1 });
+					drawText(Input.getKeyName(PingOptions.KEY_UP), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 37, 50, white);
+					drawText(Input.getKeyName(PingOptions.KEY_DOWN), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 150 + 37, 50, white);
 				}
-
+				
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 0) {
 					renderTexture(Textures.GAME_MOUSE_UP, x + (PingOptions.MOUSE == 2 ? ecartement / 2 : -30), y + 45, 60, 60);
 					renderTexture(Textures.GAME_MOUSE_DOWN, x + (PingOptions.MOUSE == 2 ? ecartement / 2 : -30), y + 150 + 45, 60, 60);
 				}
-				
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Tenir plus d'", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText("1 minute 20", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, orange);
+				float[] gray = new float[] { 0.8f, 0.8f, 0.8f, 1 };
+				drawText("Tenir plus d'", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, gray);
+				drawText("1 minute 20", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, gray);
+				
+				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}
-
+		
 		if (pauseScreen) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
@@ -234,7 +234,7 @@ public class PingGame extends AbstractGameMenu {
 				// set best score
 				if (record)
 					Main.getPlayer().getPingStats().setRecord(timer / 60);
-
+					
 				if (timer / 60 > pingStats.getObjectif()) {
 					if (Main.getPlayer().getLevel() <= GameList.PING.getID())
 						Main.getPlayer().setLevel(GameList.PING.getID() + 1);
@@ -242,85 +242,85 @@ public class PingGame extends AbstractGameMenu {
 				addStats = true;
 			}
 		}
-		
+
 	}
-
+	
 	private void rebond() {
-
+		
 		// rebond murs
 		int epaisseur = paddleWidth + ballSize - 5 + ecartBordPaddle;
 		if (deplacedX() > defaultWidth - ballSize || deplacedX() < ballSize) {
 			direction = 540 - direction;
-
+			
 			if (direction > 360)
 				direction -= 360;
 			gameOver = true;
 		} else if ((direction < 90 || direction > 270) && deplacedX() > AbstractGameMenu.defaultWidth - epaisseur && Math.abs(ballPos.getY() - (yRobot + paddleHeight / 2)) <= (double) paddleHeight / 2) {
-
+			
 			direction = 540 - direction;
-
+			
 			direction += (ballPos.getY() - yRobot - paddleHeight / 2) / 2;
-
+			
 			if (direction > 360)
 				direction -= 360;
-
+				
 			speedBall += 10 * defaultWidth / AbstractGameMenu.defaultWidth / speedBall;
 			speedPaddle = Math.abs(speedBall * Math.sin(Math.toRadians(50))) + 1;
-
+			
 		} else if (deplacedX() < epaisseur && Math.abs(ballPos.getY() - (yPlayer + paddleHeight / 2)) <= (double) paddleHeight / 2 && direction > 90 && direction < 270) {
-
+			
 			direction = 540 - direction;
-
+			
 			direction += (ballPos.getY() - yPlayer - paddleHeight / 2) / 2;
-
+			
 			direction += new Random().nextGaussian();// - 1 ou + 1
-
+			
 			if (direction > 90 && direction < 100) {
 				direction = 88;
 			} else if (direction < 270) {
 				direction = 272;
 			}
-
+			
 			if (direction > 360)
 				direction -= 360;
-
+				
 			speedBall += 10 / speedBall;
 			speedPaddle = Math.abs(speedBall * Math.sin(Math.toRadians(50))) + 1;
-
+			
 		} else
 			ballPos.setX(deplacedX());
-
+			
 		// Rebond si rencontre sol || plafond
-
+		
 		if (deplacedY() > defaultHeight - ballSize || deplacedY() < ballSize) {
 			direction = 360 - direction;
-
+			
 			int directionBis = direction;
 			while (directionBis > 90)
 				directionBis -= 90;
-
+				
 			// alonge les rebond pour que la balle ne face pas trop de rebonds
 			if (directionBis < 45)
 				direction += 10;
 			else
 				direction -= 10;
-
+				
 			// verifie si le +/- 10 a pas fait depasser les bornes
 			if (direction > 360) direction -= 360;
 			else if (direction < 0) direction += 360;
-
+			
 		} else
 			ballPos.setY(deplacedY());
-
+			
 	}
-
+	
 	private double deplacedX() {
 		return ballPos.getX() + speedBall * Math.cos(Math.toRadians(direction));
 	}
-
+	
 	private double deplacedY() {
 		// - car + fait decendre
 		return ballPos.getY() + speedBall * Math.sin(Math.toRadians(direction));
 	}
-	
+
 }

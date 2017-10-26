@@ -320,21 +320,22 @@ public class TankGame extends AbstractGameMenu {
 
 				int x = 1093;
 				int y = 400;
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				float[] white = new float[] { 1, 1, 1, 1 };
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
 
-				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Avancer", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Reculer", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, orange);
+				drawText("Avancer", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25, white);
+				drawText("Reculer", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25, white);
 
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 150 + 25, 60, 60);
-				drawText(Input.getKeyName(TankOptions.KEY_UP), x - 28 + 16, y + 38, 50, new float[] { 0, 0, 0, 1 });
-				drawText(Input.getKeyName(TankOptions.KEY_DOWN), x - 28 + 16, y + 150 + 18, 50, new float[] { 0, 0, 0, 1 });
+				drawText(Input.getKeyName(TankOptions.KEY_UP), x - 28 + 16, y + 38, 50, white);
+				drawText(Input.getKeyName(TankOptions.KEY_DOWN), x - 28 + 16, y + 150 + 18, 50, white);
 				
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Tuer plus de", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText(Main.getPlayer().getTankStats().getObjectif() + " fois le bot.", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, orange);
+				drawText("Tuer plus de", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
+				drawText(Main.getPlayer().getTankStats().getObjectif() + " fois le bot.", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
 
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}

@@ -167,29 +167,29 @@ public class TetrasGame extends AbstractGameMenu {
 				int x = 1093;
 				int y = 400;
 				int ecartement = 120;
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				float[] white = new float[] { 1, 1, 1, 1 };
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
 
-				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, orange);
 
-				drawText("Rotation", x - ecartement - 15, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Bas", x - ecartement + 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Droite", x + ecartement / 2, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Gauche", x + ecartement / 2 - 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("Rotation", x - ecartement - 15, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, white);
+				drawText("Bas", x - ecartement + 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, white);
+				drawText("Droite", x + ecartement / 2, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, white);
+				drawText("Gauche", x + ecartement / 2 - 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, white);
 
 				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement - 30, y + 45, 60, 60);
 				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement + 90, y + 45, -60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 150 + 25, 60, 60);
-				drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 17, 50, new float[] { 0, 0, 0, 1 });
+				drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 17, 50, white);
 
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 45, 60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 150 + 25, 60, 60);
-				drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, new float[] { 0, 0, 0, 1 });
-				drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 20, 50, new float[] { 0, 0, 0, 1 });
+				drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, white);
+				drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 20, 50, white);
 
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, orange);
+				drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
+				drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, grey);
 
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, white);
 				return;
 			} else
 				pause.showRestartChrono();
