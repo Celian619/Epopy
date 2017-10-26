@@ -46,15 +46,6 @@ public class ChooseGameTypeMenu {
 	public ChooseGameTypeMenu() {
 		if (Main.getPlayer() == null)
 			Main.setPlayer(new Player("localhost"));
-			
-		if (Integer.parseInt(Main.getPlayer().getConfig().getData("configUpgrade", "0")) == 0) {
-			File localhost = new File(FileUtils.PATH_FOLDER + "localhost.txt");
-			if (localhost.exists())
-				localhost.delete();
-			Main.setPlayer(new Player("localhost"));
-			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
-			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[] { 1, 0, 0, 1 }, true);
-		}
 
 		if (!Display.isCreated()) {
 			Config c = Main.getPlayer().getConfig();

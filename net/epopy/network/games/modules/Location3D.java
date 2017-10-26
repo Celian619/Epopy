@@ -111,6 +111,11 @@ public class Location3D {
 		this.pitch = pitch;
 	}
 	
+	public void set(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void set(double x, double y, double z) {
 		this.x = x;
 		this.y = y;

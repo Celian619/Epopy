@@ -27,7 +27,7 @@ import net.epopy.network.NetworkPlayer;
 public class DisplayManager {
 
 	private static boolean running = true;
-	private boolean vSync = false;
+	
 	public DisplayManager() {
 		NotificationGui.clear();
 		/**int FRAME_CAP = 9000;//max

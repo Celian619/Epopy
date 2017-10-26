@@ -64,6 +64,17 @@ public class Player {
 	public void init() {
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		config = new Config(profil);
+
+		if (Integer.parseInt(config.getData("configUpgrade", "0")) == 0) {
+			File localhost = new File(FileUtils.PATH_FOLDER + "localhost.txt");
+			if (localhost.exists())
+				localhost.delete();
+			Main.setPlayer(new Player("localhost"));
+			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
+			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[] { 1, 0, 0, 1 }, true);
+			return;
+		}
+
 		level = Integer.parseInt(config.getData("level"));
 		carStats = new CarStats(config);
 		snakeStats = new SnakeStats(config);
@@ -72,10 +83,10 @@ public class Player {
 		placeInvaderStats = new PlaceInvaderStats(config);
 		tankStats = new TankStats(config);
 		tetrasStats = new TetrasStats(config);
-		
+
 		sound = Boolean.valueOf(config.getData("sound", "true"));
 	}
-	
+
 	public int getSoundLevel() {
 		return Integer.parseInt(config.getData("sound_volume", "5"));
 	}
@@ -124,11 +135,11 @@ public class Player {
 		lastGameID = id;
 		config.setValue("last_game", String.valueOf(id));
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void setLevel(final int level) {
 		if (this.level < level) {
 			new NotificationGui("• Objectif réussi •", "Vous venez de débloquer un nouveau jeu !", 5, new float[] { 1, 1, 1, 1 }, false);
@@ -149,7 +160,7 @@ public class Player {
 	public PlaceInvaderStats getPlaceInvaderStats() {
 		return placeInvaderStats;
 	}
-	
+
 	public PingStats getPingStats() {
 		return pingStats;
 	}
