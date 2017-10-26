@@ -1,5 +1,10 @@
 package net.epopy.epopy.games.gestion.menus;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawQuad;
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+import static net.epopy.epopy.display.components.ComponentsHelper.getResponsiveY;
+import static net.epopy.epopy.display.components.ComponentsHelper.renderTexture;
+
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
@@ -22,7 +27,7 @@ import net.epopy.epopy.player.stats.TankStats;
 import net.epopy.epopy.player.stats.TetrasStats;
 
 public class GameMenu extends AbstractGameMenu {
-
+	
 	private String name = null;
 	private AbstractGame game;
 	private static ButtonGui retour = new ButtonGui(Textures.GAME_MENU_USERS_RETOUR_OFF, Textures.GAME_MENU_USERS_RETOUR_ON);;
@@ -33,24 +38,24 @@ public class GameMenu extends AbstractGameMenu {
 	private static ButtonGui options = new ButtonGui("Options", new float[] { 1, 1, 1, 1 }, 30, false);
 	private static ButtonGui quitterMenu = new ButtonGui(Textures.GAME_MENU_QUITTER_OFF, Textures.GAME_MENU_QUITTER_ON);
 	private static ButtonGui sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
-
+	
 	private static ButtonGui sound_moins = new ButtonGui("-", new float[] { 1, 1, 1, 1 }, 30, false);
 	private static ButtonGui sound_plus = new ButtonGui("+", new float[] { 1, 1, 1, 1 }, 30, false);
-
+	
 	private boolean showStats = false;
 	private boolean showOptions = false;
-
+	
 	private int w1Jouer = 0;
 	private int w2Jouer = 0;
-
+	
 	@Override
 	public void onEnable() {
-
+	
 	}
-
+	
 	private float i = 0;
 	boolean soundCrescendo;
-
+	
 	@Override
 	public void update() {
 		if (!Audios.LOBBY.isRunning() && Main.getPlayer().hasSound()) {
@@ -58,7 +63,7 @@ public class GameMenu extends AbstractGameMenu {
 			soundCrescendo = true;
 			i = 0;
 		}
-
+		
 		if (soundCrescendo) {
 			if (i == 10)
 				Audios.LOBBY.setVolume(0.15f);
@@ -74,26 +79,26 @@ public class GameMenu extends AbstractGameMenu {
 		}
 		if (showStats) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
-
+			
 		} else if (showOptions) {
 			quitterMenu.update(482 - 13, 263 - 13, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 			if (game != null && game.getMenuOptions() != null)
 				game.getMenuOptions().update();
 		}
-
+		
 		if (quitterMenu.isClicked()) {
 			showStats = false;
 			showOptions = false;
 		}
-
+		
 		/*
 		 * sound
 		 */
-
+		
 		sound.update(10, 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 65, 65);
 		sound_moins.update(80, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
 		sound_plus.update(123, 21, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, 30);
-
+		
 		if (sound_moins.isClicked()) {
 			if (Audios.VOLUME_VALUE > 1) {
 				Audios.VOLUME_VALUE -= 1;
@@ -101,7 +106,7 @@ public class GameMenu extends AbstractGameMenu {
 				Audios.updateAllVolume();
 			}
 		}
-
+		
 		if (sound_plus.isClicked()) {
 			if (Audios.VOLUME_VALUE < 10) {
 				Audios.VOLUME_VALUE += 1;
@@ -109,7 +114,7 @@ public class GameMenu extends AbstractGameMenu {
 				Audios.updateAllVolume();
 			}
 		}
-
+		
 		if (!Main.getPlayer().hasSound()) {
 			sound.textureOff = Textures.MENU_SOUND_OFF;
 			sound.textureOn = Textures.MENU_SOUND_OFF;
@@ -117,31 +122,31 @@ public class GameMenu extends AbstractGameMenu {
 			sound.textureOff = Textures.MENU_SOUND_ON;
 			sound.textureOn = Textures.MENU_SOUND_ON;
 		}
-
+		
 		if (sound.isClicked()) {
 			Main.getPlayer().setSoundStatus(!Main.getPlayer().hasSound());
 			sound.setClicked(false);
 		}
-
+		
 		retour.update(AbstractGameMenu.defaultWidth - 17, 17, PositionWidth.DROITE, PositionHeight.HAUT, 50, 50);
 		droite.update(AbstractGameMenu.defaultWidth - 200, AbstractGameMenu.defaultHeight / 2, PositionWidth.DROITE, PositionHeight.MILIEU, 165, 148);
 		gauche.update(200, AbstractGameMenu.defaultHeight / 2, PositionWidth.GAUCHE, PositionHeight.MILIEU, 165, 148);
-
+		
 		jouer.update(1550, 840, PositionWidth.MILIEU, PositionHeight.HAUT, 130, 50);
-
+		
 		stats.update(1280, 980, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
 		options.update(1730, 730, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, 30);
-
+		
 		if (stats.isOn())
 			stats.setText(" Stats");
 		else
 			stats.setText("Stats");
-
+			
 		if (options.isOn())
 			options.setText(" Options");
 		else
 			options.setText("Options");
-
+			
 		if (stats.isClicked() && !name.equals("? ? ? ?")) {
 			showStats = true;
 			showOptions = false;
@@ -150,10 +155,10 @@ public class GameMenu extends AbstractGameMenu {
 			showStats = false;
 			showOptions = true;
 		}
-
+		
 		if (retour.isClicked())
 			new ChooseGameTypeMenu();
-
+			
 		if (jouer.isOn()) {
 			if (w1Jouer > 0)
 				w1Jouer -= 20;
@@ -169,11 +174,11 @@ public class GameMenu extends AbstractGameMenu {
 				w2Jouer += 20;
 			else w2Jouer = 280;
 		}
-
+		
 		if (jouer.isClicked()) {
 			showStats = false;
 			showOptions = false;
-
+			
 			Main.getGameManager().setGameEnable(game);
 			game.setStatus(true);
 			Main.getPlayer().setLastGame(GameList.valueOf(name.toUpperCase()).getID());
@@ -213,9 +218,9 @@ public class GameMenu extends AbstractGameMenu {
 					game.getMenuOptions().onEnable();
 			}
 		}
-
+		
 	}
-
+	
 	@Override
 	public void render() {
 		if (name == null) {
@@ -225,21 +230,21 @@ public class GameMenu extends AbstractGameMenu {
 			if (game.getMenuOptions() != null)
 				game.getMenuOptions().onEnable();
 		}
-		
+
 		Textures.GAME_MENU_BG.renderBackground();
-		
+
 		if (sound != null) {
 			sound.render();
 			sound_moins.render();
 			sound_plus.render();
-			ComponentsHelper.drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
+			drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
 		}
-		
+
 		if (showStats) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
-			ComponentsHelper.drawText("Statistiques", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
-			
+			drawText("Statistiques", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
+
 			if (game != null) {
 				String temps = "";
 				String record = "";
@@ -283,26 +288,26 @@ public class GameMenu extends AbstractGameMenu {
 					parties = tetrasStats.getParties() + "";
 				}
 				// temps
-				float lastXTemps = ComponentsHelper.drawText("Temps de jeu", 780 - 10, 353, 30, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText(temps, lastXTemps + 30, ComponentsHelper.getResponsiveY(353), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
+				float lastXTemps = drawText("Temps de jeu", 780 - 10, 353, 30, new float[] { 1, 1, 1, 1 });
+				drawText(temps, lastXTemps + 30, getResponsiveY(353), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 				// nombre de partie jouées
-				float lastXPartie = ComponentsHelper.drawText("Parties jouées", 770 - 10, 530, 30, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText(parties, lastXPartie + 30, ComponentsHelper.getResponsiveY(530), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
+				float lastXPartie = drawText("Parties jouées", 770 - 10, 530, 30, new float[] { 1, 1, 1, 1 });
+				drawText(parties, lastXPartie + 30, getResponsiveY(530), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 				// dernier record
 				float lastXRecord = ComponentsHelper.drawText("Record", 856 - 5, 718, 30, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText(record, lastXRecord + 30, ComponentsHelper.getResponsiveY(718), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
+				drawText(record, lastXRecord + 30, getResponsiveY(718), PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 0, 0.7f, 0, 1 }, false);
 			}
-			
+
 		} else if (showOptions) {
 			Textures.GAME_MENU_BG_STATS.renderBackground();
 			quitterMenu.render();
-			ComponentsHelper.drawText("Options", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
-			
+			drawText("Options", AbstractGameMenu.defaultWidth / 2, 299, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 1 });
+
 			if (game != null && game.getMenuOptions() != null)
 				game.getMenuOptions().render();
 		} else {
 			if (game != null) {
-				ComponentsHelper.renderTexture(game.getDefaultBackGround(), 483, 267, 958, 539);
+				renderTexture(game.getDefaultBackGround(), 483, 267, 958, 539);
 			}
 		}
 		if (name.equals("? ? ? ?") && showOptions || name.equals("? ? ? ?") && showStats) {
@@ -312,30 +317,30 @@ public class GameMenu extends AbstractGameMenu {
 		if (!name.equals("? ? ? ?")) {
 			Textures.GAME_MENU_SCOTCH.renderBackground();
 			// Bas
-			ComponentsHelper.drawQuad(1297 + 18, 930 - 10, w1Jouer == 280 ? 287 : w1Jouer, 2);
+			drawQuad(1297 + 18, 930 - 10, w1Jouer == 280 ? 287 : w1Jouer, 2);
 			// Haut
-			ComponentsHelper.drawQuad(1768 + 18, 835 - 10, w2Jouer == 280 ? -287 : -w2Jouer, 2);
-			
+			drawQuad(1768 + 18, 835 - 10, w2Jouer == 280 ? -287 : -w2Jouer, 2);
+
 			jouer.render();
 			stats.render();
 			options.render();
 		}
-		
+
 		retour.render();
-		
+
 		if (GameList.valueOf(game.getName().toUpperCase()).getID() - 1 != 0)
 			gauche.render();
-			
+
 		if (Main.getPlayer().getLevel() > GameList.valueOf(game.getName().toUpperCase()).getID()) {
 			droite.render();
-			
+
 		}
-		
-		ComponentsHelper.drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
+
+		drawText(name, 370, 200, PositionWidth.MILIEU, PositionHeight.MILIEU, 65);
 		NotificationGui.render();
-		
+
 	}
-	
+
 	public String changeTpsTxt(int seconds) {
 		int minutes = 0;
 		int hours = 0;
@@ -347,8 +352,8 @@ public class GameMenu extends AbstractGameMenu {
 			hours++;
 			minutes -= 60;
 		}
-
+		
 		return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + +seconds;
 	}
-
+	
 }

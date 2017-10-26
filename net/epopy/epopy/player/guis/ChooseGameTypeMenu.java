@@ -1,5 +1,6 @@
 package net.epopy.epopy.player.guis;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawQuad;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
@@ -24,7 +25,6 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.display.DisplayManager;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.display.components.NotificationGui;
@@ -37,55 +37,55 @@ import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.WebPage;
 
 public class ChooseGameTypeMenu {
-
+	
 	private int w1_Solo = 0;
 	private int w2_Solo = 0;
 	private int w1_Multi = 0;
 	private int w2_Multi = 0;
-
+	
 	public ChooseGameTypeMenu() {
 		if (Main.getPlayer() == null)
 			Main.setPlayer(new Player("localhost"));
-		
+			
 		if (Integer.parseInt(Main.getPlayer().getConfig().getData("configUpgrade", "0")) == 0) {
 			File localhost = new File(FileUtils.PATH_FOLDER + "localhost.txt");
-			if(localhost.exists()) 
+			if (localhost.exists())
 				localhost.delete();
 			Main.setPlayer(new Player("localhost"));
 			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
-			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[]{1, 0, 0, 1}, true);
+			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[] { 1, 0, 0, 1 }, true);
 		}
-		
+
 		if (!Display.isCreated()) {
 			Config c = Main.getPlayer().getConfig();
 			int width = Integer.parseInt(c.getData("display_width", (int) (1920 / 1.5) + ""));
 			int height = Integer.parseInt(c.getData("display_height", (int) (1080 / 1.5) + ""));
-
+			
 			new DisplayManager(width, height, "Epopy", Boolean.parseBoolean(Main.getPlayer().getConfig().getData("display_fullscreen")), false);
 		} else {
-
+			
 			Textures.unloadTextures();
 		}
-
+		
 		ButtonGui soloButton = new ButtonGui("SOLO", new float[] { 1, 1, 1, 1 }, 50, false);
 		ButtonGui multiButton = new ButtonGui("MULTIJOUEUR", new float[] { 1, 1, 1, 1 }, 50, false);
-
+		
 		ButtonGui twitterButton = new ButtonGui(Textures.LOGO_TWITTER_OFF, Textures.LOGO_TWITTER_ON);
 		ButtonGui facebookButton = new ButtonGui(Textures.LOGO_FACEBOOK_OFF, Textures.LOGO_FACEBOOK_ON);
 		ButtonGui webButton = new ButtonGui(Textures.LOGO_WEB_OFF, Textures.LOGO_WEB_ON);
-
+		
 		ButtonGui quitterButton = new ButtonGui(Textures.GAME_MENU_QUITTER_OFF, Textures.GAME_MENU_QUITTER_ON);
-
+		
 		while (true) {
 			view2D();
 			Textures.MAIN_BG.renderBackground();
-
+			
 			/*
 			 * Buttons
 			 */
 			soloButton.update(430, 795, PositionWidth.MILIEU, PositionHeight.HAUT, 150, 70);
 			multiButton.update(1565, 200, PositionWidth.MILIEU, PositionHeight.HAUT, 300, 70);
-
+			
 			if (Display.isFullscreen()) {
 				quitterButton.update(AbstractGameMenu.defaultWidth - 12, 12, PositionWidth.DROITE, PositionHeight.HAUT, 20, 20);
 				quitterButton.render();
@@ -107,7 +107,7 @@ public class ChooseGameTypeMenu {
 					w2_Solo += 20;
 				else w2_Solo = 520;
 			}
-
+			
 			if (multiButton.isOn()) {
 				if (w1_Multi > 40)
 					w1_Multi -= 40;
@@ -123,27 +123,27 @@ public class ChooseGameTypeMenu {
 					w2_Multi += 20;
 				else w2_Multi = 520;
 			}
-
+			
 			// solo bar bas
-			ComponentsHelper.drawQuad(42, 880, w1_Solo == 520 ? 523 : w1_Solo, 2);
-			ComponentsHelper.drawQuad(780, 770, w2_Solo == 520 ? -530 : -w2_Solo, 2);
-
+			drawQuad(42, 880, w1_Solo == 520 ? 523 : w1_Solo, 2);
+			drawQuad(780, 770, w2_Solo == 520 ? -530 : -w2_Solo, 2);
+			
 			// multi bars
-			ComponentsHelper.drawQuad(1390, 180, w1_Multi == 520 ? 523 : w1_Multi, 2);
-			ComponentsHelper.drawQuad(1730, 190 + 90, w2_Multi == 520 ? -530 : -w2_Multi, 2);
-
+			drawQuad(1390, 180, w1_Multi == 520 ? 523 : w1_Multi, 2);
+			drawQuad(1730, 190 + 90, w2_Multi == 520 ? -530 : -w2_Multi, 2);
+			
 			soloButton.render();
 			multiButton.render();
-
+			
 			twitterButton.update(AbstractGameMenu.defaultWidth - 60, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			twitterButton.render();
-
+			
 			facebookButton.update(AbstractGameMenu.defaultWidth - 120, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			facebookButton.render();
-
+			
 			webButton.update(AbstractGameMenu.defaultWidth - 60 * 3, AbstractGameMenu.defaultHeight - 10, PositionWidth.GAUCHE, PositionHeight.BAS, 50, 50);
 			webButton.render();
-
+			
 			if (twitterButton.isClicked())
 				new WebPage(WebPage.WEB_PAGE_TWITTER_EPOPY);
 			else if (facebookButton.isClicked())
@@ -155,14 +155,14 @@ public class ChooseGameTypeMenu {
 			Input.update();
 			Display.update();
 			Display.sync(60);
-
+			
 			if (Display.isCloseRequested())
 				Main.exit();
 			else if (soloButton.isClicked()) {
 				Textures.unloadTextures();
 				Main.setGameManager(new GameManager());
 				break;
-
+				
 			} else if (multiButton.isClicked()) {
 				Textures.unloadTextures();
 				/*
@@ -175,22 +175,22 @@ public class ChooseGameTypeMenu {
 			}
 		}
 	}
-
+	
 	private void view2D() {
 		glClearColor(1, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-
+		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
+		
 		GLU.gluOrtho2D(0, Display.getWidth(), Display.getHeight(), 0);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
+		
 		glEnable(GL_TEXTURE_2D);
-
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}

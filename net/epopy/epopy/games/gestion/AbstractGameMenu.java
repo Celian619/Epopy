@@ -1,10 +1,12 @@
 package net.epopy.epopy.games.gestion;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawQuad;
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.utils.Pause;
@@ -36,9 +38,9 @@ public abstract class AbstractGameMenu {
 		// Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 		Textures.GAME_ECHAP_BANDE.renderBackground();
 		if (!pause) {
-			ComponentsHelper.drawText(title, defaultWidth / 2 + (subtitle.equals("") ? -7 : 30), defaultHeight / 2 - (subtitle.equals("") ? 0 : 40), PositionWidth.MILIEU, PositionHeight.MILIEU, 90, new float[] { 1, 1, 1, 1 });
+			drawText(title, defaultWidth / 2 + (subtitle.equals("") ? -7 : 30), defaultHeight / 2 - (subtitle.equals("") ? 0 : 40), PositionWidth.MILIEU, PositionHeight.MILIEU, 90, new float[] { 1, 1, 1, 1 });
 			if (!subtitle.equals(""))
-				ComponentsHelper.drawText(subtitle, defaultWidth / 2 + 30, defaultHeight / 2 + 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 0.8f });
+				drawText(subtitle, defaultWidth / 2 + 30, defaultHeight / 2 + 40, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 1, 1, 0.8f });
 		}
 		ButtonGui button = pause ? reprendreButton : rejouerButton;
 		button.update(pause ? 1560 : 1590, 200, PositionWidth.MILIEU, PositionHeight.HAUT, 300, 50);
@@ -79,12 +81,12 @@ public abstract class AbstractGameMenu {
 			else w2Button = 520;
 		}
 		// solo bar bas
-		ComponentsHelper.drawQuad(42 - 17, 880, w1Quitter == 520 ? 523 : w1Quitter, 2);
-		ComponentsHelper.drawQuad(780 - 17, 770, w2Quitter == 520 ? -530 : -w2Quitter, 2);
+		drawQuad(42 - 17, 880, w1Quitter == 520 ? 523 : w1Quitter, 2);
+		drawQuad(780 - 17, 770, w2Quitter == 520 ? -530 : -w2Quitter, 2);
 
 		// button bars
-		ComponentsHelper.drawQuad(1390 - 17, 180, w1Button == 520 ? 523 : w1Button, 2);
-		ComponentsHelper.drawQuad(1730 - 17, 190 + 90, w2Button == 520 ? -530 : -w2Button, 2);
+		drawQuad(1390 - 17, 180, w1Button == 520 ? 523 : w1Button, 2);
+		drawQuad(1730 - 17, 190 + 90, w2Button == 520 ? -530 : -w2Button, 2);
 
 		if (quitterButton.isClicked()) {
 			Audios.stopAll();

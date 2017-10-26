@@ -1,5 +1,7 @@
 package net.epopy.epopy.games.tetras.menus;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+import static net.epopy.epopy.display.components.ComponentsHelper.renderTexture;
 import static org.lwjgl.opengl.GL11.glColor4f;
 
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ import org.lwjgl.input.Mouse;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
@@ -167,28 +168,28 @@ public class TetrasGame extends AbstractGameMenu {
 				int y = 400;
 				int ecartement = 120;
 
-				ComponentsHelper.drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
 
-				ComponentsHelper.drawText("Rotation", x - ecartement - 15, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText("Bas", x - ecartement + 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText("Droite", x + ecartement / 2, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				ComponentsHelper.drawText("Gauche", x + ecartement / 2 - 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("Rotation", x - ecartement - 15, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("Bas", x - ecartement + 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("Droite", x + ecartement / 2, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				drawText("Gauche", x + ecartement / 2 - 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 
-				ComponentsHelper.renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement - 30, y + 45, 60, 60);
-				ComponentsHelper.renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement + 90, y + 45, -60, 60);
-				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 150 + 25, 60, 60);
-				ComponentsHelper.drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 17, 50, new float[] { 0, 0, 0, 1 });
+				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement - 30, y + 45, 60, 60);
+				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement + 90, y + 45, -60, 60);
+				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 150 + 25, 60, 60);
+				drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 17, 50, new float[] { 0, 0, 0, 1 });
 
-				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 45, 60, 60);
-				ComponentsHelper.renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 150 + 25, 60, 60);
-				ComponentsHelper.drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, new float[] { 0, 0, 0, 1 });
-				ComponentsHelper.drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 20, 50, new float[] { 0, 0, 0, 1 });
+				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 45, 60, 60);
+				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 150 + 25, 60, 60);
+				drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, new float[] { 0, 0, 0, 1 });
+				drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 20, 50, new float[] { 0, 0, 0, 1 });
 
-				ComponentsHelper.drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				ComponentsHelper.drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				ComponentsHelper.drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
+				drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
 
-				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
 				return;
 			} else
 				pause.showRestartChrono();
@@ -204,7 +205,7 @@ public class TetrasGame extends AbstractGameMenu {
 			y *= grilleHeight;
 			
 			glColor4f(color[0], color[1], color[2], color[3]);
-			ComponentsHelper.renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
+			renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
 			
 			glColor4f(1, 1, 1, 1);
 			
@@ -220,7 +221,7 @@ public class TetrasGame extends AbstractGameMenu {
 				
 				glColor4f(lastColor[0], lastColor[1], lastColor[2], lastColor[3]);
 				
-				ComponentsHelper.renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
+				renderTexture(Textures.TETRAS_BLOCK, x - 1, y - 1, (int) grilleWidth + 2, (int) grilleHeight + 2);
 				
 				glColor4f(1, 1, 1, 1);
 				
@@ -229,7 +230,7 @@ public class TetrasGame extends AbstractGameMenu {
 			i++;
 		}
 		
-		ComponentsHelper.drawText("Score : " + score, 10, 50, 40);
+		drawText("Score : " + score, 10, 50, 40);
 		
 	}
 	

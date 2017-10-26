@@ -1,35 +1,36 @@
 package net.epopy.epopy.games.ping.menus;
 
+import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
+
 import org.lwjgl.input.Keyboard;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class PingOptions extends AbstractGameMenu {
-
+	
 	private static ButtonGui controlBas;
 	private static ButtonGui controlHaut;
 	private static boolean controlBasClicked;
 	private boolean controlHautClicked;
 	private static ButtonGui gauche;
 	private static ButtonGui droite;
-
+	
 	public static int KEY_DOWN;
 	public static int KEY_UP;
 	public static int MOUSE;
 	// 2 = touches & mouse
-
+	
 	@Override
 	public void onEnable() {
 		KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_bas"));
 		KEY_UP = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_haut"));
 		MOUSE = Integer.parseInt(Main.getPlayer().getConfig().getData("ping_control_mouse"));// 0 = mouse | 1 = touches |
-		
+
 		controlBasClicked = false;
 		controlHautClicked = false;
 		gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
@@ -37,14 +38,14 @@ public class PingOptions extends AbstractGameMenu {
 		controlBas = new ButtonGui(Keyboard.getKeyName(KEY_DOWN), new float[] { 0, 0.7f, 0, 1 }, 30);
 		controlHaut = new ButtonGui(Keyboard.getKeyName(KEY_UP), new float[] { 0, 0.7f, 0, 1 }, 30);
 	}
-
+	
 	@Override
 	public void update() {
 		gauche.update(1008, 723, PositionWidth.DROITE, PositionHeight.HAUT, 33, 30);
 		droite.update(1203, 723, PositionWidth.GAUCHE, PositionHeight.HAUT, 33, 30);
 		controlBas.update(985, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 		controlHaut.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-
+		
 		if (gauche.isClicked()) {
 			if (MOUSE > 0) {
 				MOUSE--;
@@ -56,14 +57,14 @@ public class PingOptions extends AbstractGameMenu {
 			} else MOUSE = 0;
 			Main.getPlayer().getConfig().setValue("ping_control_mouse", String.valueOf(MOUSE));
 		}
-
+		
 		if (!controlBas.isOn() && controlBasClicked) {
 			controlBasClicked = false;
 			controlBas.setText(Keyboard.getKeyName(KEY_DOWN));
 		}
 		if (controlBas.isClicked())
 			controlBasClicked = true;
-
+			
 		if (controlBasClicked) {
 			controlBas.setText("Touche ?");
 			for (int i = 0; i < 209; i++) {
@@ -82,7 +83,7 @@ public class PingOptions extends AbstractGameMenu {
 		}
 		if (controlHaut.isClicked())
 			controlHautClicked = true;
-
+			
 		if (controlHautClicked) {
 			controlHaut.setText("Touche ?");
 			for (int i = 0; i < 209; i++) {
@@ -96,26 +97,26 @@ public class PingOptions extends AbstractGameMenu {
 			}
 		}
 	}
-
+	
 	@Override
 	public void render() {
-
+		
 		gauche.render();
 		droite.render();
 		controlBas.render();
 		controlHaut.render();
-		
+
 		String type = "";
 		if (MOUSE == 0) type = "Souris";
 		else if (MOUSE == 1) type = "Touches";
 		else if (MOUSE == 2) type = "Touches & Souris";
-
-		ComponentsHelper.drawText(type, 1105, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
-
+		
+		drawText(type, 1105, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
+		
 		float[] color = new float[] { 1, 1, 1, 1 };
-		ComponentsHelper.drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		ComponentsHelper.drawText("Bas", 935, 550, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		ComponentsHelper.drawText("Type de contrôle", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-
+		drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Bas", 935, 550, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Type de contrôle", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		
 	}
 }
