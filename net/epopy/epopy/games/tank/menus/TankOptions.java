@@ -32,8 +32,8 @@ public class TankOptions extends AbstractGameMenu {
 
 	@Override
 	public void update() {
-		controlBas.update(1495 - 510, 718, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
-		controlHaut.update(1495 - 510, 350, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
+		controlBas.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlHaut.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 
 		if (!controlBas.isOn() && controlBasClicked) {
 			controlBasClicked = false;

@@ -39,10 +39,10 @@ public class TetrasOptions extends AbstractGameMenu {
 
 	@Override
 	public void update() {
-		controlBas.update(1495 - 510, 350, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
+		controlBas.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 		
-		controlGauche.update(1495 - 510, 530, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
-		controlDroite.update(1495 - 510, 723, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
+		controlGauche.update(985, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlDroite.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 		/*
 		 * Gauche
 		 */

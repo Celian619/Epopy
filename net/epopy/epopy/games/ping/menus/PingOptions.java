@@ -40,10 +40,10 @@ public class PingOptions extends AbstractGameMenu {
 
 	@Override
 	public void update() {
-		gauche.update(1550 - 25 - 520, 723, PositionWidth.DROITE, PositionHeight.HAUT, 165 / 5, 148 / 5);
-		droite.update(1550 + 185 - 530, 723, PositionWidth.GAUCHE, PositionHeight.HAUT, 165 / 5, 148 / 5);
-		controlBas.update(1495 - 510, 530, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
-		controlHaut.update(1495 - 510, 350, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
+		gauche.update(1008, 723, PositionWidth.DROITE, PositionHeight.HAUT, 33, 30);
+		droite.update(1203, 723, PositionWidth.GAUCHE, PositionHeight.HAUT, 33, 30);
+		controlBas.update(985, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlHaut.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 
 		if (gauche.isClicked()) {
 			if (MOUSE > 0) {
@@ -110,7 +110,7 @@ public class PingOptions extends AbstractGameMenu {
 		else if (MOUSE == 1) type = "Touches";
 		else if (MOUSE == 2) type = "Touches & Souris";
 
-		ComponentsHelper.drawText(type, 1580 - 475, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
+		ComponentsHelper.drawText(type, 1105, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
 
 		float[] color = new float[] { 1, 1, 1, 1 };
 		ComponentsHelper.drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);

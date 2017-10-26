@@ -11,12 +11,12 @@ public class CarStats {
 	
 	public CarStats(final Config config) {
 		this.config = config;
-
-		parties = Integer.parseInt(config.getData("car_parties"));
 		
-		temps = Integer.parseInt(config.getData("car_temps"));
-
-		record = Integer.parseInt(config.getData("car_record"));
+		parties = Integer.parseInt(config.getData("car_parties", "0"));
+		
+		temps = Integer.parseInt(config.getData("car_temps", "0"));
+		
+		record = Integer.parseInt(config.getData("car_record", "0"));
 		
 	}
 	

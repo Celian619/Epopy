@@ -2,20 +2,19 @@ package net.epopy.epopy.player.stats;
 
 import net.epopy.epopy.utils.Config;
 
-public class PlaceInvaderStats {
+public class TetrasStats {
 	
 	private int pts;
 	private int parties;
 	private int temps;
 	private final Config config;
 
-	public PlaceInvaderStats(final Config config) {
+	public TetrasStats(final Config config) {
 		this.config = config;
-		pts = Integer.parseInt(config.getData("plainv_record", "0"));
-		parties = Integer.parseInt(config.getData("plainv_parties", "0"));
-
-		temps = Integer.parseInt(config.getData("plainv_temps", "0"));
-
+		pts = Integer.parseInt(config.getData("tetras_pts", "0"));
+		parties = Integer.parseInt(config.getData("tetras_parties", "0"));
+		temps = Integer.parseInt(config.getData("tetras_temps", "0"));
+		
 	}
 
 	public int getTemps() {
@@ -24,7 +23,7 @@ public class PlaceInvaderStats {
 
 	public void addTemps(final int temps) {
 		this.temps += temps;
-		config.setValue("plainv_temps", this.temps + "");
+		config.setValue("tetras_temps", this.temps + "");
 	}
 
 	public int getObjectif() {
@@ -37,7 +36,7 @@ public class PlaceInvaderStats {
 
 	public void addPartie() {
 		parties++;
-		config.setValue("plainv_parties", parties + "");
+		config.setValue("tetras_parties", parties + "");
 	}
 
 	public int getRecord() {
@@ -46,6 +45,7 @@ public class PlaceInvaderStats {
 
 	public void setRecord(final int pts) {
 		this.pts = pts;
-		config.setValue("plainv_record", pts + "");
+		config.setValue("tetras_pts", pts + "");
 	}
+
 }

@@ -32,8 +32,8 @@ public class SpeedRunOptions extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		controlDroite.update(1495 - 520, 353, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
-		controlGauche.update(1495 - 520, 720, PositionWidth.GAUCHE, PositionHeight.HAUT, 40 * 5, 30);
+		controlDroite.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlGauche.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
 		/*
 		 * Gauche
 		 */

@@ -19,6 +19,7 @@ import net.epopy.epopy.player.stats.PlaceInvaderStats;
 import net.epopy.epopy.player.stats.SnakeStats;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.player.stats.TankStats;
+import net.epopy.epopy.player.stats.TetrasStats;
 
 public class GameMenu extends AbstractGameMenu {
 
@@ -275,6 +276,11 @@ public class GameMenu extends AbstractGameMenu {
 					temps = changeTpsTxt(speedRunStats.getTemps());
 					record = speedRunStats.getRecord() + "s";
 					parties = speedRunStats.getParties() + "";
+				} else if (GameList.TETRAS.toString().toLowerCase().equals(nom)) {
+					TetrasStats tetrasStats = p.getTetrasStats();
+					temps = changeTpsTxt(tetrasStats.getTemps());
+					record = tetrasStats.getRecord() + " point" + (tetrasStats.getRecord() <= 1 ? "" : "s");
+					parties = tetrasStats.getParties() + "";
 				}
 				// temps
 				float lastXTemps = ComponentsHelper.drawText("Temps de jeu", 780 - 10, 353, 30, new float[] { 1, 1, 1, 1 });
