@@ -193,13 +193,13 @@ public class PingGame extends AbstractGameMenu {
 				}
 
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 1) {
-					drawText(Input.getKeyName(PingOptions.KEY_UP), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 157, 50, white);
-					drawText(Input.getKeyName(PingOptions.KEY_DOWN), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 307, 50, white);
+					drawText(Input.getKeyName(PingOptions.KEY_UP), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 437, 50, white);
+					drawText(Input.getKeyName(PingOptions.KEY_DOWN), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 597, 50, white);
 				}
 
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 0) {
-					renderTexture(Textures.GAME_MOUSE_UP, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 165, 60, 60);
-					renderTexture(Textures.GAME_MOUSE_DOWN, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 315, 60, 60);
+					renderTexture(Textures.GAME_MOUSE_UP, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 445, 60, 60);
+					renderTexture(Textures.GAME_MOUSE_DOWN, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 605, 60, 60);
 				}
 				
 				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);

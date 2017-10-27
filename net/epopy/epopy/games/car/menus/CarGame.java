@@ -249,8 +249,10 @@ public class CarGame extends AbstractGameMenu {
 	 *
 	 *
 	 */
+	private int lastTimeLine = 0;
 	
 	private void movePlayer() {
+		lastTimeLine++;
 		if (Input.isKeyDown(CarOptions.KEY_RIGHT) && timer > 6) {
 			speed -= speed / 5 - 0.5;// freine dans les virage a grande vitesse
 			direction += 2 + speed;
@@ -264,11 +266,17 @@ public class CarGame extends AbstractGameMenu {
 		}
 
 		if (isLine() && timer > 18 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
-			if (direction > 270 || direction < 90)
-				win = true;
-			else {
+			if (direction > 270 || direction < 90) {
+				if (lastTimeLine < 1800) {
+					lastTimeLine = 0;
+					locCar.setPos(deplacedX(), deplacedY());// pas rester bloquer sur la line en trichant
+				} else {
+					win = true;
+				}
+			} else {
 				contreSens = true;
 				speed = 0;
+				lastTimeLine = 0;
 			}
 
 		} else {
