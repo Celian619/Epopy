@@ -10,7 +10,9 @@ public class PacketPlayerDisconnect extends PacketAbstract {
 	public PacketPlayerDisconnect() {
 		
 	}
-
+	public String getName() {
+		return "PacketPlayerDisconnect";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		//System.out.println("- PacketPlayerDisconnect- ");

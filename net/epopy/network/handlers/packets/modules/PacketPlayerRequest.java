@@ -13,7 +13,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketPlayerRequest extends PacketAbstract {
 
 	public PacketPlayerRequest() {}
-
+	public String getName() {
+		return "PacketPlayerRequest";
+	}
 	public PacketPlayerRequest(String senderName, String targetName, RequestType type, boolean reponse) {
 		packet.put(senderName);
 		packet.put(targetName);

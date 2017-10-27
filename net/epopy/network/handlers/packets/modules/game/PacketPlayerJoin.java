@@ -16,7 +16,9 @@ public class PacketPlayerJoin extends PacketAbstract {
 		packet.put(team);
 		packet.flip();
 	}
-
+	public String getName() {
+		return "PacketPlayerJoin";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String playerName = dataBuffer.getString();

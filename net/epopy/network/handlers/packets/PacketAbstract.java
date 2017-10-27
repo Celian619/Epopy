@@ -10,10 +10,8 @@ public abstract class PacketAbstract {
   
     public DataBuffer packet = new DataBuffer(Packets.MAX_SIZE).put(getName()).put(NetworkPlayer.getNetworkPlayer().getName()).put(NetworkPlayer.getNetworkPlayer().getPassword());
   
-    public String getName() {
-  		return getClass().getSimpleName();
-      }
-    
+    public abstract String getName();
+    //return getClass().getSimpleName();
   	public DataBuffer getPacket() {
   		return packet;
   	}

@@ -11,7 +11,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketPlayerShootBall extends PacketAbstract {
 
 	public PacketPlayerShootBall() {}
-
+	public String getName() {
+		return "PacketPlayerShootBall";
+	}
 	public PacketPlayerShootBall(Location3D location) {
 		packet.put(location.getX());
 		packet.put(location.getY());

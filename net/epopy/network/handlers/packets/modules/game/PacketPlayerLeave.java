@@ -11,7 +11,9 @@ public class PacketPlayerLeave extends PacketAbstract {
 	public PacketPlayerLeave() {
 		packet.flip();
 	}
-
+	public String getName() {
+		return "PacketPlayerLeave";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String playerName = dataBuffer.getString();

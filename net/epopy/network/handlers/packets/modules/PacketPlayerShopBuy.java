@@ -9,7 +9,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketPlayerShopBuy extends PacketAbstract {
 
 	public PacketPlayerShopBuy() {}
-
+	public String getName() {
+		return "PacketPlayerShopBuy";
+	}
 	public PacketPlayerShopBuy(String gameType, String item) {
 		packet.put(gameType);
 		packet.put(item);

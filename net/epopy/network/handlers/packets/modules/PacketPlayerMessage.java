@@ -10,7 +10,9 @@ public class PacketPlayerMessage extends PacketAbstract {
 
 	public PacketPlayerMessage() {
 	}
-
+	public String getName() {
+		return "PacketPlayerMessage";
+	}
 	@Override
 	public void process(final NetworkPlayerHandlers networkPlayerHandlers, final DataBuffer dataBuffer) {
 		dataBuffer.getString();

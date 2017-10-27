@@ -315,7 +315,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 		 * Le jeu de la waiting room (infos)
 		 */
 
-		drawText(game.getAbstractGame().getName().toUpperCase(), 300 - 10, 55, PosWidth.MILIEU, PosHeight.HAUT, 50);
+		drawText("TANK", 300 - 10, 55, PosWidth.MILIEU, PosHeight.HAUT, 50);
 		if (game.getAbstractGame().getDefaultBackGround() != null)
 			renderTexture(game.getAbstractGame().getDefaultBackGround(), 0, 166, 582, 332);
 

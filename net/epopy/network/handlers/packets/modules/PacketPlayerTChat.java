@@ -1,6 +1,5 @@
 package net.epopy.network.handlers.packets.modules;
 
-import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.modules.TChat;
 import net.epopy.network.handlers.packets.PacketAbstract;
@@ -9,6 +8,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketPlayerTChat extends PacketAbstract {
 	
 	public PacketPlayerTChat() {}
+	public String getName() {
+		return "PacketPlayerTChat";
+	}
 	
 	public PacketPlayerTChat(String sender, String message, PacketTChatType packetTChatType) {
 		packet.put(sender);

@@ -41,8 +41,10 @@ public class Player {
 		this.name = name;
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
 		try {
-			if (profil.createNewFile())
+			if (profil.createNewFile()) {
 				new NewPlayer(name);
+				System.out.println("[NEW PLAYER]");
+			}
 			init();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,8 +71,7 @@ public class Player {
 			File localhost = new File(FileUtils.PATH_FOLDER + "localhost.txt");
 			if (localhost.exists())
 				localhost.delete();
-			Main.setPlayer(new Player("localhost"));
-			Main.getPlayer().getConfig().setValue("configUpgrade", "1");
+			reset();
 			new NotificationGui("Vos statistiques ont été réinitialisées", "pour le passage à la version publique.", 5, new float[] { 1, 0, 0, 1 }, true);
 			return;
 		}

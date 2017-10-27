@@ -10,7 +10,9 @@ public class PacketPlayerLogin extends PacketAbstract {
 	public PacketPlayerLogin() {
 		packet.flip();
 	}
-
+	public String getName() {
+		return "PacketPlayerLogin";
+	}
 	public PacketPlayerLogin(String version) {
 		packet.put(version);
 		packet.flip();

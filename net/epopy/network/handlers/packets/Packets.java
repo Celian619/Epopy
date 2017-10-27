@@ -34,27 +34,27 @@ public class Packets {
 	public Packets() {
 		if (packets == null) {
 			packets = new TreeMap<>();
-			packets.put(PacketPlayerLogin.class.getSimpleName(), PacketPlayerLogin.class);
-			packets.put(PacketPlayerFriends.class.getSimpleName(), PacketPlayerFriends.class);
-			packets.put(PacketPlayerWaitingRoom.class.getSimpleName(), PacketPlayerWaitingRoom.class);
-			packets.put(PacketPlayerRequest.class.getSimpleName(), PacketPlayerRequest.class);
-			packets.put(PacketPlayerMessage.class.getSimpleName(), PacketPlayerMessage.class);
-			packets.put(PacketPlayerDisconnect.class.getSimpleName(), PacketPlayerDisconnect.class);
-			packets.put(PacketPlayerTChat.class.getSimpleName(), PacketPlayerTChat.class);
-			packets.put(PacketPlayerStatsNetwork.class.getSimpleName(), PacketPlayerStatsNetwork.class);
-			packets.put(PacketPlayerStats.class.getSimpleName(), PacketPlayerStats.class);
-			packets.put(PacketPlayerShopBuy.class.getSimpleName(), PacketPlayerShopBuy.class);
+			packets.put("PacketPlayerLogin", PacketPlayerLogin.class);
+			packets.put("PacketPlayerFriends", PacketPlayerFriends.class);
+			packets.put("PacketPlayerWaitingRoom", PacketPlayerWaitingRoom.class);
+			packets.put("PacketPlayerRequest", PacketPlayerRequest.class);
+			packets.put("PacketPlayerMessage", PacketPlayerMessage.class);
+			packets.put("PacketPlayerDisconnect", PacketPlayerDisconnect.class);
+			packets.put("PacketPlayerTChat", PacketPlayerTChat.class);
+			packets.put("PacketPlayerStatsNetwork", PacketPlayerStatsNetwork.class);
+			packets.put("PacketPlayerStats", PacketPlayerStats.class);
+			packets.put("PacketPlayerShopBuy", PacketPlayerShopBuy.class);
 			
 			// Game
-			packets.put(PacketPlayerDirection.class.getSimpleName(), PacketPlayerDirection.class);
-			packets.put(PacketPlayerLocation.class.getSimpleName(), PacketPlayerLocation.class);
-			packets.put(PacketPlayerJoin.class.getSimpleName(), PacketPlayerJoin.class);
-			packets.put(PacketPlayerLeave.class.getSimpleName(), PacketPlayerLeave.class);
-			packets.put(PacketPlayerShootBall.class.getSimpleName(), PacketPlayerShootBall.class);
-			packets.put(PacketTeamPoints.class.getSimpleName(), PacketTeamPoints.class);
-			packets.put(PacketTeamCaptureZone.class.getSimpleName(), PacketTeamCaptureZone.class);
-			packets.put(PacketGameStatus.class.getSimpleName(), PacketGameStatus.class);
-			packets.put(PacketPlayerDamage.class.getSimpleName(), PacketPlayerDamage.class);
+			packets.put("PacketPlayerDirection", PacketPlayerDirection.class);
+			packets.put("PacketPlayerLocation", PacketPlayerLocation.class);
+			packets.put("PacketPlayerJoin", PacketPlayerJoin.class);
+			packets.put("PacketPlayerLeave", PacketPlayerLeave.class);
+			packets.put("PacketPlayerShootBall", PacketPlayerShootBall.class);
+			packets.put("PacketTeamPoints", PacketTeamPoints.class);
+			packets.put("PacketTeamCaptureZone", PacketTeamCaptureZone.class);
+			packets.put("PacketGameStatus", PacketGameStatus.class);
+			packets.put("PacketPlayerDamage", PacketPlayerDamage.class);
 			
 			Logger.info("[Packets] init packet (" + packets.size() + ")");
 		}

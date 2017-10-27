@@ -14,7 +14,9 @@ public class PacketGameStatus extends PacketAbstract {
 
 	public PacketGameStatus() {
 	}
-
+	public String getName() {
+		return "PacketGameStatus";
+	}
 	public PacketGameStatus(final String name, final String data) {
 		packet.put(name);
 		packet.put(data);
