@@ -136,6 +136,7 @@ public class EpopyLauncher {
 			String timeUpdate = timeFormat.format(Calendar.getInstance().getTimeInMillis() - startUpdate - 3600000);
 			System.out.println("  Update: " + timeUpdate);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		try {

@@ -1,6 +1,5 @@
 package net.epopy.network.games.tank;
 
-import static net.epopy.epopy.display.components.ComponentsHelper.drawCircle;
 import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
 import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
 
@@ -87,9 +86,9 @@ public class Tank extends AbstractGameNetwork {
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") &&
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
 						// inputs
-						if (Input.isKeyDown(Keyboard.KEY_S))
+						if (Input.isKeyDown(Keyboard.KEY_DOWN))
 							CalculTank.moove(true);
-						else if (Input.isKeyDown(Keyboard.KEY_Z))
+						else if (Input.isKeyDown(Keyboard.KEY_UP))
 							CalculTank.moove(false);
 					}
 					
@@ -133,8 +132,7 @@ public class Tank extends AbstractGameNetwork {
 			player.render();
 			
 		for (Ball ball : getBalls())
-			drawCircle(ball.getLocation().getX(), ball.getLocation().getY(), 5, 10, ball.getColor());
-			
+			ball.render();
 		if (getGameStatus().equals(GameStatus.IN_GAME)) {
 			drawText(String.valueOf(getTeam("BLUE").getPoints()), AbstractGameMenu.defaultWidth / 2 - 10, 20, PosWidth.DROITE, PosHeight.HAUT, 30, getTeam("BLUE").getColor());
 			drawText(String.valueOf(getTeam("RED").getPoints()), AbstractGameMenu.defaultWidth / 2 + 20, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, getTeam("RED").getColor());
