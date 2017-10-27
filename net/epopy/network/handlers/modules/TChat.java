@@ -18,8 +18,8 @@ public class TChat {
 
 	private TextAreaGui textArea;
 	private int x, y, maxWidth;
-	private List<String> messages = new LinkedList<>();
-	private int MAX_MESSAGE = 12;
+	private static List<String> messages = new LinkedList<>();
+	private static int MAX_MESSAGE = 12;
 
 	public TChat(int x, int y, int maxWidth) {
 		this.x = x;
@@ -33,9 +33,9 @@ public class TChat {
 	/*
 	 * Fonctions
 	 */
-	public void addMessage(String sender, String message) {
-		messages.add(sender.equals("SERVER") ? "&e" + message : sender + " » " + message);
-		//System.out.println(sender + " » " + message);
+	public static void addMessage(String sender, String message) {//»
+		messages.add(sender.equals("SERVER") ? "&e" + message : sender + " : " + message);
+	
 		if(messages.size() > MAX_MESSAGE)
 			messageFirst++;
 
@@ -57,8 +57,10 @@ public class TChat {
 
 	}
 	//dernier message qu'il veut afficher 
-	int messageFirst = 1;
-
+	private static int messageFirst = 1;
+	private float[] serverColor = new float[]{1, 1, 0, 1};
+	private float[] defaultColor = new float[]{1, 1, 1, 1};
+	
 	public void render() {
 		int x = this.x - 15;
 		int y = this.y - 50;
@@ -75,9 +77,9 @@ public class TChat {
 
 		for(String message : messagesList) {
 			if(message.contains("&e"))
-				ComponentsHelper.drawText(message.replace("&e", ""), x, y, 30, new float[]{1, 1, 0, 1});
+				ComponentsHelper.drawText(message.replace("&e", ""), x, y, 30, serverColor);
 			else
-				ComponentsHelper.drawText(message, x, y, 30);
+				ComponentsHelper.drawText(message, x, y, 30, defaultColor);
 			y -= 30;
 		}
 

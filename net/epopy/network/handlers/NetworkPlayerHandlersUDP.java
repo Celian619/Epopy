@@ -16,14 +16,15 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 	private int				port;
 	private InetAddress		address;
 	private DatagramSocket	socket;
-
+	private Thread thread;
 	public NetworkPlayerHandlersUDP(NetworkPlayerHandlers networkPlayerHandlers, String address, int port) {
 		try {
 			this.address = InetAddress.getByName(address);
 			this.port = port;
 			this.socket = new DatagramSocket(networkPlayerHandlers.getSocket().getLocalPort());
 			//	socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
-			new Thread(this, "udp-thread").start();
+			thread = new Thread(this, "udp-thread");
+			thread.start();
 		} catch (SocketException e) {
 			System.out.println("SocketException");
 			System.out.println("Local port: " + networkPlayerHandlers.getSocket().getLocalPort());
@@ -70,5 +71,6 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 
 	public void close() {
 		socket.close();
+		thread.stop();
 	}
 }

@@ -113,15 +113,10 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 					if (MapLoader.LOADING) {
 						if (!connexion) {
 							connexion = true;
-							new java.util.Timer().schedule(
-									new java.util.TimerTask() {
-										@Override
-										public void run() {
-											NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
-											System.out.println("[Server - Network] Server ready ! Teleportation ..."); 
-											NetworkPlayer.getGame().clear();
-										}
-									}, 500);
+
+							NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
+							System.out.println("[Server - Network] Server ready ! Teleportation ..."); 
+							NetworkPlayer.getGame().clear();
 
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
@@ -130,6 +125,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 											Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
 										}
 									}, 2000);
+							
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
 										@Override

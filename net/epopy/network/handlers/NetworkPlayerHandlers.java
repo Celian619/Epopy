@@ -118,7 +118,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (socket != null) {
 			try {
 				byte[] bytes = DataStream.readPacket(dataInputStream);
 				DataBuffer data = new DataBuffer(bytes);

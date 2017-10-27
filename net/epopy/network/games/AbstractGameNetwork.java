@@ -22,7 +22,7 @@ public abstract class AbstractGameNetwork {
 	private static Map<String, PlayerNetwork> players = new TreeMap<>();
 	private static Map<String, PlayerNetwork> playersADD = new TreeMap<>();
 	private static List<String> playersREMOVE = new LinkedList<>();
-	
+
 	private static Map<String, Team> teams = new TreeMap<>(); // STRING = nom de la team
 	private static Map<String, Ball> balls = new TreeMap<>(); // STRING = nom de la team
 	private static Map<String, Zone> zones = new TreeMap<>();//INT = id de la zone
@@ -117,9 +117,10 @@ public abstract class AbstractGameNetwork {
 	// ----- BALLS -----
 
 	public void updateBall(final String name, final float[] color, final Location3D location3d) {
-		if (balls.containsKey(name))
-			balls.get(name).setLocation3d(location3d);
-		else
+		if (balls.containsKey(name)) {
+			if(location3d != null)
+				balls.get(name).setLocation3d(location3d);
+		} else
 			balls.put(name, new Ball(name, color, location3d));
 	}
 
@@ -151,7 +152,7 @@ public abstract class AbstractGameNetwork {
 			zoneADD.clear();
 		}
 	}
-	
+
 	public void addZone(String id) {
 		updateZone();
 		if (!zones.containsKey(id))
