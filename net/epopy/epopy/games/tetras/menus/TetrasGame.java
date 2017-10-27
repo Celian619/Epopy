@@ -132,7 +132,7 @@ public class TetrasGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 
-		renderTexture(Textures.TETRAS_BG, defaultWidth / 2 - 215, defaultHeight / 2 - 194, 400, 388, rotation);
+		renderTexture(Textures.TETRAS_BG, defaultWidth / 2 - 215, defaultHeight / 2 - 194, 431, 388, rotation);
 		
 		if (pauseScreen) {
 			renderEchap(true);
