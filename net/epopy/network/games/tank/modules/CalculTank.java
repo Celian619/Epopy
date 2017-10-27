@@ -129,7 +129,7 @@ public class CalculTank {
 			} else location.setPos(location.getX(), y, 0);
 		}
 
-		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), 0.0));
+		Packets.sendPacketUDP(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY()));
 	}
 
 	private static boolean hasCollisionTank(PlayerNetwork player, int x, int y) {

@@ -5,7 +5,6 @@ import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
 import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
@@ -52,8 +51,7 @@ public class Tank extends AbstractGameNetwork {
 	public void update() {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		if (player != null) {
-			Display.setTitle("Epopy - " + player.getName());
-			
+			//Display.setTitle("Epopy - " + player.getName());
 			if (getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
 				if (player != null) {
 					// rotation du tank
@@ -127,16 +125,7 @@ public class Tank extends AbstractGameNetwork {
 		}
 		
 		getDefaultBackGround().renderBackground();
-		
-		if (PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") ||
-				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") ||
-				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
 				
-			if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03"))
-				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
-				
-		}
-		
 		for (Zone zone : getZones())
 			zone.render();
 			
@@ -165,6 +154,13 @@ public class Tank extends AbstractGameNetwork {
 				drawLine(player.getLocation().getX(), y, player.getLocation().getX() + timeReload, y, 2, colorReload);
 				drawLine(player.getLocation().getX(), y, player.getLocation().getX() - timeReload, y, 2, colorReload);
 			}
+		}
+		
+		if (PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") ||
+				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") ||
+				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
+			if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03"))
+				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });	
 		}
 	}
 	

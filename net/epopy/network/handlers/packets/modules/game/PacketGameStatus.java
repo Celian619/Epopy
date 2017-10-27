@@ -35,7 +35,7 @@ public class PacketGameStatus extends PacketAbstract {
 				Location3D location = NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getLocation();
 				Location3D teamLoc =  NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getTeam().getSpawnLocation();
 				location.set(teamLoc.copy());
-				Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), 0.0));
+				Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerLocation(location.getX(), location.getY()));
 			}
 			break;
 		case IN_GAME:

@@ -62,7 +62,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 		game = GameListNetwork.TANK;
 		addPlayersMenu.onEnable();
 		boutiqueMenu.onEnable();
-		
+
 		// private
 		gauche = new ButtonGui(Textures.GAME_MENU_GAUCHE_OFF, Textures.GAME_MENU_GAUCHE_ON);
 		droite = new ButtonGui(Textures.GAME_MENU_DROITE_OFF, Textures.GAME_MENU_DROITE_ON);
@@ -84,24 +84,24 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 	@Override
 	public void update() {
-
 		/*
-		 * Start
+		 * Button Start
 		 */
-
 		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName())) {
-			if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING) && jouer.text.equals("ANNULER")) {
+			if (waitingRoom.getWaitingRoomStatus() == WaitingRoomStatus.WAITING && jouer.text.equals("ANNULER")) {
 				jouer.setText("JOUER");
 				jouer.textColor = new float[] { 0, 1, 0, 1 };
 				jouer.xx = -1;
-			} else if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.SEARCH) && jouer.text.equals("JOUER")) {
+			} else if (waitingRoom.getWaitingRoomStatus() == WaitingRoomStatus.SEARCH && jouer.text.equals("JOUER")) {
 				jouer.setText("ANNULER");
 				jouer.textColor = new float[] { 1, 0, 0, 1 };
 				jouer.xx = -1;
 			}
 
+
 			jouer.update(290, 790, PosWidth.MILIEU, PosHeight.HAUT);
 			if (jouer.isClicked() && !waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.MATCH_FOUND)) {
+
 				Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersWaitingRoom(),
 						new PacketPlayerWaitingRoom(NetworkPlayer.getNetworkPlayer(), NetworkPlayer.getNetworkPlayer().getName(), waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING) ? PacketWaitingRoomType.START : PacketWaitingRoomType.CANCEL_START));
 				jouer.setClicked(false);
@@ -110,11 +110,10 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 		/**
 		 * Pour changer le jeu de la salle d'attente
-		 */
-		gauche.update(200 - 10, 85, PosWidth.DROITE, PosHeight.MILIEU, 165 / 2, 148 / 2);
-		droite.update(400 - 10, 85, PosWidth.GAUCHE, PosHeight.MILIEU, 165 / 2, 148 / 2);
-
-		if (GameListNetwork.values().length > 1 && waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING)) {
+		 */	
+		if (GameListNetwork.values().length > 1 && waitingRoom.getWaitingRoomStatus() == WaitingRoomStatus.WAITING) {
+			gauche.update(200 - 10, 85, PosWidth.DROITE, PosHeight.MILIEU, 165 / 2, 148 / 2);
+			droite.update(400 - 10, 85, PosWidth.GAUCHE, PosHeight.MILIEU, 165 / 2, 148 / 2);
 			if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName())) {
 				if (gauche.isClicked()) {
 					if (game.getID() > 1) {
@@ -178,7 +177,6 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 	@Override
 	public void render() {
-
 		if (showAddPlayersMenu || showBoutiqueMenu) {
 			if (showAddPlayersMenu)
 				addPlayersMenu.render();
@@ -196,8 +194,8 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 		// render les infos de la waiting room, rank, jeu, map...
 		renderInfosRoom();
-		
-		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && !waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.MATCH_FOUND))
+
+		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && waitingRoom.getWaitingRoomStatus() != WaitingRoomStatus.MATCH_FOUND)
 			jouer.render();
 		else {
 			if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.SEARCH))
@@ -229,7 +227,9 @@ public class WaitingRoom extends AbstractGameNetwork {
 		 */
 		drawText(waitingRoom.getLeader(), 840, 350, PosWidth.MILIEU, PosHeight.HAUT, 30);
 		if (waitingRoom != null) {
-			renderTexture(userProfilTexture.containsKey(waitingRoom.getLeader()) ? userProfilTexture.get(waitingRoom.getLeader()) : Textures.NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT, 756, 174, 157, 157);
+			renderTexture(Textures.NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT, 756, 174, 157, 157);
+
+			//TODO renderTexture(userProfilTexture.containsKey(waitingRoom.getLeader()) ? userProfilTexture.get(waitingRoom.getLeader()) : Textures.NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT, 756, 174, 157, 157);
 			if (leaderInfosButton.isOn() && !waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName())) {
 				drawQuad(756, 173, 158, 158, new float[] { 0, 0, 0, 0.8f });
 				renderInfosPlayer(leaderInfosButton, waitingRoom.getLeader(), waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()));
@@ -241,8 +241,11 @@ public class WaitingRoom extends AbstractGameNetwork {
 		 */
 		for (int i = 0; i < waitingRoom.getPlayers().size(); i++) {
 			String name = waitingRoom.getPlayers().get(i);
+			//	TODO	renderTexture(userProfilTexture.containsKey(name) ? userProfilTexture.get(name) : Textures.NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT, 756 + 210 * (i + 1), 173, 157, 157);
+
 			drawText(name, 835 + 210 * (i + 1), 350, PosWidth.MILIEU, PosHeight.HAUT, 30);
 			renderTexture(userProfilTexture.containsKey(name) ? userProfilTexture.get(name) : Textures.NETWORK_WAITING_ROOM_IMAGE_USER_DEFAULT, 756 + 210 * (i + 1), 173, 157, 157);
+
 			/*
 			 * render les infos du joueur demandé
 			 */
@@ -326,7 +329,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 		drawText("Parties: " + tankStats.getParties(), 10, 555, PosWidth.GAUCHE, PosHeight.HAUT, 24);
 
 		drawText("Temps: " + tankStats.getPlayTime(), 350, 500, PosWidth.GAUCHE, PosHeight.HAUT, 24);
-		
+
 		drawText("Rank: " + tankStats.getRank(), 350, 555, PosWidth.GAUCHE, PosHeight.HAUT, 24);
 		boolean waiting = waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING);
 		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && waiting) {

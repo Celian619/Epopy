@@ -74,5 +74,6 @@ public class PlayerNetwork {
 	
 		ComponentsHelper.drawText((getName().equals(NetworkPlayer.getNetworkPlayer().getName()) ?  Tank.balls + " Obu" + (Tank.balls > 1 ? "s" : "") + " | " : "") + getName() + " - " + getHP() + " HP", getLocation().getX(), getLocation().getY() - 75, PosWidth.MILIEU, PosHeight.HAUT, 30, team.getColor());
 		ComponentsHelper.renderTexture(texture,  (getLocation().getX() - 26),  (getLocation().getY() - 24), 64, 56, getLocation().getDirection());
+
 	}
 }

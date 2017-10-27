@@ -67,7 +67,7 @@ public class NotificationGui {
 	private static boolean reponseChoose;
 
 	public static void render() {
-		if (notifs.size() > 0) {
+		if (!notifs.isEmpty()) {
 			NotificationGui notif = notifs.get(0);
 			if (!notif.time.isStarted())
 				notif.time.startPause(notif.timeToStay);

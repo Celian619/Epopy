@@ -22,7 +22,7 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 			this.address = InetAddress.getByName(address);
 			this.port = port;
 			this.socket = new DatagramSocket(networkPlayerHandlers.getSocket().getLocalPort());
-			socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
+			//	socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
 			new Thread(this, "udp-thread").start();
 		} catch (SocketException e) {
 			System.out.println("SocketException");
@@ -44,10 +44,10 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 				DatagramPacket receive = new DatagramPacket(bytes, bytes.length);
 				socket.receive(receive);
 				DataBuffer data = new DataBuffer(receive.getData());
-				receive.setLength(bytes.length);
 				PacketAbstract packet = Packets.getPacket(data.getString());
-				if (packet != null)
+				if (packet != null) {
 					packet.process(null, data);
+				}
 			} catch (IOException e) {
 				break;
 			}
@@ -56,17 +56,16 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 	}
 
 	public void send(byte[] bytes) {
-		new Thread("udp-send-thread") {
-			public void run() {
-				try {
-					DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, port);
-					socket.send(packet);
-					packet.setLength(bytes.length);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}.start();
+		//	new Thread("udp-send-thread") {
+		//public void run() {
+		try {
+			DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, port);
+			socket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//			}
+		//}.start();
 	}
 
 	public void close() {
