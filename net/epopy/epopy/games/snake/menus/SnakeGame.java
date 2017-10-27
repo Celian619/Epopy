@@ -49,8 +49,8 @@ public class SnakeGame extends AbstractGameMenu {
 		
 		// Lancement de la musique si le joueur l'a activé
 		if (Main.getPlayer().hasSound() && !Audios.SNAKE.isRunning())
-			Audios.SNAKE.start(true).setVolume(0.2f);
-
+			Audios.SNAKE.start(true).setVolume(0.3f);
+		song = Audios.SNAKE;
 		pause.startPause(5);
 
 		/*

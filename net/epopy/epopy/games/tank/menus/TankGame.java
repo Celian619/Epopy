@@ -74,8 +74,8 @@ public class TankGame extends AbstractGameMenu {
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.TANK.isRunning())
-			Audios.TANK.start(true).setVolume(0.2f);
-
+			Audios.TANK.start(true).setVolume(0.3f);
+		song = Audios.TANK;
 		cooldownRobot = 25;
 		
 		damaged = damage = robotBallesNbr = directionMax = print = tankAspectR = tankAspectP = timer = 0;

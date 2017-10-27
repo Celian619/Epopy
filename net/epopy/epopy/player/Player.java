@@ -115,11 +115,11 @@ public class Player {
 		return sound;
 	}
 
-	public void setSoundStatus(final boolean sound) {
+	public void setSoundStatus(final boolean sound, final boolean lobby) {
 		config.setValue("sound", String.valueOf(sound));
 		if (!sound)
 			Audios.stopAll();
-		else
+		else if (lobby)
 			Audios.LOBBY.start(true).setVolume(0.4f);
 		this.sound = sound;
 	}

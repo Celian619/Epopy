@@ -53,8 +53,9 @@ public class PingGame extends AbstractGameMenu {
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.PING.isRunning())
-			Audios.PING.start(true).setVolume(0.2f);
-			
+			Audios.PING.start(true).setVolume(0.3f);
+		song = Audios.PING;
+
 		speedBall = 8;
 		speedPaddle = 10;
 		addStats = pauseScreen = gameOver = false;

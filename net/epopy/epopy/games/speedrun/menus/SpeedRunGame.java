@@ -42,7 +42,8 @@ public class SpeedRunGame extends AbstractGameMenu {
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.SPEEDRUN.isRunning())
-			Audios.SPEEDRUN.start(true).setVolume(0.2f);
+			Audios.SPEEDRUN.start(true).setVolume(0.3f);
+		song = Audios.SPEEDRUN;
 		sneak = addStats = gameOver = pauseScreen = false;
 		
 		decors = 0.0;

@@ -14,13 +14,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import net.epopy.epopy.Main;
 
 public class Audios {
-
+	
 	// le volume du joueur
 	public static int VOLUME_VALUE = Main.getPlayer().getSoundLevel(); // min 1 | max 10 | default 5
-
+	
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 	private static List<Audios> audios = new ArrayList<Audios>(10);
-	
+
 	public static Audios LOBBY = new Audios("menu");
 	public static Audios NEW_GAME = new Audios("level");
 	public static Audios PING = new Audios("ping");
@@ -29,26 +29,26 @@ public class Audios {
 	public static Audios TANK = new Audios("tank");
 	public static Audios PLACEINVADER = new Audios("place_invader");
 	public static Audios SPEEDRUN = new Audios("speedrun");
-	public static Audios TETRIS = new Audios("tetris");
-	
+	public static Audios TETRAS = new Audios("tetras");
+
 	private Clip clip;
 	private float volume;
 	private float vec = 110 - VOLUME_VALUE * 10;// 0 < plus c'est fort
 	private final String name;
 	private boolean running = false;
-	
+
 	public Audios(final String name) {
 		this.name = name;
 	}
-
+	
 	/*
 	 * Fonctions
 	 */
-
+	
 	public Audios start(final boolean loop) {
 		stopAll();
 		running = true;
-
+		
 		AudioInputStream audioIn;
 		try {
 			audioIn = AudioSystem.getAudioInputStream(getClass().getResource(PATH + name + ".wav"));
@@ -57,23 +57,23 @@ public class Audios {
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
-
+		
 		clip.start();
 		if (loop)
 			clip.loop(Integer.MAX_VALUE);
-
+			
 		audios.add(this);
-		
+
 		return this;
 	}
-
+	
 	public void stop() {
 		if (running) {
 			clip.close();
 			running = false;
 		}
 	}
-
+	
 	public static void stopAll() {
 		for (Audios audio : audios) {
 			if (audio.isRunning())
@@ -81,25 +81,25 @@ public class Audios {
 		}
 		audios.clear();
 	}
-
+	
 	public static void pauseAll() {
 		for (Audios audio : audios) {
 			if (audio.isRunning())
 				audio.clip.stop();
 		}
 	}
-	
+
 	public static void resumeAll() {
 		for (Audios audio : audios) {
 			if (audio.isRunning())
 				audio.clip.start();
 		}
 	}
-
+	
 	public boolean isRunning() {
 		return running;
 	}
-
+	
 	/*
 	 * Fonction pour update le volume du clip quand le joueur changer son master volume
 	 */
@@ -109,7 +109,7 @@ public class Audios {
 		float value = vec * (float) Math.log10(volume);
 		gainControl.setValue(value <= -80 ? -70.0f : value);
 	}
-
+	
 	/*
 	 * Fonction pour changer le volume default
 	 */
@@ -120,11 +120,11 @@ public class Audios {
 		}
 		return this;
 	}
-
+	
 	public float getVolume() {
 		return (float) Math.pow(10f, ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).getValue() / vec);
 	}
-	
+
 	/**
 	 * Fonction pour recalculer tous les volumes quand le joueur changer de volume
 	 *
@@ -134,7 +134,7 @@ public class Audios {
 		for (Audios audio : audios)
 			audio.updateVolume();
 	}
-
+	
 	/**
 	 * Pour set le volumes de tous les clips
 	 *
