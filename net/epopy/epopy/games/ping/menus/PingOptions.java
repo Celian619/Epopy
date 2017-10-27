@@ -7,8 +7,8 @@ import org.lwjgl.input.Keyboard;
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class PingOptions extends AbstractGameMenu {
@@ -41,10 +41,10 @@ public class PingOptions extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		gauche.update(1008, 723, PositionWidth.DROITE, PositionHeight.HAUT, 33, 30);
-		droite.update(1203, 723, PositionWidth.GAUCHE, PositionHeight.HAUT, 33, 30);
-		controlBas.update(985, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-		controlHaut.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		gauche.update(1008, 723, PosWidth.DROITE, PosHeight.HAUT, 33, 30);
+		droite.update(1203, 723, PosWidth.GAUCHE, PosHeight.HAUT, 33, 30);
+		controlBas.update(985, 547, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
+		controlHaut.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 		
 		if (gauche.isClicked()) {
 			if (MOUSE > 0) {
@@ -111,12 +111,12 @@ public class PingOptions extends AbstractGameMenu {
 		else if (MOUSE == 1) type = "Touches";
 		else if (MOUSE == 2) type = "Touches & Souris";
 		
-		drawText(type, 1105, 721, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
+		drawText(type, 1105, 721, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 0.7f, 0, 1 });
 		
 		float[] color = new float[] { 1, 1, 1, 1 };
-		drawText("Haut", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Bas", 935, 550, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Type de contrôle", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Haut", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Bas", 935, 550, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Type de contrôle", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 		
 	}
 }

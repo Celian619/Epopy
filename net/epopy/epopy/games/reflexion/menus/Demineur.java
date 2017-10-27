@@ -12,8 +12,8 @@ import org.lwjgl.opengl.Display;
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
 import net.epopy.epopy.display.components.ComponentsHelper;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 
@@ -50,7 +50,7 @@ public class Demineur extends AbstractGameMenu {
 			if (demineur.isClicked())
 				inGame = true;
 			else
-				demineur.update(defaultWidth - 300, 169, PositionWidth.MILIEU, PositionHeight.MILIEU, 265, 40);
+				demineur.update(defaultWidth - 300, 169, PosWidth.MILIEU, PosHeight.MILIEU, 265, 40);
 		} else {
 			if (Input.getButtonDown(0)) {
 				int x = (int) (Mouse.getX() / (double) Display.getWidth() * defaultWidth);

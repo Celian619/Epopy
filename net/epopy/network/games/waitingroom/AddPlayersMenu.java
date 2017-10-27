@@ -12,8 +12,8 @@ import java.util.TreeMap;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.epopy.display.components.TextAreaGui;
 import net.epopy.network.NetworkPlayer;
@@ -106,9 +106,9 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		// text ara pour chercher un joueur
 		searchPlayer.update(18);
 		// button pour envoyer les requets d'invitation
-		validPlayers.update(1265, 900, PositionWidth.MILIEU, PositionHeight.HAUT, 170, 50);
+		validPlayers.update(1265, 900, PosWidth.MILIEU, PosHeight.HAUT, 170, 50);
 		// button pour retourner à la salle d'attente
-		retourWaitingRoom.update(1803, 115, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, 30);
+		retourWaitingRoom.update(1803, 115, PosWidth.GAUCHE, PosHeight.MILIEU, 30, 30);
 
 		if (retourWaitingRoom.isClicked()) {
 			reset();
@@ -268,8 +268,8 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		retourWaitingRoom.render();
 
 		if (searchPlayer.getText().length() == 0)
-			drawText("Rechercher un joueur", 1135, 225 + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 24, new float[] { 0.7f, 0.7f, 0.7f, 1 });
-		drawText("AJOUTER DES JOUEURS", 1250, 160, PositionWidth.MILIEU, PositionHeight.HAUT, 50);
+			drawText("Rechercher un joueur", 1135, 225 + 10, PosWidth.GAUCHE, PosHeight.HAUT, 24, new float[] { 0.7f, 0.7f, 0.7f, 1 });
+		drawText("AJOUTER DES JOUEURS", 1250, 160, PosWidth.MILIEU, PosHeight.HAUT, 50);
 		/**
 		 * LIST des joueurs
 		 */

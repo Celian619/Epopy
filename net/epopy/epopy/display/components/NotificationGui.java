@@ -6,8 +6,8 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.utils.Pause;
 import net.epopy.network.utils.Callback;
@@ -124,8 +124,8 @@ public class NotificationGui {
 					notif.refuse.render();
 				}
 
-				ComponentsHelper.drawText(notif.notification, x, y + (notif.information.equals("null") ? 13 : 5), PositionWidth.MILIEU, PositionHeight.HAUT, sizeNotif, notif.color);
-				ComponentsHelper.drawText(notif.information.equals("null") ? "" : notif.information, x, y + sizeNotif + 10, PositionWidth.MILIEU, PositionHeight.HAUT, sizeInformations, notif.color);
+				ComponentsHelper.drawText(notif.notification, x, y + (notif.information.equals("null") ? 13 : 5), PosWidth.MILIEU, PosHeight.HAUT, sizeNotif, notif.color);
+				ComponentsHelper.drawText(notif.information.equals("null") ? "" : notif.information, x, y + sizeNotif + 10, PosWidth.MILIEU, PosHeight.HAUT, sizeInformations, notif.color);
 
 				notif.time.getPauseString();
 

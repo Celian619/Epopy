@@ -29,7 +29,7 @@ public class Audios {
 	public static Audios TANK = new Audios("tank");
 	public static Audios PLACEINVADER = new Audios("place_invader");
 	public static Audios SPEEDRUN = new Audios("speedrun");
-	public static Audios DECO = new Audios("deco");
+	public static Audios TETRIS = new Audios("tetris");
 	
 	private Clip clip;
 	private float volume;

@@ -14,8 +14,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.utils.Input;
 
@@ -213,7 +213,7 @@ public class TextAreaGui {
 					}
 				} else {
 					glColor4f(1, 0, 0, 1);
-					ComponentsHelper.drawText("Max " + maxletters + " caractères !", AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 50, new float[] { 1, 0, 0, 1 });
+					ComponentsHelper.drawText("Max " + maxletters + " caractères !", AbstractGameMenu.defaultWidth / 2, AbstractGameMenu.defaultHeight / 2 - 50, PosWidth.MILIEU, PosHeight.MILIEU, 50, new float[] { 1, 0, 0, 1 });
 					glColor4f(1, 1, 1, 1);
 				}
 			}

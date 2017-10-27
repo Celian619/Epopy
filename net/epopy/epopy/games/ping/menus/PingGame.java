@@ -14,8 +14,8 @@ import org.lwjgl.opengl.Display;
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.PingStats;
@@ -163,7 +163,7 @@ public class PingGame extends AbstractGameMenu {
 
 			boolean record = timer / (double) 60 >= Main.getPlayer().getPingStats().getRecord();
 
-			drawText(timer / 60 + "", defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
+			drawText(timer / 60 + "", defaultWidth / 2, 10, PosWidth.MILIEU, PosHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
 			
 		}
 		drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
@@ -180,38 +180,34 @@ public class PingGame extends AbstractGameMenu {
 			if (pause.getTimePauseTotal() == 5) {
 
 				Textures.GAME_STARTING_BG.renderBackground();
-
-				int x = 1093;
-				int y = 400;
-				int ecartement = 120;
-
-				drawText("CONTROLES", x, y - 50, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-
-				drawText("Haut", x, y, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Bas", x, y + 150, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				drawText("CONTROLES", 1093, 350, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
+				float[] white = new float[] { 1, 1, 1, 1 };
+				drawText("Haut", 1093, 400, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
+				drawText("Bas", 1093, 550, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
 
 				if (PingOptions.MOUSE == 2) {
-					drawText("ou", x, y + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 0.5f, 0, 1 });
-					drawText("ou", x, y + 150 + 60, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 0.5f, 0, 1 });
+					drawText("ou", 1093, 460, PosWidth.MILIEU, PosHeight.HAUT, 25, orange);
+					drawText("ou", 1093, 610, PosWidth.MILIEU, PosHeight.HAUT, 25, orange);
 				}
 
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 1) {
-					renderTexture(Textures.GAME_TOUCHE_VIERGE, x - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 45, 60, 60);
-					renderTexture(Textures.GAME_TOUCHE_VIERGE, x - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 150 + 45, 60, 60);
-					drawText(Input.getKeyName(PingOptions.KEY_UP), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 37, 50, new float[] { 0, 0, 0, 1 });
-					drawText(Input.getKeyName(PingOptions.KEY_DOWN), x + 16 - (PingOptions.MOUSE == 2 ? ecartement : 30), y + 150 + 37, 50, new float[] { 0, 0, 0, 1 });
+					drawText(Input.getKeyName(PingOptions.KEY_UP), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 437, 50, white);
+					drawText(Input.getKeyName(PingOptions.KEY_DOWN), 1109 - (PingOptions.MOUSE == 2 ? 120 : 30), 597, 50, white);
 				}
 
 				if (PingOptions.MOUSE == 2 || PingOptions.MOUSE == 0) {
-					renderTexture(Textures.GAME_MOUSE_UP, x + (PingOptions.MOUSE == 2 ? ecartement / 2 : -30), y + 45, 60, 60);
-					renderTexture(Textures.GAME_MOUSE_DOWN, x + (PingOptions.MOUSE == 2 ? ecartement / 2 : -30), y + 150 + 45, 60, 60);
+					renderTexture(Textures.GAME_MOUSE_UP, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 445, 60, 60);
+					renderTexture(Textures.GAME_MOUSE_DOWN, 1093 + (PingOptions.MOUSE == 2 ? 60 : -30), 605, 60, 60);
 				}
 				
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Tenir plus d'", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText("1 minute 20", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
+				float[] gray = new float[] { 0.8f, 0.8f, 0.8f, 1 };
+				drawText("Tenir plus d'", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
+				drawText("1 minute 20", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
 
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}

@@ -6,8 +6,8 @@ import org.lwjgl.input.Keyboard;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class TankOptions extends AbstractGameMenu {
@@ -33,8 +33,8 @@ public class TankOptions extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		controlBas.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-		controlHaut.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlBas.update(985, 735, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
+		controlHaut.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 		
 		if (!controlBas.isOn() && controlBasClicked) {
 			controlBasClicked = false;
@@ -83,7 +83,7 @@ public class TankOptions extends AbstractGameMenu {
 		controlHaut.render();
 		
 		float[] color = new float[] { 1, 1, 1, 1 };
-		drawText("Avancer", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Reculer", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Avancer", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Reculer", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 	}
 }

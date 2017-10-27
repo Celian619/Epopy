@@ -6,8 +6,8 @@ import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.games.modules.Team;
@@ -45,7 +45,7 @@ public class TankMenuEnd {
 	
 	public void update() {
 
-		quitterButton.update(1550 + 120, 840 + 80, PositionWidth.MILIEU, PositionHeight.HAUT, 130, 80);
+		quitterButton.update(1550 + 120, 840 + 80, PosWidth.MILIEU, PosHeight.HAUT, 130, 80);
 		if (quitterButton.isOn()) {
 			if (w1Quitter > 0)
 				w1Quitter -= 20;
@@ -86,26 +86,26 @@ public class TankMenuEnd {
 		 * Header
 		 */
 		if (TEAM_WINNER != null) {
-			drawText("Victoire des", AbstractGameMenu.defaultWidth / 2 - 40 - 30 - (TEAM_WINNER.getName().equals("RED") ? 20 : 0), 171, PositionWidth.MILIEU, PositionHeight.HAUT, 48);
-			drawText(TEAM_WINNER.getName().equals("RED") ? "Rouges" : TEAM_WINNER.getName().equals("BLUE") ? "bleus" : TEAM_WINNER.getName(), AbstractGameMenu.defaultWidth / 2 + 170 - 30, 171, PositionWidth.MILIEU, PositionHeight.HAUT, 48, TEAM_WINNER.getColor());
-		} else drawText("Match nul !", AbstractGameMenu.defaultWidth / 2, 171, PositionWidth.MILIEU, PositionHeight.HAUT, 48);
-		drawText("Récapitulatif", AbstractGameMenu.defaultWidth / 2, 250, PositionWidth.MILIEU, PositionHeight.HAUT, 35, new float[] { 0, 1, 0, 1 });
+			drawText("Victoire des", AbstractGameMenu.defaultWidth / 2 - 40 - 30 - (TEAM_WINNER.getName().equals("RED") ? 20 : 0), 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
+			drawText(TEAM_WINNER.getName().equals("RED") ? "Rouges" : TEAM_WINNER.getName().equals("BLUE") ? "bleus" : TEAM_WINNER.getName(), AbstractGameMenu.defaultWidth / 2 + 170 - 30, 171, PosWidth.MILIEU, PosHeight.HAUT, 48, TEAM_WINNER.getColor());
+		} else drawText("Match nul !", AbstractGameMenu.defaultWidth / 2, 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
+		drawText("Récapitulatif", AbstractGameMenu.defaultWidth / 2, 250, PosWidth.MILIEU, PosHeight.HAUT, 35, new float[] { 0, 1, 0, 1 });
 		drawLine(860, 290, 1060, 290, 1);
 		
 		/*
 		 * Classement des Meilleur joueurs
 		 */
-		drawText("Meilleur joueurs", AbstractGameMenu.defaultWidth / 2 - 400, 330, PositionWidth.MILIEU, PositionHeight.HAUT, 35);
-		drawText("© Points obtenus ©", AbstractGameMenu.defaultWidth / 2 - 400, 380, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
+		drawText("Meilleur joueurs", AbstractGameMenu.defaultWidth / 2 - 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
+		drawText("© Points obtenus ©", AbstractGameMenu.defaultWidth / 2 - 400, 380, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
 			if (!TOP_POINTS[i - 1].equals("null"))
-				drawText(TOP_POINTS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 390 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
+				drawText(TOP_POINTS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 390 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
 		}
 		// top pour celui qui à tuer le plus de personne
-		drawText("Φ Top victimes Φ", AbstractGameMenu.defaultWidth / 2 - 400, 515, PositionWidth.MILIEU, PositionHeight.HAUT, 30, colorTop);
+		drawText("Φ Top victimes Φ", AbstractGameMenu.defaultWidth / 2 - 400, 515, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
 			if (!TOP_VICTIMES[i - 1].equals("null"))
-				drawText(TOP_VICTIMES[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 520 + 30 * i, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
+				drawText(TOP_VICTIMES[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 520 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
 		}
 		/**
 		 * total de points captures pour l'equipe ComponentsHelper.drawText("• Points obtenus •", AbstractGameMenu.defaultWidth / 2 - 400,
@@ -116,12 +116,12 @@ public class TankMenuEnd {
 		/*
 		 * Statistique du joueur
 		 */
-		drawText("Mes statistiques", AbstractGameMenu.defaultWidth / 2 + 400, 330, PositionWidth.MILIEU, PositionHeight.HAUT, 35);
+		drawText("Mes statistiques", AbstractGameMenu.defaultWidth / 2 + 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
 		int xStats = 340;
-		drawText("Victimes: " + PLAYER_KILLS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
-		drawText("Morts: " + PLAYER_MORT, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 2, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
-		drawText("Coins gagnés: " + PLAYER_COINS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 3, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
-		drawText("Points obtenus: " + PLAYER_POINTS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 4, PositionWidth.MILIEU, PositionHeight.HAUT, 28);
+		drawText("Victimes: " + PLAYER_KILLS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Morts: " + PLAYER_MORT, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 2, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Coins gagnés: " + PLAYER_COINS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 3, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Points obtenus: " + PLAYER_POINTS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 4, PosWidth.MILIEU, PosHeight.HAUT, 28);
 		
 	}
 

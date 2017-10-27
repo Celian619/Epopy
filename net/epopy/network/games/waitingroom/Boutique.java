@@ -2,8 +2,8 @@ package net.epopy.network.games.waitingroom;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.network.games.AbstractGameNetwork;
 import net.epopy.network.games.GameListNetwork;
 import net.epopy.network.games.tank.TankBoutique;
@@ -22,7 +22,7 @@ public class Boutique extends AbstractGameNetwork {
 
 	@Override
 	public void update() {
-		retourWaitingRoom.update(1803, 115, PositionWidth.GAUCHE, PositionHeight.MILIEU, 30, 30);
+		retourWaitingRoom.update(1803, 115, PosWidth.GAUCHE, PosHeight.MILIEU, 30, 30);
 
 		if (retourWaitingRoom.isClicked()) {
 			WaitingRoom.showBoutiqueMenu = false;

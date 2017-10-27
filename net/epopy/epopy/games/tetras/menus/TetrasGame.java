@@ -12,9 +12,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import net.epopy.epopy.Main;
+import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.TetrasStats;
@@ -39,6 +40,7 @@ public class TetrasGame extends AbstractGameMenu {
 	private boolean changeStopDown;
 
 	private int score;
+	private float rotation;
 	
 	private block movingBlock;
 
@@ -51,6 +53,9 @@ public class TetrasGame extends AbstractGameMenu {
 
 	@Override
 	public void onEnable() {
+		if (Main.getPlayer().hasSound() && !Audios.TETRIS.isRunning())
+			Audios.TETRIS.start(true).setVolume(0.4f);
+			
 		score = 0;
 		changeStopDown = false;
 		Random r = new Random();
@@ -62,10 +67,14 @@ public class TetrasGame extends AbstractGameMenu {
 		pause.startPause(5);
 		
 		Mouse.setGrabbed(true);
+		rotation = 0;
 	}
 	
 	@Override
 	public void update() {
+		rotation += 0.1;
+		if (rotation > 360) rotation = 0;
+		
 		if (!pauseScreen && pause.isFinish() && !gameOver) {
 			timer++;
 		}
@@ -102,8 +111,7 @@ public class TetrasGame extends AbstractGameMenu {
 		
 		if (Keyboard.isKeyDown(TetrasOptions.KEY_RIGHT))
 			right = true;
-
-		if (Keyboard.isKeyDown(TetrasOptions.KEY_LEFT))
+		else if (Keyboard.isKeyDown(TetrasOptions.KEY_LEFT))
 			left = true;
 
 		if (Keyboard.isKeyDown(TetrasOptions.KEY_DOWN)) {
@@ -114,8 +122,7 @@ public class TetrasGame extends AbstractGameMenu {
 			
 		if (Input.getButtonDown(0))
 			rotateL = true;
-			
-		if (Input.getButtonDown(1))
+		else if (Input.getButtonDown(1))
 			rotateR = true;
 			
 		movingBlock.move();
@@ -124,8 +131,8 @@ public class TetrasGame extends AbstractGameMenu {
 	
 	@Override
 	public void render() {
-		
-		Textures.TETRAS_BG.renderBackground();
+
+		renderTexture(Textures.TETRAS_BG, defaultWidth / 2 - 215, defaultHeight / 2 - 194, 400, 388, rotation);
 		
 		if (pauseScreen) {
 			renderEchap(true);
@@ -134,6 +141,7 @@ public class TetrasGame extends AbstractGameMenu {
 			
 			boolean record = false;
 			if (!stats) {
+				Mouse.setGrabbed(false);
 				stats = true;
 				TetrasStats tetrasStats = Main.getPlayer().getTetrasStats();
 				tetrasStats.addPartie();
@@ -163,33 +171,30 @@ public class TetrasGame extends AbstractGameMenu {
 			if (pause.getTimePauseTotal() == 5) {
 				
 				Textures.GAME_STARTING_BG.renderBackground();
+				
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				float[] white = new float[] { 1, 1, 1, 1 };
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
 
-				int x = 1093;
-				int y = 400;
-				int ecartement = 120;
+				drawText("CONTROLES", 1093, 370, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
 
-				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
+				drawText("Rotation", 958, 410, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
+				drawText("Bas", 983, 545, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
+				drawText("Droite", 1153, 410, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
+				drawText("Gauche", 1143, 545, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
 
-				drawText("Rotation", x - ecartement - 15, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Bas", x - ecartement + 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Droite", x + ecartement / 2, y + 10, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Gauche", x + ecartement / 2 - 10, y + 145, PositionWidth.GAUCHE, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
+				renderTexture(Textures.GAME_GAUCHE_SOURIS, 943, 445, 60, 60);
+				renderTexture(Textures.GAME_GAUCHE_SOURIS, 1063, 445, -60, 60);
+				drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), 989, 567, 50, white);
 
-				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement - 30, y + 45, 60, 60);
-				renderTexture(Textures.GAME_GAUCHE_SOURIS, x - ecartement + 90, y + 45, -60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - ecartement, y + 150 + 25, 60, 60);
-				drawText(Input.getKeyName(TetrasOptions.KEY_DOWN), x + 16 - ecartement, y + 150 + 17, 50, new float[] { 0, 0, 0, 1 });
+				drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), 1156, 440, 50, white);
+				drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), 1156, 570, 50, white);
 
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 45, 60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x + ecartement / 2, y + 150 + 25, 60, 60);
-				drawText(Input.getKeyName(TetrasOptions.KEY_RIGHT), x + 3 + ecartement / 2, y + 40, 50, new float[] { 0, 0, 0, 1 });
-				drawText(Input.getKeyName(TetrasOptions.KEY_LEFT), x + 3 + ecartement / 2, y + 150 + 20, 50, new float[] { 0, 0, 0, 1 });
+				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
+				drawText("Avoir plus", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+				drawText("de 100 points !", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Avoir plus", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText("de 100 points !", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 				return;
 			} else
 				pause.showRestartChrono();
@@ -433,12 +438,12 @@ public class TetrasGame extends AbstractGameMenu {
 		}
 		
 		private boolean isCollision(final Location loca) {// y a t'il un block ?
-			int xTest = (int) loca.getX();
-			int yTest = (int) loca.getY();
+			double xTest = loca.getX();
+			double yTest = loca.getY();
 			// hors limite
 			if (xTest <= 0 || xTest >= grilleSectionX || yTest <= 0 || yTest >= grilleSectionY) return true;
 			
-			return isBlock[yTest * grilleSectionX + xTest];
+			return isBlock[(int) yTest * grilleSectionX + (int) xTest];
 			
 		}
 	}

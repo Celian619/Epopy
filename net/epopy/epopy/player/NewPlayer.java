@@ -39,7 +39,7 @@ public class NewPlayer {
 
 			write(w, "configUpgrade=" + 1);
 
-			write(w, "level=" + 1000);// TODO Modifier ceci !
+			write(w, "level=" + 1);// TODO Modifier ceci !
 
 			write(w, "last_game=" + 1);
 			

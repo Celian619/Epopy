@@ -6,8 +6,8 @@ import org.lwjgl.input.Keyboard;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class TetrasOptions extends AbstractGameMenu {
@@ -40,10 +40,10 @@ public class TetrasOptions extends AbstractGameMenu {
 	
 	@Override
 	public void update() {
-		controlBas.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlBas.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 
-		controlGauche.update(985, 547, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-		controlDroite.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlGauche.update(985, 547, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
+		controlDroite.update(985, 735, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 		/*
 		 * Gauche
 		 */
@@ -123,9 +123,9 @@ public class TetrasOptions extends AbstractGameMenu {
 		controlDroite.render();
 		
 		float[] color = new float[] { 1, 1, 1, 1 };
-		drawText("Bas", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Gauche", 935, 550, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Droite", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Bas", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Gauche", 935, 550, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Droite", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 	}
 	
 }

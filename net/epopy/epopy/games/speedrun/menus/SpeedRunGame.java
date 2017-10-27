@@ -14,8 +14,8 @@ import org.lwjgl.input.Mouse;
 import net.epopy.epopy.Main;
 import net.epopy.epopy.audio.Audios;
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.utils.Input;
@@ -239,7 +239,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 		if (!gameOver && !pauseScreen && pause.isFinish()) {
 			
 			boolean record = timer / 60 > Main.getPlayer().getSpeedRunStats().getRecord();
-			drawText(timer / 60 + "", defaultWidth / 2, 10, PositionWidth.MILIEU, PositionHeight.HAUT, 40, record ? new float[] { 0.7f, 0, 0, 1 } : new float[] { 0.6f, 0.6f, 0.6f, 1 });
+			drawText(timer / 60 + "", defaultWidth / 2, 10, PosWidth.MILIEU, PosHeight.HAUT, 40, record ? new float[] { 0.7f, 0, 0, 1 } : new float[] { 0.6f, 0.6f, 0.6f, 1 });
 
 		}
 		
@@ -251,24 +251,24 @@ public class SpeedRunGame extends AbstractGameMenu {
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();
-				int x = 1093;
-				int y = 400;
-
-				drawText("CONTROLES", x, y - 30, PositionWidth.MILIEU, PositionHeight.MILIEU, 30, new float[] { 1, 0.5f, 0, 1 });
-
-				drawText("Jump", x, y + 10, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
-				drawText("Sneak", x, y + 140, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 1, 1, 1, 1 });
 				
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 45, 60, 60);
-				renderTexture(Textures.GAME_TOUCHE_VIERGE, x - 30, y + 140 + 35, 60, 60);
-				drawText(Input.getKeyName(SpeedRunOptions.KEY_JUMP), x + 16 - 30, y + 37, 50, new float[] { 0, 0, 0, 1 });
-				drawText(Input.getKeyName(SpeedRunOptions.KEY_SNEAK), x + 16 - 30, y + 130 + 37, 50, new float[] { 0, 0, 0, 1 });
+				float[] orange = new float[] { 1, 0.5f, 0, 1 };
+				float[] white = new float[] { 1, 1, 1, 1 };
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
 
-				drawText("OBJECTIF", 660, 495, PositionWidth.GAUCHE, PositionHeight.HAUT, 30, new float[] { 1, 0.5f, 0, 1 });
-				drawText("Tenir plus de", 710, 600, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
-				drawText("2 minutes", 710, 630, PositionWidth.MILIEU, PositionHeight.HAUT, 25, new float[] { 0.8f, 0.8f, 0.8f, 1 });
+				drawText("CONTROLES", 1093, 370, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
 
-				drawText(pause.getPauseString(), 660, 335, PositionWidth.GAUCHE, PositionHeight.HAUT, 100, new float[] { 1, 1, 1, 1 });
+				drawText("Jump", 1093, 410, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
+				drawText("Sneak", 1093, 540, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
+				
+				drawText(Input.getKeyName(SpeedRunOptions.KEY_JUMP), 1079, 437, 50, white);
+				drawText(Input.getKeyName(SpeedRunOptions.KEY_SNEAK), 1079, 567, 50, white);
+
+				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
+				drawText("Tenir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+				drawText("2 minutes", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+
+				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}

@@ -6,8 +6,8 @@ import org.lwjgl.input.Keyboard;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.ButtonGui;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class SpeedRunOptions extends AbstractGameMenu {
@@ -33,8 +33,8 @@ public class SpeedRunOptions extends AbstractGameMenu {
 
 	@Override
 	public void update() {
-		controlDroite.update(985, 367, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
-		controlGauche.update(985, 735, PositionWidth.GAUCHE, PositionHeight.MILIEU, 200, 30);
+		controlDroite.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
+		controlGauche.update(985, 735, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
 		/*
 		 * Gauche
 		 */
@@ -90,7 +90,7 @@ public class SpeedRunOptions extends AbstractGameMenu {
 		controlDroite.render();
 		
 		float[] color = new float[] { 1, 1, 1, 1 };
-		drawText("Jump", 935, 370, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
-		drawText("Sneak", 935, 738, PositionWidth.DROITE, PositionHeight.MILIEU, 30, color);
+		drawText("Jump", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
+		drawText("Sneak", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 	}
 }

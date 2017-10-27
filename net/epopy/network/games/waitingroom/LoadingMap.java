@@ -4,8 +4,8 @@ import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
 import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
 
 import net.epopy.epopy.display.Textures;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionHeight;
-import net.epopy.epopy.display.components.ComponentsHelper.PositionWidth;
+import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
+import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.network.games.AbstractGameNetwork;
 import net.epopy.network.games.tank.Tank;
 import net.epopy.network.games.tank.modules.MapLoader;
@@ -60,7 +60,7 @@ public class LoadingMap extends AbstractGameNetwork {
 		else if (i == 3)
 			point = ". . .";
 
-		drawText("Chargement en cours ", milieu, 800, PositionWidth.MILIEU, PositionHeight.HAUT, 50, blackColor);
+		drawText("Chargement en cours ", milieu, 800, PosWidth.MILIEU, PosHeight.HAUT, 50, blackColor);
 		drawText(point, 1210, 800, 50, blackColor);
 
 		drawLine(milieu + x, 880, milieu - x, 880, 2, blackColor);
