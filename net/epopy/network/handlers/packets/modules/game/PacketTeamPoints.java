@@ -9,7 +9,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketTeamPoints extends PacketAbstract {
 
 	public PacketTeamPoints(){}
-		
+	public String getName() {
+		return "PacketTeamPoints";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		Team team = NetworkPlayer.getGame().getTeam(dataBuffer.getString());

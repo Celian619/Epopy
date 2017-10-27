@@ -9,7 +9,9 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketTeamCaptureZone extends PacketAbstract {
 
 	public PacketTeamCaptureZone(){}
-
+	public String getName() {
+		return "PacketTeamCaptureZone";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String zoneId = dataBuffer.getString();

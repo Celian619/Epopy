@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 import net.epopy.epopy.Main;
 
@@ -43,6 +46,21 @@ public class FileUtils {
 		PATH_FOLDER = directory.getPath() + "/";
 		PATH_INFOS = PATH_FOLDER + "infos.txt";
 
+		try {
+			File lock = new File(PATH_FOLDER + "lockEpopy.txt");
+			lock.createNewFile();
+			input = new FileOutputStream(lock);
+			
+			if (input.getChannel().tryLock() == null) {
+				JOptionPane.showMessageDialog(null, "Une autre fenêtre est déjà lancée !", "Epopy", JOptionPane.WARNING_MESSAGE);
+				System.out.println("\n\n\nAn other instance is ON ! (EXIT)");
+				System.exit(0);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		File version = new File(PATH_FOLDER + "version.txt");
 		if(version.exists()) {
 			try (BufferedReader br = new BufferedReader(new FileReader(PATH_FOLDER + "version.txt"))) {

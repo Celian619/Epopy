@@ -26,6 +26,10 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 	private static String ip, team;
 	private static int port;
 
+	public String getName() {
+		return "PacketPlayerWaitingRoom";
+	}
+	
 	public PacketPlayerWaitingRoom() {
 	}
 

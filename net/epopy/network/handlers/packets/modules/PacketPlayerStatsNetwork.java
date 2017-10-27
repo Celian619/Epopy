@@ -8,7 +8,10 @@ import net.epopy.network.utils.DataBuffer;
 public class PacketPlayerStatsNetwork extends PacketAbstract {
 
 	public PacketPlayerStatsNetwork(){};
-
+	public String getName() {
+		return "PacketPlayerStatsNetwork";
+	}
+	
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String players = dataBuffer.getString();

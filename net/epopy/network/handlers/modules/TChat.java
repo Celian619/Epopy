@@ -34,7 +34,7 @@ public class TChat {
 	 * Fonctions
 	 */
 	public static void addMessage(String sender, String message) {//»
-		messages.add(sender.equals("SERVER") ? "&e" + message : sender + " : " + message);
+		messages.add(sender.equals("SERVER") ? "&e" + message : sender + " » " + message);
 	
 		if(messages.size() > MAX_MESSAGE)
 			messageFirst++;

@@ -10,7 +10,9 @@ public class PacketPlayerDirection extends PacketAbstract {
 
 	
 	public PacketPlayerDirection() {}
-	
+	public String getName() {
+		return "PacketPlayerDirection";
+	}
 	public PacketPlayerDirection(int direction) {
 		packet.put(direction);
 		packet.flip();

@@ -11,7 +11,9 @@ public class PacketPlayerDamage extends PacketAbstract {
 	public PacketPlayerDamage() {
 		packet.flip();
 	}
-
+	public String getName() {
+		return "PacketPlayerDamage";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String playerName = dataBuffer.getString();

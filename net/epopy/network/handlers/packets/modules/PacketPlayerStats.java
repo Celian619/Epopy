@@ -10,7 +10,9 @@ public class PacketPlayerStats extends PacketAbstract {
 	public PacketPlayerStats() {
 		packet.flip();
 	}
-
+	public String getName() {
+		return "PacketPlayerStats";
+	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
 		String name = dataBuffer.getString();

@@ -101,6 +101,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		try {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(ip, port), 4000);// 10s de time out
+			System.out.println("Connect: " + ip + " " + port);
 			socket.setTcpNoDelay(true);
 			socket.setKeepAlive(true);
 			dataInputStream = new DataInputStream(socket.getInputStream());

@@ -37,12 +37,12 @@ public class PacketGetIPServers {
 		
 		try {
 			Socket socket = new Socket();
-			socket.connect(new InetSocketAddress(MANAGER_IP, MANAGER_PORT), 3000);
+			socket.connect(new InetSocketAddress("37.59.205.252", 25565), 3000);
 			socket.setTcpNoDelay(true);
 			DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
 			DataBuffer packet = new DataBuffer(512);
-			packet.put(getClass().getSimpleName());
-			packet.put(EnvType.PROD.name());// changer par la suite
+			packet.put("PacketGetIPServers");
+			packet.put("prod");// changer par la suite
 			packet.flip();
 			dataOutputStream.write(packet.getData());
 			dataOutputStream.flush();
@@ -52,7 +52,7 @@ public class PacketGetIPServers {
 				byte[] bytes = DataStream.readPacket(dataInputStream);
 				DataBuffer data = new DataBuffer(bytes);
 				String packetName = data.getString();
-				if (packetName.equals(getClass().getSimpleName())) {
+				if (packetName.equals("PacketGetIPServers")) {
 					String dataMatchmaking = data.getString();
 					String dataTexture = data.getString();
 					

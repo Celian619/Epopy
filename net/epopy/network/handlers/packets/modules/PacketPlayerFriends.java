@@ -9,7 +9,9 @@ public class PacketPlayerFriends extends PacketAbstract {
 
 	
 	public PacketPlayerFriends(){}
-
+	public String getName() {
+		return "PacketPlayerFriends";
+	}
 	public PacketPlayerFriends(NetworkPlayer player, String targetName, PacketFriendsType packetFriendsType) {
 		packet.put(player.getName());
 		packet.put(targetName);
