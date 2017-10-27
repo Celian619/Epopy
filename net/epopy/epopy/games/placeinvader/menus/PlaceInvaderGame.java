@@ -60,6 +60,8 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 		locBalleP = new ArrayList<Location>();
 		locBalleR = new ArrayList<Location>();
 		
+		objectif = "100 points";
+		
 		xPlayer = defaultWidth / 2;
 		pause.startPause(5);
 		Mouse.setGrabbed(true);
@@ -241,7 +243,7 @@ public class PlaceInvaderGame extends AbstractGameMenu {
 				
 				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
 				drawText("Obtenir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
-				drawText("100 points.", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+				drawText("100 points", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 				
 				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 				return;

@@ -86,6 +86,8 @@ public class CarGame extends AbstractGameMenu {
 		map = null;
 		locCar = new Location(middleWidth * cubeWidth - 17.5, middleHeight * cubeHeight + cubeHeight / 2);
 
+		objectif = "60 secondes";
+		
 		pointsInt = new LinkedList<Location>();//
 		waitingPoints = new LinkedList<Location>();
 		for (int x = middleWidth - 5; x < middleWidth + 5; x++) {

@@ -12,37 +12,38 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.utils.Pause;
 
 public abstract class AbstractGameMenu {
-	
+
 	// buttons
-	
+
 	protected ButtonGui rejouerButton = new ButtonGui("Rejouer", new float[] { 0, 1, 0, 1 }, 50, false);
-	
+
 	protected ButtonGui reprendreButton = new ButtonGui("Reprendre", new float[] { 0, 1, 0, 1 }, 50, false);
-	
+
 	protected ButtonGui quitterButton = new ButtonGui("Quitter", new float[] { 1, 1, 1, 1 }, 50, false);
-
+	
 	private static ButtonGui sound = new ButtonGui(Textures.MENU_SOUND_ON, Textures.MENU_BTN_SOUND_ON);
-
+	
 	private static ButtonGui sound_moins = new ButtonGui("-", new float[] { 1, 1, 1, 1 }, 30, false);
 	private static ButtonGui sound_plus = new ButtonGui("+", new float[] { 1, 1, 1, 1 }, 30, false);
-
-	protected static Audios song = Audios.PING;
 	
+	protected static Audios song = Audios.PING;
+	protected static String objectif = "0";
+
 	private int w1Quitter = 0;
 	private int w2Quitter = 0;
 	private int w1Button = 0;
 	private int w2Button = 0;
-	
+
 	public void renderEchap(final boolean pause) {
 		renderEchap(pause, "", false);
 	}
-
+	
 	public void renderEchap(final boolean pause, final String score, final boolean record) {
 		renderEchap(pause, score, record ? "Record !" : "Score");
 	}
-
+	
 	public void renderEchap(final boolean pause, final String subtitle, final String title) {
-		
+
 		Textures.GAME_ECHAP_BANDE.renderBackground();
 		if (!pause) {
 			drawText(title, defaultWidth / 2 + (subtitle.equals("") ? -7 : 30), defaultHeight / 2 - (subtitle.equals("") ? 0 : 40), PosWidth.MILIEU, PosHeight.MILIEU, 90, new float[] { 1, 1, 1, 1 });
@@ -52,11 +53,11 @@ public abstract class AbstractGameMenu {
 		ButtonGui button = pause ? reprendreButton : rejouerButton;
 		button.update(pause ? 1560 : 1590, 200, PosWidth.MILIEU, PosHeight.HAUT, 300, 50);
 		quitterButton.update(450 - 55, 795, PosWidth.MILIEU, PosHeight.HAUT, 150, 50);
-		
+
 		sound.update(10, 10, PosWidth.GAUCHE, PosHeight.HAUT, 65, 65);
 		sound_moins.update(80, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
 		sound_plus.update(123, 21, PosWidth.GAUCHE, PosHeight.HAUT, 30, 30);
-		
+
 		if (sound_moins.isClicked()) {
 			if (Audios.VOLUME_VALUE > 1) {
 				Audios.VOLUME_VALUE -= 1;
@@ -64,7 +65,7 @@ public abstract class AbstractGameMenu {
 				Audios.updateAllVolume();
 			}
 		}
-		
+
 		if (sound_plus.isClicked()) {
 			if (Audios.VOLUME_VALUE < 10) {
 				Audios.VOLUME_VALUE += 1;
@@ -72,7 +73,7 @@ public abstract class AbstractGameMenu {
 				Audios.updateAllVolume();
 			}
 		}
-		
+
 		if (!Main.getPlayer().hasSound()) {
 			sound.textureOff = Textures.MENU_SOUND_OFF;
 			sound.textureOn = Textures.MENU_SOUND_OFF;
@@ -82,11 +83,12 @@ public abstract class AbstractGameMenu {
 		}
 		if (sound.isClicked()) {
 			Main.getPlayer().setSoundStatus(!Main.getPlayer().hasSound(), false);
-
+			
 			if (Main.getPlayer().hasSound()) song.start(true).setVolume(0.3f);
-
+			
 			sound.setClicked(false);
 		}
+		drawText("Objectif : " + objectif, defaultWidth - 5, defaultHeight - 5, PosWidth.DROITE, PosHeight.BAS, 40, new float[] { 1, 1, 1, 1 });
 		
 		if (sound != null) {
 			sound.render();
@@ -94,10 +96,10 @@ public abstract class AbstractGameMenu {
 			sound_plus.render();
 			drawText(String.valueOf(Audios.VOLUME_VALUE), Audios.VOLUME_VALUE == 10 ? 92 : 100, 20, PosWidth.GAUCHE, PosHeight.HAUT, 30, new float[] { 1, 1, 1, 1 });
 		}
-		
+
 		button.render();
 		quitterButton.render();
-		
+
 		if (quitterButton.isOn()) {
 			if (w1Quitter > 0)
 				w1Quitter -= 40;
@@ -113,7 +115,7 @@ public abstract class AbstractGameMenu {
 				w2Quitter += 20;
 			else w2Quitter = 520;
 		}
-		
+
 		if (button.isOn()) {
 			if (w1Button > 0)
 				w1Button -= 40;
@@ -132,50 +134,50 @@ public abstract class AbstractGameMenu {
 		// solo bar bas
 		drawQuad(42 - 17, 880, w1Quitter == 520 ? 523 : w1Quitter, 2);
 		drawQuad(780 - 17, 770, w2Quitter == 520 ? -530 : -w2Quitter, 2);
-		
+
 		// button bars
 		drawQuad(1390 - 17, 180, w1Button == 520 ? 523 : w1Button, 2);
 		drawQuad(1730 - 17, 190 + 90, w2Button == 520 ? -530 : -w2Button, 2);
-		
+
 		if (quitterButton.isClicked()) {
 			Audios.stopAll();
 			Textures.unloadTextures();
 			Main.getGameManager().getGameEnable().setStatus(false);
 		}
 	}
-	
+
 	public boolean gameOver = false;
-	
+
 	public boolean win = false;
-	
+
 	/**
 	 * This int is the default size in width of the window
 	 */
 	public static int defaultWidth = 1920;
-	
+
 	/**
 	 * This int is the default size in height of the window
 	 */
 	public static int defaultHeight = 1080;
-	
+
 	/*
 	 * This object is for create a pause in game
 	 */
 	public static Pause pause = new Pause();
-	
+
 	/**
 	 * This function is the activation function which is launched at the beginning of each game.
 	 */
 	public abstract void onEnable();
-	
+
 	/**
 	 * This function is used to update all the mecanics of the game
 	 */
 	public abstract void update();
-	
+
 	/**
 	 * This function is used to update the textures.
 	 */
 	public abstract void render();
-	
+
 }
