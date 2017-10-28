@@ -39,7 +39,7 @@ public class PingStats {
 	}
 	
 	public int getObjectif() {
-		return 80;// 1 minute 20
+		return 70;// 1 minute 20
 	}
 
 	public String getObjectifString() {

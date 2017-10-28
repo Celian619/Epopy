@@ -17,6 +17,7 @@ import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
+import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.stats.SpeedRunStats;
 import net.epopy.epopy.utils.Input;
 
@@ -293,12 +294,11 @@ public class SpeedRunGame extends AbstractGameMenu {
 				// set best score
 				if (record)
 					speedRunStats.setRecord(timer / 60);
-					
-				/**
-				 * TODO if (timer.getTime() * 1000 > speedRunStats.getObjectif()) { if (Main.getPlayer().getLevel() <=
-				 * GameList.SPEEDRUN.getID()) Main.getPlayer().setLevel(GameList.SPEEDRUN.getID() + 1); }
-				 */
-				
+
+				if (speedRunStats.getRecord() > speedRunStats.getObjectif()) {
+					if (Main.getPlayer().getLevel() <= GameList.SPEEDRUN.getID()) Main.getPlayer().setLevel(GameList.SPEEDRUN.getID() + 1);
+				}
+
 				addStats = true;
 			}
 		}

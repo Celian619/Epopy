@@ -367,7 +367,7 @@ public class SnakeGame extends AbstractGameMenu {
 			if (snakeSize > ptsRecord)
 				snakeStats.setRecord(snakeSize);
 				
-			if (snakeSize >= snakeStats.getObjectif()) {
+			if (snakeStats.getRecord() >= snakeStats.getObjectif()) {
 				if (Main.getPlayer().getLevel() <= GameList.SNAKE.getID())
 					Main.getPlayer().setLevel(GameList.SNAKE.getID() + 1);
 			}
