@@ -18,6 +18,7 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
+import net.epopy.epopy.player.Player;
 import net.epopy.epopy.player.stats.PingStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
@@ -71,10 +72,10 @@ public class PingGame extends AbstractGameMenu {
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 
-		objectif = "1 minute 10";
-		
 		timer = 0;
 		pause.startPause(5);
+		
+		gameStats = Main.getPlayer().getPingStats();
 	}
 
 	@Override
@@ -175,7 +176,7 @@ public class PingGame extends AbstractGameMenu {
 		drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
 
 		if (!pause.isFinish()) {
-			if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
+			if (Input.getAnyKeyDown()) {
 				pause.stopPause();
 				return;
 			}
@@ -206,10 +207,14 @@ public class PingGame extends AbstractGameMenu {
 				}
 				
 				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
-				float[] gray = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-				drawText("Tenir plus d'", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
-				drawText("1 minute 10", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
-				
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
+
+				if (gameStats.getRecord() > gameStats.getObjectif()) {
+					drawText("Réussi !", 710, 615, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 1, 0, 1 });
+				} else {
+					drawText("Tenir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+					drawText(gameStats.getObjectifString(), 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+				}
 				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
@@ -225,19 +230,22 @@ public class PingGame extends AbstractGameMenu {
 				Mouse.setGrabbed(false);
 			PingStats pingStats = Main.getPlayer().getPingStats();
 			String timeString = timer / 60 + "s";
+
 			boolean record = timer / 60 > pingStats.getRecord();
 			renderEchap(false, timeString, record);
 			if (!addStats) {
-				pingStats.addPartie();
+
 				pingStats.addTemps(timer / 60);
 				// set best score
 				if (record)
 					pingStats.setRecord(timer / 60);
 
 				if (pingStats.getRecord() > pingStats.getObjectif()) {
-					if (Main.getPlayer().getLevel() <= GameList.PING.getID())
-						Main.getPlayer().setLevel(GameList.PING.getID() + 1);
+					Player p = Main.getPlayer();
+					if (p.getLevel() <= GameList.PING.getID())
+						p.setLevel(p.getLevel() + 1);
 				}
+				pingStats.addPartie();
 				addStats = true;
 			}
 		}
