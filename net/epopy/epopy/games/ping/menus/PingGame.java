@@ -172,8 +172,10 @@ public class PingGame extends AbstractGameMenu {
 		}
 		drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
 		drawQuad(defaultWidth - paddleWidth - ecartBordPaddle, (int) yRobot, paddleWidth, paddleHeight);
-		drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
-		drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
+		if (!gameOver) {
+			drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
+			drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
+		}
 
 		if (!pause.isFinish()) {
 			if (Input.getAnyKeyDown()) {
@@ -256,13 +258,10 @@ public class PingGame extends AbstractGameMenu {
 
 		// rebond murs
 		int epaisseur = paddleWidth + ballSize - 5 + ecartBordPaddle;
+		double diffPadPlayer = Math.abs(ballPos.getY() + ballSize / 2 - (yPlayer + paddleHeight / 2));
 		if (deplacedX() > defaultWidth - ballSize || deplacedX() < ballSize) {
-			direction = 540 - direction;
-
-			if (direction > 360)
-				direction -= 360;
 			gameOver = true;
-		} else if ((direction < 90 || direction > 270) && deplacedX() > AbstractGameMenu.defaultWidth - epaisseur && Math.abs(ballPos.getY() - (yRobot + paddleHeight / 2)) <= (double) paddleHeight / 2) {
+		} else if ((direction < 90 || direction > 270) && deplacedX() > AbstractGameMenu.defaultWidth - epaisseur) {
 
 			direction = 540 - direction;
 
@@ -274,7 +273,7 @@ public class PingGame extends AbstractGameMenu {
 			speedBall += 10 * defaultWidth / AbstractGameMenu.defaultWidth / speedBall;
 			speedPaddle = Math.abs(speedBall * Math.sin(Math.toRadians(50))) + 1;
 
-		} else if (deplacedX() < epaisseur && Math.abs(ballPos.getY() - (yPlayer + paddleHeight / 2)) <= (double) paddleHeight / 2 && direction > 90 && direction < 270) {
+		} else if (deplacedX() < epaisseur && diffPadPlayer <= (double) paddleHeight / 2 + ballSize / 2 - 5 && direction > 90 && direction < 270) {
 
 			direction = 540 - direction;
 

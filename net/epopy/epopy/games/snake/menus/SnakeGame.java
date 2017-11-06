@@ -391,17 +391,23 @@ public class SnakeGame extends AbstractGameMenu {
 		Double speed;
 		int walk;
 		double size;
+		boolean boosted;
 
 		public mouse(final Location loc) {
 			this.loc = loc;
 			Random r = new Random();
+			boosted = r.nextInt(10) == 2;
 			directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
-			speed = r.nextDouble() / 2 + 0.2;
+			if (boosted) speed = 1.0;
+			else
+				speed = r.nextDouble() / 2 + 0.2;
 			walk = 0;
 			size = 0;
+
 		}
 
 		private void move() {
+
 			if (size < 6)
 				size += 0.05;
 			walk++;
@@ -433,12 +439,12 @@ public class SnakeGame extends AbstractGameMenu {
 
 				loc.add(xAdd, yAdd);
 			}
-			
-			speed += (r.nextBoolean() ? 1 : -1) * r.nextDouble() / 10;
-			
-			if (speed > 0.7) speed = 0.7;
-			if (speed < 0.2) speed = 0.2;
-			
+			if (!boosted) {
+				speed += (r.nextBoolean() ? 1 : -1) * r.nextDouble() / 10;
+				
+				if (speed > 0.7) speed = 0.7;
+				if (speed < 0.2) speed = 0.2;
+			}
 			if (loc.getDirection() > 180) loc.setDirection(loc.getDirection() - 360);
 			
 			if (loc.getDirection() < -180) loc.setDirection(loc.getDirection() + 360);
