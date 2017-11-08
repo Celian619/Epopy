@@ -19,7 +19,6 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
 import net.epopy.epopy.player.Player;
-import net.epopy.epopy.player.stats.PingStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
@@ -76,6 +75,12 @@ public class PingGame extends AbstractGameMenu {
 		pause.startPause(5);
 		
 		gameStats = Main.getPlayer().getPingStats();
+		
+		if (gameStats.getRecord() > gameStats.getObjectif()) {
+			Player p = Main.getPlayer();
+			if (p.getLevel() <= GameList.PING.getID())
+				p.setLevel(p.getLevel() + 1);
+		}
 	}
 
 	@Override
@@ -230,24 +235,23 @@ public class PingGame extends AbstractGameMenu {
 		if (gameOver) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
-			PingStats pingStats = Main.getPlayer().getPingStats();
 			String timeString = timer / 60 + "s";
 
-			boolean record = timer / 60 > pingStats.getRecord();
+			boolean record = timer / 60 > gameStats.getRecord();
 			renderEchap(false, timeString, record);
 			if (!addStats) {
 
-				pingStats.addTemps(timer / 60);
+				gameStats.addTemps(timer / 60);
 				// set best score
 				if (record)
-					pingStats.setRecord(timer / 60);
+					gameStats.setRecord(timer / 60);
 
-				if (pingStats.getRecord() > pingStats.getObjectif()) {
+				if (gameStats.getRecord() > gameStats.getObjectif()) {
 					Player p = Main.getPlayer();
 					if (p.getLevel() <= GameList.PING.getID())
 						p.setLevel(p.getLevel() + 1);
 				}
-				pingStats.addPartie();
+				gameStats.addPartie();
 				addStats = true;
 			}
 		}
