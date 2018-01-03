@@ -11,6 +11,7 @@ import net.epopy.epopy.display.components.NotificationGui;
 import net.epopy.network.Logger;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.display.DisplayManager;
+import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.packets.PacketAbstract;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.PacketPlayerDisconnect;
@@ -104,6 +105,11 @@ public class NetworkPlayerHandlers implements Runnable {
 			System.out.println("Connect: " + ip + " " + port);
 			socket.setTcpNoDelay(true);
 			socket.setKeepAlive(true);
+
+			this.socket.setTrafficClass(0x10);
+			this.socket.setReuseAddress(false);
+			this.socket.setSoLinger(false, 0);
+
 			dataInputStream = new DataInputStream(socket.getInputStream());
 			dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -123,10 +129,12 @@ public class NetworkPlayerHandlers implements Runnable {
 			try {
 				byte[] bytes = DataStream.readPacket(dataInputStream);
 				DataBuffer data = new DataBuffer(bytes);
+
 				PacketAbstract packet = Packets.getPacket(data.getString());
 				if (packet != null) {
+					System.out.println("Packet: " + packet.getName());
 					packet.process(this, data);
-			//		System.out.println("Packet: " + packet.getName());
+					System.out.println("-----");
 				} else 
 					break;
 			} catch (Exception ex) {
@@ -145,7 +153,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		} else {
 			Logger.info("Server game has been stopped");
 			//TODO voir pour send que quand il y a vraiment besoin
-			//	NetworkPlayer.setGame(new WaitingRoom());
+				NetworkPlayer.setGame(new WaitingRoom());
 			//new NotificationGui("Votre serveur de jeu vient de s'éteindre", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
 		}
 	}

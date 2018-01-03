@@ -25,8 +25,8 @@ public abstract class AbstractGameNetwork {
 
 	private static Map<String, Team> teams = new TreeMap<>(); // STRING = nom de la team
 	private static Map<String, Ball> balls = new TreeMap<>(); // STRING = nom de la team
-	private static Map<String, Zone> zones = new TreeMap<>();//INT = id de la zone
-	private static Map<String, Zone> zoneADD = new TreeMap<>();
+	private static Map<Integer, Zone> zones = new TreeMap<>();//INT = id de la zone
+	private static Map<Integer, Zone> zoneADD = new TreeMap<>();
 
 	private static GameStatus gameStatus = GameStatus.WAITING;
 
@@ -147,16 +147,19 @@ public abstract class AbstractGameNetwork {
 
 	private void updateZone() {
 		if(!zoneADD.isEmpty()) {
-			for(Entry<String, Zone> zone : zoneADD.entrySet()) 
+			for(Entry<Integer, Zone> zone : zoneADD.entrySet()) 
 				zones.put(zone.getKey(), zone.getValue());
 			zoneADD.clear();
 		}
 	}
 
-	public void addZone(String id) {
+	public void addZone(int id) {
+
 		updateZone();
 		if (!zones.containsKey(id))
 			zoneADD.put(id, new Zone(id));
+		updateZone();
+		System.out.println("zone size" + getZones().size());
 	}
 
 	public Collection<Zone> getZones() {
@@ -164,12 +167,12 @@ public abstract class AbstractGameNetwork {
 		return zones.values();
 	}
 
-	public boolean containsZone(String id) {
+	public boolean containsZone(int id) {
 		updateZone();
 		return zones.containsKey(id);
 	}
 
-	public Zone getZone(String id) {
+	public Zone getZone(int id) {
 		updateZone();
 		if (zones.containsKey(id))
 			return zones.get(id);

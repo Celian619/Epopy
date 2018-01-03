@@ -58,11 +58,10 @@ public class FileUtils {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
 		File version = new File(PATH_FOLDER + "version.txt");
-		if(version.exists()) {
+		if (version.exists()) {
 			try (BufferedReader br = new BufferedReader(new FileReader(PATH_FOLDER + "version.txt"))) {
 				String ligne;
 				while ((ligne = br.readLine()) != null) {

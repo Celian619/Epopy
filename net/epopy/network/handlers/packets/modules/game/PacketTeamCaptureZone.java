@@ -14,9 +14,10 @@ public class PacketTeamCaptureZone extends PacketAbstract {
 	}
 	@Override
 	public void process(NetworkPlayerHandlers networkPlayerHandlers, DataBuffer dataBuffer) {
-		String zoneId = dataBuffer.getString();
+		int zoneId = dataBuffer.getInt();
 		float[] color = new float[]{dataBuffer.getFloat(), dataBuffer.getFloat(), dataBuffer.getFloat(), dataBuffer.getFloat()};
 		AbstractGameNetwork game = NetworkPlayer.getGame();
+		System.out.println("REcu :" + zoneId);
 		if(game.containsZone(zoneId))
 			game.getZone(zoneId).setColor(color);
 		else

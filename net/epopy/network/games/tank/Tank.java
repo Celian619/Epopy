@@ -4,6 +4,7 @@ import static net.epopy.epopy.display.components.ComponentsHelper.drawLine;
 import static net.epopy.epopy.display.components.ComponentsHelper.drawText;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.epopy.display.components.ComponentsHelper;
@@ -49,8 +50,9 @@ public class Tank extends AbstractGameNetwork {
 	@Override
 	public void update() {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
+		Display.setTitle("Epopy - " + NetworkPlayer.getNetworkPlayer().getName());
 		if (player != null) {
-			//Display.setTitle("Epopy - " + player.getName());
+		
 			if (getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
 				if (player != null) {
 					// rotation du tank

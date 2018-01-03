@@ -29,7 +29,7 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 	public String getName() {
 		return "PacketPlayerWaitingRoom";
 	}
-	
+
 	public PacketPlayerWaitingRoom() {
 	}
 
@@ -117,28 +117,34 @@ public class PacketPlayerWaitingRoom extends PacketAbstract {
 					if (MapLoader.LOADING) {
 						if (!connexion) {
 							connexion = true;
-
-							NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
-							System.out.println("[Server - Network] Server ready ! Teleportation ..."); 
-							NetworkPlayer.getGame().clear();
-
 							new java.util.Timer().schedule(
 									new java.util.TimerTask() {
 										@Override
 										public void run() {
-											Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
+
+											NetworkPlayer.getNetworkPlayer().connectGame(ip, port);
+											System.out.println("[Server - Network] Server ready ! Teleportation ..."); 
+											NetworkPlayer.getGame().clear();
+
+											new java.util.Timer().schedule(
+													new java.util.TimerTask() {
+														@Override
+														public void run() {
+															Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(team));
+														}
+													}, 2000);
+
+											new java.util.Timer().schedule(
+													new java.util.TimerTask() {
+														@Override
+														public void run() {
+															NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
+														}
+													}, 4000);
 										}
-									}, 2000);
-							
-							new java.util.Timer().schedule(
-									new java.util.TimerTask() {
-										@Override
-										public void run() {
-											NetworkPlayer.setGame(GameListNetwork.getGameByID(WaitingRoom.waitingRoom.getIdGame()).getAbstractGame());
-										}
-									}, 4000);
+									}, 500);
+							timer.cancel();
 						}
-						timer.cancel();
 					}
 				}
 			}, 20, 20);
