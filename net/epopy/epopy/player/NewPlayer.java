@@ -15,7 +15,7 @@ import net.epopy.epopy.Main;
 import net.epopy.epopy.utils.FileUtils;
 
 public class NewPlayer {
-
+	
 	public NewPlayer(final String name) {
 		
 		File profil = new File(FileUtils.PATH_FOLDER + name + ".txt");
@@ -42,7 +42,7 @@ public class NewPlayer {
 			write(w, "level=" + 1);// TODO Modifier ceci !
 			
 			write(w, "last_game=" + 1);
-
+			
 			for (String str : new String[] { "snake", "ping", "car", "tank", "plainv", "speedrun", "tetras" }) {
 				write(w, str + "_record=0");
 				write(w, str + "_parties=0");
@@ -83,7 +83,7 @@ public class NewPlayer {
 		
 		}
 	}
-
+	
 	private void write(final Writer w, final String s) {
 		try {
 			w.write(Main.getEncryptor().encrypt(s));

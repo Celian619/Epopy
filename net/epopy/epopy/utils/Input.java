@@ -25,6 +25,12 @@ public class Input {
 			lastButtons[i] = isButtonDown(i);
 	}
 
+	public static boolean getAnyKeyDown() {
+		for (boolean down : lastKeys)
+			if (down) return true;
+		return false;
+	}
+
 	public static boolean isKeyDown(final int key) {
 		return Keyboard.isKeyDown(key);
 	}

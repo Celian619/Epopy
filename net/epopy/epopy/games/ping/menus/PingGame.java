@@ -18,7 +18,7 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
-import net.epopy.epopy.player.stats.PingStats;
+import net.epopy.epopy.player.Player;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
@@ -71,10 +71,16 @@ public class PingGame extends AbstractGameMenu {
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 
-		objectif = "1 minute 10";
-		
 		timer = 0;
 		pause.startPause(5);
+		
+		gameStats = Main.getPlayer().getPingStats();
+		
+		if (gameStats.getRecord() > gameStats.getObjectif()) {
+			Player p = Main.getPlayer();
+			if (p.getLevel() <= GameList.PING.getID())
+				p.setLevel(p.getLevel() + 1);
+		}
 	}
 
 	@Override
@@ -171,11 +177,13 @@ public class PingGame extends AbstractGameMenu {
 		}
 		drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
 		drawQuad(defaultWidth - paddleWidth - ecartBordPaddle, (int) yRobot, paddleWidth, paddleHeight);
-		drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
-		drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
+		if (!gameOver) {
+			drawCircle((int) ballPos.getX() + 1, (int) ballPos.getY() + 1, ballSize, 20, new float[] { 0.5f, 0.5f, 0.5f, 1 });
+			drawCircle((int) ballPos.getX(), (int) ballPos.getY(), ballSize - 2, 20);
+		}
 
 		if (!pause.isFinish()) {
-			if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
+			if (Input.getAnyKeyDown()) {
 				pause.stopPause();
 				return;
 			}
@@ -206,10 +214,14 @@ public class PingGame extends AbstractGameMenu {
 				}
 				
 				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
-				float[] gray = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-				drawText("Tenir plus d'", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
-				drawText("1 minute 10", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, gray);
-				
+				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
+
+				if (gameStats.getRecord() > gameStats.getObjectif()) {
+					drawText("Réussi !", 710, 615, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 1, 0, 1 });
+				} else {
+					drawText("Tenir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+					drawText(gameStats.getObjectifString(), 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+				}
 				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
@@ -223,21 +235,23 @@ public class PingGame extends AbstractGameMenu {
 		if (gameOver) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
-			PingStats pingStats = Main.getPlayer().getPingStats();
 			String timeString = timer / 60 + "s";
-			boolean record = timer / 60 > pingStats.getRecord();
+
+			boolean record = timer / 60 > gameStats.getRecord();
 			renderEchap(false, timeString, record);
 			if (!addStats) {
-				pingStats.addPartie();
-				pingStats.addTemps(timer / 60);
+
+				gameStats.addTemps(timer / 60);
 				// set best score
 				if (record)
-					pingStats.setRecord(timer / 60);
+					gameStats.setRecord(timer / 60);
 
-				if (pingStats.getRecord() > pingStats.getObjectif()) {
-					if (Main.getPlayer().getLevel() <= GameList.PING.getID())
-						Main.getPlayer().setLevel(GameList.PING.getID() + 1);
+				if (gameStats.getRecord() > gameStats.getObjectif()) {
+					Player p = Main.getPlayer();
+					if (p.getLevel() <= GameList.PING.getID())
+						p.setLevel(p.getLevel() + 1);
 				}
+				gameStats.addPartie();
 				addStats = true;
 			}
 		}
@@ -248,13 +262,10 @@ public class PingGame extends AbstractGameMenu {
 
 		// rebond murs
 		int epaisseur = paddleWidth + ballSize - 5 + ecartBordPaddle;
+		double diffPadPlayer = Math.abs(ballPos.getY() + ballSize / 2 - (yPlayer + paddleHeight / 2));
 		if (deplacedX() > defaultWidth - ballSize || deplacedX() < ballSize) {
-			direction = 540 - direction;
-
-			if (direction > 360)
-				direction -= 360;
 			gameOver = true;
-		} else if ((direction < 90 || direction > 270) && deplacedX() > AbstractGameMenu.defaultWidth - epaisseur && Math.abs(ballPos.getY() - (yRobot + paddleHeight / 2)) <= (double) paddleHeight / 2) {
+		} else if ((direction < 90 || direction > 270) && deplacedX() > AbstractGameMenu.defaultWidth - epaisseur) {
 
 			direction = 540 - direction;
 
@@ -266,7 +277,7 @@ public class PingGame extends AbstractGameMenu {
 			speedBall += 10 * defaultWidth / AbstractGameMenu.defaultWidth / speedBall;
 			speedPaddle = Math.abs(speedBall * Math.sin(Math.toRadians(50))) + 1;
 
-		} else if (deplacedX() < epaisseur && Math.abs(ballPos.getY() - (yPlayer + paddleHeight / 2)) <= (double) paddleHeight / 2 && direction > 90 && direction < 270) {
+		} else if (deplacedX() < epaisseur && diffPadPlayer <= (double) paddleHeight / 2 + ballSize / 2 - 5 && direction > 90 && direction < 270) {
 
 			direction = 540 - direction;
 

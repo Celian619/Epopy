@@ -39,7 +39,6 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosHeight;
 import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 import net.epopy.epopy.games.gestion.GameList;
-import net.epopy.epopy.player.stats.CarStats;
 import net.epopy.epopy.utils.Input;
 import net.epopy.epopy.utils.Location;
 
@@ -86,7 +85,7 @@ public class CarGame extends AbstractGameMenu {
 		map = null;
 		locCar = new Location(middleWidth * cubeWidth - 17.5, middleHeight * cubeHeight + cubeHeight / 2);
 
-		objectif = "60 secondes";
+		gameStats = Main.getPlayer().getCarStats();
 		
 		pointsInt = new LinkedList<Location>();//
 		waitingPoints = new LinkedList<Location>();
@@ -127,9 +126,15 @@ public class CarGame extends AbstractGameMenu {
 			pause.startPause(5);
 		}
 		
-		if (creating)
-			upgradeMap();
-		else if (win || pauseScreen) {
+		if (creating) {
+
+			if (Input.getAnyKeyDown()) {
+				while (waitingPoints.size() != 0)
+					upgradeMap();
+					
+			} else
+				upgradeMap();
+		} else if (win || pauseScreen) {
 			if (win) {
 				if (Mouse.isGrabbed())
 					Mouse.setGrabbed(false);
@@ -178,21 +183,21 @@ public class CarGame extends AbstractGameMenu {
 			map.renderBackground();
 
 			if (win) {
-				CarStats carStats = Main.getPlayer().getCarStats();
+				
 				String timeString = timer / 60 + " sec";
-				boolean record = timer / 60 <= carStats.getRecord() || carStats.getRecord() == 0;
+				boolean record = timer / 60 <= gameStats.getRecord() || gameStats.getRecord() == 0;
 				renderEchap(false, timeString, record);
 				if (!addStats) {
 					addStats = true;
 					if (record)
-						carStats.setRecord(timer / 60);
+						gameStats.setRecord(timer / 60);
 
-					if (carStats.getRecord() <= carStats.getObjectif()) {
+					if (gameStats.getRecord() <= gameStats.getObjectif()) {
 						if (Main.getPlayer().getLevel() <= GameList.CAR.getID())
 							Main.getPlayer().setLevel(GameList.CAR.getID() + 1);
 					}
-					carStats.addPartie();
-					carStats.addTemps(timer / 60);
+					gameStats.addPartie();
+					gameStats.addTemps(timer / 60);
 				}
 				return;
 			} else if (pauseScreen) {
@@ -207,7 +212,7 @@ public class CarGame extends AbstractGameMenu {
 				drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PosWidth.MILIEU, PosHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
 			}
 			if (!pause.isFinish()) {
-				if (Input.getKeyDown(Keyboard.KEY_RETURN)) {
+				if (Input.getAnyKeyDown()) {
 					pause.stopPause();
 					return;
 				}
@@ -227,9 +232,14 @@ public class CarGame extends AbstractGameMenu {
 
 					drawText("OBJECTIF", 660, 495, 30, orange);
 					float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-					drawText("Finir en moins", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
-					drawText("d'une minute !", 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 
+					if (gameStats.getRecord() < gameStats.getObjectif() && gameStats.getRecord() != 0) {
+						drawText("Réussi !", 710, 615, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 1, 0, 1 });
+					} else {
+						drawText("Finir en moins de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+						drawText(gameStats.getObjectifString(), 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
+					}
+					
 					drawText(pause.getPauseString(), 660, 335, 100, white);
 				} else
 					pause.showRestartChrono();

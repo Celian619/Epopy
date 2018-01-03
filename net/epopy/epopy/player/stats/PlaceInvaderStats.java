@@ -2,50 +2,26 @@ package net.epopy.epopy.player.stats;
 
 import net.epopy.epopy.utils.Config;
 
-public class PlaceInvaderStats {
-	
-	private int pts;
-	private int parties;
-	private int temps;
-	private final Config config;
+public class PlaceInvaderStats extends AbstractStats {
 
 	public PlaceInvaderStats(final Config config) {
 		this.config = config;
-		pts = Integer.parseInt(config.getData("plainv_record", "0"));
 		parties = Integer.parseInt(config.getData("plainv_parties", "0"));
+		partiesConfig = "plainv_parties";
+
+		record = Integer.parseInt(config.getData("plainv_record", "0"));
+		recordConfig = "plainv_record";
 
 		temps = Integer.parseInt(config.getData("plainv_temps", "0"));
+		tempsConfig = "plainv_temps";
 
+		diminution = 5;
+		firstObjectif = 150;
 	}
-
-	public int getTemps() {
-		return temps;
+	
+	@Override
+	public String getObjectifString() {
+		return getObjectif() + " points";
 	}
-
-	public void addTemps(final int temps) {
-		this.temps += temps;
-		config.setValue("plainv_temps", this.temps + "");
-	}
-
-	public int getObjectif() {
-		return 100;
-	}
-
-	public int getParties() {
-		return parties;
-	}
-
-	public void addPartie() {
-		parties++;
-		config.setValue("plainv_parties", parties + "");
-	}
-
-	public int getRecord() {
-		return pts;
-	}
-
-	public void setRecord(final int pts) {
-		this.pts = pts;
-		config.setValue("plainv_record", pts + "");
-	}
+	
 }
