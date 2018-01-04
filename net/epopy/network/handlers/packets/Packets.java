@@ -61,7 +61,7 @@ public class Packets {
 	}
 
 	public static void sendPacket(final NetworkPlayerHandlers clientHandlers, final PacketAbstract packetAbstract) {
-		if (packetAbstract.getPacket().getData().length > 0 && clientHandlers != null && clientHandlers.getDataOutputStream() != null) {
+		/**if (packetAbstract.getPacket().getData().length > 0 && clientHandlers != null && clientHandlers.getDataOutputStream() != null) {
 			try {
 				clientHandlers.getDataOutputStream().write(packetAbstract.getPacket().getData());
 				clientHandlers.getDataOutputStream().flush();
@@ -69,7 +69,9 @@ public class Packets {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
+		clientHandlers.send(packetAbstract);
+		System.out.println("send");
 	}
 
 	public static void sendPacketUDP(final NetworkPlayerHandlers clientHandlers, final PacketAbstract packetAbstract) {

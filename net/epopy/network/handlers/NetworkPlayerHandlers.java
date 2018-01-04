@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.epopy.epopy.Main;
 import net.epopy.epopy.display.components.NotificationGui;
@@ -33,7 +34,8 @@ public class NetworkPlayerHandlers implements Runnable {
 	private Thread thread;
 
 	private NetworkStatus networkStatus;
-
+	private ConcurrentLinkedQueue<PacketAbstract> sendQueue = new ConcurrentLinkedQueue<>();
+	
 	private NetworkPlayerHandlersUDP networkPlayerHandlersUDP;
 
 	public NetworkPlayerHandlers(final NetworkPlayer player, final String ip, final int port, final boolean udp) {
@@ -105,10 +107,10 @@ public class NetworkPlayerHandlers implements Runnable {
 			System.out.println("Connect: " + ip + " " + port);
 			socket.setTcpNoDelay(true);
 			socket.setKeepAlive(true);
-
-			this.socket.setTrafficClass(0x10);
-			this.socket.setReuseAddress(false);
-			this.socket.setSoLinger(false, 0);
+			new ClientSendThread(this);
+			//this.socket.setTrafficClass(0x10);
+		//	this.socket.setReuseAddress(false);
+			//this.socket.setSoLinger(false, 0);
 
 			dataInputStream = new DataInputStream(socket.getInputStream());
 			dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -117,6 +119,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 			thread = new Thread(this, "tcp-" + socket.getLocalPort());
 			thread.start();
+			
 			return NetworkStatus.USER_WAITING_CONFIRMATION;
 		} catch (IOException e) {
 			return NetworkStatus.SERVER_OFFLINE;
@@ -132,9 +135,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 				PacketAbstract packet = Packets.getPacket(data.getString());
 				if (packet != null) {
-					System.out.println("Packet: " + packet.getName());
 					packet.process(this, data);
-					System.out.println("-----");
 				} else 
 					break;
 			} catch (Exception ex) {
@@ -161,5 +162,54 @@ public class NetworkPlayerHandlers implements Runnable {
 	public void setNetworkStatus(final NetworkStatus networkStatus) {
 		this.networkStatus = networkStatus;
 	}
+	
+	public ConcurrentLinkedQueue<PacketAbstract> getSendingQueue() {
+		return sendQueue;
+	}
+	public void send(PacketAbstract packet) {
+		sendQueue.add(packet);
+	}
+	
+	public class ClientSendThread implements Runnable {
+		private Thread thread;
+		private NetworkPlayerHandlers client;
 
+		public ClientSendThread(NetworkPlayerHandlers client) {
+			this.client = client;
+			this.thread = new Thread(this);
+			thread.start();
+		}
+
+		public void stop() {
+			if(thread != null) {
+				thread.stop();
+			}
+			System.out.println("stop thread");
+		}
+
+		@Override
+		public void run() {
+			while (client.getSocket() != null && !client.getSocket().isClosed()) { 
+				while (!client.getSendingQueue().isEmpty()) {
+					try {
+						PacketAbstract packet = client.getSendingQueue().poll();
+						if (packet != null) {
+
+							byte[] packetData = packet.getPacket().getData();
+							if (packetData.length >= 0 ) {
+								client.getDataOutputStream().write(packetData);
+								client.getDataOutputStream().flush();
+							//	System.out.println(client.getName() + " <- send " + packet.getName());
+							} 
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+						stop();
+					}
+				}
+			}
+			stop();
+
+		}
+	}
 }

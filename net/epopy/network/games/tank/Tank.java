@@ -19,10 +19,12 @@ import net.epopy.network.games.modules.PlayerNetwork;
 import net.epopy.network.games.tank.modules.CalculTank;
 import net.epopy.network.games.tank.modules.MapLoader;
 import net.epopy.network.games.tank.modules.Zone;
+import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.packets.Packets;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus;
 import net.epopy.network.handlers.packets.modules.game.PacketGameStatus.GameStatus;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerDirection;
+import net.epopy.network.handlers.packets.modules.game.PacketPlayerJoin;
 import net.epopy.network.handlers.packets.modules.game.PacketPlayerShootBall;
 
 public class Tank extends AbstractGameNetwork {
@@ -52,8 +54,11 @@ public class Tank extends AbstractGameNetwork {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		Display.setTitle("Epopy - " + NetworkPlayer.getNetworkPlayer().getName());
 		if (player != null) {
-		
 			if (getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
+				if(getGameStatus().equals(GameStatus.IN_GAME) && NetworkPlayer.getGame().getPlayers().size() < WaitingRoom.waitingRoom.getPlayers().size() * 2 + 2) {
+					System.out.println("--> Manque des joueurs");
+					Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getTeam().getName()));	
+					}
 				if (player != null) {
 					// rotation du tank
 					int rotationSpeed = 5;

@@ -154,12 +154,10 @@ public abstract class AbstractGameNetwork {
 	}
 
 	public void addZone(int id) {
-
 		updateZone();
 		if (!zones.containsKey(id))
 			zoneADD.put(id, new Zone(id));
 		updateZone();
-		System.out.println("zone size" + getZones().size());
 	}
 
 	public Collection<Zone> getZones() {

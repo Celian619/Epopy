@@ -46,7 +46,7 @@ public class FileUtils {
 		PATH_FOLDER = directory.getPath() + "/";
 		PATH_INFOS = PATH_FOLDER + "infos.txt";
 
-		try {
+		/**try {
 			File lock = new File(PATH_FOLDER + "lockEpopy.txt");
 			lock.createNewFile();
 			input = new FileOutputStream(lock);
@@ -58,7 +58,7 @@ public class FileUtils {
 			}
 
 		} catch (IOException e) {
-		}
+		}*/
 		
 		File version = new File(PATH_FOLDER + "version.txt");
 		if (version.exists()) {

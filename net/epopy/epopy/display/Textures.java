@@ -225,7 +225,7 @@ public class Textures {
 		if (id == -12) {
 			
 			try {
-
+			//	System.out.println(path);
 				if (bufferedImage == null)
 					bufferedImage = ImageIO.read(Textures.class.getResource(path));
 				BufferedImage image = bufferedImage;
