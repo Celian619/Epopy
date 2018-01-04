@@ -150,7 +150,6 @@ public class ChooseGameTypeMenu {
 				Textures.unloadTextures();
 				Main.setGameManager(new GameManager());
 				break;
-				
 			} else if (multiButton.isClicked()) {
 				Textures.unloadTextures();
 				/*

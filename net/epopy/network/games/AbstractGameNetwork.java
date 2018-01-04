@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.epopy.epopy.display.Textures;
 import net.epopy.network.games.modules.Ball;
@@ -19,14 +19,14 @@ import net.epopy.network.handlers.packets.modules.game.PacketGameStatus.GameStat
 
 public abstract class AbstractGameNetwork {
 
-	private static Map<String, PlayerNetwork> players = new TreeMap<>();
-	private static Map<String, PlayerNetwork> playersADD = new TreeMap<>();
+	private static Map<String, PlayerNetwork> players = new ConcurrentHashMap<>();
+	private static Map<String, PlayerNetwork> playersADD = new ConcurrentHashMap<>();
 	private static List<String> playersREMOVE = new LinkedList<>();
 
-	private static Map<String, Team> teams = new TreeMap<>(); // STRING = nom de la team
-	private static Map<String, Ball> balls = new TreeMap<>(); // STRING = nom de la team
-	private static Map<Integer, Zone> zones = new TreeMap<>();//INT = id de la zone
-	private static Map<Integer, Zone> zoneADD = new TreeMap<>();
+	private static Map<String, Team> teams = new ConcurrentHashMap<>(); // STRING = nom de la team
+	private static Map<String, Ball> balls = new ConcurrentHashMap<>(); // STRING = nom de la team
+	private static Map<Integer, Zone> zones = new ConcurrentHashMap<>();//INT = id de la zone
+	private static Map<Integer, Zone> zoneADD = new ConcurrentHashMap<>();
 
 	private static GameStatus gameStatus = GameStatus.WAITING;
 

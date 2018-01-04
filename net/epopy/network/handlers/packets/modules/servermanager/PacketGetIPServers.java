@@ -8,7 +8,6 @@ import java.net.Socket;
 
 import net.epopy.network.utils.DataBuffer;
 import net.epopy.network.utils.DataStream;
-import net.epopy.network.utils.EnvType;
 
 public class PacketGetIPServers {
 	

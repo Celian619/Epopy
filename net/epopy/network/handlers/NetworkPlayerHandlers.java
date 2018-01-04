@@ -30,9 +30,6 @@ public class NetworkPlayerHandlers implements Runnable {
 	private DataOutputStream dataOutputStream;
 	private DataInputStream dataInputStream;
 
-	// externe
-	private Thread thread;
-
 	private NetworkStatus networkStatus;
 	private ConcurrentLinkedQueue<PacketAbstract> sendQueue = new ConcurrentLinkedQueue<>();
 	
@@ -106,7 +103,7 @@ public class NetworkPlayerHandlers implements Runnable {
 			socket.connect(new InetSocketAddress(ip, port), 4000);// 10s de time out
 			System.out.println("Connect: " + ip + " " + port);
 			socket.setTcpNoDelay(true);
-			socket.setKeepAlive(true);
+		//	socket.setKeepAlive(true);
 			new ClientSendThread(this);
 			//this.socket.setTrafficClass(0x10);
 		//	this.socket.setReuseAddress(false);
@@ -117,8 +114,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 			new Packets();
 
-			thread = new Thread(this, "tcp-" + socket.getLocalPort());
-			thread.start();
+			new Thread(this, "tcp-" + socket.getLocalPort()).start();
 			
 			return NetworkStatus.USER_WAITING_CONFIRMATION;
 		} catch (IOException e) {
@@ -171,19 +167,14 @@ public class NetworkPlayerHandlers implements Runnable {
 	}
 	
 	public class ClientSendThread implements Runnable {
-		private Thread thread;
 		private NetworkPlayerHandlers client;
 
 		public ClientSendThread(NetworkPlayerHandlers client) {
 			this.client = client;
-			this.thread = new Thread(this);
-			thread.start();
+			new Thread(this).start();
 		}
 
 		public void stop() {
-			if(thread != null) {
-				thread.stop();
-			}
 			System.out.println("stop thread");
 		}
 

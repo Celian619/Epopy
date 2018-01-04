@@ -72,6 +72,10 @@ public class DisplayManager {
 			Display.setVSyncEnabled(true);
 			vSync = true;
 		}*/
+		glEnable(GL_TEXTURE_2D);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		while (running) {
 			if (!Display.isVisible()) {
 				Display.update();
@@ -121,10 +125,10 @@ public class DisplayManager {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		glEnable(GL_TEXTURE_2D);
+		//glEnable(GL_TEXTURE_2D);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	}
 

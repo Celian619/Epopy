@@ -1,10 +1,8 @@
 package net.epopy.network.handlers.packets.modules.game;
 
-import net.epopy.epopy.Main;
 import net.epopy.network.NetworkPlayer;
 import net.epopy.network.games.modules.Location3D;
 import net.epopy.network.games.tank.TankMenuEnd;
-import net.epopy.network.games.waitingroom.WaitingRoom;
 import net.epopy.network.handlers.NetworkPlayerHandlers;
 import net.epopy.network.handlers.packets.PacketAbstract;
 import net.epopy.network.handlers.packets.Packets;

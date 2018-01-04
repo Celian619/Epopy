@@ -110,7 +110,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 
 		/**
 		 * Pour changer le jeu de la salle d'attente
-		 */	
+		 TODO pour le moment pas besoin
 		if (GameListNetwork.values().length > 1 && waitingRoom.getWaitingRoomStatus() == WaitingRoomStatus.WAITING) {
 			gauche.update(200 - 10, 85, PosWidth.DROITE, PosHeight.MILIEU, 165 / 2, 148 / 2);
 			droite.update(400 - 10, 85, PosWidth.GAUCHE, PosHeight.MILIEU, 165 / 2, 148 / 2);
@@ -129,7 +129,7 @@ public class WaitingRoom extends AbstractGameNetwork {
 				}
 			}
 		}
-
+*/
 		/**
 		 * Si le menu ajouter des joueurs est activé
 		 */
@@ -198,11 +198,11 @@ public class WaitingRoom extends AbstractGameNetwork {
 		if (waitingRoom.getLeader().equals(NetworkPlayer.getNetworkPlayer().getName()) && waitingRoom.getWaitingRoomStatus() != WaitingRoomStatus.MATCH_FOUND)
 			jouer.render();
 		else {
-			if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.SEARCH))
-				drawText("Recherche en cours...", 290, 790, PosWidth.MILIEU, PosHeight.HAUT, 30);
-			else if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING))
+			if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.WAITING))
 				drawText("En attente...", 290, 790, PosWidth.MILIEU, PosHeight.HAUT, 30);
-			if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.MATCH_FOUND))
+			else if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.SEARCH))
+				drawText("Recherche en cours...", 290, 790, PosWidth.MILIEU, PosHeight.HAUT, 30);
+			else if (waitingRoom.getWaitingRoomStatus().equals(WaitingRoomStatus.MATCH_FOUND))
 				drawText("Match trouvé !", 290, 790, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 0, 1, 0, 1 });
 		}
 		tChat.render();

@@ -1,6 +1,5 @@
 package net.epopy.network.handlers.packets;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -71,7 +70,6 @@ public class Packets {
 			}
 		}*/
 		clientHandlers.send(packetAbstract);
-		System.out.println("send");
 	}
 
 	public static void sendPacketUDP(final NetworkPlayerHandlers clientHandlers, final PacketAbstract packetAbstract) {
