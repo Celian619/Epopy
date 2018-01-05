@@ -55,7 +55,7 @@ public class Packets {
 			packets.put("PacketGameStatus", PacketGameStatus.class);
 			packets.put("PacketPlayerDamage", PacketPlayerDamage.class);
 			
-			Logger.info("[Packets] init packet (" + packets.size() + ")");
+			Logger.info("[Packets] Init packets (" + packets.size() + ")");
 		}
 	}
 

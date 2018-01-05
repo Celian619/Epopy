@@ -62,7 +62,6 @@ public class PacketGameStatus extends PacketAbstract {
 			TankMenuEnd.PLAYER_MORT = Integer.parseInt(playerStats.split(":")[1]);
 			TankMenuEnd.PLAYER_COINS = Integer.parseInt(playerStats.split(":")[2]);
 			TankMenuEnd.PLAYER_POINTS = Integer.parseInt(playerStats.split(":")[3]);
-
 			break;
 		default:
 			break;

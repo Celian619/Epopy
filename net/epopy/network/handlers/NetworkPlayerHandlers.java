@@ -32,7 +32,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 	private NetworkStatus networkStatus;
 	private ConcurrentLinkedQueue<PacketAbstract> sendQueue = new ConcurrentLinkedQueue<>();
-	
+
 	private NetworkPlayerHandlersUDP networkPlayerHandlersUDP;
 
 	public NetworkPlayerHandlers(final NetworkPlayer player, final String ip, final int port, final boolean udp) {
@@ -79,6 +79,7 @@ public class NetworkPlayerHandlers implements Runnable {
 
 	public void disconnect() {
 		Packets.sendPacket(this, new PacketPlayerDisconnect());
+		System.out.println("Disco");
 		try {
 			socket.close();
 		} catch (IOException e) {
@@ -101,12 +102,12 @@ public class NetworkPlayerHandlers implements Runnable {
 		try {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(ip, port), 4000);// 10s de time out
-			System.out.println("Connect: " + ip + " " + port);
+			//System.out.println("Connect: " + ip + " " + port);
 			socket.setTcpNoDelay(true);
-		//	socket.setKeepAlive(true);
+			//	socket.setKeepAlive(true);
 			new ClientSendThread(this);
 			//this.socket.setTrafficClass(0x10);
-		//	this.socket.setReuseAddress(false);
+			//	this.socket.setReuseAddress(false);
 			//this.socket.setSoLinger(false, 0);
 
 			dataInputStream = new DataInputStream(socket.getInputStream());
@@ -115,7 +116,7 @@ public class NetworkPlayerHandlers implements Runnable {
 			new Packets();
 
 			new Thread(this, "tcp-" + socket.getLocalPort()).start();
-			
+
 			return NetworkStatus.USER_WAITING_CONFIRMATION;
 		} catch (IOException e) {
 			return NetworkStatus.SERVER_OFFLINE;
@@ -150,6 +151,7 @@ public class NetworkPlayerHandlers implements Runnable {
 		} else {
 			Logger.info("Server game has been stopped");
 			//TODO voir pour send que quand il y a vraiment besoin
+			if(NetworkPlayer.getGame().getName().equals("Tank"))
 				NetworkPlayer.setGame(new WaitingRoom());
 			//new NotificationGui("Votre serveur de jeu vient de s'éteindre", "( Pour plus d'informations veuillez nous contacter, @EpopyOfficiel/Epopy.fr )", 4, new float[] { 1, 0, 0, 1 }, false);
 		}
@@ -158,49 +160,49 @@ public class NetworkPlayerHandlers implements Runnable {
 	public void setNetworkStatus(final NetworkStatus networkStatus) {
 		this.networkStatus = networkStatus;
 	}
-	
+
 	public ConcurrentLinkedQueue<PacketAbstract> getSendingQueue() {
 		return sendQueue;
 	}
 	public void send(PacketAbstract packet) {
 		sendQueue.add(packet);
 	}
-	
+
 	public class ClientSendThread implements Runnable {
 		private NetworkPlayerHandlers client;
-
+		private boolean stop = false;
+		
 		public ClientSendThread(NetworkPlayerHandlers client) {
 			this.client = client;
 			new Thread(this).start();
 		}
 
 		public void stop() {
+			stop = true;
 			System.out.println("stop thread");
 		}
 
 		@Override
 		public void run() {
-			while (client.getSocket() != null && !client.getSocket().isClosed()) { 
+			while (client.getSocket() != null && !client.getSocket().isClosed() && !stop) { 
 				while (!client.getSendingQueue().isEmpty()) {
 					try {
 						PacketAbstract packet = client.getSendingQueue().poll();
 						if (packet != null) {
-
 							byte[] packetData = packet.getPacket().getData();
 							if (packetData.length >= 0 ) {
 								client.getDataOutputStream().write(packetData);
 								client.getDataOutputStream().flush();
-							//	System.out.println(client.getName() + " <- send " + packet.getName());
+								//	System.out.println(client.getName() + " <- send " + packet.getName());
 							} 
 						}
 					} catch (IOException e) {
-						e.printStackTrace();
-						stop();
+						stop = true;
+						break;
 					}
 				}
 			}
 			stop();
-
 		}
 	}
 }
