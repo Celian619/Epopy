@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.epopy.epopy.Main;
@@ -168,21 +170,44 @@ public class NetworkPlayerHandlers implements Runnable {
 		sendQueue.add(packet);
 	}
 
-	public class ClientSendThread implements Runnable {
-		private NetworkPlayerHandlers client;
-		private boolean stop = false;
+	public class ClientSendThread  {
+	///	private NetworkPlayerHandlers client;
+		//private boolean stop = false;
 		
 		public ClientSendThread(NetworkPlayerHandlers client) {
-			this.client = client;
-			new Thread(this).start();
+			//this.client = client;
+			//new Thread(this).start();
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					if(!client.getSendingQueue().isEmpty()) {
+						try {
+							PacketAbstract packet = client.getSendingQueue().poll();
+							if (packet != null) {
+								byte[] packetData = packet.getPacket().getData();
+								if (packetData.length >= 0 ) {
+									client.getDataOutputStream().write(packetData);
+									client.getDataOutputStream().flush();
+								//	System.out.println(client.getName() + " <- send " + packet.getName());
+								} 
+							}
+						} catch (IOException e) {
+							stop();
+							cancel();
+						}
+					}
+				}
+			}, 20, 20);
 		}
 
-		public void stop() {
+		/**public void stop() {
 			stop = true;
 			System.out.println("stop thread");
-		}
+		}*/
 
-		@Override
+		/**@Override
 		public void run() {
 			while (client.getSocket() != null && !client.getSocket().isClosed() && !stop) { 
 				while (!client.getSendingQueue().isEmpty()) {
@@ -203,6 +228,6 @@ public class NetworkPlayerHandlers implements Runnable {
 				}
 			}
 			stop();
-		}
+		}*/
 	}
 }
