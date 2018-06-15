@@ -79,9 +79,9 @@ public class Pause {
 	}
 
 	/**
-	 * Donne le pause en format jolie x)
+	 * Donne le pause en joli format
 	 *
-	 * @return le temps qui reste de la pause en secondes (ex: 03,04...)
+	 * @return le temps qu il reste de la pause en secondes (ex: 03,04...)
 	 */
 
 	@SuppressWarnings("deprecation")

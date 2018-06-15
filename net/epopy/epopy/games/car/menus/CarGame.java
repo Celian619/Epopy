@@ -107,8 +107,8 @@ public class CarGame extends AbstractGameMenu {
 				if (pauseScreen) {
 					pauseScreen = false;
 					pause.startPause(3);
-					start = false;
 					Mouse.setGrabbed(true);
+					start = false;
 				} else {
 					pauseScreen = true;
 					Mouse.setGrabbed(false);
@@ -128,7 +128,7 @@ public class CarGame extends AbstractGameMenu {
 		
 		if (creating) {
 
-			if (Input.getAnyKeyDown()) {
+			if (Input.isAnyKeyDown()) {
 				while (waitingPoints.size() != 0)
 					upgradeMap();
 					
@@ -212,7 +212,7 @@ public class CarGame extends AbstractGameMenu {
 				drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PosWidth.MILIEU, PosHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
 			}
 			if (!pause.isFinish()) {
-				if (Input.getAnyKeyDown()) {
+				if (Input.isAnyKeyDown() && !Input.isKeyDown(Keyboard.KEY_ESCAPE) && !Input.getKeyUp(Keyboard.KEY_ESCAPE)) {
 					pause.stopPause();
 					return;
 				}

@@ -71,6 +71,7 @@ public class PingGame extends AbstractGameMenu {
 		ballPos = new Location(defaultWidth / 2, defaultHeight / 2);
 		Textures.GAME_BACKGROUND_80OPACITY.renderBackground();
 
+		colorTime = 0;
 		timer = 0;
 		pause.startPause(5);
 		
@@ -90,12 +91,13 @@ public class PingGame extends AbstractGameMenu {
 		}
 
 		/*
-		 * Random color
+		 * Color orange / rose
 		 */
+
+		colorTimer = new float[] { 0.98f, 0.70f, (float) Math.abs(Math.cos(Math.toRadians(colorTime))), 1 };
+
 		colorTime++;
-		if (colorTime > 20) {
-			Random random = new Random();
-			colorTimer = new float[] { random.nextFloat(), random.nextFloat(), random.nextFloat(), 1 };
+		if (colorTime > 360) {
 			colorTime = 0;
 		}
 
@@ -118,9 +120,10 @@ public class PingGame extends AbstractGameMenu {
 
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
-				pause.startPause(3);
 				pauseScreen = false;
+				pause.startPause(3);
 				Mouse.setGrabbed(true);
+				Mouse.setCursorPosition(20, Display.getHeight() - (int) lastMouseY * Display.getHeight() / defaultHeight);
 			}
 		}
 
@@ -135,18 +138,19 @@ public class PingGame extends AbstractGameMenu {
 		if (PingOptions.MOUSE == 1 || PingOptions.MOUSE == 2) {
 			if (Input.isKeyDown(PingOptions.KEY_UP)) {
 				yPlayer -= speedPaddle;
-				if (yPlayer < 0) yPlayer = 0;
+				if (yPlayer < 2) yPlayer = 2;
 			} else if (Input.isKeyDown(PingOptions.KEY_DOWN)) {
 				yPlayer += speedPaddle;
 				if (yPlayer > defaultHeight - paddleHeight) yPlayer = defaultHeight - paddleHeight;
 			}
 		}
+		
 		if (PingOptions.MOUSE == 0 || PingOptions.MOUSE == 2) {
 			double adaptedMouseY = (Display.getHeight() - Mouse.getY()) / (double) Display.getHeight() * defaultHeight;
 			if (lastMouseY != adaptedMouseY) {
 				lastMouseY = adaptedMouseY;
 				if (adaptedMouseY < paddleHeight / 2)
-					yPlayer = 0;
+					yPlayer = 2;
 				else if (adaptedMouseY > defaultHeight - paddleHeight / 2)
 					yPlayer = defaultHeight - paddleHeight;
 				else
@@ -172,7 +176,7 @@ public class PingGame extends AbstractGameMenu {
 
 			boolean record = timer / (double) 60 >= Main.getPlayer().getPingStats().getRecord();
 
-			drawText(timer / 60 + "", defaultWidth / 2, 10, PosWidth.MILIEU, PosHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
+			drawText(timer / 60 + "", defaultWidth / 2, 8, PosWidth.MILIEU, PosHeight.HAUT, 40, record ? colorTimer : new float[] { 1, 1, 1, 1 });
 			
 		}
 		drawQuad(ecartBordPaddle, (int) yPlayer, paddleWidth, paddleHeight);
@@ -183,7 +187,7 @@ public class PingGame extends AbstractGameMenu {
 		}
 
 		if (!pause.isFinish()) {
-			if (Input.getAnyKeyDown()) {
+			if (Input.isAnyKeyDown() && !Input.isKeyDown(Keyboard.KEY_ESCAPE) && !Input.getKeyUp(Keyboard.KEY_ESCAPE)) {
 				pause.stopPause();
 				return;
 			}

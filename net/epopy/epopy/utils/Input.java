@@ -25,7 +25,7 @@ public class Input {
 			lastButtons[i] = isButtonDown(i);
 	}
 
-	public static boolean getAnyKeyDown() {
+	public static boolean isAnyKeyDown() {
 		for (boolean down : lastKeys)
 			if (down) return true;
 		return false;

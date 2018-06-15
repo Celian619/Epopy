@@ -28,6 +28,10 @@ public class SnakeGame extends AbstractGameMenu {
 	
 	private int timer;
 
+	// color
+	private float[] colorTimer = new float[] { 1, 1, 1, 1 };
+	private int colorTime;
+
 	private List<Location> posSnake;
 	private List<mouse> posMouse;
 	
@@ -40,6 +44,7 @@ public class SnakeGame extends AbstractGameMenu {
 	private int timeFood;
 	private int eat;
 	private int lastKey;
+	private int rotationFood;
 
 	private boolean pauseScreen;
 	private boolean addStats;
@@ -57,7 +62,7 @@ public class SnakeGame extends AbstractGameMenu {
 		 * Initialisation de toute les variable a chaque lancement du jeu
 		 */
 		timer = 0;
-
+		colorTime = 0;
 		posSnake = new LinkedList<Location>();
 		
 		posMouse = new ArrayList<mouse>(10);
@@ -66,6 +71,8 @@ public class SnakeGame extends AbstractGameMenu {
 
 		cubeX = defaultWidth / (double) grilleSize;
 		cubeY = 0.1 + defaultHeight / (double) grilleSize;
+
+		rotationFood = 0;
 
 		snakeSize = 1;
 		timeSecond = timeFood = eat = lastKey = 0;
@@ -87,6 +94,17 @@ public class SnakeGame extends AbstractGameMenu {
 		// update le Timer
 		if (!pauseScreen && pause.isFinish() && !gameOver) {
 			timer++;
+		}
+		
+		/*
+		 * Color orange / rose
+		 */
+
+		colorTimer = new float[] { 0f, 0.5f + (float) Math.abs(Math.cos(Math.toRadians(colorTime))) * 0.5f, 0.4f, 1 };
+
+		colorTime++;
+		if (colorTime > 360) {
+			colorTime = 0;
 		}
 		
 		if (pause.isFinish() && !gameOver) {
@@ -248,11 +266,7 @@ public class SnakeGame extends AbstractGameMenu {
 		for (mouse mouse : posMouse)
 			mouse.move();
 	}
-
-	private int c = 0;
-	private float[] color = new float[] { 1, 0f, 0f, 1 };
-	private int rotationFood = 0;
-
+	
 	@Override
 	public void render() {
 		rotationFood++;
@@ -296,24 +310,19 @@ public class SnakeGame extends AbstractGameMenu {
 			}
 
 		}
-		c++;
-		if (c > 20) {
-			Random random = new Random();
-			color = new float[] { random.nextFloat(), random.nextFloat(), random.nextFloat(), 1 };
-			c = 0;
-		}
 
 		if (!gameOver && pause.isFinish() && !pauseScreen) {
 			if (snakeSize < gameStats.getRecord())
 				ComponentsHelper.drawText("Score: " + snakeSize, 0, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
 			else {
+
 				ComponentsHelper.drawText("Score: ", 0, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
-				ComponentsHelper.drawText(snakeSize + "", 170, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, color);
+				ComponentsHelper.drawText(snakeSize + "", 170, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, colorTimer);
 			}
 		}
 
 		if (!pause.isFinish()) {
-			if (Input.getAnyKeyDown()) {
+			if (Input.isAnyKeyDown() && !Input.isKeyDown(Keyboard.KEY_ESCAPE) && !Input.getKeyUp(Keyboard.KEY_ESCAPE)) {
 				pause.stopPause();
 				return;
 			}
