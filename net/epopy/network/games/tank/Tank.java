@@ -29,36 +29,33 @@ import net.epopy.network.handlers.packets.modules.game.PacketPlayerShootBall;
 
 public class Tank extends AbstractGameNetwork {
 
-	public static int TANK_SIZE = 25;
+	public static boolean unloadTexture;
+	public static int TANK_SIZE = 25, balls = CalculTank.getMunitions();
 	public static MapLoader MAP;
 
+	private boolean shoot, sendRequestPlayer;
+	private int timeReload;
 	private TankMenuEnd tankMenuEnd;
-	public static boolean unloadTexture = false;
-
-	private boolean shoot = false;
-	public static int balls = CalculTank.getMunitions();
 
 	public Tank() {
 		tankMenuEnd = new TankMenuEnd();
 	}
-
+	
 	@Override
 	public void onEnable() {
-
+	
 	}
-
-	private int timeReload;
-	private boolean sendRequestPlayer = false;//evite spam
+	
 	@Override
 	public void update() {
 		PlayerNetwork player = getPlayer(NetworkPlayer.getNetworkPlayer().getName());
 		Display.setTitle("Epopy - " + NetworkPlayer.getNetworkPlayer().getName());
 		if (player != null) {
 			if (getGameStatus().equals(GameStatus.IN_GAME) || getGameStatus().equals(GameStatus.WAITING)) {
-				if(!sendRequestPlayer) {
-					if(getGameStatus().equals(GameStatus.IN_GAME) && NetworkPlayer.getGame().getPlayers().size() < WaitingRoom.waitingRoom.getPlayers().size() * 2 + 2) {
+				if (!sendRequestPlayer) {
+					if (getGameStatus().equals(GameStatus.IN_GAME) && NetworkPlayer.getGame().getPlayers().size() < WaitingRoom.waitingRoom.getPlayers().size() * 2 + 2) {
 						System.out.println("--> Manque des joueurs");
-						Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getTeam().getName()));	
+						Packets.sendPacket(NetworkPlayer.getNetworkPlayer().getNetworkPlayerHandlersGame(), new PacketPlayerJoin(NetworkPlayer.getGame().getPlayer(NetworkPlayer.getNetworkPlayer().getName()).getTeam().getName()));
 						sendRequestPlayer = true;
 					}
 				}
@@ -67,7 +64,7 @@ public class Tank extends AbstractGameNetwork {
 					int rotationSpeed = 5;
 					int directionMouse = CalculTank.getDirectionMouse(player.getLocation().getX(), player.getLocation().getY());
 					int directionPlayer = player.getLocation().getDirection();
-
+					
 					if (!CalculTank.isMouseDistanceNear(player.getLocation())) {
 						if (Math.abs(directionMouse - directionPlayer) <= rotationSpeed) {
 							if (player.getLocation().getDirection() != directionMouse) {
@@ -77,11 +74,9 @@ public class Tank extends AbstractGameNetwork {
 						} else {
 							boolean directionInverse = Math.abs(directionMouse - directionPlayer) > 180;
 							if (directionPlayer < directionMouse) {
-								if (directionInverse) directionPlayer -= rotationSpeed;
-								else directionPlayer += rotationSpeed;
+								directionPlayer = directionInverse ? directionPlayer - rotationSpeed : directionPlayer + rotationSpeed;
 							} else {
-								if (directionInverse) directionPlayer += rotationSpeed;
-								else directionPlayer -= rotationSpeed;
+								directionPlayer = directionInverse ? directionPlayer + rotationSpeed : directionPlayer - rotationSpeed;
 							}
 							if (directionPlayer >= 180) directionPlayer -= 360;
 							else if (directionPlayer < -180) directionPlayer += 360;
@@ -91,7 +86,7 @@ public class Tank extends AbstractGameNetwork {
 							}
 						}
 					}
-
+					
 					if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") &&
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") &&
 							!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
@@ -101,7 +96,7 @@ public class Tank extends AbstractGameNetwork {
 						else if (Input.isKeyDown(Keyboard.KEY_UP))
 							CalculTank.moove(false);
 					}
-
+					
 					if (timeReload <= 0) {
 						if (balls > 0) {
 							if (Input.isButtonDown(0)) {
@@ -116,16 +111,16 @@ public class Tank extends AbstractGameNetwork {
 						}
 					} else
 						timeReload--;
-
+						
 				}
 			} else if (getGameStatus().equals(GameStatus.END)) {
 				if (tankMenuEnd != null) tankMenuEnd.update();
 			}
 		}
 	}
-
+	
 	private static float[] colorReload = new float[] { 0, 0, 0, 1 };
-
+	
 	@Override
 	public void render() {
 		if (unloadTexture) {
@@ -164,32 +159,34 @@ public class Tank extends AbstractGameNetwork {
 			}
 		}
 
-		if (PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") ||
-				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02") ||
-				PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03")) {
-			if (!PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:03"))
-				drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });	
-		}
+		if (PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:01") || PacketGameStatus.WAITING_MESSAGE.equals("Lancement dans 00:02"))
+			drawText("Capturer les zones pour gagner des points !", 1920 / 2, 1030 / 2, PosWidth.MILIEU, PosHeight.HAUT, 30, new float[] { 1, 0.1f, 0.1f, 1 });
+			
 	}
-
+	
 	@Override
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_GAME_TANK_MAP;
 	}
-
+	
 	public int getTankReload() {
-		int level = TankBoutique.LEVEL_CANON;
-		if (level == 0)
-			return 50;
-		if (level == 1)
-			return 45;
-		if (level == 2)
-			return 40;
-		if (level == 3)
-			return 35;
-		if (level == 4)
-			return 30;
-		return 50;
-	}
 
+		switch (TankBoutique.LEVEL_CANON) {
+			case 0:
+			return 50;
+			case 1:
+			return 45;
+			case 2:
+			return 40;
+			case 3:
+			return 35;
+			case 4:
+			return 30;
+			
+			default:
+			return 50;
+		}
+		
+	}
+	
 }

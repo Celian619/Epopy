@@ -34,6 +34,10 @@ import net.epopy.epopy.utils.FileUtils;
 public class FontUtils {
 	
 	// Constants
+	
+	private final int fontTextureId;
+	private final FontMetrics fontMetrics;
+	private final BufferedImage bufferedImage;
 	private final Map<Integer, String> CHARS = new HashMap<Integer, String>() {
 		private static final long serialVersionUID = 1L;
 
@@ -45,14 +49,8 @@ public class FontUtils {
 			put(4, " $+-*/=%\"'#@&_(),.;:?!\\|<>[]§`^~°{}¨£¤$ùç");
 		}
 	};
-	
-	// Variables
 	private java.awt.Font font;
-	private final FontMetrics fontMetrics;
-	private final BufferedImage bufferedImage;
-	private final int fontTextureId;
-	
-	// Getters
+
 	public float getFontImageWidth() {
 		return (float) CHARS.values().stream().mapToDouble(e -> fontMetrics.getStringBounds(e, null).getWidth()).max().getAsDouble();
 	}

@@ -23,32 +23,15 @@ import net.epopy.epopy.utils.Location;
 
 public class SnakeGame extends AbstractGameMenu {
 	
-	private final int maxFood = 10;
-	private final int dontMoveTime = 2;
-	
-	private int timer;
+	private final int maxFood = 10, dontMoveTime = 2;
 
-	// color
+	private boolean pauseScreen, addStats;
+	private int timer, colorTime, grilleSize, snakeSize, timeSecond, timeFood, eat, lastKey, rotationFood;
+	private double cubeX, cubeY;
 	private float[] colorTimer = new float[] { 1, 1, 1, 1 };
-	private int colorTime;
-
 	private List<Location> posSnake;
 	private List<mouse> posMouse;
-	
-	private double cubeX;
-	private double cubeY;
-	
-	private int grilleSize;
-	private int snakeSize;
-	private int timeSecond;
-	private int timeFood;
-	private int eat;
-	private int lastKey;
-	private int rotationFood;
 
-	private boolean pauseScreen;
-	private boolean addStats;
-	
 	@Override
 	public void onEnable() {
 		
@@ -57,7 +40,7 @@ public class SnakeGame extends AbstractGameMenu {
 			Audios.SNAKE.start(true).setVolume(0.3f);
 		song = Audios.SNAKE;
 		pause.startPause(5);
-
+		
 		/*
 		 * Initialisation de toute les variable a chaque lancement du jeu
 		 */
@@ -68,15 +51,15 @@ public class SnakeGame extends AbstractGameMenu {
 		posMouse = new ArrayList<mouse>(10);
 		
 		grilleSize = 100;
-
+		
 		cubeX = defaultWidth / (double) grilleSize;
 		cubeY = 0.1 + defaultHeight / (double) grilleSize;
-
+		
 		rotationFood = 0;
-
+		
 		snakeSize = 1;
 		timeSecond = timeFood = eat = lastKey = 0;
-
+		
 		pauseScreen = addStats = gameOver = false;
 		
 		gameStats = Main.getPlayer().getSnakeStats();
@@ -88,7 +71,7 @@ public class SnakeGame extends AbstractGameMenu {
 		}
 		
 	}
-
+	
 	@Override
 	public void update() {
 		// update le Timer
@@ -99,9 +82,9 @@ public class SnakeGame extends AbstractGameMenu {
 		/*
 		 * Color orange / rose
 		 */
-
+		
 		colorTimer = new float[] { 0f, 0.5f + (float) Math.abs(Math.cos(Math.toRadians(colorTime))) * 0.5f, 0.4f, 1 };
-
+		
 		colorTime++;
 		if (colorTime > 360) {
 			colorTime = 0;
@@ -120,7 +103,7 @@ public class SnakeGame extends AbstractGameMenu {
 				}
 			}
 		}
-
+		
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
@@ -271,56 +254,56 @@ public class SnakeGame extends AbstractGameMenu {
 	public void render() {
 		rotationFood++;
 		if (rotationFood > 360) rotationFood -= 360;
-
+		
 		Textures.SNAKE_LEVEL_BG.renderBackground();
-
+		
 		for (mouse m : posMouse) {
 			Location loc = m.loc;
 			double width = 24 * m.size;
 			double height = 7 * m.size;
-
+			
 			if (m.walk < 5)
 				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
 			else if (m.walk < 10 || m.walk > 15)
 				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD2, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
 			else
 				ComponentsHelper.renderTexture(Textures.SNAKE_FOOD3, (int) (cubeX * loc.getX() - width / 2), (int) (cubeY * loc.getY() - height / 2), width, height, loc.getDirection(), true);
-
+				
 		}
-
+		
 		for (int i = posSnake.size() - 1; i >= 0; i--) {
 			Location loc = posSnake.get(i);
-
+			
 			if (i == 0) {
 				ComponentsHelper.renderTexture(Textures.SNAKE_TETE, (int) (cubeX * loc.getX() - 50 / 2), (int) (cubeY * loc.getY() - 100 / 2), 50, 100, loc.getDirection());
 			} else {
 				int sizeX = 45;
 				int sizeY = 45;
-
+				
 				int directionSoon = posSnake.get(i - 1).getDirection();
-
+				
 				if (i > posSnake.size() - 30) {
 					sizeX -= 30 - (posSnake.size() - i);
 					if (directionSoon != loc.getDirection()) {
 						sizeY = sizeX;
 					}
 				}
-
+				
 				ComponentsHelper.renderTexture(Textures.SNAKE_CORP, (int) (cubeX * loc.getX() - sizeX / 2), (int) (cubeY * loc.getY() - sizeY / 2), sizeX, sizeY, loc.getDirection());
 			}
-
+			
 		}
-
+		
 		if (!gameOver && pause.isFinish() && !pauseScreen) {
 			if (snakeSize < gameStats.getRecord())
 				ComponentsHelper.drawText("Score: " + snakeSize, 0, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
 			else {
-
+				
 				ComponentsHelper.drawText("Score: ", 0, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, new float[] { 0.5f, 0.5f, 1, 1 });
 				ComponentsHelper.drawText(snakeSize + "", 170, 0, PosWidth.GAUCHE, PosHeight.HAUT, 50, colorTimer);
 			}
 		}
-
+		
 		if (!pause.isFinish()) {
 			if (Input.isAnyKeyDown() && !Input.isKeyDown(Keyboard.KEY_ESCAPE) && !Input.getKeyUp(Keyboard.KEY_ESCAPE)) {
 				pause.stopPause();
@@ -329,24 +312,24 @@ public class SnakeGame extends AbstractGameMenu {
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();
-
+				
 				float[] orange = new float[] { 1, 0.5f, 0, 1 };
 				float[] white = new float[] { 1, 1, 1, 1 };
 				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-
+				
 				ComponentsHelper.drawText("CONTROLES", 1093, 370, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
-
+				
 				ComponentsHelper.drawText("Haut", 978, 410, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
 				ComponentsHelper.drawText("Bas", 983, 545, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
 				ComponentsHelper.drawText("Droite", 1153, 410, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
 				ComponentsHelper.drawText("Gauche", 1143, 545, PosWidth.GAUCHE, PosHeight.HAUT, 25, white);
-
+				
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_UP), 989, 437, 50, white);
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_DOWN), 989, 567, 50, white);
-
+				
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_RIGHT), 1156, 440, 50, white);
 				ComponentsHelper.drawText(Input.getKeyName(SnakeOptions.KEY_LEFT), 1156, 570, 50, white);
-
+				
 				ComponentsHelper.drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
 				
 				if (gameStats.getRecord() > gameStats.getObjectif()) {
@@ -355,24 +338,24 @@ public class SnakeGame extends AbstractGameMenu {
 					drawText("Avoir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 					drawText(gameStats.getObjectifString(), 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 				}
-
+				
 				ComponentsHelper.drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}
 		if (pauseScreen)
 			renderEchap(true);
-
+			
 		if (gameOver) {
 			char[] recordC = String.valueOf(snakeSize).toCharArray();
 			int n = recordC.length;
 			String newRecord = "";
-
+			
 			for (char chars : recordC) {
-
+				
 				if (n / 3 == n / (double) 3 && n != recordC.length)
 					newRecord += ",";
-
+					
 				newRecord += chars;
 				n--;
 			}
@@ -394,14 +377,12 @@ public class SnakeGame extends AbstractGameMenu {
 	}
 	
 	class mouse {
-
-		Location loc;
-		int directionModif;
-		Double speed;
-		int walk;
-		double size;
+		
 		boolean boosted;
-
+		int directionModif, walk;
+		double size, speed;
+		Location loc;
+		
 		public mouse(final Location loc) {
 			this.loc = loc;
 			Random r = new Random();
@@ -412,24 +393,24 @@ public class SnakeGame extends AbstractGameMenu {
 				speed = r.nextDouble() / 2 + 0.2;
 			walk = 0;
 			size = 0;
-
+			
 		}
-
+		
 		private void move() {
-
+			
 			if (size < 6)
 				size += 0.05;
 			walk++;
 			if (walk >= 20) {
 				walk = 0;
-
+				
 			}
 			Random r = new Random();
 			if (directionModif <= 5 && directionModif >= -5) {
 				loc.setDirection(loc.getDirection() + directionModif);
 				
 				directionModif = (r.nextBoolean() ? 1 : -1) * (45 + r.nextInt(135));
-
+				
 			} else {
 				
 				int i = r.nextInt(6);
@@ -442,10 +423,10 @@ public class SnakeGame extends AbstractGameMenu {
 			double yAdd = speed * Math.sin(Math.toRadians(loc.getDirection()));
 			
 			Location locModif = loc.clone().add(xAdd, yAdd);
-
+			
 			double nearestDistS = loc.getNearestDistance(posSnake);
 			if (nearestDistS > 5 || locModif.getNearestDistance(posSnake) > nearestDistS) {
-
+				
 				loc.add(xAdd, yAdd);
 			}
 			if (!boosted) {

@@ -189,11 +189,11 @@ public class Textures {
 	public static Textures GAME_MENU_SCOTCH = load("games/menu/scotch");
 	public static Textures GAME_MENU_BG_STATS = load("games/menu/bg_stats");
 
-	private int width, height;
-	private int id = -12;
 	public String path;
 	public BufferedImage bufferedImage;
 
+	private int width, height, id = -12;
+	
 	private Textures(final String path) {
 		this.path = path;
 		textures.add(this);
@@ -225,7 +225,7 @@ public class Textures {
 		if (id == -12) {
 			
 			try {
-			//	System.out.println(path);
+				// System.out.println(path);
 				if (bufferedImage == null)
 					bufferedImage = ImageIO.read(Textures.class.getResource(path));
 				BufferedImage image = bufferedImage;

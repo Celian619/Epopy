@@ -16,13 +16,12 @@ import net.epopy.epopy.Main;
 import net.epopy.sdk.security.Encryptor;
 
 public class Config {
-
-	private File file;
-	private Map<String, String> infos = new TreeMap<String, String>();
-	private Map<String, String> infosCrypt = new TreeMap<String, String>();
-	private Encryptor encryptor;
-
-	public Config(File file) {
+	
+	private final File file;
+	private final Map<String, String> infos = new TreeMap<String, String>(), infosCrypt = new TreeMap<String, String>();
+	private final Encryptor encryptor;
+	
+	public Config(final File file) {
 		this.file = file;
 		encryptor = Main.getEncryptor();
 		if (file.exists()) {
@@ -33,7 +32,7 @@ public class Config {
 					infos.put(ligneDecrypt.split("=")[0], ligneDecrypt.split("=")[1]);
 					infosCrypt.put(ligneDecrypt.split("=")[0], ligne);
 				}
-			System.out.println("[CONFIG] Config has been loaded");
+				System.out.println("[CONFIG] Config has been loaded");
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (file.getName().equals("infos.txt")) {
@@ -45,28 +44,28 @@ public class Config {
 		} else
 			System.out.println("[CONFIG][ERROR] File : " + file.getPath() + " not exist !");
 	}
-
-	public boolean contains(String key) {
+	
+	public boolean contains(final String key) {
 		return infos.containsKey(key);
 	}
-
-	public String getData(String key) {
+	
+	public String getData(final String key) {
 		if (contains(key))
 			return infos.get(key);
 		else
 			setValue(key, "0");
 		return getData(key);
 	}
-	
-	public String getData(String key, String defaultValue) {
+
+	public String getData(final String key, final String defaultValue) {
 		if (contains(key))
 			return infos.get(key);
 		else
 			setValue(key, defaultValue);
 		return getData(key);
 	}
-
-	public void setValue(String key, String value) {
+	
+	public void setValue(final String key, final String value) {
 		String replace = key + "=" + value;
 		String newValue = encryptor.encrypt(replace);
 		if (contains(key) && file.exists()) {
@@ -81,7 +80,7 @@ public class Config {
 			try {
 				infos.put(key, value);
 				infosCrypt.put(key, newValue);
-
+				
 				FileOutputStream is = new FileOutputStream(getFile().getPath());
 				OutputStreamWriter osw = new OutputStreamWriter(is);
 				Writer w = new BufferedWriter(osw);
@@ -96,9 +95,9 @@ public class Config {
 			}
 		}
 	}
-
+	
 	public File getFile() {
 		return file;
 	}
-
+	
 }

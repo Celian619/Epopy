@@ -30,20 +30,11 @@ import net.epopy.launcher.utils.Version;
 import net.epopy.sdk.security.Encryptor;
 
 public class EpopyLauncher {
+	public static String URL_PARTENAIRES, VERSION = "Bêta-1.0.0.0";
 
-	private static String URL_JAR;
-	private static String URL_VERSION;
-	private static String PATH_FOLDER;
+	private static String URL_JAR, URL_VERSION, PATH_FOLDER, KEY = "E1BB465D57CAE7ACDBBE80919CE83DF", ALGORITMO = "AES/CBC/PKCS5Padding", CODIFICACION = "UTF-8";
 	private static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
-	public static String VERSION = "Bêta-1.0.0.0";
-	public static String URL_PARTENAIRES;
-
-	// encryp
-	private static String KEY = "E1BB465D57CAE7ACDBBE80919CE83DF";
-	private static String ALGORITMO = "AES/CBC/PKCS5Padding";
-	private static String CODIFICACION = "UTF-8";
-	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);;
+	private static Encryptor encryptor = new Encryptor(KEY, ALGORITMO, CODIFICACION);
 
 	public static void main(final String[] args) {
 		initFiles();
@@ -94,7 +85,7 @@ public class EpopyLauncher {
 			Version currentVersionFile = new Version(PATH_FOLDER + "/version.txt");
 			currentVersionFile.delete();
 			String currentVersion = currentVersionFile.getVersion();
-			
+
 			/*
 			 * Future version
 			 */
@@ -225,7 +216,7 @@ public class EpopyLauncher {
 		/*
 		 * Infos.txt
 		 */
-		
+
 		try {
 			File infos = new File(PATH_FOLDER);
 			if (infos.createNewFile()) {
@@ -245,16 +236,16 @@ public class EpopyLauncher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		/*
 		 * Lock.txt
 		 */
-		
+
 		try {
 			File lock = new File(PATH_FOLDER + "lockLauncher.txt");
 			lock.createNewFile();
 			input = new FileOutputStream(lock);
-			
+
 			if (input.getChannel().tryLock() == null) {
 				JOptionPane.showMessageDialog(null, "Une autre fenêtre est déjà lancée !", "Epopy", JOptionPane.WARNING_MESSAGE);
 				System.out.println("\n\n\nAn other instance is ON ! (EXIT)");

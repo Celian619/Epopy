@@ -16,8 +16,9 @@ import net.epopy.launcher.EpopyLauncher;
 public class Gif extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	Image image;
-	Image image2;
+	private final Image image, image2;
+	private static Window frame;
+	private static Image partenaire;
 
 	public Gif() {
 		image = Toolkit.getDefaultToolkit().createImage(Gif.class.getResource("/net/epopy/launcher/update.png"));
@@ -37,10 +38,7 @@ public class Gif extends JPanel {
 			g.drawImage(partenaire, 3, 610, partenaire.getWidth(null) / 2, partenaire.getHeight(null) / 2, this);
 		}
 	}
-
-	private static Window frame;
-	private static Image partenaire = null;
-
+	
 	public static void frame() {
 		partenaire = FileDownload.getImage(EpopyLauncher.URL_PARTENAIRES);
 

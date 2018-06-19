@@ -44,32 +44,18 @@ import net.epopy.epopy.utils.Location;
 
 public class CarGame extends AbstractGameMenu {
 	
-	// grille de construction de la map
-	private final int grilleWidth = 20;
-	private final int grilleHeight = 10;
-	private final int bord = grilleWidth / 10;
-	private final double cubeWidth = defaultWidth / (double) grilleWidth;
-	private final double cubeHeight = defaultHeight / (double) grilleHeight;
-	
-	private final int middleWidth = grilleWidth / 2;
-	private final int middleHeight = grilleHeight / 2;
-	
-	private boolean creating;
-	Textures map;
-	
-	private List<Location> pointsInt;
-	private List<Location> waitingPoints;
-	
-	private Location locCar;
-	private double speed;
-	private int direction;
-	private boolean start;
+	private static boolean pauseScreen;
 	private static int timer;
 
-	private boolean contreSens;
-	private boolean addStats;
+	private final int grilleWidth = 20, grilleHeight = 10, bord = grilleWidth / 10, middleWidth = grilleWidth / 2, middleHeight = grilleHeight / 2;
+	private final double cubeWidth = defaultWidth / (double) grilleWidth, cubeHeight = defaultHeight / (double) grilleHeight;
 	
-	private static boolean pauseScreen;
+	private boolean creating, start, contreSens, addStats;
+	private int direction, lastTimeLine;
+	private double speed;
+	private Location locCar;
+	private List<Location> pointsInt, waitingPoints;
+	private Textures map;
 	
 	@Override
 	public void onEnable() {
@@ -84,7 +70,7 @@ public class CarGame extends AbstractGameMenu {
 		speed = 0.1;
 		map = null;
 		locCar = new Location(middleWidth * cubeWidth - 17.5, middleHeight * cubeHeight + cubeHeight / 2);
-
+		
 		gameStats = Main.getPlayer().getCarStats();
 		
 		pointsInt = new LinkedList<Location>();//
@@ -101,7 +87,7 @@ public class CarGame extends AbstractGameMenu {
 		if (!creating && !pauseScreen && pause.isFinish() && !win) {
 			timer++;
 		}
-
+		
 		if (pause.isFinish() && !win) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -116,7 +102,7 @@ public class CarGame extends AbstractGameMenu {
 				
 			}
 		}
-
+		
 		// fin de la creation
 		if (waitingPoints.size() == 0 && creating) {
 			creating = false;
@@ -127,7 +113,7 @@ public class CarGame extends AbstractGameMenu {
 		}
 		
 		if (creating) {
-
+			
 			if (Input.isAnyKeyDown()) {
 				while (waitingPoints.size() != 0)
 					upgradeMap();
@@ -160,28 +146,28 @@ public class CarGame extends AbstractGameMenu {
 	@Override
 	public void render() {
 		drawQuad(0, 0, defaultWidth, defaultHeight);
-
+		
 		if (creating) {
 			List<Location> pointsExt = new LinkedList<Location>();// exterieur
-
+			
 			for (int x = 0; x <= grilleWidth; x++) {
 				for (int y = 0; y <= grilleWidth; y++) {
 					Location loc = new Location(x, y);
 					if (loc.getNearest(pointsInt).distance(loc) > 0) pointsExt.add(loc);
 				}
 			}
-
+			
 			// la ligne de départ :
 			drawLine(middleWidth * cubeWidth, middleHeight *
 					cubeHeight, middleWidth * cubeWidth, (middleHeight + 1) * cubeHeight, 8, new float[] { 0f, 0f, 1, 1 });
-
+					
 			paintLiaisons(pointsInt);
 			paintLiaisons(pointsExt);
-
+			
 		} else {
-
+			
 			map.renderBackground();
-
+			
 			if (win) {
 				
 				String timeString = timer / 60 + " sec";
@@ -191,7 +177,7 @@ public class CarGame extends AbstractGameMenu {
 					addStats = true;
 					if (record)
 						gameStats.setRecord(timer / 60);
-
+						
 					if (gameStats.getRecord() <= gameStats.getObjectif()) {
 						if (Main.getPlayer().getLevel() <= GameList.CAR.getID())
 							Main.getPlayer().setLevel(GameList.CAR.getID() + 1);
@@ -204,9 +190,9 @@ public class CarGame extends AbstractGameMenu {
 				renderEchap(true);
 				return;
 			}
-
+			
 			renderTexture(Textures.GAME_CAR_VOITURE, locCar.getX() - 17.5, locCar.getY() - 8, 35, 16, direction);
-
+			
 			if (contreSens) {
 				contreSens = false;
 				drawText("Tricher, c'est mal !", defaultWidth / 2, defaultHeight - 50, PosWidth.MILIEU, PosHeight.MILIEU, 40, new float[] { 1, 0, 0, 1 });
@@ -216,9 +202,9 @@ public class CarGame extends AbstractGameMenu {
 					pause.stopPause();
 					return;
 				}
-
+				
 				if (pause.getTimePauseTotal() == 5) {
-
+					
 					Textures.GAME_STARTING_BG.renderBackground();
 					
 					float[] orange = new float[] { 1, 0.5f, 0, 1 };
@@ -229,10 +215,10 @@ public class CarGame extends AbstractGameMenu {
 					float[] white = new float[] { 1, 1, 1, 1 };
 					drawText(Input.getKeyName(CarOptions.KEY_RIGHT), 1093, 475, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
 					drawText(Input.getKeyName(CarOptions.KEY_LEFT), 1093, 600, PosWidth.MILIEU, PosHeight.MILIEU, 50, white);
-
+					
 					drawText("OBJECTIF", 660, 495, 30, orange);
 					float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-
+					
 					if (gameStats.getRecord() < gameStats.getObjectif() && gameStats.getRecord() != 0) {
 						drawText("Réussi !", 710, 615, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 1, 0, 1 });
 					} else {
@@ -245,12 +231,12 @@ public class CarGame extends AbstractGameMenu {
 					pause.showRestartChrono();
 				return;
 			}
-
+			
 			if (!pauseScreen && pause.isFinish())
 				drawText(timer / 60 + "", 960, 10, PosWidth.MILIEU, PosHeight.HAUT, 60);
-
+				
 		}
-
+		
 	}
 	
 	/*
@@ -262,7 +248,6 @@ public class CarGame extends AbstractGameMenu {
 	 *
 	 *
 	 */
-	private int lastTimeLine = 0;
 	
 	private void movePlayer() {
 		lastTimeLine++;
@@ -277,7 +262,7 @@ public class CarGame extends AbstractGameMenu {
 		} else {
 			speed += 0.2 / speed;
 		}
-
+		
 		if (isLine() && timer > 18 && locCar.getY() >= middleHeight * cubeHeight) {// arrivee
 			if (direction > 270 || direction < 90) {
 				if (lastTimeLine < 1800) {
@@ -291,14 +276,14 @@ public class CarGame extends AbstractGameMenu {
 				speed = 0;
 				lastTimeLine = 0;
 			}
-
+			
 		} else {
 			if (!isCircuit()) // crash
 				speed = 0;
-
+				
 			locCar.setPos(deplacedX(), deplacedY());
 		}
-
+		
 	}
 	
 	private void upgradeMap() {
@@ -326,16 +311,16 @@ public class CarGame extends AbstractGameMenu {
 	}
 	
 	private boolean isLine() {
-
+		
 		int x = (int) locCar.getX();
 		int y = (int) locCar.getY();
-
+		
 		boolean xT = x > middleWidth * cubeWidth - 16 && x < middleWidth * cubeWidth;
 		boolean yT = y > middleHeight * cubeHeight && y < (middleHeight + 1) * cubeHeight;
-
+		
 		return xT && yT;
 	}
-
+	
 	private boolean isCircuit() {
 		int x = (int) deplacedX();
 		int y = (int) deplacedY();

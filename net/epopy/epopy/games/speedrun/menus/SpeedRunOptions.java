@@ -12,25 +12,21 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class SpeedRunOptions extends AbstractGameMenu {
 	
-	private static ButtonGui controlGauche;
-	private static ButtonGui controlDroite;
-	private static boolean controlGaucheClicked;
-	private static boolean controlDroiteClicked;
+	private static boolean controlGaucheClicked, controlDroiteClicked;
+	public static int KEY_SNEAK, KEY_JUMP;
+	private static ButtonGui controlGauche, controlDroite;
 	
-	public static int KEY_SNEAK;
-	public static int KEY_JUMP;
-
 	@Override
 	public void onEnable() {
 		KEY_SNEAK = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_sneak", String.valueOf(Keyboard.KEY_DOWN)));
 		KEY_JUMP = Integer.parseInt(Main.getPlayer().getConfig().getData("speedrun_control_jump", String.valueOf(Keyboard.KEY_UP)));
-
+		
 		controlDroiteClicked = false;
 		controlGaucheClicked = false;
 		controlGauche = new ButtonGui(Keyboard.getKeyName(KEY_SNEAK), new float[] { 0, 0.7f, 0, 1 }, 30);
 		controlDroite = new ButtonGui(Keyboard.getKeyName(KEY_JUMP), new float[] { 0, 0.7f, 0, 1 }, 30);
 	}
-
+	
 	@Override
 	public void update() {
 		controlDroite.update(985, 367, PosWidth.GAUCHE, PosHeight.MILIEU, 200, 30);
@@ -42,10 +38,10 @@ public class SpeedRunOptions extends AbstractGameMenu {
 			controlGaucheClicked = false;
 			controlGauche.setText(Keyboard.getKeyName(KEY_SNEAK));
 		}
-		
+
 		if (controlGauche.isClicked())
 			controlGaucheClicked = true;
-
+			
 		if (controlGaucheClicked) {
 			controlGauche.setText("Touche ?");
 			for (int i = 0; i < 209; i++) {
@@ -65,10 +61,10 @@ public class SpeedRunOptions extends AbstractGameMenu {
 			controlDroiteClicked = false;
 			controlDroite.setText(Keyboard.getKeyName(KEY_JUMP));
 		}
-		
+
 		if (controlDroite.isClicked())
 			controlDroiteClicked = true;
-
+			
 		if (controlDroiteClicked) {
 			controlDroite.setText("Touche ?");
 			for (int i = 0; i < 209; i++) {
@@ -81,14 +77,14 @@ public class SpeedRunOptions extends AbstractGameMenu {
 				}
 			}
 		}
-		
-	}
 
+	}
+	
 	@Override
 	public void render() {
 		controlGauche.render();
 		controlDroite.render();
-		
+
 		float[] color = new float[] { 1, 1, 1, 1 };
 		drawText("Jump", 935, 370, PosWidth.DROITE, PosHeight.MILIEU, 30, color);
 		drawText("Sneak", 935, 738, PosWidth.DROITE, PosHeight.MILIEU, 30, color);

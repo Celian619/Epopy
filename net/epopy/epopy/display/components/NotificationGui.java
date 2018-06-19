@@ -15,19 +15,18 @@ import net.epopy.network.utils.Callback;
 public class NotificationGui {
 
 	public static List<NotificationGui> notifs = new LinkedList<>();
+	
+	private static boolean reponseChoose;
+	private static int x, w, removeTime, y = 30, h = 70;
 
-	private final String notification;
-	private final String information;
-	private final Pause time = new Pause();
-
+	private final boolean error;
 	private final int timeToStay;
 	private final float[] color;
-	private final boolean error;
-	private Callback callback = null;
-	private Callback reponse = null;
+	private final String notification, information;
+	private final Pause time = new Pause();
+	private final ButtonGui accept, refuse;
 
-	private final ButtonGui accept;
-	private final ButtonGui refuse;
+	private Callback callback, reponse;
 
 	public NotificationGui(final String notification, String information, final int timeToStay, final float[] color, final boolean error) {
 		this.notification = notification;
@@ -58,13 +57,6 @@ public class NotificationGui {
 		removeTime = 0;
 		notifs = new LinkedList<>();
 	}
-
-	private static int x;
-	private static int w = 0;
-	private static int h = 70;
-	private static int y = 30;
-	private static int removeTime = 0;
-	private static boolean reponseChoose;
 
 	public static void render() {
 		if (!notifs.isEmpty()) {

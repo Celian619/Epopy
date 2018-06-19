@@ -14,18 +14,18 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class FileDownload {
-	
-	public static double pourcent = 0;
-	
+
+	public static double pourcent;
+
 	public static Image getImage(final String filePath) {
 		BufferedInputStream in = null;
 		HttpURLConnection connection = null;
-		
+
 		try {
 			final URL url = new URL(filePath);
 			connection = (HttpURLConnection) url.openConnection();
 			// connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-			
+
 			final int filesize = connection.getContentLength();
 			float totalDataRead = 0;
 			in = new BufferedInputStream(connection.getInputStream());
@@ -53,21 +53,21 @@ public class FileDownload {
 		}
 		return null;
 	}
-	
+
 	public static void download(final String urlString, final File downloaded) throws IOException {
 		pourcent = 0;
 		BufferedOutputStream bout = null;
 		BufferedInputStream in = null;
 		HttpURLConnection connection = null;
-		
+
 		if (downloaded.getParentFile() != null
 				&& !downloaded.getParentFile().exists()) {
 			downloaded.getParentFile().mkdirs();
 		}
-		
+
 		if (downloaded.exists())
 			downloaded.delete();
-			
+
 		try {
 			final URL url = new URL(urlString);
 			connection = (HttpURLConnection) url.openConnection();

@@ -9,11 +9,7 @@ import net.epopy.epopy.Main;
 
 public class FileUtils {
 
-	public static String PATH_FOLDER;
-	public static String PATH_INFOS;
-	public static String SYSTEM_NAME;
-	public static String version;
-
+	public static String PATH_FOLDER, PATH_INFOS, SYSTEM_NAME, version;
 	public static FileOutputStream input;
 
 	public static void checkFiles() {
@@ -43,19 +39,14 @@ public class FileUtils {
 		PATH_FOLDER = directory.getPath() + "/";
 		PATH_INFOS = PATH_FOLDER + "infos.txt";
 
-		/**try {
-			File lock = new File(PATH_FOLDER + "lockEpopy.txt");
-			lock.createNewFile();
-			input = new FileOutputStream(lock);
-			
-			if (input.getChannel().tryLock() == null) {
-				JOptionPane.showMessageDialog(null, "Une autre fenêtre est déjà lancée !", "Epopy", JOptionPane.WARNING_MESSAGE);
-				System.out.println("\n\n\nAn other instance is ON ! (EXIT)");
-				System.exit(0);
-			}
-
-		} catch (IOException e) {
-		}*/
+		/**
+		 * try { File lock = new File(PATH_FOLDER + "lockEpopy.txt"); lock.createNewFile(); input = new FileOutputStream(lock);
+		 *
+		 * if (input.getChannel().tryLock() == null) { JOptionPane.showMessageDialog(null, "Une autre fenêtre est déjà lancée !", "Epopy",
+		 * JOptionPane.WARNING_MESSAGE); System.out.println("\n\n\nAn other instance is ON ! (EXIT)"); System.exit(0); }
+		 *
+		 * } catch (IOException e) { }
+		 */
 		
 		File version = new File(PATH_FOLDER + "version.txt");
 		if (version.exists()) {

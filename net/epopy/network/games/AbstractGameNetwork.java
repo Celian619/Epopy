@@ -19,14 +19,12 @@ import net.epopy.network.handlers.packets.modules.game.PacketGameStatus.GameStat
 
 public abstract class AbstractGameNetwork {
 
-	private static Map<String, PlayerNetwork> players = new ConcurrentHashMap<>();
-	private static Map<String, PlayerNetwork> playersADD = new ConcurrentHashMap<>();
 	private static List<String> playersREMOVE = new LinkedList<>();
-
+	
+	private static Map<String, PlayerNetwork> players = new ConcurrentHashMap<>(), playersADD = new ConcurrentHashMap<>();
 	private static Map<String, Team> teams = new ConcurrentHashMap<>(); // STRING = nom de la team
 	private static Map<String, Ball> balls = new ConcurrentHashMap<>(); // STRING = nom de la team
-	private static Map<Integer, Zone> zones = new ConcurrentHashMap<>();//INT = id de la zone
-	private static Map<Integer, Zone> zoneADD = new ConcurrentHashMap<>();
+	private static Map<Integer, Zone> zoneADD = new ConcurrentHashMap<>(), zones = new ConcurrentHashMap<>();// INT = id de la zone
 
 	private static GameStatus gameStatus = GameStatus.WAITING;
 
@@ -41,13 +39,13 @@ public abstract class AbstractGameNetwork {
 	}
 
 	private static void updatePlayer() {
-		if(!playersADD.isEmpty()) {
-			for(Entry<String, PlayerNetwork> player : playersADD.entrySet()) 
+		if (!playersADD.isEmpty()) {
+			for (Entry<String, PlayerNetwork> player : playersADD.entrySet())
 				players.put(player.getKey(), player.getValue());
 			playersADD.clear();
 		}
-		if(!playersREMOVE.isEmpty()) {
-			for(String player : playersREMOVE)
+		if (!playersREMOVE.isEmpty()) {
+			for (String player : playersREMOVE)
 				players.remove(player);
 			playersREMOVE.clear();
 		}
@@ -56,18 +54,20 @@ public abstract class AbstractGameNetwork {
 	/*
 	 * Variables commmumes
 	 */
-	//----- GAME -----
+	// ----- GAME -----
 	public GameStatus getGameStatus() {
 		return gameStatus;
 	}
-	public void setGameStatus(GameStatus g) {
+
+	public void setGameStatus(final GameStatus g) {
 		gameStatus = g;
 	}
+
 	// ----- JOUEURS -----
-	public void addPlayer(final String name, final String teamName, int hp) {
+	public void addPlayer(final String name, final String teamName, final int hp) {
 		PlayerNetwork player = new PlayerNetwork(name, teams.get(teamName), hp);
 		updatePlayer();
-		if (!players.containsKey(name)) 
+		if (!players.containsKey(name))
 			playersADD.put(name, player);
 	}
 
@@ -118,7 +118,7 @@ public abstract class AbstractGameNetwork {
 
 	public void updateBall(final String name, final float[] color, final Location3D location3d) {
 		if (balls.containsKey(name)) {
-			if(location3d != null)
+			if (location3d != null)
 				balls.get(name).setLocation3d(location3d);
 		} else
 			balls.put(name, new Ball(name, color, location3d));
@@ -140,20 +140,20 @@ public abstract class AbstractGameNetwork {
 	// }
 
 	// ----- ZONE -----
-	public void removeZone(int id) {
+	public void removeZone(final int id) {
 		if (zones.containsKey(id))
 			zones.remove(id);
 	}
 
 	private void updateZone() {
-		if(!zoneADD.isEmpty()) {
-			for(Entry<Integer, Zone> zone : zoneADD.entrySet()) 
+		if (!zoneADD.isEmpty()) {
+			for (Entry<Integer, Zone> zone : zoneADD.entrySet())
 				zones.put(zone.getKey(), zone.getValue());
 			zoneADD.clear();
 		}
 	}
 
-	public void addZone(int id) {
+	public void addZone(final int id) {
 		updateZone();
 		if (!zones.containsKey(id))
 			zoneADD.put(id, new Zone(id));
@@ -165,17 +165,18 @@ public abstract class AbstractGameNetwork {
 		return zones.values();
 	}
 
-	public boolean containsZone(int id) {
+	public boolean containsZone(final int id) {
 		updateZone();
 		return zones.containsKey(id);
 	}
 
-	public Zone getZone(int id) {
+	public Zone getZone(final int id) {
 		updateZone();
 		if (zones.containsKey(id))
 			return zones.get(id);
 		return null;
 	}
+
 	/*
 	 * abstract
 	 */

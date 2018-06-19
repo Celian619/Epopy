@@ -32,29 +32,19 @@ public class ButtonGui {
 	/**
 	 * Quand on switch de button et qu'on reclique sur un autre
 	 */
-	public static int timeResetMenu = 40;
-	public static int resetMenu = 0;
-
-	private boolean isClicked;
-	private int x;
-	private int y;
-	private int width;
-	private int height;
-	public int xx = -1;
-	public int yy;
-	private int ww;
-	private int hh;
-	public Textures textureOff;
-	public Textures textureOn;
-	private boolean isOn = false;
-
-	public String text = null;
-	private int textSize = 20;
-	public float[] textColor = new float[] { 1, 1, 1, 1 };
-	private boolean changeColor = true;
-	private FontUtils font;
-
+	public static int timeResetMenu = 40, resetMenu = 0;
+	
 	public boolean canOver = true;
+	public int xx = -1, yy;
+	public String text;
+	public float[] textColor = new float[] { 1, 1, 1, 1 };
+
+	public Textures textureOff, textureOn;
+	
+	private boolean isClicked, isOn, changeColor = true;
+	private int x, y, width, height, ww, hh, textSize = 20;
+
+	private FontUtils font;
 
 	public ButtonGui(final Textures textureOff, final Textures textureOn, int x, int y, final PosWidth posWidth, final PosHeight posHeight, final int width, final int height) {
 		isClicked = false;
@@ -132,7 +122,7 @@ public class ButtonGui {
 
 		if (mx >= x && mx < x2 && my >= y && my < y2) {
 			isOn = true;
-			
+
 			if (resetMenu == 0) {
 				if (Input.getButtonDown(0)) {
 					isClicked = true;

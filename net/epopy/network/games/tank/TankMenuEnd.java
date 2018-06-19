@@ -14,38 +14,29 @@ import net.epopy.network.games.modules.Team;
 import net.epopy.network.games.waitingroom.WaitingRoom;
 
 public class TankMenuEnd {
-	
-	// team winner
-	public static Team TEAM_WINNER = null;
-	
-	public static String[] TOP_COINS = new String[] { "", "", "" };
-	public static String[] TOP_VICTIMES = new String[] { "", "", "" };
-	public static String[] TOP_POINTS = new String[] { "", "", "" };
-	
-	// player stats
-	public static int PLAYER_KILLS = 0;
-	public static int PLAYER_MORT = 0;
-	public static int PLAYER_POINTS = 0;
-	public static int PLAYER_COINS = 0;
-	
+
+	public static int PLAYER_KILLS, PLAYER_MORT, PLAYER_POINTS, PLAYER_COINS;
+	public static String[] TOP_COINS, TOP_VICTIMES, TOP_POINTS;
+	public static Team TEAM_WINNER;
+
 	private static ButtonGui quitterButton = new ButtonGui("Quitter", new float[] { 0.8f, 0, 0, 1 }, 50, false);
-	private int w1Quitter = 0;
-	private int w2Quitter = 0;
 	
+	private final float[] colorTop = new float[] { 1, 1, 0, 1 };
+	
+	private int w1Quitter, w2Quitter;
+
 	public TankMenuEnd() {
 		TOP_COINS = new String[] { "", "", "" };
 		TOP_VICTIMES = new String[] { "", "", "" };
 		TOP_POINTS = new String[] { "", "", "" };
-		PLAYER_KILLS = 0;
-		PLAYER_MORT = 0;
-		PLAYER_POINTS = 0;
-		PLAYER_COINS = 0;
+		PLAYER_KILLS = PLAYER_MORT = PLAYER_POINTS = PLAYER_COINS = 0;
+
 		TEAM_WINNER = null;
 	}
-	
-	public void update() {
 
-		quitterButton.update(1550 + 120, 840 + 80, PosWidth.MILIEU, PosHeight.HAUT, 130, 80);
+	public void update() {
+		
+		quitterButton.update(1670, 920, PosWidth.MILIEU, PosHeight.HAUT, 130, 80);
 		if (quitterButton.isOn()) {
 			if (w1Quitter > 0)
 				w1Quitter -= 20;
@@ -61,51 +52,50 @@ public class TankMenuEnd {
 				w2Quitter += 20;
 			else w2Quitter = 280;
 		}
-		
+
 		if (quitterButton.isClicked()) NetworkPlayer.setGame(new WaitingRoom());
 	}
-	
-	private final float[] colorTop = new float[] { 1, 1, 0, 1 };
-	
+
 	public void render() {
-		
+
 		getDefaultBackGround().renderBackground();
 		Textures.NETWORK_GAME_END_BG.renderBackground();
 		/*
 		 * Nav bar
 		 */
-		
-		// Bas
-		drawQuad(1297 + 18 + 134, 930 - 10 + 80, w1Quitter == 280 ? 287 : w1Quitter, 2);
-		// Haut
-		drawQuad(1768 + 18 + 134, 835 - 10 + 80, w2Quitter == 280 ? -287 : -w2Quitter, 2);
 
-		quitterButton.render();
+		// Bas
+		drawQuad(1449, 1000, w1Quitter == 280 ? 287 : w1Quitter, 2);
+		// Haut
+		drawQuad(1920, 905, w2Quitter == 280 ? -287 : -w2Quitter, 2);
 		
+		quitterButton.render();
+		int mid = AbstractGameMenu.defaultWidth / 2;
 		/*
 		 * Header
 		 */
 		if (TEAM_WINNER != null) {
-			drawText("Victoire des", AbstractGameMenu.defaultWidth / 2 - 40 - 30 - (TEAM_WINNER.getName().equals("RED") ? 20 : 0), 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
-			drawText(TEAM_WINNER.getName().equals("RED") ? "Rouges" : TEAM_WINNER.getName().equals("BLUE") ? "bleus" : TEAM_WINNER.getName(), AbstractGameMenu.defaultWidth / 2 + 170 - 30, 171, PosWidth.MILIEU, PosHeight.HAUT, 48, TEAM_WINNER.getColor());
-		} else drawText("Match nul !", AbstractGameMenu.defaultWidth / 2, 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
-		drawText("Récapitulatif", AbstractGameMenu.defaultWidth / 2, 250, PosWidth.MILIEU, PosHeight.HAUT, 35, new float[] { 0, 1, 0, 1 });
+			drawText("Victoire des", mid - 70 - (TEAM_WINNER.getName().equals("RED") ? 20 : 0), 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
+			drawText(TEAM_WINNER.getName().equals("RED") ? "Rouges" : TEAM_WINNER.getName().equals("BLUE") ? "Bleus" : TEAM_WINNER.getName(), mid + 140, 171, PosWidth.MILIEU, PosHeight.HAUT, 48, TEAM_WINNER.getColor());
+		} else drawText("Match nul !", mid, 171, PosWidth.MILIEU, PosHeight.HAUT, 48);
+
+		drawText("Récapitulatif", mid, 250, PosWidth.MILIEU, PosHeight.HAUT, 35, new float[] { 0, 1, 0, 1 });
 		drawLine(860, 290, 1060, 290, 1);
-		
+
 		/*
 		 * Classement des Meilleur joueurs
 		 */
-		drawText("Meilleur joueurs", AbstractGameMenu.defaultWidth / 2 - 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
-		drawText("© Points obtenus ©", AbstractGameMenu.defaultWidth / 2 - 400, 380, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
+		drawText("Meilleur joueurs", mid - 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
+		drawText("© Points obtenus ©", mid - 400, 380, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
 			if (!TOP_POINTS[i - 1].equals("null"))
-				drawText(TOP_POINTS[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 390 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
+				drawText(TOP_POINTS[i - 1], mid - 400, 390 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
 		}
 		// top pour celui qui à tuer le plus de personne
-		drawText("Φ Top victimes Φ", AbstractGameMenu.defaultWidth / 2 - 400, 515, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
+		drawText("Φ Top victimes Φ", mid - 400, 515, PosWidth.MILIEU, PosHeight.HAUT, 30, colorTop);
 		for (int i = 1; i < 4; i++) {
 			if (!TOP_VICTIMES[i - 1].equals("null"))
-				drawText(TOP_VICTIMES[i - 1], AbstractGameMenu.defaultWidth / 2 - 400, 520 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
+				drawText(TOP_VICTIMES[i - 1], mid - 400, 520 + 30 * i, PosWidth.MILIEU, PosHeight.HAUT, 28);
 		}
 		/**
 		 * total de points captures pour l'equipe ComponentsHelper.drawText("• Points obtenus •", AbstractGameMenu.defaultWidth / 2 - 400,
@@ -116,17 +106,16 @@ public class TankMenuEnd {
 		/*
 		 * Statistique du joueur
 		 */
-		drawText("Mes statistiques", AbstractGameMenu.defaultWidth / 2 + 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
-		int xStats = 340;
-		drawText("Victimes: " + PLAYER_KILLS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30, PosWidth.MILIEU, PosHeight.HAUT, 28);
-		drawText("Morts: " + PLAYER_MORT, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 2, PosWidth.MILIEU, PosHeight.HAUT, 28);
-		drawText("Coins gagnés: " + PLAYER_COINS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 3, PosWidth.MILIEU, PosHeight.HAUT, 28);
-		drawText("Points obtenus: " + PLAYER_POINTS, AbstractGameMenu.defaultWidth / 2 + 400, xStats + 30 * 4, PosWidth.MILIEU, PosHeight.HAUT, 28);
-		
-	}
+		drawText("Mes statistiques", mid + 400, 330, PosWidth.MILIEU, PosHeight.HAUT, 35);
+		drawText("Victimes: " + PLAYER_KILLS, mid + 400, 370, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Morts: " + PLAYER_MORT, mid + 400, 400, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Coins gagnés: " + PLAYER_COINS, mid + 400, 430, PosWidth.MILIEU, PosHeight.HAUT, 28);
+		drawText("Points obtenus: " + PLAYER_POINTS, mid + 400, 460, PosWidth.MILIEU, PosHeight.HAUT, 28);
 
+	}
+	
 	public Textures getDefaultBackGround() {
 		return Textures.NETWORK_GAME_TANK_MAP;
 	}
-	
+
 }

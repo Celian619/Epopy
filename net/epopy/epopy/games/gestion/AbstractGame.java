@@ -5,13 +5,11 @@ import net.epopy.epopy.display.Textures;
 
 public abstract class AbstractGame {
 	
-	private boolean inGame = false;
+	private boolean inGame;
 
-	// menu
-	public AbstractGameMenu menuGame;
-	public AbstractGameMenu menuOptions;
+	public AbstractGameMenu menuGame, menuOptions;
 	/*
-	 * --> Pour cree un module de jeu Copier un autre module et changer les menus 'menuMain' (dans la fonction onEnable();) et changer le
+	 * --> Pour creer un module de jeu Copier un autre module et changer les menus 'menuMain' (dans la fonction onEnable();) et changer le
 	 * nom du jeu dans le 'getName();'
 	 *
 	 *

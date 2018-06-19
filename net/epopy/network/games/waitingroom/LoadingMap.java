@@ -11,10 +11,16 @@ import net.epopy.network.games.tank.Tank;
 import net.epopy.network.games.tank.modules.MapLoader;
 
 public class LoadingMap extends AbstractGameNetwork {
+	
+	private static float[] blackColor = new float[] { 0, 0, 0, 1 };
+
+	private boolean loading, droite = true;
+	private int i, iValue;
+	private double x;
 
 	@Override
 	public void onEnable() {
-		loding = false;
+		loading = false;
 	}
 
 	@Override
@@ -22,20 +28,10 @@ public class LoadingMap extends AbstractGameNetwork {
 
 	}
 
-	double x = 0;
-	boolean loding;
-	boolean droite = true;
-	private static float[] blackColor = new float[] { 0, 0, 0, 1 };
-
-	private int i = 0;
-	private int iValue = 0;
-
 	@Override
 	public void render() {
 		getDefaultBackGround().renderBackground();
 
-		int milieu = 1920 / 2;
-		
 		if (iValue == 20)
 			i = 1;
 		else if (iValue == 40)
@@ -51,19 +47,15 @@ public class LoadingMap extends AbstractGameNetwork {
 			iValue = 0;
 		}
 		iValue++;
+
+		String point = new String(new char[i]).replace("\0", ".");// . ou .. ou ...
 		
-		String point = "";
-		if (i == 1)
-			point = ".";
-		else if (i == 2)
-			point = ". .";
-		else if (i == 3)
-			point = ". . .";
+		int milieu = 960;
 
 		drawText("Chargement en cours ", milieu, 800, PosWidth.MILIEU, PosHeight.HAUT, 50, blackColor);
 		drawText(point, 1210, 800, 50, blackColor);
-
 		drawLine(milieu + x, 880, milieu - x, 880, 2, blackColor);
+
 		if (droite) {
 			if (x < 300)
 				x += 5;
@@ -76,9 +68,9 @@ public class LoadingMap extends AbstractGameNetwork {
 				droite = true;
 		}
 
-		if (!MapLoader.LOADING && !loding) {
+		if (!MapLoader.LOADING && !loading) {
 			Tank.MAP = new MapLoader("/net/epopy/epopy/display/res/network/games/map-tank-default-game.png");
-			loding = true;
+			loading = true;
 		}
 	}
 

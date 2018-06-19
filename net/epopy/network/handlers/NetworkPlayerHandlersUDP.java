@@ -13,16 +13,18 @@ import net.epopy.network.utils.DataBuffer;
 
 public class NetworkPlayerHandlersUDP implements Runnable {
 
-	private int				port;
-	private InetAddress		address;
-	private DatagramSocket	socket;
+	private int port;
+	
+	private InetAddress address;
+	private DatagramSocket socket;
 	private Thread thread;
-	public NetworkPlayerHandlersUDP(NetworkPlayerHandlers networkPlayerHandlers, String address, int port) {
+
+	public NetworkPlayerHandlersUDP(final NetworkPlayerHandlers networkPlayerHandlers, final String address, final int port) {
 		try {
 			this.address = InetAddress.getByName(address);
 			this.port = port;
-			this.socket = new DatagramSocket(networkPlayerHandlers.getSocket().getLocalPort());
-			//	socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
+			socket = new DatagramSocket(networkPlayerHandlers.getSocket().getLocalPort());
+			// socket.setReceiveBufferSize(Packets.MAX_SIZE * 30 * 100);
 			thread = new Thread(this, "udp-thread");
 			thread.start();
 		} catch (SocketException e) {
@@ -38,6 +40,7 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		while (true) {
 			try {
@@ -56,17 +59,17 @@ public class NetworkPlayerHandlersUDP implements Runnable {
 		close();
 	}
 
-	public void send(byte[] bytes) {
-		//	new Thread("udp-send-thread") {
-		//public void run() {
+	public void send(final byte[] bytes) {
+		// new Thread("udp-send-thread") {
+		// public void run() {
 		try {
 			DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, port);
 			socket.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//			}
-		//}.start();
+		// }
+		// }.start();
 	}
 
 	public void close() {

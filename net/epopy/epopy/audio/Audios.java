@@ -21,21 +21,13 @@ public class Audios {
 	private static String PATH = "/net/epopy/epopy/audio/res/";
 	private static List<Audios> audios = new ArrayList<Audios>(10);
 
-	public static Audios LOBBY = new Audios("menu");
-	public static Audios NEW_GAME = new Audios("level");
-	public static Audios PING = new Audios("ping");
-	public static Audios CAR = new Audios("car");
-	public static Audios SNAKE = new Audios("snake");
-	public static Audios TANK = new Audios("tank");
-	public static Audios PLACEINVADER = new Audios("place_invader");
-	public static Audios SPEEDRUN = new Audios("speedrun");
-	public static Audios TETRAS = new Audios("tetras");
-
+	public static Audios LOBBY = new Audios("menu"), NEW_GAME = new Audios("level"), PING = new Audios("ping"), CAR = new Audios("car"), SNAKE = new Audios("snake"), TANK = new Audios("tank"), PLACEINVADER = new Audios("place_invader"), SPEEDRUN = new Audios("speedrun"),
+			TETRAS = new Audios("tetras");
+			
 	private Clip clip;
-	private float volume;
-	private float vec = 110 - VOLUME_VALUE * 10;// 0 < plus c'est fort
+	private float volume, vec = 110 - VOLUME_VALUE * 10;
 	private final String name;
-	private boolean running = false;
+	private boolean running;
 
 	public Audios(final String name) {
 		this.name = name;

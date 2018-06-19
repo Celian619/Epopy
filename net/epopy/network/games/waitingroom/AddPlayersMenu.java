@@ -25,26 +25,17 @@ import net.epopy.network.handlers.packets.modules.PacketPlayerWaitingRoom.Packet
 public class AddPlayersMenu extends AbstractGameNetwork {
 
 	// liste d'information
-	public static List<String> friends = new LinkedList<>();// liste de tous ses amis
-	public static List<String> friendsOnline = new LinkedList<>();// liste de ses amis en lignes
-	public static List<String> playersNetwork = new LinkedList<>();// liste de tous les joueurs sur le network
+	public static List<String> friends = new LinkedList<>(), friendsOnline = new LinkedList<>(), playersNetwork = new LinkedList<>(), addfriendsButtons = new ArrayList<>(5);
 
-	// render
-	public static List<String> addfriendsButtons = new ArrayList<>(5);// liste des personnes qui veut ajouter à sa waiting room
+	private static int colone, sizeTextArea;// nbr de lettre dans la recherche de joueur. Cette variable permet de savoir si il l a modif
+	private static TextAreaGui searchPlayer;
+	private static ButtonGui validPlayers, retourWaitingRoom;
 	private static List<ButtonGui> friendsButtons = new LinkedList<>();// tous les amis à render
+
+	private final int ecartLigne = 40, maxColone = 3, ecartX = 450, defaultX = 730;
 	private final Map<String, ButtonGui> playersRender = new TreeMap<>();// list des joueurs du network à render
 
-	// variable de changement
-	private static int sizeTextArea = 0;// nombre de lettre dans la recherche de joueur. Cette variable permet de savoir si il a modifier ça
-										// recherche
-	private static TextAreaGui searchPlayer;
-	private static ButtonGui validPlayers;
-
-	private static ButtonGui retourWaitingRoom;
-
-	/**
-	 * -- Class --
-	 */
+	private int clickTime, lastX = 770, ySearchPlayer = 300;
 
 	@Override
 	public void onEnable() {
@@ -87,19 +78,6 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		searchPlayer.setText("");
 		colone = 0;
 	}
-
-	// variable pour eviter la reclick sur le button des amis
-	private int clickTime = 0;
-	private int lastX = 770;
-	private int ySearchPlayer = 300;
-
-	// Default variables
-	private final int ecartLigne = 40;
-	private final int maxColone = 3;
-
-	private final int defaultX = 730;// 770
-	private final int ecartX = 450;
-	private static int colone = 0;
 
 	@Override
 	public void update() {
@@ -157,66 +135,65 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		 */
 		if (!searchPlayer.getText().isEmpty()) {
 			for (String pls : playersNetwork) {
-				if (pls.toUpperCase().contains(searchPlayer.getText().toUpperCase())) {
-					// on check si le joueur n'est pas dans la waiting room
-					if (!WaitingRoom.waitingRoom.getPlayers().contains(pls) && !WaitingRoom.waitingRoom.getLeader().equals(pls)) {
-						// on check si je joueur n'est pas déjà afficher, si oui on update si non on l'ajoute
-						if (!playersRender.containsKey(pls)) {
-							if (playersRender.size() < 45) {
-								ButtonGui button = new ButtonGui(pls, new float[] { 1, 1, 1, 1 }, 30, false);
-								if (lastX != x) {
-									if (lastX >= 2080) {
-										lastX = defaultX;
-										ySearchPlayer += ecartLigne;
-									}
-									button.update(lastX, ySearchPlayer, null, null);
-									lastX += ecartX;
-								} else {
-									button.update(lastX, ySearchPlayer, null, null);
-									lastX += ecartX;
+				if (pls.toUpperCase().contains(searchPlayer.getText().toUpperCase()) && !WaitingRoom.waitingRoom.getPlayers().contains(pls) && !WaitingRoom.waitingRoom.getLeader().equals(pls)) {
+					/*
+					 * on check si le joueur n'est pas dans la waiting room puis on check si je joueur n'est pas déjà afficher, si oui on
+					 * update si non on l'ajoute
+					 */
+
+					if (!playersRender.containsKey(pls)) {
+						if (playersRender.size() < 45) {
+							ButtonGui button = new ButtonGui(pls, new float[] { 1, 1, 1, 1 }, 30, false);
+							if (lastX != x) {
+								if (lastX >= 2080) {
+									lastX = defaultX;
+									ySearchPlayer += ecartLigne;
 								}
-								playersRender.put(pls, button);
-							} // TODO page
-						} else {
-							if (playersRender.containsKey(pls)) {
-								ButtonGui button = playersRender.get(pls);
-								button.update(0, 0, null, null);
-								if (addfriendsButtons.contains(button.text)) {
-									if (button.textColor[0] == 1) {
-										button.textColor = new float[] { 0, 1, 0, 1 };
-									}
+								button.update(lastX, ySearchPlayer, null, null);
+								lastX += ecartX;
+							} else {
+								button.update(lastX, ySearchPlayer, null, null);
+								lastX += ecartX;
+							}
+							playersRender.put(pls, button);
+						} // TODO page
+					} else {
+						if (playersRender.containsKey(pls)) {
+							ButtonGui button = playersRender.get(pls);
+							button.update(0, 0, null, null);
+							if (addfriendsButtons.contains(button.text)) {
+								if (button.textColor[0] == 1) {
+									button.textColor = new float[] { 0, 1, 0, 1 };
 								}
-								if (button.isClicked()) {
-									button.setClicked(false);
-									if (clickTime == 0) {
-										clickTime = 10;
-										if (addfriendsButtons.contains(button.text)) {
-											button.textColor = new float[] { 1, 1, 1, 1 };
-											addfriendsButtons.remove(button.text);
-										} else {
-											if (addfriendsButtons.size() + WaitingRoom.waitingRoom.getPlayers().size() <= WaitingRoom.MAX_PLAYERS) {
-												button.textColor = new float[] { 0, 0.7f, 0, 1 };
-												addfriendsButtons.add(button.text);
-											} else
-												new NotificationGui("WAITING ROOM", "Plus assez de place !", 1, new float[] { 1, 0, 0, 1 }, true);
-										}
+							}
+							if (button.isClicked()) {
+								button.setClicked(false);
+								if (clickTime == 0) {
+									clickTime = 10;
+									if (addfriendsButtons.contains(button.text)) {
+										button.textColor = new float[] { 1, 1, 1, 1 };
+										addfriendsButtons.remove(button.text);
+									} else {
+										if (addfriendsButtons.size() + WaitingRoom.waitingRoom.getPlayers().size() <= WaitingRoom.MAX_PLAYERS) {
+											button.textColor = new float[] { 0, 0.7f, 0, 1 };
+											addfriendsButtons.add(button.text);
+										} else
+											new NotificationGui("WAITING ROOM", "Plus assez de place !", 1, new float[] { 1, 0, 0, 1 }, true);
 									}
 								}
 							}
 						}
-					} else if (playersRender.containsKey(pls))
-						playersRender.remove(pls);
-
-				} else {
-					if (playersRender.containsKey(pls)) {
-						playersRender.remove(pls);
 					}
-				}
+				} else if (playersRender.containsKey(pls))
+					playersRender.remove(pls);
+
 			}
 			return;
 		}
 
-		while (idfriendsButtons < friendsButtons.size()) { // TODO page par la suite
+		while (idfriendsButtons < friendsButtons.size())
+
+		{ // TODO page par la suite
 			ButtonGui button = friendsButtons.get(idfriendsButtons);
 			if (WaitingRoom.waitingRoom.getPlayers().contains(button.text) || WaitingRoom.waitingRoom.getLeader().equals(button.text)) {
 				friendsButtons.remove(button);
@@ -254,6 +231,7 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 				x += ecartX;
 			}
 		}
+
 	}
 
 	@Override
@@ -289,11 +267,11 @@ public class AddPlayersMenu extends AbstractGameNetwork {
 		int[] ligneId = new int[] { 0, 0, 0 };
 		for (ButtonGui friend : !searchPlayer.getText().isEmpty() ? playersRender.values() : friendsButtons) {
 			if (friend.xx == defaultX) {
-				ligneId[0] = ligneId[0] + 1;
+				ligneId[0]++;
 			} else if (friend.xx == defaultX + ecartX)
-				ligneId[1] = ligneId[1] + 1;
+				ligneId[1]++;
 			if (friend.xx == defaultX + ecartX * 2)
-				ligneId[2] = ligneId[2] + 1;
+				ligneId[2]++;
 		}
 		if (ligneId[0] != 0)// -15
 			drawLine(715, 300, 715, 300 + ecartLigne * ligneId[0], 1);

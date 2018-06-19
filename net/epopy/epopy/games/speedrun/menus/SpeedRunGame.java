@@ -22,30 +22,22 @@ import net.epopy.epopy.utils.Input;
 
 public class SpeedRunGame extends AbstractGameMenu {
 	private static final int menSize = 100;
+
+	private static int timer;
 	
-	private double decors;
-	private int playerWalk;
-	private int playerSneak;
-	private int height;
-	private int propulsion;
-	private int newRobot;
-	private double level;
-	private boolean sneak;
+	private boolean sneak, pauseScreen, addStats;
+	private int playerWalk, playerSneak, height, propulsion, newRobot;
+	private double level, decors;
 	List<Robot> robots = new LinkedList<Robot>();
 	List<Integer> lampadairesX = new LinkedList<Integer>();
-	
-	private static int timer;
-	private boolean addStats;
 
-	private boolean pauseScreen;
-	
 	@Override
 	public void onEnable() {
 		if (Main.getPlayer().hasSound() && !Audios.SPEEDRUN.isRunning())
 			Audios.SPEEDRUN.start(true).setVolume(0.3f);
 		song = Audios.SPEEDRUN;
 		sneak = addStats = gameOver = pauseScreen = false;
-
+		
 		decors = 0.0;
 		playerWalk = height = 1;
 		newRobot = 50;
@@ -53,18 +45,18 @@ public class SpeedRunGame extends AbstractGameMenu {
 		playerSneak = propulsion = timer = 0;
 		robots.clear();
 		lampadairesX.clear();
-
+		
 		gameStats = Main.getPlayer().getSpeedRunStats();
-
+		
 		pause.startPause(5);
 	}
-
+	
 	@Override
 	public void update() {
 		if (pause.isFinish() && !gameOver && !pauseScreen) {
 			timer++;
 		}
-		
+
 		if (pause.isFinish() && !gameOver) {
 			if (Input.getKeyDown(Keyboard.KEY_ESCAPE)) {
 				if (pauseScreen) {
@@ -75,12 +67,12 @@ public class SpeedRunGame extends AbstractGameMenu {
 				}
 			}
 		}
-
+		
 		if (gameOver) {
 			if (rejouerButton.isClicked())
 				onEnable();
 		}
-
+		
 		if (pauseScreen) {
 			if (reprendreButton.isClicked()) {
 				pause.startPause(3);
@@ -88,9 +80,9 @@ public class SpeedRunGame extends AbstractGameMenu {
 				Mouse.setGrabbed(true);
 			}
 		}
-
-		if (pauseScreen || !pause.isFinish() || gameOver) return;
 		
+		if (pauseScreen || !pause.isFinish() || gameOver) return;
+
 		if (Input.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			Mouse.setGrabbed(false);
 		}
@@ -99,7 +91,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 			sneak = true;
 		} else {
 			if (sneak) sneak = false;
-
+			
 			if (Input.isKeyDown(SpeedRunOptions.KEY_JUMP)) {
 				if (height == 1) {// au sol
 					height += 5;
@@ -107,7 +99,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 				} else {
 					propulsion++;
 				}
-
+				
 			}
 		}
 		if (height > 1) {
@@ -118,22 +110,22 @@ public class SpeedRunGame extends AbstractGameMenu {
 		}
 		decors -= (float) level / 8;
 		if (decors < 0) decors += 1920;
-
+		
 		playerWalk++;
 		if (playerWalk > 80) playerWalk = 9;
-
+		
 		playerSneak++;
 		if (playerSneak > 10) playerSneak = 0;
-
+		
 		for (int i = robots.size() - 1; i >= 0; i--) {
 			Robot r = robots.get(i);
-
+			
 			if (r.x > 0 && r.x < 130) {
-				if (r.normalORsneakORlampadaire == 0) {
+				if (r.status == 0) {
 					if (!sneak) {
 						gameOver = true;
 					}
-				} else if (r.normalORsneakORlampadaire == 1) {
+				} else if (r.status == 1) {
 					if (height < 60) {
 						gameOver = true;
 					}
@@ -142,29 +134,29 @@ public class SpeedRunGame extends AbstractGameMenu {
 						gameOver = true;
 					}
 				}
-
+				
 			}
 			r.move();
 		}
-
+		
 		if (newRobot > 0) newRobot--;
 		else {
 			robots.add(new Robot());
 			newRobot = defaultWidth / (int) level;
 		}
-
+		
 	}
-	
+
 	@Override
 	public void render() {
-		
+
 		renderTexture(Textures.SPEEDRUN_BG, decors, 0, 1920, 1080);
 		renderTexture(Textures.SPEEDRUN_BG, decors - 1920, 0, 1920, 1080);
-		
+
 		for (Robot r : robots) {
-			if (r.normalORsneakORlampadaire == 2) {// lampadaire
+			if (r.status == 2) {// lampadaire
 				drawWithOmbre(Textures.SPEEDRUN_LAMPADAIRE, r.x, defaultHeight / 2 - 180, 100, 300);
-			} else if (r.normalORsneakORlampadaire == 1) {// sneak
+			} else if (r.status == 1) {// sneak
 				if ((r.walk - 5) / 10 == r.walk / 10)// l'unité n'est pas 1/2/3/4/5
 					drawWithOmbre(Textures.SPEEDRUN_OTHERMENSOL1, r.x, defaultHeight / 2 + 62, 140, 60);
 				else drawWithOmbre(Textures.SPEEDRUN_OTHERMENSOL2, r.x, defaultHeight / 2 + 62, 140, 60);
@@ -198,14 +190,14 @@ public class SpeedRunGame extends AbstractGameMenu {
 				}
 				drawWithOmbre(robotTexture, r.x, defaultHeight / 2 - 180, 200, 300);
 			}
-			
+
 		}
-		
+
 		if (sneak) {
 			if ((playerWalk - 5) / 10 == playerWalk / 10)// l'unité n'est pas 1/2/3/4/5
 				drawWithOmbre(Textures.SPEEDRUN_MANSOL1, 50, defaultHeight / 2 + 62, 140, 60);
 			else drawWithOmbre(Textures.SPEEDRUN_MANSOL2, 50, defaultHeight / 2 + 62, 140, 60);
-			
+
 		} else {
 			Textures playerTexture;
 			switch (playerWalk / 10) {
@@ -240,12 +232,12 @@ public class SpeedRunGame extends AbstractGameMenu {
 			glColor4f(1, 1, 1, 1);
 		}
 		if (!gameOver && !pauseScreen && pause.isFinish()) {
-
+			
 			boolean record = timer / 60 > gameStats.getRecord();
 			drawText(timer / 60 + "", defaultWidth / 2, 10, PosWidth.MILIEU, PosHeight.HAUT, 40, record ? new float[] { 0.7f, 0, 0, 1 } : new float[] { 0.6f, 0.6f, 0.6f, 1 });
-			
-		}
 
+		}
+		
 		if (!pause.isFinish()) {
 			if (Input.isAnyKeyDown() && !Input.isKeyDown(Keyboard.KEY_ESCAPE) && !Input.getKeyUp(Keyboard.KEY_ESCAPE)) {
 				pause.stopPause();
@@ -254,33 +246,33 @@ public class SpeedRunGame extends AbstractGameMenu {
 			// debut du jeu
 			if (pause.getTimePauseTotal() == 5) {
 				Textures.GAME_STARTING_BG.renderBackground();
-
+				
 				float[] orange = new float[] { 1, 0.5f, 0, 1 };
 				float[] white = new float[] { 1, 1, 1, 1 };
 				float[] grey = new float[] { 0.8f, 0.8f, 0.8f, 1 };
-				
+
 				drawText("CONTROLES", 1093, 370, PosWidth.MILIEU, PosHeight.MILIEU, 30, orange);
-				
+
 				drawText("Jump", 1093, 410, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
 				drawText("Sneak", 1093, 540, PosWidth.MILIEU, PosHeight.HAUT, 25, white);
-
+				
 				drawText(Input.getKeyName(SpeedRunOptions.KEY_JUMP), 1079, 437, 50, white);
 				drawText(Input.getKeyName(SpeedRunOptions.KEY_SNEAK), 1079, 567, 50, white);
-				
+
 				drawText("OBJECTIF", 660, 495, PosWidth.GAUCHE, PosHeight.HAUT, 30, orange);
-				
+
 				if (gameStats.getRecord() > gameStats.getObjectif()) {
 					drawText("Réussi !", 710, 615, PosWidth.MILIEU, PosHeight.HAUT, 25, new float[] { 0, 1, 0, 1 });
 				} else {
 					drawText("Tenir plus de", 710, 600, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 					drawText(gameStats.getObjectifString(), 710, 630, PosWidth.MILIEU, PosHeight.HAUT, 25, grey);
 				}
-				
+
 				drawText(pause.getPauseString(), 660, 335, PosWidth.GAUCHE, PosHeight.HAUT, 100, white);
 			} else
 				pause.showRestartChrono();
 		}
-
+		
 		if (pauseScreen) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
@@ -289,7 +281,7 @@ public class SpeedRunGame extends AbstractGameMenu {
 		if (gameOver) {
 			if (Mouse.isGrabbed())
 				Mouse.setGrabbed(false);
-				
+
 			boolean record = timer / 60 > gameStats.getRecord();
 			renderEchap(false, timer / 60 + "s", record);
 			if (!addStats) {
@@ -298,35 +290,32 @@ public class SpeedRunGame extends AbstractGameMenu {
 				// set best score
 				if (record)
 					gameStats.setRecord(timer / 60);
-
+					
 				if (gameStats.getRecord() > gameStats.getObjectif()) {
 					if (Main.getPlayer().getLevel() <= GameList.SPEEDRUN.getID()) Main.getPlayer().setLevel(GameList.SPEEDRUN.getID() + 1);
 				}
-
+				
 				addStats = true;
 			}
 		}
 	}
-	
-	private void drawWithOmbre(final Textures texture, final double x, final double y, final int width, final int height) {
 
+	private void drawWithOmbre(final Textures texture, final double x, final double y, final int width, final int height) {
+		
 		renderTexture(texture, x, y, width, height);
 		glColor4f(0, 0, 0, 0.2f);
 		renderTexture(texture, x, y + height * 2, width, -height);
 		glColor4f(1, 1, 1, 1);
 	}
-	
+
 	class Robot {
 		
-		int x;
-		int speed;
-		int walk;
-		int normalORsneakORlampadaire;
+		int x, speed, walk, status;
 		
 		public Robot() {
 			x = defaultWidth;
 			Random r = new Random();
-			normalORsneakORlampadaire = r.nextInt(3);
+			status = r.nextInt(3);
 			speed = (int) level / 2;
 			walk = r.nextInt(79) + 1;
 		}
@@ -343,5 +332,5 @@ public class SpeedRunGame extends AbstractGameMenu {
 		}
 		
 	}
-	
+
 }

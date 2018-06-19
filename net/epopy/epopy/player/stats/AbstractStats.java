@@ -4,19 +4,10 @@ import net.epopy.epopy.utils.Config;
 
 public class AbstractStats {
 	
-	protected int diminution;
-	protected int firstObjectif;
-
+	protected int diminution, firstObjectif, record, parties, temps;
+	protected String recordConfig, partiesConfig, tempsConfig;
 	protected Config config;
 	
-	protected int record;
-	protected int parties;
-	protected int temps;
-	
-	protected String recordConfig;
-	protected String partiesConfig;
-	protected String tempsConfig;
-
 	public void addTemps(final int time) {
 		temps += time;
 		config.setValue(tempsConfig, temps + "");

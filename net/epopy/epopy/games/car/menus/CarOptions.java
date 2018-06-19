@@ -10,14 +10,11 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class CarOptions extends AbstractGameMenu {
+	
+	private static boolean controlGaucheClicked, controlDroiteClicked;
+	private static ButtonGui controlGauche, controlDroite;
 
-	private static ButtonGui controlGauche;
-	private static ButtonGui controlDroite;
-	private static boolean controlGaucheClicked;
-	private static boolean controlDroiteClicked;
-
-	public static int KEY_LEFT;
-	public static int KEY_RIGHT;
+	public static int KEY_LEFT, KEY_RIGHT;
 	
 	@Override
 	public void onEnable() {

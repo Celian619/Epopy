@@ -12,18 +12,12 @@ import net.epopy.epopy.display.components.ComponentsHelper.PosWidth;
 import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class PingOptions extends AbstractGameMenu {
-	
-	private static ButtonGui controlBas;
-	private static ButtonGui controlHaut;
+
 	private static boolean controlBasClicked;
+	public static int KEY_DOWN, KEY_UP, MOUSE;// 2 = touches & mouse
+	private static ButtonGui controlBas, controlHaut, gauche, droite;
+
 	private boolean controlHautClicked;
-	private static ButtonGui gauche;
-	private static ButtonGui droite;
-	
-	public static int KEY_DOWN;
-	public static int KEY_UP;
-	public static int MOUSE;
-	// 2 = touches & mouse
 	
 	@Override
 	public void onEnable() {

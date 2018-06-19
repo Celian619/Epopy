@@ -12,20 +12,10 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class SnakeOptions extends AbstractGameMenu {
 	
-	private static ButtonGui controlBas;
-	private static ButtonGui controlHaut;
-	private static ButtonGui controlGauche;
-	private static ButtonGui controlDroite;
-	private static boolean controlBasClicked;
-	private static boolean controlHautClicked;
-	private static boolean controlGaucheClicked;
-	private static boolean controlDroiteClicked;
+	private static boolean controlBasClicked, controlHautClicked, controlGaucheClicked, controlDroiteClicked;
+	public static int KEY_DOWN, KEY_UP, KEY_LEFT, KEY_RIGHT;
+	private static ButtonGui controlBas, controlHaut, controlGauche, controlDroite;
 	
-	public static int KEY_DOWN;
-	public static int KEY_UP;
-	public static int KEY_LEFT;
-	public static int KEY_RIGHT;
-
 	@Override
 	public void onEnable() {
 		KEY_DOWN = Integer.parseInt(Main.getPlayer().getConfig().getData("snake_control_bas", String.valueOf(Keyboard.KEY_DOWN)));

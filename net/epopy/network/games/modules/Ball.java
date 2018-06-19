@@ -5,16 +5,14 @@ import static net.epopy.epopy.display.components.ComponentsHelper.drawCircle;
 import net.epopy.network.NetworkPlayer;
 
 public class Ball {
-
+	
+	private int stay;
+	private double lastX, lastY;
+	private String name;
 	private float[] color;
 	private Location3D location3d;
-	private String name;
-
-	private double lastX = 0;
-	private double lastY = 0;
-	private int stay = 0;
-
-	public Ball(String name, float[] color, Location3D location3d) {
+	
+	public Ball(final String name, final float[] color, final Location3D location3d) {
 		this.name = name;
 		this.color = color;
 		this.location3d = location3d;
@@ -37,31 +35,31 @@ public class Ball {
 	}
 
 	public void render() {
-		if(getLocation().getX() == lastX && getLocation().getY() == lastY) {
+		if (getLocation().getX() == lastX && getLocation().getY() == lastY) {
 			stay++;
-			if(stay > 10) {
+			if (stay > 10) {
 				stay = 0;
 				NetworkPlayer.getGame().removeBall(getName());
 			}
-		} else 
+		} else
 			drawCircle(getLocation().getX(), getLocation().getY(), 5, 10, getColor());
-		this.lastX = location3d.getX();
-		this.lastY = location3d.getY();
+		lastX = location3d.getX();
+		lastY = location3d.getY();
 	}
 
 	/*
 	 * SETTERS
 	 */
 
-	public void setColor(float[] color) {
+	public void setColor(final float[] color) {
 		this.color = color;
 	}
 
-	public void setLocation3d(Location3D location3d) {
+	public void setLocation3d(final Location3D location3d) {
 		this.location3d = location3d;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 }

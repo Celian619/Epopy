@@ -29,8 +29,10 @@ import net.epopy.epopy.games.gestion.AbstractGameMenu;
 
 public class ComponentsHelper {
 	
-	private static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789.;,:=+-'►✔✖*/(\\()!?@ ";
+	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 
+	private static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789.;,:=+-'►✔✖*/(\\()!?@ ";
+	
 	public static void drawQuadData(double x, double y, double width, double height, double epaisseur, final float[] color) {
 		x = getResponsiveX(x);
 		y = getResponsiveY(y);
@@ -118,8 +120,6 @@ public class ComponentsHelper {
 		glEnd();
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	
-	public static Map<Integer, FontUtils> fonts = new HashMap<>(10);
 
 	public static float drawText(final String msg, final double x, final double y, final PosWidth posWidth, final PosHeight posHeight, final int size) {
 		return drawText(msg, x, y, posWidth, posHeight, size, new float[] { 1, 1, 1, 1 });

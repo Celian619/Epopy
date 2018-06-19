@@ -9,23 +9,21 @@ import net.epopy.network.utils.PlayerStats;
 
 public class NetworkPlayer {
 	
-	private String name;
-	private String password;
-
-	private NetworkPlayerHandlers networkPlayerHandlersWaitingRoom;
-	private NetworkPlayerHandlers networkPlayerHandlersGame;
-	
 	private static NetworkPlayer networkPlayer;
 	private static AbstractGameNetwork game;
 	
-	private PlayerStats tankStats = new PlayerStats();
+	private final PlayerStats tankStats = new PlayerStats();
+	private final String password;
 	
-	public NetworkPlayer(String name, String password) {
-		this.name = name; 	
+	private String name;
+	private NetworkPlayerHandlers networkPlayerHandlersWaitingRoom, networkPlayerHandlersGame;
+	
+	public NetworkPlayer(final String name, final String password) {
+		this.name = name;
 		this.password = password;
 		networkPlayer = this;
 		new PacketGetIPServers();
-		this.networkPlayerHandlersWaitingRoom = new NetworkPlayerHandlers(this, PacketGetIPServers.MATCH_MAKING_IP, PacketGetIPServers.MATCH_MAKING_PORT, false);
+		networkPlayerHandlersWaitingRoom = new NetworkPlayerHandlers(this, PacketGetIPServers.MATCH_MAKING_IP, PacketGetIPServers.MATCH_MAKING_PORT, false);
 	}
 
 	/*
@@ -34,7 +32,7 @@ public class NetworkPlayer {
 
 	/**
 	 * Donne le password du joueur
-	 * 
+	 *
 	 * @return
 	 */
 	public String getPassword() {
@@ -50,32 +48,35 @@ public class NetworkPlayer {
 	
 	/**
 	 * Donne le nom du joueur
-	 * 
+	 *
 	 * @return string < 16
 	 */
 	public String getName() {
 		return name;
 	}
+
 	public NetworkPlayerHandlers getNetworkPlayerHandlersWaitingRoom() {
 		return networkPlayerHandlersWaitingRoom;
 	}
+
 	public NetworkPlayerHandlers getNetworkPlayerHandlersGame() {
 		return networkPlayerHandlersGame;
 	}
+
 	/**
 	 * -- Fonctions & Setters --
-	 * 
+	 *
 	 */
-	public void connectWaitingRoom(String ip, int port) {
-		this.networkPlayerHandlersWaitingRoom = new NetworkPlayerHandlers(this, ip, port, false);
+	public void connectWaitingRoom(final String ip, final int port) {
+		networkPlayerHandlersWaitingRoom = new NetworkPlayerHandlers(this, ip, port, false);
 	}
 	
-	public void connectGame(String ip, int port) {
-		this.networkPlayerHandlersGame = new NetworkPlayerHandlers(this, ip, port, true);
+	public void connectGame(final String ip, final int port) {
+		networkPlayerHandlersGame = new NetworkPlayerHandlers(this, ip, port, true);
 	}
 
-	public void setPseudo(String pseudo) {
-		this.name = pseudo;
+	public void setPseudo(final String pseudo) {
+		name = pseudo;
 	}
 	
 	public void init() {
@@ -94,7 +95,7 @@ public class NetworkPlayer {
 		return game;
 	}
 	
-	public static AbstractGameNetwork setGame(AbstractGameNetwork abstractGameNetwork) {
+	public static AbstractGameNetwork setGame(final AbstractGameNetwork abstractGameNetwork) {
 		abstractGameNetwork.onEnable();
 		game = abstractGameNetwork;
 		return game;
