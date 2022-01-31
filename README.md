@@ -1,6 +1,6 @@
 # Epopy
 
-Epopy est un jeu que j'ai programmé il y a quelques années en java (tourne sur java 1.8) avec Corentin P. (pour le site internet) et Romain P. (pour le launcher et le mode multijoueur).
+Epopy est un jeu que j'ai programmé il y a quelques années en java (tourne sur java 1.8 et avec la librairie lwjgl) avec Corentin P. (pour le site internet) et Romain P. (pour le launcher et le mode multijoueur).
 
 Ce jeu contient un mode multijoueur (qui n'est plus actif) et un mode solo.
 
